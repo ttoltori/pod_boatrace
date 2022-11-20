@@ -1,0 +1,1545 @@
+drop table if exists st_patternid;
+create table st_patternid (
+result_type varchar(10),           -- 実験のタイプ 
+bettype varchar(30),
+kumiban varchar(30),
+patternid varchar(20),
+modelno varchar(5),
+betcnt int,
+hitcnt int,
+betamt int,
+hitamt int,
+
+
+
+drop table if exists ml_pork_classification;
+create table ml_pork_classification (
+modelno varchar(5),
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+sime varchar(4),
+bettype varchar(3),
+bet_kumiban varchar(4),
+bet_odds double precision,
+bet_oddsrank int,
+pattern varchar(20),
+prediction1 varchar(3),
+-- kumiban1 varchar(1),
+probability1 double precision,
+probabilities1 double precision[], 
+skewness1 double precision,
+kurtosis1 double precision,
+prediction2 varchar(3),
+-- kumiban2 varchar(1),
+probability2 double precision,
+probabilities2 double precision[], 
+skewness2 double precision,
+kurtosis2 double precision,
+prediction3 varchar(3),
+-- kumiban3 varchar(1),
+probability3 double precision,
+probabilities3 double precision[], 
+skewness3 double precision,
+kurtosis3 double precision
+-- probability_sum double precision,
+-- probability_mul double precision,
+-- skewness123 double precision,
+-- kurtosis123 double precision
+);
+drop index if exists indexes_ml_pork_classification;
+create index indexes_ml_pork_classification on ml_pork_classification (ymd, jyocd, raceno, sime, bettype, bet_kumiban);
+
+
+drop table if exists st_evaluation;
+create table st_evaluation (
+resultno varchar(6),
+modelno varchar(5),
+patternid varchar(20),
+pattern varchar(200),
+bettype varchar(30),
+kumiban varchar(30),
+betcnt int,
+hitcnt int,
+betamt int,
+hitamt int,
+betrate double precision,
+hitrate double precision,
+incomerate double precision,
+hmeanrate double precision,        -- betrate,hitrate,incomerateの調和平均（総合性能指標）2002/2/23 追加
+balance int[],                     -- 区間毎の残高評価
+bal_slope double precision[],
+betr_slope double precision,       -- 投票率変化推移
+hitr_slope double precision,       -- 的中率変化推移
+incr_slope double precision,       -- 収益率変化推移
+pt_precision double precision,     -- MLのconfusion matrix評価 (bettype,kumiban,patternの組み合わせ）
+pt_recall double precision,
+pt_fmeasure double precision,
+-- 的中オッズの記述統計量
+hodds_min double precision,
+hodds_max double precision,
+hodds_mean double precision,
+hodds_stddev double precision,
+hodds_median double precision, 
+-- 的中オッズRANKINGの記述統計量
+hoddsrk_min double precision,
+hoddsrk_max double precision,
+hoddsrk_mean double precision,
+hoddsrk_stddev double precision,
+hoddsrk_median double precision, 
+-- 確定オッズの記述統計量
+rodds_min double precision,
+rodds_max double precision,
+rodds_mean double precision,
+rodds_stddev double precision,
+rodds_median double precision,
+-- 確定オッズRANKINGの記述統計量
+roddsrk_min double precision,
+roddsrk_max double precision,
+roddsrk_mean double precision,
+roddsrk_stddev double precision,
+roddsrk_median double precision,
+-- 直前オッズ記述統計量
+bodds_min double precision,
+bodds_max double precision,
+bodds_mean double precision,
+bodds_stddev double precision,
+bodds_median double precision, 
+-- 直前オッズRANKING記述統計量
+boddsrk_min double precision,
+boddsrk_max double precision,
+boddsrk_mean double precision,
+boddsrk_stddev double precision,
+boddsrk_median double precision, 
+-- 予想確率の記述統計量
+prob_min double precision,
+prob_max double precision,
+prob_mean double precision,
+prob_stddev double precision,
+prob_median double precision,
+-- 確定オッズの最適値計算情報
+ror_bestmin double precision,       -- 黒字となった最適範囲min
+ror_bestmax double precision,       -- 黒字となった最適範囲max
+ror_betcnt int,                     -- 最適範囲内のデータ数
+ror_betamt int,                     -- 最適範囲内のbet金額
+ror_hitcnt int,                     -- 最適範囲内の的中したデータ数
+ror_hitamt int,                     -- 最適範囲内の的中金額合計
+ror_betrate double precision,       -- range_cnt / betcnt
+ror_hitrate double precision,       -- range_hitcnt / range_betcnt
+ror_incomerate double precision,    -- range_hitamt / range_betamt
+-- 確定オッズRANKINGの最適値計算情報
+rork_bestmin double precision,       -- 黒字となった最適範囲min
+rork_bestmax double precision,       -- 黒字となった最適範囲max
+rork_betcnt int,                     -- 最適範囲内のデータ数
+rork_betamt int,                     -- 最適範囲内のbet金額
+rork_hitcnt int,                     -- 最適範囲内の的中したデータ数
+rork_hitamt int,                     -- 最適範囲内の的中金額合計
+rork_betrate double precision,       -- range_cnt / betcnt
+rork_hitrate double precision,       -- range_hitcnt / range_betcnt
+rork_incomerate double precision,    -- range_hitamt / range_betamt
+-- 直前オッズの最適値計算情報
+bor_bestmin double precision,       -- 黒字となった最適範囲min
+bor_bestmax double precision,       -- 黒字となった最適範囲max
+bor_betcnt int,                     -- 最適範囲内のデータ数
+bor_betamt int,                     -- 最適範囲内のbet金額
+bor_hitcnt int,                     -- 最適範囲内の的中したデータ数
+bor_hitamt int,                     -- 最適範囲内の的中金額合計
+bor_betrate double precision,       -- range_cnt / betcnt
+bor_hitrate double precision,       -- range_hitcnt / range_betcnt
+bor_incomerate double precision,    -- range_hitamt / range_betamt
+-- 直前オッズRANKINGの最適値計算情報
+bork_bestmin double precision,       -- 黒字となった最適範囲min
+bork_bestmax double precision,       -- 黒字となった最適範囲max
+bork_betcnt int,                     -- 最適範囲内のデータ数
+bork_betamt int,                     -- 最適範囲内のbet金額
+bork_hitcnt int,                     -- 最適範囲内の的中したデータ数
+bork_hitamt int,                     -- 最適範囲内の的中金額合計
+bork_betrate double precision,       -- range_cnt / betcnt
+bork_hitrate double precision,       -- range_hitcnt / range_betcnt
+bork_incomerate double precision,    -- range_hitamt / range_betamt
+-- 予想確率の最適値計算情報
+pr_bestmin double precision,       -- 黒字となった最適範囲min
+pr_bestmax double precision,       -- 黒字となった最適範囲max
+pr_betcnt int,                     -- 最適範囲内のデータ数
+pr_betamt int,                     -- 最適範囲内のbet金額
+pr_hitcnt int,                     -- 最適範囲内の的中したデータ数
+pr_hitamt int,                     -- 最適範囲内の的中金額合計
+pr_betrate double precision,       -- range_cnt / betcnt
+pr_hitrate double precision,       -- range_hitcnt / range_betcnt
+pr_incomerate double precision,    -- range_hitamt / range_betamt
+bal_pluscnt int,                   -- 黒字の基数
+result_type varchar(10),           -- 実験のタイプ 
+evaluations_id varchar(255),         -- simulationの場合のみ、関連group no
+bonus_pr varchar(30),
+bonus_bor varchar(30),
+bonus_bork varchar(30),
+-- TOP1-3直前オッズRANKINGの最適値計算情報
+topbork_bestmin double precision,       -- 黒字となった最適範囲min
+topbork_bestmax double precision,       -- 黒字となった最適範囲max
+topbork_betcnt int,                     -- 最適範囲内のデータ数
+topbork_betamt int,                     -- 最適範囲内のbet金額
+topbork_hitcnt int,                     -- 最適範囲内の的中したデータ数
+topbork_hitamt int,                     -- 最適範囲内の的中金額合計
+topbork_betrate double precision,       -- range_cnt / betcnt
+topbork_hitrate double precision,       -- range_hitcnt / range_betcnt
+topbork_incomerate double precision,    -- range_hitamt / range_betamt
+sim_termtype varchar(5),
+sim_term varchar(1),
+sim_bettype varchar(2),
+sim_factor varchar(10),
+sim_limit varchar(3),
+sim_incr varchar(5),
+sim_group varchar(3),
+sim_model varchar(25),
+sim_grade varchar(2),
+sim_prob varchar(10)
+);
+
+drop index if exists indexes_st_evaluation;
+create index indexes_st_evaluation on st_evaluation (resultno, modelno, patternid, pattern, bettype, kumiban, result_type,
+evaluations_id, sim_termtype, sim_term, sim_bettype, sim_factor, sim_limit, sim_incr, sim_group, sim_model, sim_grade, sim_prob);
+
+
+drop table if exists st_range_evaluation;
+create table st_range_evaluation (
+resultno varchar(6),
+modelno varchar(5),
+patternid varchar(20),
+pattern varchar(200),
+bettype varchar(30),
+kumiban varchar(30),
+-- 予想確率の最適値計算情報 left to right
+lpr_bestmin double precision,       -- 黒字となった最適範囲min
+lpr_bestmax double precision,       -- 黒字となった最適範囲max
+lpr_betcnt int,                     -- 最適範囲内のデータ数
+lpr_betamt int,                     -- 最適範囲内のbet金額
+lpr_hitcnt int,                     -- 最適範囲内の的中したデータ数
+lpr_hitamt int,                     -- 最適範囲内の的中金額合計
+lpr_betrate double precision,       -- range_cnt / betcnt
+lpr_hitrate double precision,       -- range_hitcnt / range_betcnt
+lpr_incomerate double precision,    -- range_hitamt / range_betamt
+-- 予想確率の最適値計算情報 right to left
+rpr_bestmin double precision,       -- 黒字となった最適範囲min
+rpr_bestmax double precision,       -- 黒字となった最適範囲max
+rpr_betcnt int,                     -- 最適範囲内のデータ数
+rpr_betamt int,                     -- 最適範囲内のbet金額
+rpr_hitcnt int,                     -- 最適範囲内の的中したデータ数
+rpr_hitamt int,                     -- 最適範囲内の的中金額合計
+rpr_betrate double precision,       -- range_cnt / betcnt
+rpr_hitrate double precision,       -- range_hitcnt / range_betcnt
+rpr_incomerate double precision,    -- range_hitamt / range_betamt
+-- 確定オッズの最適値計算情報 left to right
+lror_bestmin double precision,       -- 黒字となった最適範囲min
+lror_bestmax double precision,       -- 黒字となった最適範囲max
+lror_betcnt int,                     -- 最適範囲内のデータ数
+lror_betamt int,                     -- 最適範囲内のbet金額
+lror_hitcnt int,                     -- 最適範囲内の的中したデータ数
+lror_hitamt int,                     -- 最適範囲内の的中金額合計
+lror_betrate double precision,       -- range_cnt / betcnt
+lror_hitrate double precision,       -- range_hitcnt / range_betcnt
+lror_incomerate double precision,    -- range_hitamt / range_betamt
+-- 確定オッズの最適値計算情報 right to left
+rror_bestmin double precision,       -- 黒字となった最適範囲min
+rror_bestmax double precision,       -- 黒字となった最適範囲max
+rror_betcnt int,                     -- 最適範囲内のデータ数
+rror_betamt int,                     -- 最適範囲内のbet金額
+rror_hitcnt int,                     -- 最適範囲内の的中したデータ数
+rror_hitamt int,                     -- 最適範囲内の的中金額合計
+rror_betrate double precision,       -- range_cnt / betcnt
+rror_hitrate double precision,       -- range_hitcnt / range_betcnt
+rror_incomerate double precision,    -- range_hitamt / range_betamt
+-- 確定オッズRANKINGの最適値計算情報 left to right
+lrork_bestmin double precision,       -- 黒字となった最適範囲min
+lrork_bestmax double precision,       -- 黒字となった最適範囲max
+lrork_betcnt int,                     -- 最適範囲内のデータ数
+lrork_betamt int,                     -- 最適範囲内のbet金額
+lrork_hitcnt int,                     -- 最適範囲内の的中したデータ数
+lrork_hitamt int,                     -- 最適範囲内の的中金額合計
+lrork_betrate double precision,       -- range_cnt / betcnt
+lrork_hitrate double precision,       -- range_hitcnt / range_betcnt
+lrork_incomerate double precision,    -- range_hitamt / range_betamt
+-- 確定オッズRANKINGの最適値計算情報 left to right
+rrork_bestmin double precision,       -- 黒字となった最適範囲min
+rrork_bestmax double precision,       -- 黒字となった最適範囲max
+rrork_betcnt int,                     -- 最適範囲内のデータ数
+rrork_betamt int,                     -- 最適範囲内のbet金額
+rrork_hitcnt int,                     -- 最適範囲内の的中したデータ数
+rrork_hitamt int,                     -- 最適範囲内の的中金額合計
+rrork_betrate double precision,       -- range_cnt / betcnt
+rrork_hitrate double precision,       -- range_hitcnt / range_betcnt
+rrork_incomerate double precision,    -- range_hitamt / range_betamt
+-- 直前オッズの最適値計算情報 left to right
+lbor_bestmin double precision,       -- 黒字となった最適範囲min
+lbor_bestmax double precision,       -- 黒字となった最適範囲max
+lbor_betcnt int,                     -- 最適範囲内のデータ数
+lbor_betamt int,                     -- 最適範囲内のbet金額
+lbor_hitcnt int,                     -- 最適範囲内の的中したデータ数
+lbor_hitamt int,                     -- 最適範囲内の的中金額合計
+lbor_betrate double precision,       -- range_cnt / betcnt
+lbor_hitrate double precision,       -- range_hitcnt / range_betcnt
+lbor_incomerate double precision,    -- range_hitamt / range_betamt
+-- 直前オッズの最適値計算情報 right to left
+rbor_bestmin double precision,       -- 黒字となった最適範囲min
+rbor_bestmax double precision,       -- 黒字となった最適範囲max
+rbor_betcnt int,                     -- 最適範囲内のデータ数
+rbor_betamt int,                     -- 最適範囲内のbet金額
+rbor_hitcnt int,                     -- 最適範囲内の的中したデータ数
+rbor_hitamt int,                     -- 最適範囲内の的中金額合計
+rbor_betrate double precision,       -- range_cnt / betcnt
+rbor_hitrate double precision,       -- range_hitcnt / range_betcnt
+rbor_incomerate double precision,    -- range_hitamt / range_betamt
+-- 直前オッズRANKINGの最適値計算情報 left to right
+lbork_bestmin double precision,       -- 黒字となった最適範囲min
+lbork_bestmax double precision,       -- 黒字となった最適範囲max
+lbork_betcnt int,                     -- 最適範囲内のデータ数
+lbork_betamt int,                     -- 最適範囲内のbet金額
+lbork_hitcnt int,                     -- 最適範囲内の的中したデータ数
+lbork_hitamt int,                     -- 最適範囲内の的中金額合計
+lbork_betrate double precision,       -- range_cnt / betcnt
+lbork_hitrate double precision,       -- range_hitcnt / range_betcnt
+lbork_incomerate double precision,    -- range_hitamt / range_betamt
+-- 直前オッズRANKINGの最適値計算情報 left to right
+rbork_bestmin double precision,       -- 黒字となった最適範囲min
+rbork_bestmax double precision,       -- 黒字となった最適範囲max
+rbork_betcnt int,                     -- 最適範囲内のデータ数
+rbork_betamt int,                     -- 最適範囲内のbet金額
+rbork_hitcnt int,                     -- 最適範囲内の的中したデータ数
+rbork_hitamt int,                     -- 最適範囲内の的中金額合計
+rbork_betrate double precision,       -- range_cnt / betcnt
+rbork_hitrate double precision,       -- range_hitcnt / range_betcnt
+rbork_incomerate double precision,    -- range_hitamt / range_betamt
+result_type varchar(10),           -- 実験のタイプ 
+evaluations_id varchar(255),         -- simulationの場合のみ、関連group no
+sim_termtype varchar(5),
+sim_term varchar(1),
+sim_bettype varchar(2),
+sim_factor varchar(10),
+sim_limit varchar(3),
+sim_incr varchar(5),
+sim_group varchar(3),
+sim_model varchar(25),
+sim_grade varchar(2),
+sim_prob varchar(10)
+);
+
+drop index if exists indexes_st_raneg_evaluation;
+create index indexes_st_range_evaluation on st_range_evaluation (resultno, modelno, patternid, pattern, bettype, kumiban, result_type,
+evaluations_id, sim_termtype, sim_term, sim_bettype, sim_factor, sim_limit, sim_incr, sim_group, sim_model, sim_grade, sim_prob);
+
+--------------
+drop table if exists ol_race;
+create table ol_race (
+ymd varchar(8),
+jyocd varchar(2),
+raceno int,
+sime varchar(4),
+grade varchar(2),
+timezone varchar(2),
+turn varchar(2),
+fixedentrance varchar(6),
+racetype varchar(20),
+wakulevellist varchar(20),
+alevelcount int,
+femalecount int,
+com_predict varchar(4),
+com_confidence int,
+status int  -- 0:締切前 1:締切後 2:投票完了 
+);
+create index indexes_ol_race on ol_race (ymd, jyocd, raceno);
+
+
+drop table if exists ol_racer;
+create table ol_racer (
+ymd varchar(8),
+jyocd varchar(2),
+raceno int,
+entry int[],
+sex varchar(2)[],
+age int[],
+level varchar(2)[],
+weight double precision[],
+branch varchar(4)[],
+exhibit double precision[],            -- 直前情報のため未使用
+startexhibit double precision[],       -- 直前情報のため未使用
+flying int[],
+late int[],
+averagestart double precision[],
+avgtime double precision[],            -- 直前情報のため未使用
+nationwiningrate double precision[],
+nation2winingrate double precision[],
+nation3winingrate double precision[],
+localwiningrate double precision[],
+local2winingrate double precision[],
+local3winingrate double precision[],
+motorno int[],
+motor2winingrate double precision[],
+motor3winingrate double precision[],
+waku int[],                            -- 不要のため未使用
+rank int[]                             -- 不要のため未使用
+);
+create index indexes_ol_racer on ol_racer (ymd, jyocd, raceno);
+
+-- 未使用
+drop table if exists ol_classification;
+create table ol_classification (
+modelno varchar(5),
+ymd varchar(8),
+jyocd varchar(2),
+raceno int,
+sime varchar(4),
+prediction1 varchar(3),
+probability1 double precision,
+probabilities1 double precision[], 
+prediction2 varchar(3),
+probability2 double precision,
+probabilities2 double precision[], 
+prediction3 varchar(3),
+probability3 double precision,
+probabilities3 double precision[] 
+);
+drop index if exists indexes_ol_classification;
+create index indexes_ol_classification on ol_classification (ymd, jyocd, raceno, sime);
+
+-- 未使用
+drop table if exists ol_result;
+create table ol_result (
+ymd varchar(8),
+jyocd varchar(2),
+raceno int,
+sime varchar(4),
+predict_rank123 varchar(4),
+result_rank123 varchar(4),
+bettype varchar(2),
+bet_kumiban varchar(4),
+bet_odds double precision,
+bet_oddsrank int,
+result_kumiban varchar(4),
+result_odds double precision,
+result_oddsrank int,
+result_amt int,
+hity int,
+hitn int,
+betamt int,
+hitamt int,
+probability double precision,  -- MLから算出した予想的中確率
+evaluation varchar(50),        -- modelno_patternid_pattern
+custom varchar(10),
+status int                     -- 0: 投票完了 1:投票失敗 2:結果正常
+);
+drop index if exists indexes_ol_result;
+create index indexes_ol_result on ol_result (resultno, ymd, jyocd, raceno, sime);
+
+
+
+
+----------------------------------------------------------------------------------
+drop table if exists stat_range;
+CREATE TABLE stat_range (
+	result_type varchar(2) NULL,
+	grades varchar(10) NULL,
+	bettype varchar(3) NULL,
+	kumiban varchar(3) NULL,
+	resultno varchar(5) NULL,
+	modelno varchar(5) NULL,
+	patternid varchar(20) NULL,
+	pattern varchar(200) NULL,
+	bpr int,
+	bror int,
+	brork int,
+	bbor int,
+	bbork int,
+	lpr int,
+	rpr int,
+	lror int, 
+	rror int,
+	lrork int,
+	rrork int, 
+	lbor int,
+	rbor int,
+	lbork int,
+	rbork int,
+	incamt int NULL,
+	betcnt int NULL,
+	incrate numeric(5,2) NULL,
+	hitrate numeric(5,2) NULL,
+	bal_pluscnt int NULL
+);
+drop index if exists indexes_stat_range;
+create index indexes_stat_range on stat_range (result_type, bettype, kumiban, modelno, 
+bpr, bror, brork, bbor, bbork, lpr, rpr, lror, rror, lrork, rrork, lbor, rbor, lbork, rbork,
+betcnt, incrate);
+
+drop table if exists stat_bork5;
+CREATE TABLE stat_bork5 (
+	result_type varchar(2) NULL,
+	grades varchar(10) NULL,
+	bettype varchar(3) NULL,
+	kumiban varchar(3) NULL,
+	resultno varchar(5) NULL,
+	modelno varchar(5) NULL,
+	patternid varchar(20) NULL,
+	pattern varchar(200) NULL,
+	i0 int NULL,
+	i1 int NULL,
+	i2 int NULL,
+	i3 int NULL,
+	i4 int NULL,
+	i5 int NULL,
+	i6 int NULL,
+	i7 int NULL,
+	i8 int NULL,
+	i9 int NULL,
+	i04 int NULL,
+	i27 int NULL,
+	i59 int NULL,
+	i09 int NULL,
+	incamt int NULL,
+	betcnt int NULL,
+	incrate numeric(5,2) NULL,
+	hitrate numeric(5,2) NULL,
+	bal_pluscnt int NULL
+);
+
+drop index if exists indexes_stat_bork5;
+create index indexes_stat_bork5 on stat_bork5 (result_type, bettype, kumiban, modelno, 
+i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, i04, i27, i59,i09,
+betcnt, incrate, hitrate, bal_pluscnt );
+
+
+drop table if exists stat_bork4;
+CREATE TABLE stat_bork4 (
+	result_type varchar(2) NULL,
+	grades varchar(10) NULL,
+	bettype varchar(3) NULL,
+	kumiban varchar(3) NULL,
+	resultno varchar(5) NULL,
+	modelno varchar(5) NULL,
+	patternid varchar(20) NULL,
+	pattern varchar(200) NULL,
+	i0 int NULL,
+	i1 int NULL,
+	i2 int NULL,
+	i3 int NULL,
+	i4 int NULL,
+	i5 int NULL,
+	i6 int NULL,
+	i7 int NULL,
+	i8 int NULL,
+	i9 int NULL,
+	i01 int NULL,
+	i02 int NULL,
+	i03 int NULL,
+	i04 int NULL,
+	i05 int NULL,
+	i06 int NULL,
+	i07 int NULL,
+	i08 int NULL,
+	i09 int NULL,
+	i89 int NULL,
+	i79 int NULL,
+	i69 int NULL,
+	i59 int NULL,
+	i49 int NULL,
+	i39 int NULL,
+	i29 int NULL,
+	i19 int NULL,
+	i13 int NULL,
+	i24 int NULL,
+	i35 int NULL,
+	i46 int NULL,
+	i57 int NULL,
+	i68 int NULL,
+--	i79 int NULL,
+	i14 int NULL,
+	i25 int NULL,
+	i36 int NULL,
+	i47 int NULL,
+	i58 int NULL,
+--	i69 int NULL,
+	i15 int NULL,
+	i26 int NULL,
+	i37 int NULL,
+	i48 int NULL,
+	i45 int NULL,
+	incamt int NULL,
+	betcnt int NULL,
+	incrate numeric(5,2) NULL,
+	hitrate numeric(5,2) NULL,
+	bal_pluscnt int NULL
+);
+
+drop index if exists indexes_stat_bork4;
+create index indexes_stat_bork4 on stat_bork4 (result_type, bettype, kumiban, modelno, 
+i01, i02, i03, i04, i05, i06, i07, i08, i09, 
+i13, i24, i35, i46, i57, i68, i14, i25, i36, i47, i58, i15, i26, i37, i48, i45, 
+betcnt, incrate, hitrate );
+
+drop table if exists stat_pr;
+CREATE TABLE stat_pr (
+	result_type varchar(2) NULL,
+	grades varchar(10) NULL,
+	bettype varchar(3) NULL,
+	kumiban varchar(3) NULL,
+	resultno varchar(5) NULL,
+	modelno varchar(5) NULL,
+	patternid varchar(20) NULL,
+	pattern varchar(200) NULL,
+	i0 int NULL,
+	i1 int NULL,
+	i2 int NULL,
+	i3 int NULL,
+	i4 int NULL,
+	i5 int NULL,
+	i6 int NULL,
+	i7 int NULL,
+	i8 int NULL,
+	i9 int NULL,
+	i01 int NULL,
+	i02 int NULL,
+	i03 int NULL,
+	i04 int NULL,
+	i05 int NULL,
+	i06 int NULL,
+	i07 int NULL,
+	i08 int NULL,
+	i09 int NULL,
+	i89 int NULL,
+	i79 int NULL,
+	i69 int NULL,
+	i59 int NULL,
+	i49 int NULL,
+	i39 int NULL,
+	i29 int NULL,
+	i19 int NULL,
+	i13 int NULL,
+	i24 int NULL,
+	i35 int NULL,
+	i46 int NULL,
+	i57 int NULL,
+	i68 int NULL,
+--	i79 int NULL,
+	i14 int NULL,
+	i25 int NULL,
+	i36 int NULL,
+	i47 int NULL,
+	i58 int NULL,
+--	i69 int NULL,
+	i15 int NULL,
+	i26 int NULL,
+	i37 int NULL,
+	i48 int NULL,
+	i45 int NULL,
+	incamt int NULL,
+	betcnt int NULL,
+	incrate numeric(5,2) NULL,
+	hitrate numeric(5,2) NULL,
+	bal_pluscnt int NULL
+);
+
+drop index if exists indexes_stat_pr;
+
+create index indexes_stat_pr on stat_pr (result_type, bettype, kumiban, modelno, 
+i01, i02, i03, i04, i05, i06, i07, i08, i09, 
+i13, i24, i35, i46, i57, i68, i14, i25, i36, i47, i58, i15, i26, i37, i48, i45,
+betcnt, incrate, hitrate );
+
+
+
+drop table if exists ml_simulation;
+create table ml_simulation (
+resultno varchar(5),
+bettype varchar(30),
+kumiban varchar(30), -- predictions
+modelnos varchar(5)[],
+patternids varchar(20)[],
+patterns varchar(20)[],
+betcnt int,
+hitcnt int,
+betamt int,
+hitamt int,
+hitrate double precision,
+incomerate double precision,
+inc_min double precision,
+inc_max double precision,
+inc_mean double precision,
+hitodds_min double precision,
+hitodds_max double precision,
+hitodds_mean double precision
+);
+drop index if exists indexes_ml_simulation;
+create index indexes_ml_simulation on ml_simulation (resultno,bettype,kumiban);
+
+drop table if exists ml_model_config;
+create table ml_model_config (
+modelno varchar(5),
+model_start_ymd varchar(8),
+model_end_ymd varchar(8),
+class_rank1 varchar(30),
+class_rank2 varchar(30),
+class_rank3 varchar(30),
+algorithm_rank1 varchar(30),
+algorithm_rank2 varchar(30),
+algorithm_rank3 varchar(30),
+features_rank1 varchar(30),
+features_rank2 varchar(30),
+features_rank3 varchar(30),
+arff_sql_id varchar(30),
+classification_sql_id varchar(30),
+grade_condition varchar(30),
+data_use_range varchar(3),
+outlier_method varchar(20),
+outlier_field varchar(20),
+model_data_days varchar(5),
+model_interval_days varchar(5)
+);
+drop index if exists indexes_ml_model_config;
+create index indexes_ml_model_config on ml_model_config (modelno);
+
+drop table if exists ml_result_config;
+create table ml_result_config (
+resultno varchar(5),
+modelno varchar(5),
+result_start_ymd varchar(8),
+result_end_ymd varchar(8),
+split varchar(2),
+result_sql_id varchar(30),
+bettype varchar(30),
+kumiban varchar(30),
+result_class_id varchar(30),
+simul_class_id varchar(30),
+evaluations_id varchar(30),
+pattern_selector varchar(30),
+prediction_selector varchar(30),
+model_selector varchar(30),
+pattern_id varchar(30),
+min_betrate double precision,
+min_betcnt int,
+save_stat varchar(3),
+save_graph varchar(3),
+save_result varchar(3),
+grade_condition varchar(30)
+);
+drop index if exists indexes_ml_result_config;
+create index indexes_ml_result_config on ml_result_config (resultno, modelno);
+
+
+CREATE OR REPLACE FUNCTION sort_desc (ANYARRAY)
+RETURNS ANYARRAY LANGUAGE SQL
+AS $$
+SELECT ARRAY(SELECT unnest($1) ORDER BY 1 desc)
+$$;
+
+080-3277-5363
+
+-- 略語
+-- hodds_=hit odds, bodds_=before odds, rodds_=result odds
+-- prob_=probability
+-- pr_=probability range, or_=odds range, xr_=expectation range
+
+
+drop table if exists ml_range_evaluation;
+create table ml_range_evaluation (
+resultno varchar(6),
+modelno varchar(5),
+patternid varchar(20),
+pattern varchar(200),
+bettype varchar(30),
+kumiban varchar(30),
+-- 予想確率の最適値計算情報 left to right
+lpr_bestmin double precision,       -- 黒字となった最適範囲min
+lpr_bestmax double precision,       -- 黒字となった最適範囲max
+lpr_betcnt int,                     -- 最適範囲内のデータ数
+lpr_betamt int,                     -- 最適範囲内のbet金額
+lpr_hitcnt int,                     -- 最適範囲内の的中したデータ数
+lpr_hitamt int,                     -- 最適範囲内の的中金額合計
+lpr_betrate double precision,       -- range_cnt / betcnt
+lpr_hitrate double precision,       -- range_hitcnt / range_betcnt
+lpr_incomerate double precision,    -- range_hitamt / range_betamt
+-- 予想確率の最適値計算情報 right to left
+rpr_bestmin double precision,       -- 黒字となった最適範囲min
+rpr_bestmax double precision,       -- 黒字となった最適範囲max
+rpr_betcnt int,                     -- 最適範囲内のデータ数
+rpr_betamt int,                     -- 最適範囲内のbet金額
+rpr_hitcnt int,                     -- 最適範囲内の的中したデータ数
+rpr_hitamt int,                     -- 最適範囲内の的中金額合計
+rpr_betrate double precision,       -- range_cnt / betcnt
+rpr_hitrate double precision,       -- range_hitcnt / range_betcnt
+rpr_incomerate double precision,    -- range_hitamt / range_betamt
+-- 確定オッズの最適値計算情報 left to right
+lror_bestmin double precision,       -- 黒字となった最適範囲min
+lror_bestmax double precision,       -- 黒字となった最適範囲max
+lror_betcnt int,                     -- 最適範囲内のデータ数
+lror_betamt int,                     -- 最適範囲内のbet金額
+lror_hitcnt int,                     -- 最適範囲内の的中したデータ数
+lror_hitamt int,                     -- 最適範囲内の的中金額合計
+lror_betrate double precision,       -- range_cnt / betcnt
+lror_hitrate double precision,       -- range_hitcnt / range_betcnt
+lror_incomerate double precision,    -- range_hitamt / range_betamt
+-- 確定オッズの最適値計算情報 right to left
+rror_bestmin double precision,       -- 黒字となった最適範囲min
+rror_bestmax double precision,       -- 黒字となった最適範囲max
+rror_betcnt int,                     -- 最適範囲内のデータ数
+rror_betamt int,                     -- 最適範囲内のbet金額
+rror_hitcnt int,                     -- 最適範囲内の的中したデータ数
+rror_hitamt int,                     -- 最適範囲内の的中金額合計
+rror_betrate double precision,       -- range_cnt / betcnt
+rror_hitrate double precision,       -- range_hitcnt / range_betcnt
+rror_incomerate double precision,    -- range_hitamt / range_betamt
+-- 確定オッズRANKINGの最適値計算情報 left to right
+lrork_bestmin double precision,       -- 黒字となった最適範囲min
+lrork_bestmax double precision,       -- 黒字となった最適範囲max
+lrork_betcnt int,                     -- 最適範囲内のデータ数
+lrork_betamt int,                     -- 最適範囲内のbet金額
+lrork_hitcnt int,                     -- 最適範囲内の的中したデータ数
+lrork_hitamt int,                     -- 最適範囲内の的中金額合計
+lrork_betrate double precision,       -- range_cnt / betcnt
+lrork_hitrate double precision,       -- range_hitcnt / range_betcnt
+lrork_incomerate double precision,    -- range_hitamt / range_betamt
+-- 確定オッズRANKINGの最適値計算情報 left to right
+rrork_bestmin double precision,       -- 黒字となった最適範囲min
+rrork_bestmax double precision,       -- 黒字となった最適範囲max
+rrork_betcnt int,                     -- 最適範囲内のデータ数
+rrork_betamt int,                     -- 最適範囲内のbet金額
+rrork_hitcnt int,                     -- 最適範囲内の的中したデータ数
+rrork_hitamt int,                     -- 最適範囲内の的中金額合計
+rrork_betrate double precision,       -- range_cnt / betcnt
+rrork_hitrate double precision,       -- range_hitcnt / range_betcnt
+rrork_incomerate double precision,    -- range_hitamt / range_betamt
+-- 直前オッズの最適値計算情報 left to right
+lbor_bestmin double precision,       -- 黒字となった最適範囲min
+lbor_bestmax double precision,       -- 黒字となった最適範囲max
+lbor_betcnt int,                     -- 最適範囲内のデータ数
+lbor_betamt int,                     -- 最適範囲内のbet金額
+lbor_hitcnt int,                     -- 最適範囲内の的中したデータ数
+lbor_hitamt int,                     -- 最適範囲内の的中金額合計
+lbor_betrate double precision,       -- range_cnt / betcnt
+lbor_hitrate double precision,       -- range_hitcnt / range_betcnt
+lbor_incomerate double precision,    -- range_hitamt / range_betamt
+-- 直前オッズの最適値計算情報 right to left
+rbor_bestmin double precision,       -- 黒字となった最適範囲min
+rbor_bestmax double precision,       -- 黒字となった最適範囲max
+rbor_betcnt int,                     -- 最適範囲内のデータ数
+rbor_betamt int,                     -- 最適範囲内のbet金額
+rbor_hitcnt int,                     -- 最適範囲内の的中したデータ数
+rbor_hitamt int,                     -- 最適範囲内の的中金額合計
+rbor_betrate double precision,       -- range_cnt / betcnt
+rbor_hitrate double precision,       -- range_hitcnt / range_betcnt
+rbor_incomerate double precision,    -- range_hitamt / range_betamt
+-- 直前オッズRANKINGの最適値計算情報 left to right
+lbork_bestmin double precision,       -- 黒字となった最適範囲min
+lbork_bestmax double precision,       -- 黒字となった最適範囲max
+lbork_betcnt int,                     -- 最適範囲内のデータ数
+lbork_betamt int,                     -- 最適範囲内のbet金額
+lbork_hitcnt int,                     -- 最適範囲内の的中したデータ数
+lbork_hitamt int,                     -- 最適範囲内の的中金額合計
+lbork_betrate double precision,       -- range_cnt / betcnt
+lbork_hitrate double precision,       -- range_hitcnt / range_betcnt
+lbork_incomerate double precision,    -- range_hitamt / range_betamt
+-- 直前オッズRANKINGの最適値計算情報 left to right
+rbork_bestmin double precision,       -- 黒字となった最適範囲min
+rbork_bestmax double precision,       -- 黒字となった最適範囲max
+rbork_betcnt int,                     -- 最適範囲内のデータ数
+rbork_betamt int,                     -- 最適範囲内のbet金額
+rbork_hitcnt int,                     -- 最適範囲内の的中したデータ数
+rbork_hitamt int,                     -- 最適範囲内の的中金額合計
+rbork_betrate double precision,       -- range_cnt / betcnt
+rbork_hitrate double precision,       -- range_hitcnt / range_betcnt
+rbork_incomerate double precision,    -- range_hitamt / range_betamt
+result_type varchar(10),           -- 実験のタイプ 
+evaluations_id varchar(255)         -- simulationの場合のみ、関連group no
+);
+drop index if exists indexes_ml_range_evaluation;
+create index indexes_ml_range_evaluation on ml_range_evaluation (resultno, modelno, patternid, pattern, bettype, kumiban, result_type);
+
+drop table if exists ml_rork_evaluation;
+create table ml_rork_evaluation (
+resultno varchar(6),
+modelno varchar(5),
+patternid varchar(20),
+pattern varchar(200),
+bettype varchar(30),
+kumiban varchar(30),
+betcnt int[],
+hitcnt int[],
+betamt int[],
+hitamt int[],
+incamt int[],
+betrate double precision[],
+hitrate double precision[],
+incomerate double precision[],
+result_type varchar(10),           -- 実験のタイプ 
+evaluations_id varchar(20)         -- simulationの場合のみ、関連group no
+);
+drop index if exists indexes_ml_rork_evaluation;
+create index indexes_ml_rork_evaluation on ml_rork_evaluation (resultno, modelno, patternid, pattern, bettype, kumiban);
+drop table if exists ml_pr_evaluation;
+create table ml_pr_evaluation (
+resultno varchar(6),
+modelno varchar(5),
+patternid varchar(20),
+pattern varchar(200),
+bettype varchar(30),
+kumiban varchar(30),
+betcnt int[],
+hitcnt int[],
+betamt int[],
+hitamt int[],
+incamt int[],
+betrate double precision[],
+hitrate double precision[],
+incomerate double precision[],
+result_type varchar(10),           -- 実験のタイプ 
+evaluations_id varchar(255)         -- simulationの場合のみ、関連group no
+);
+drop index if exists indexes_ml_pr_evaluation;
+create index indexes_ml_pr_evaluation on ml_pr_evaluation (resultno, modelno, patternid, pattern, bettype, kumiban);
+
+
+drop table if exists ml_bork_evaluation;
+create table ml_bork_evaluation (
+resultno varchar(6),
+modelno varchar(5),
+patternid varchar(20),
+pattern varchar(200),
+bettype varchar(30),
+kumiban varchar(30),
+betcnt int[],
+hitcnt int[],
+betamt int[],
+hitamt int[],
+incamt int[],
+betrate double precision[],
+hitrate double precision[],
+incomerate double precision[],
+result_type varchar(10),           -- 実験のタイプ 
+evaluations_id varchar(20),         -- simulationの場合のみ、関連group no
+bor_min double precision[],        -- 当該bork内でのbor min 20221103
+bor_max double precision[]        -- 当該bork内でのbor max 20221103
+);
+drop index if exists indexes_ml_bork_evaluation;
+create index indexes_ml_bork_evaluation on ml_bork_evaluation (resultno, modelno, patternid, pattern, bettype, kumiban);drop index if exists indexes_ml_bork_evaluation_evaluationsid;
+create index indexes_ml_bork_evaluation_evaluationsid on ml_bork_evaluation (evaluations_id);
+
+
+drop table if exists ml_evaluation;
+create table ml_evaluation (
+resultno varchar(6),
+modelno varchar(5),
+patternid varchar(20),
+pattern varchar(200),
+bettype varchar(30),
+kumiban varchar(30),
+betcnt int,
+hitcnt int,
+betamt int,
+hitamt int,
+betrate double precision,
+hitrate double precision,
+incomerate double precision,
+hmeanrate double precision,        -- betrate,hitrate,incomerateの調和平均（総合性能指標）2002/2/23 追加
+balance int[],                     -- 区間毎の残高評価
+bal_slope double precision[],
+betr_slope double precision,       -- 投票率変化推移
+hitr_slope double precision,       -- 的中率変化推移
+incr_slope double precision,       -- 収益率変化推移
+pt_precision double precision,     -- MLのconfusion matrix評価 (bettype,kumiban,patternの組み合わせ）
+pt_recall double precision,
+pt_fmeasure double precision,
+-- 的中オッズの記述統計量
+hodds_min double precision,
+hodds_max double precision,
+hodds_mean double precision,
+hodds_stddev double precision,
+hodds_median double precision, 
+-- 的中オッズRANKINGの記述統計量
+hoddsrk_min double precision,
+hoddsrk_max double precision,
+hoddsrk_mean double precision,
+hoddsrk_stddev double precision,
+hoddsrk_median double precision, 
+-- 確定オッズの記述統計量
+rodds_min double precision,
+rodds_max double precision,
+rodds_mean double precision,
+rodds_stddev double precision,
+rodds_median double precision,
+-- 確定オッズRANKINGの記述統計量
+roddsrk_min double precision,
+roddsrk_max double precision,
+roddsrk_mean double precision,
+roddsrk_stddev double precision,
+roddsrk_median double precision,
+-- 直前オッズ記述統計量
+bodds_min double precision,
+bodds_max double precision,
+bodds_mean double precision,
+bodds_stddev double precision,
+bodds_median double precision, 
+-- 直前オッズRANKING記述統計量
+boddsrk_min double precision,
+boddsrk_max double precision,
+boddsrk_mean double precision,
+boddsrk_stddev double precision,
+boddsrk_median double precision, 
+-- 予想確率の記述統計量
+prob_min double precision,
+prob_max double precision,
+prob_mean double precision,
+prob_stddev double precision,
+prob_median double precision,
+-- 確定オッズの最適値計算情報
+ror_bestmin double precision,       -- 黒字となった最適範囲min
+ror_bestmax double precision,       -- 黒字となった最適範囲max
+ror_betcnt int,                     -- 最適範囲内のデータ数
+ror_betamt int,                     -- 最適範囲内のbet金額
+ror_hitcnt int,                     -- 最適範囲内の的中したデータ数
+ror_hitamt int,                     -- 最適範囲内の的中金額合計
+ror_betrate double precision,       -- range_cnt / betcnt
+ror_hitrate double precision,       -- range_hitcnt / range_betcnt
+ror_incomerate double precision,    -- range_hitamt / range_betamt
+-- 確定オッズRANKINGの最適値計算情報
+rork_bestmin double precision,       -- 黒字となった最適範囲min
+rork_bestmax double precision,       -- 黒字となった最適範囲max
+rork_betcnt int,                     -- 最適範囲内のデータ数
+rork_betamt int,                     -- 最適範囲内のbet金額
+rork_hitcnt int,                     -- 最適範囲内の的中したデータ数
+rork_hitamt int,                     -- 最適範囲内の的中金額合計
+rork_betrate double precision,       -- range_cnt / betcnt
+rork_hitrate double precision,       -- range_hitcnt / range_betcnt
+rork_incomerate double precision,    -- range_hitamt / range_betamt
+-- 直前オッズの最適値計算情報
+bor_bestmin double precision,       -- 黒字となった最適範囲min
+bor_bestmax double precision,       -- 黒字となった最適範囲max
+bor_betcnt int,                     -- 最適範囲内のデータ数
+bor_betamt int,                     -- 最適範囲内のbet金額
+bor_hitcnt int,                     -- 最適範囲内の的中したデータ数
+bor_hitamt int,                     -- 最適範囲内の的中金額合計
+bor_betrate double precision,       -- range_cnt / betcnt
+bor_hitrate double precision,       -- range_hitcnt / range_betcnt
+bor_incomerate double precision,    -- range_hitamt / range_betamt
+-- 直前オッズRANKINGの最適値計算情報
+bork_bestmin double precision,       -- 黒字となった最適範囲min
+bork_bestmax double precision,       -- 黒字となった最適範囲max
+bork_betcnt int,                     -- 最適範囲内のデータ数
+bork_betamt int,                     -- 最適範囲内のbet金額
+bork_hitcnt int,                     -- 最適範囲内の的中したデータ数
+bork_hitamt int,                     -- 最適範囲内の的中金額合計
+bork_betrate double precision,       -- range_cnt / betcnt
+bork_hitrate double precision,       -- range_hitcnt / range_betcnt
+bork_incomerate double precision,    -- range_hitamt / range_betamt
+-- 予想確率の最適値計算情報
+pr_bestmin double precision,       -- 黒字となった最適範囲min
+pr_bestmax double precision,       -- 黒字となった最適範囲max
+pr_betcnt int,                     -- 最適範囲内のデータ数
+pr_betamt int,                     -- 最適範囲内のbet金額
+pr_hitcnt int,                     -- 最適範囲内の的中したデータ数
+pr_hitamt int,                     -- 最適範囲内の的中金額合計
+pr_betrate double precision,       -- range_cnt / betcnt
+pr_hitrate double precision,       -- range_hitcnt / range_betcnt
+pr_incomerate double precision,    -- range_hitamt / range_betamt
+bal_pluscnt int,                   -- 黒字の基数
+result_type varchar(10),           -- 実験のタイプ 
+evaluations_id varchar(255),         -- simulationの場合のみ、関連group no
+bonus_pr varchar(30),
+bonus_bor varchar(30),
+bonus_bork varchar(30),
+-- TOP1-3直前オッズRANKINGの最適値計算情報
+topbork_bestmin double precision,       -- 黒字となった最適範囲min
+topbork_bestmax double precision,       -- 黒字となった最適範囲max
+topbork_betcnt int,                     -- 最適範囲内のデータ数
+topbork_betamt int,                     -- 最適範囲内のbet金額
+topbork_hitcnt int,                     -- 最適範囲内の的中したデータ数
+topbork_hitamt int,                     -- 最適範囲内の的中金額合計
+topbork_betrate double precision,       -- range_cnt / betcnt
+topbork_hitrate double precision,       -- range_hitcnt / range_betcnt
+topbork_incomerate double precision    -- range_hitamt / range_betamt
+);
+
+drop index if exists indexes_ml_evaluation;
+create index indexes_ml_evaluation on ml_evaluation (resultno, modelno, patternid, pattern, bettype, kumiban, result_type);
+drop index if exists indexes_ml_evaluation_evaluationsid;
+create index indexes_ml_evaluation_evaluationsid on ml_evaluation (evaluations_id);
+
+-- 以下2022/4/8 削除 evaluaton戦略変更
+bor_outliermin double precision,    -- 外れ値範囲min
+bor_outliermax double precision,    -- 外れ値範囲max
+bork_outliermin double precision,    -- 外れ値範囲min
+bork_outliermax double precision,    -- 外れ値範囲max
+pr_outliermin double precision,    -- 外れ値範囲min
+pr_outliermax double precision,    -- 外れ値範囲max 
+expt_min double precision,         -- 期待値の記述統計量
+expt_max double precision,
+expt_mean double precision,
+expt_stddev double precision,
+expt_median double precision,
+-- 直前オッズ/予想確率の交差最適値計算情報
+xy_bestminx double precision,       -- 黒字となった最適範囲min
+xy_bestmaxx double precision,       -- 黒字となった最適範囲max
+xy_bestminy double precision,       -- 黒字となった最適範囲min
+xy_bestmaxy double precision,       -- 黒字となった最適範囲max
+xy_betcnt int,                     -- 最適範囲内のデータ数
+xy_betamt int,                     -- 最適範囲内のbet金額
+xy_hitcnt int,                     -- 最適範囲内の的中したデータ数
+xy_hitamt int,                     -- 最適範囲内の的中金額合計
+xy_betrate double precision,       -- range_cnt / betcnt
+xy_hitrate double precision,       -- range_hitcnt / range_betcnt
+xy_incomerate double precision,    -- range_hitamt / range_betamt
+-- 期待値の最適値計算情報
+xr_bestmin double precision,       -- 黒字となった最適範囲min
+xr_bestmax double precision,       -- 黒字となった最適範囲max
+xr_betcnt int,                     -- 最適範囲内のデータ数
+xr_betamt int,                     -- 最適範囲内のbet金額
+xr_hitcnt int,                     -- 最適範囲内の的中したデータ数
+xr_hitamt int,                     -- 最適範囲内の的中金額合計
+xr_betrate double precision,       -- range_cnt / betcnt
+xr_hitrate double precision,       -- range_hitcnt / range_betcnt
+xr_incomerate double precision,    -- range_hitamt / range_betamt
+
+-- 以下2022/3/19 削除 evaluaton戦略変更
+inc_min double precision,       -- 払戻金の記述統計量（安定性評価）
+inc_max double precision,
+inc_mean double precision,
+inc_stddev double precision,
+inc_skewness double precision,
+inc_kurtosis double precision,
+hitodds_skewness double precision,
+hitodds_kurtosis double precision,
+odds_skewness double precision,
+odds_kurtosis double precision,
+beforeodds_skewness double precision,
+beforeodds_kurtosis double precision,
+probability_skewness double precision,
+probability_kurtosis double precision,
+range_worstmin double precision,       -- 赤字となった的中予想確率の最適範囲min（全体的中予想確率からもっとも合計黒字が高い範囲を探索した結果）
+range_worstmax double precision,       -- 赤字となった的中予想確率の最適範囲max
+range_hitrslope double precision,    -- 範囲内で的中率のslope
+range_incrslope double precision,    -- 範囲内で収益率のslope
+range_incmslope double precision,    -- 範囲内で収益金額のslope
+range_hmeanrate double precision,  -- range_[betrate,hitrate,incomerate,hitbetrate,hitamtrateの調和平均
+pr_hitbetrate double precision,    -- range_hitcnt / hitcnt
+pr_hitamtrate double precision,    -- range_hitamt / hitamt
+xr_hitbetrate double precision,    -- range_hitcnt / hitcnt
+xr_hitamtrate double precision,    -- range_hitamt / hitamt
+or_hitbetrate double precision,    -- range_hitcnt / hitcnt
+or_hitamtrate double precision,    -- range_hitamt / hitamt
+
+
+-- !!注意 カラム変更時,ResultHelper:copyOf()も変更必須
+drop table if exists ml_result;
+create table ml_result (
+resultno varchar(5),
+modelno varchar(5),
+patternid varchar(20),                  -- 追加 2022/3/17
+pattern varchar(200),
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+sime varchar(4),
+predict_rank123 varchar(4),
+result_rank123 varchar(4),
+bettype varchar(2),
+stat_bettype varchar(2),                -- 追加 2022/3/17
+bet_kumiban varchar(4),
+bet_odds double precision,
+bet_oddsrank int,
+result_kumiban varchar(4),
+result_odds double precision,
+result_oddsrank int,
+result_amt int,
+hity int,
+hitn int,
+betamt int,
+hitamt int,
+probability double precision,           -- 追加 2022/3/17 MLから算出した予想的中確率
+result_type varchar(10),                -- 実験のタイプ 
+custom varchar(3),
+hitrate_transition double precision,
+incomerate_transition double precision,
+balance int,
+race_odds double precision,             -- 追加 2022/4/26. DB에미반영상태여서 테이블재생성 2022/9/29
+race_oddsrank int
+);
+drop index if exists indexes_ml_result;
+create index indexes_ml_result on ml_result (resultno, ymd, jyocd, raceno, sime);
+
+
+drop table if exists odds_predict;
+create table odds_predict (
+modelno varchar(5),
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+bettype varchar(2),
+kumiban varchar(4),
+odds double precision
+);
+drop index if exists indexes_odds_predict;
+create index indexes_odds_predict on odds_predict (modelno, ymd, jyocd, raceno);
+
+drop table if exists odds_before;
+create table odds_before (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+bettype varchar(2),
+kumiban varchar(4),
+odds double precision
+);
+drop index if exists indexes_odds_before;
+create index indexes_odds_before on odds_before (ymd, jyocd, raceno);
+
+drop table if exists odds_result;
+create table odds_result (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+bettype varchar(2),
+kumiban varchar(4),
+odds double precision
+);
+drop index if exists indexes_odds_result;
+create index indexes_odds_result on odds_result (ymd, jyocd, raceno);
+
+drop table if exists odds_monitor;
+create table odds_monitor (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+bettype varchar(2),
+kumiban varchar(4),
+--oddslist double precision[],
+--lastindex smallint,
+bork int,
+bor double precision,
+rork int,
+ror double precision,
+);
+drop index if exists indexes_odds_monitor;
+create index indexes_odds_monitor on odds_monitor (ymd, jyocd, raceno);
+
+
+drop table if exists ml_classification;
+create table ml_classification (
+modelno varchar(5),
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+sime varchar(4),
+pattern varchar(20),
+prediction1 varchar(3),
+-- kumiban1 varchar(1),
+probability1 double precision,
+probabilities1 double precision[], 
+skewness1 double precision,
+kurtosis1 double precision,
+prediction2 varchar(3),
+-- kumiban2 varchar(1),
+probability2 double precision,
+probabilities2 double precision[], 
+skewness2 double precision,
+kurtosis2 double precision,
+prediction3 varchar(3),
+-- kumiban3 varchar(1),
+probability3 double precision,
+probabilities3 double precision[], 
+skewness3 double precision,
+kurtosis3 double precision
+-- probability_sum double precision,
+-- probability_mul double precision,
+-- skewness123 double precision,
+-- kurtosis123 double precision
+);
+drop index if exists indexes_ml_classification;
+create index indexes_ml_classification on ml_classification (ymd, jyocd, raceno, sime);
+
+drop table if exists ml_classification_store;
+create table ml_classification_store (
+modelno varchar(5),
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+sime varchar(4),
+pattern varchar(20),
+prediction1 varchar(3),
+-- kumiban1 varchar(1),
+probability1 double precision,
+probabilities1 double precision[], 
+skewness1 double precision,
+kurtosis1 double precision,
+prediction2 varchar(3),
+-- kumiban2 varchar(1),
+probability2 double precision,
+probabilities2 double precision[], 
+skewness2 double precision,
+kurtosis2 double precision,
+prediction3 varchar(3),
+-- kumiban3 varchar(1),
+probability3 double precision,
+probabilities3 double precision[], 
+skewness3 double precision,
+kurtosis3 double precision
+-- probability_sum double precision,
+-- probability_mul double precision,
+-- skewness123 double precision,
+-- kurtosis123 double precision
+);
+drop index if exists indexes_ml_classification_store;
+create index indexes_ml_classification_store on ml_classification_store (ymd, jyocd, raceno, sime);
+
+
+drop table if exists rec_racer_arr;
+create table rec_racer_arr (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+entry smallint[],
+sex varchar(2)[],
+age smallint[],
+level varchar(2)[],
+weight numeric(3,1)[],
+branch varchar(4)[],
+exhibit numeric(5,2)[],
+startexhibit numeric(5,2)[],
+flying smallint[],
+late smallint[],
+averagestart numeric(5,2)[],
+avgtime numeric(5,2)[],
+nationwiningrate numeric(5,2)[],
+nation2winingrate numeric(5,2)[],
+nation3winingrate numeric(5,2)[],
+localwiningrate numeric(5,2)[],
+local2winingrate numeric(5,2)[],
+local3winingrate numeric(5,2)[],
+motorno smallint[],
+motor2winingrate numeric(5,2)[],
+motor3winingrate numeric(5,2)[],
+waku smallint[],
+rank smallint[],
+startresult numeric(5,2)[]
+);
+create index indexes_rec_racer_arr on rec_racer_arr (ymd, jyocd, raceno);
+
+drop table if exists rec_race_waku2;
+create table rec_race_waku2 (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+nationwiningrate1 numeric(5,2),
+nationwiningrate2 numeric(5,2),
+nationwiningrate3 numeric(5,2),
+nationwiningrate4 numeric(5,2),
+nationwiningrate5 numeric(5,2),
+nationwiningrate6 numeric(5,2),
+nation2winingrate1 numeric(5,2),
+nation2winingrate2 numeric(5,2),
+nation2winingrate3 numeric(5,2),
+nation2winingrate4 numeric(5,2),
+nation2winingrate5 numeric(5,2),
+nation2winingrate6 numeric(5,2),
+nation3winingrate1 numeric(5,2),
+nation3winingrate2 numeric(5,2),
+nation3winingrate3 numeric(5,2),
+nation3winingrate4 numeric(5,2),
+nation3winingrate5 numeric(5,2),
+nation3winingrate6 numeric(5,2),
+localwiningrate1 numeric(5,2),
+localwiningrate2 numeric(5,2),
+localwiningrate3 numeric(5,2),
+localwiningrate4 numeric(5,2),
+localwiningrate5 numeric(5,2),
+localwiningrate6 numeric(5,2),
+local2winingrate1 numeric(5,2),
+local2winingrate2 numeric(5,2),
+local2winingrate3 numeric(5,2),
+local2winingrate4 numeric(5,2),
+local2winingrate5 numeric(5,2),
+local2winingrate6 numeric(5,2),
+local3winingrate1 numeric(5,2),
+local3winingrate2 numeric(5,2),
+local3winingrate3 numeric(5,2),
+local3winingrate4 numeric(5,2),
+local3winingrate5 numeric(5,2),
+local3winingrate6 numeric(5,2),
+motor2winingrate1 numeric(5,2),
+motor2winingrate2 numeric(5,2),
+motor2winingrate3 numeric(5,2),
+motor2winingrate4 numeric(5,2),
+motor2winingrate5 numeric(5,2),
+motor2winingrate6 numeric(5,2),
+motor3winingrate1 numeric(5,2),
+motor3winingrate2 numeric(5,2),
+motor3winingrate3 numeric(5,2),
+motor3winingrate4 numeric(5,2),
+motor3winingrate5 numeric(5,2),
+motor3winingrate6 numeric(5,2)
+);
+drop index if exists indexes_rec_race_waku2;
+create index indexes_rec_race_waku2 on rec_race_waku2 (ymd, jyocd, raceno);
+------------------------
+drop table if exists rec_race_waku;
+create table rec_race_waku (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+entry1 smallint,
+entry2 smallint,
+entry3 smallint,
+entry4 smallint,
+entry5 smallint,
+entry6 smallint,
+motorno1 smallint,
+motorno2 smallint,
+motorno3 smallint,
+motorno4 smallint,
+motorno5 smallint,
+motorno6 smallint,
+avgtime1 numeric(5,2),
+avgtime2 numeric(5,2),
+avgtime3 numeric(5,2),
+avgtime4 numeric(5,2),
+avgtime5 numeric(5,2),
+avgtime6 numeric(5,2),
+avgst1 numeric(5,2),
+avgst2 numeric(5,2),
+avgst3 numeric(5,2),
+avgst4 numeric(5,2),
+avgst5 numeric(5,2),
+avgst6 numeric(5,2),
+setuavgst1 numeric(5,2),
+setuavgst2 numeric(5,2),
+setuavgst3 numeric(5,2),
+setuavgst4 numeric(5,2),
+setuavgst5 numeric(5,2),
+setuavgst6 numeric(5,2),
+setuavgwin1 smallint,
+setuavgwin2 smallint,
+setuavgwin3 smallint,
+setuavgwin4 smallint,
+setuavgwin5 smallint,
+setuavgwin6 smallint,
+flcount1 smallint,
+flcount2 smallint,
+flcount3 smallint,
+flcount4 smallint,
+flcount5 smallint,
+flcount6 smallint,
+tilt1 numeric(5,2),
+tilt2 numeric(5,2),
+tilt3 numeric(5,2),
+tilt4 numeric(5,2),
+tilt5 numeric(5,2),
+tilt6 numeric(5,2),
+homeyn1 smallint,
+homeyn2 smallint,
+homeyn3 smallint,
+homeyn4 smallint,
+homeyn5 smallint,
+homeyn6 smallint
+);
+create index indexes_rec_race_waku on rec_race_waku (ymd, jyocd, raceno);
+
+--------------
+drop table if exists rec_racer;
+create table rec_racer (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+entry smallint,
+sex varchar(2),
+age smallint,
+level varchar(2),
+weight numeric(3,1),
+branch varchar(4),
+exhibit numeric(5,2),
+startexhibit numeric(5,2),
+flying smallint,
+late smallint,
+averagestart numeric(5,2),
+avgtime numeric(5,2),
+nationwiningrate numeric(5,2),
+nation2winingrate numeric(5,2),
+nation3winingrate numeric(5,2),
+localwiningrate numeric(5,2),
+local2winingrate numeric(5,2),
+local3winingrate numeric(5,2),
+motorno smallint,
+motor2winingrate numeric(5,2),
+motor3winingrate numeric(5,2),
+boatno smallint,
+boat2winingrate numeric(5,2),
+boat3winingrate numeric(5,2),
+waku smallint,
+rank smallint,
+startresult numeric(5,2)
+);
+drop index if exists indexes_rec_racer;
+create index indexes_rec_racer on rec_racer (ymd, jyocd, raceno, entry);
+
+--------------
+drop table if exists rec_race;
+create table rec_race (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+sime varchar(4),
+temparature numeric(3,1),
+weather varchar(8),
+winddirection smallint,
+wind numeric(3,1),
+watertemp numeric(3,1),
+wave smallint,
+grade varchar(2),
+isvenus varchar(2),
+timezone varchar(2),
+turn varchar(2),
+sanrentanno varchar(3),
+sanrentanprize integer,
+sanrentanpopular smallint,
+sanrenhukuno varchar(3),
+sanrenhukuprize integer,
+sanrenhukupopular smallint,
+nirentanno varchar(3),
+nirentanprize integer,
+nirentanpopular smallint,
+nirenhukuno varchar(3),
+nirenhukuprize integer,
+nirenhukupopular smallint,
+tansyono varchar(3),
+tansyoprize integer,
+tansyopopular smallint,
+kimarite varchar(10),
+wakurank varchar(6),
+levelrank varchar(6),
+resultlevelrank varchar(20),
+nationwiningrank varchar(6),
+nation2winingrank varchar(6),
+nation3winingrank varchar(6),
+localwiningrank varchar(6),
+local2winingrank varchar(6),
+local3winingrank varchar(6),
+motor2rank varchar(6),
+motor3rank varchar(6),
+startexhibitrank varchar(6),
+exhibitrank varchar(6),
+averagestartrank varchar(6),
+fixedentrance varchar(6),
+racetype varchar(20),
+wakulevellist varchar(20),
+alevelcount smallint,
+femalecount smallint,
+avgstcondrank varchar(6),
+setuwinrank varchar(6),
+flrank varchar(6),
+com_predict varchar(4),
+com_confidence smallint
+);
+create index indexes_rec_race on rec_race (ymd, jyocd, raceno);
+
+create schema boatstat authorization postgres
+
+create database boatml owner postgres enocding 'UTF8';
+create database boatstat2 owner postgres encoding 'UTF8';
+
+
+drop database boatstat2;
+create database boatstat2 with 

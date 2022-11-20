@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <environments default="pod_boatrace">
+    <environment id="pod_boatrace">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="org.postgresql.Driver"/>
+        <property name="url" value="jdbc:postgresql://localhost:55432/boatstat2"/>
+        <property name="username" value="postgres"/>
+        <property name="password" value="postgres"/>
+      </dataSource>
+    </environment>
+  </environments>
+  <mappers>
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/RecRaceMapper.xml"/>
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/RecRaceWakuMapper.xml"/>
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/RecRaceWaku2Mapper.xml"/>
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/RecRacerMapper.xml"/>
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/RecOddsMapper.xml"/>
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/RecOddsRank10Mapper.xml"/>
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/RecFameMapper.xml"/>
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/RecFameWakuMapper.xml"/>
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/RecFameRank3Mapper.xml"/>
+    <!-- 20181203 追加 -->
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/RecRacerExMapper.xml"/>
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/RecWakuRecentMapper.xml"/>
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/StatWakuRecentMapper.xml"/>
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/StatWakuWinMapper.xml"/>
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/StatRaceMapper.xml"/>
+    <!-- 20181203 追加 -->
+    <!-- 20181209 追加 -->
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/StatMlResultMapper.xml"/>
+    <!-- 20181212 追加 -->
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/CustomMapper.xml"/>
+    <!-- 20181223 追加 -->
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/ProcedureExecutorMapper.xml"/>
+    <!-- 20190205 追加 -->
+    <!-- 20190603 追加 -->
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/StatMlResultWekaMapper.xml"/>
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/StatMlResultWekaPtnMapper.xml"/>
+    <!-- 20190623 追加 -->
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/StatMlResult2Mapper.xml"/>
+    <!-- 20191117 追加 -->
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/RankResultMapper.xml"/>
+    <!-- 20191130 追加 -->
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/OddsTrendMapper.xml"/>
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/OddsbeforeTrendMapper.xml"/>
+    <!-- 20200113 追加 -->
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/RunRankResultMapper.xml"/>
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/RunRankResultPtnMapper.xml"/>
+    
+    <!-- 
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/PowerAvgtimeBettypeMapper.xml"/>
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/PowerAvgtimeMapper.xml"/>
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/PowerJyoMotorBettypeMapper.xml"/>
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/PowerJyoMotorMapper.xml"/>
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/PowerRacerBettypeMapper.xml"/>
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/PowerRacerMapper.xml"/>
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/StatRaceMapper.xml"/>
+     -->
+  </mappers>
+</configuration>

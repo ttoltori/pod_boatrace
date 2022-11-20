@@ -1,0 +1,3043 @@
+`========================================= 20200729
+제외대상패턴테이블
+drop table if exists rank_pattern;
+create table rank_pattern (
+pattern_name varchar(30),
+pattern varchar(20), 
+betcnt int
+);
+
+
+`========================================= 20200629 
+balance 기울기 테이블
+drop table if exists rank_ext_slope;
+create table rank_ext_slope (
+slope_balance double precision[],
+slope_incomeamt double precision[],
+intcpt_balance double precision[],
+intcpt_incomeamt double precision[],
+extkey varchar(50)
+);
+create index indexes_rank_ext_slope on rank_ext_slope (extkey);
+
+drop table if exists rank_ext_slope2;
+create table rank_ext_slope2 (
+slopePast int,
+balance int[],
+extkey varchar(50)
+);
+create index indexes_rank_ext_slope2 on rank_ext_slope2 (extkey);
+
+
+-- 월별 통계 + balance
+drop table if exists rank_ext_balance;
+create table rank_ext_balance (
+description varchar(10),
+bettype varchar(2),
+bet_kumiban varchar(4),
+pattern varchar(20), 
+ranktype varchar(20),
+waku varchar(4),
+ym varchar(6), 
+betcnt int,
+hitcnt int,
+betamt int,
+hitamt int,
+incomeamt int, 			
+hitrate numeric(7,2),	
+incomerate numeric(7,2),
+avg_incomeamt int,		-- 평균수익금
+extkey varchar(50),
+balance int -- 월별 잔액
+);
+create index indexes_rank_ext_balance on rank_ext_balance (description, bettype, bet_kumiban, pattern, ranktype, waku, ym, extkey);
+
+
+`========================================= 20191230 메트릭테이블 재정리
+-- 투표결과
+drop table if exists run_rank_result;
+create table run_rank_result (
+ymd varchar(8),
+sime varchar(4),
+jyocd varchar(2),
+raceno smallint,
+bettype varchar(2),
+predict_rank123 varchar(4),
+result_rank123 varchar(4),
+bet_kumiban varchar(4),
+bet_odds numeric(7,2),
+bet_oddsrank int,
+result_kumiban varchar(4),
+result_odds numeric(7,2),
+result_oddsrank int,
+result_amt int, 
+hity int, 
+hitn int, 
+betamt int,
+hitamt int,
+norm_ptn_cnt int,
+form_ptn_cnt int,
+condition varchar(50)
+);
+create index indexes_run_rank_result on run_rank_result (ymd, sime, jyocd, raceno, bettype, bet_kumiban, condition);
+
+-- 투표결과 패턴정보
+drop table if exists run_rank_result_ptn;
+create table run_rank_result_ptn (
+ymd varchar(8),
+sime varchar(4),
+jyocd varchar(2),
+raceno smallint,  
+bettype varchar(2),
+bet_kumiban varchar(4),
+extkey varchar(50),
+condition varchar(50)
+);
+create index indexes_run_rank_result_ptn on run_rank_result_ptn (ymd, sime, jyocd, raceno, bettype, bet_kumiban, extkey, condition);
+
+-- 투표대상 패턴 필터 테이블
+drop table if exists rank_filter;
+create table rank_filter (
+description varchar(10),
+bettype varchar(2),
+bet_kumiban varchar(4),
+pattern varchar(20), 
+ranktype varchar(20),
+waku varchar(4),
+extkey varchar(50),
+condition varchar(50)
+);
+create index indexes_rank_filter on rank_filter (description, bettype, bet_kumiban, pattern, ranktype, waku, extkey);
+
+
+-- 기본통계 
+drop table if exists rank_ext;
+-- create table stmp_rank_ext (
+create table rank_ext (
+description varchar(10),
+bettype varchar(2),
+bet_kumiban varchar(4),
+pattern varchar(20), 
+ranktype varchar(20),
+waku varchar(4),
+betcnt int,
+hitcnt int,
+betamt int,
+hitamt int,
+incomeamt int,
+hitrate numeric(7,2),
+incomerate numeric(7,2),
+bet_months int, -- 총투표월수
+bet_days int, -- 총투표일수
+extkey varchar(50)
+);
+--create index indexes_stmp_rank_ext on stmp_rank_ext (description, bettype, bet_kumiban, pattern, ranktype, waku, extkey);
+create index indexes_rank_ext on rank_ext (description, bettype, bet_kumiban, pattern, ranktype, waku, extkey);
+
+-- 월별 통계
+drop table if exists rank_ext_monthly;
+-- create table stmp_rank_ext_monthly (
+create table rank_ext_monthly (
+description varchar(10),
+bettype varchar(2),
+bet_kumiban varchar(4),
+pattern varchar(20), 
+ranktype varchar(20),
+waku varchar(4),
+ym varchar(6), 
+betcnt int,
+hitcnt int,
+betamt int,
+hitamt int,
+incomeamt int, 			
+hitrate numeric(7,2),	
+incomerate numeric(7,2),
+avg_incomeamt int,		-- 평균수익금
+extkey varchar(50)
+);
+-- create index indexes_stmp_rank_ext_monthly on stmp_rank_ext_monthly (description, bettype, bet_kumiban, pattern, ranktype, waku, ym, extkey);
+create index indexes_rank_ext_monthly on rank_ext_monthly (description, bettype, bet_kumiban, pattern, ranktype, waku, ym, extkey);
+
+-- 적중금액안정성 평가재료 데이터
+drop table if exists rank_ext_hit;
+create table rank_ext_hit (
+description varchar(10),
+bettype varchar(2),
+bet_kumiban varchar(4),
+pattern varchar(20), 
+ranktype varchar(20),
+waku varchar(4),
+avg_hitamt int,
+dev_hitamt int,
+min_hitamt int,
+max_hitamt int,
+indev_hitamt int,
+extkey varchar(50)
+);
+create index indexes_rank_ext_hit on rank_ext_hit (description, bettype, bet_kumiban, pattern, ranktype, waku, extkey);
+
+-- 투표횟수 안정성 평가재료 데이터
+drop table if exists rank_ext_bet;
+create table rank_ext_bet (
+description varchar(10),
+bettype varchar(2),
+bet_kumiban varchar(4),
+pattern varchar(20), 
+ranktype varchar(20),
+waku varchar(4),
+avg_betcnt int,
+dev_betcnt int,
+min_betcnt int,
+max_betcnt int,
+indev_betcnt int,
+extkey varchar(50)
+);
+create index indexes_rank_ext_bet on rank_ext_bet (description, bettype, bet_kumiban, pattern, ranktype, waku, extkey);
+
+-- 확장통계
+drop table if exists rank_ext_metric;
+create table rank_ext_metric (
+description varchar(10),
+bettype varchar(2),
+bet_kumiban varchar(4),
+pattern varchar(20), 
+ranktype varchar(20),
+waku varchar(4),
+indev_hitamt_rate numeric(7,2), 	-- 전체 적중금액들에 대해 평균편차내 적중금액이 차지하는 비율 (수익안정성과 비례)
+plus_month_rate numeric(7,2), 		-- 전체 투표월수 대비 흑자월수 비율 (클수록 수익안정적)
+betdays_rate numeric(7,2), 			-- 전체 일수 대비 투표일수 비율 (투표안정성과 비례)
+indev_betcnt_rate numeric(7,2), 	-- 전체 월별투표회수들에 대해 평균편차내 투표회수의 월이 차지하는 비율(투표안정성과비례)
+slope_monthly_income numeric(12,3), 	-- 월평균수익금(율?)의 선형기울기 (수익성)
+stddev_hitrate numeric(7,2), 		-- 월평균 적중율의 평균편차
+stddev_incomerate numeric(7,2), 		-- 월평균 수익율의 평균편차
+extkey varchar(50)
+);
+create index indexes_rank_ext_metric on rank_ext_metric (description, bettype, bet_kumiban, pattern, ranktype, waku, extkey);
+
+
+`========================================= 월별통계 메트릭
+drop table if exists rank_ext_metric_monthly;
+create table rank_ext_metric_monthly (
+description varchar(10),
+bettype varchar(2),
+bet_kumiban varchar(4),
+pattern varchar(20), 
+ranktype varchar(20),
+waku varchar(3),
+avg_betcnt int,
+min_betcnt int,
+max_betcnt int,
+dev_betcnt int,
+avg_hitcnt int,
+avg_betamt int,
+min_betamt int,
+max_betamt int,
+avg_hitamt int,
+min_hitamt int,
+max_hitamt int,
+avg_incomeamt int,
+min_incomeamt int,
+max_incomeamt int,
+avg_hitrate numeric(7,2),
+min_hitrate numeric(7,2),
+max_hitrate numeric(7,2),
+dev_hitrate numeric(7,2),
+avg_incomerate numeric(7,2),
+min_incomerate numeric(7,2),
+max_incomerate numeric(7,2),
+dev_incomerate numeric(7,2)
+);
+create index indexes_rank_ext_metric_monthly on rank_ext_metric_monthly (bettype, bet_kumiban, pattern, ranktype, waku);
+`========================================= 월별통계 메트릭 이전버젼 삭제
+drop table if exists rank_ext_metric_monthly;
+create table rank_ext_metric_monthly (
+description varchar(10),
+bettype varchar(2),
+bet_kumiban varchar(4),
+pattern varchar(20), 
+ranktype varchar(20),
+waku varchar(3),
+avg_betcnt int,
+avg_hitcnt int,
+avg_betamt int,
+min_betamt int,
+max_betamt int,
+avg_hitamt int,
+min_hitamt int,
+max_hitamt int,
+avg_incomeamt int,
+min_incomeamt int,
+max_incomeamt int,
+avg_hitrate numeric(7,2),
+min_hitrate numeric(7,2),
+max_hitrate numeric(7,2),
+dev_hitrate numeric(7,2),
+avg_incomerate numeric(7,2),
+min_incomerate numeric(7,2),
+max_incomerate numeric(7,2),
+dev_incomerate numeric(7,2)
+);
+create index indexes_rank_ext_metric_monthly on rank_ext_metric_monthly (bettype, bet_kumiban, pattern, ranktype, waku);
+
+`========================================= 패턴과 랭크23의 와꾸를 혼합해서  분석
+drop table if exists rank_ext;
+create table rank_ext (
+description varchar(10),
+bettype varchar(2),
+bet_kumiban varchar(4),
+pattern varchar(20), 
+ranktype varchar(20),
+waku varchar(3),
+betcnt int,
+hitcnt int,
+betamt int,
+hitamt int,
+incomeamt int,
+hitrate numeric(7,2),
+incomerate numeric(7,2),
+daily_betamt int,
+daily_hitamt int,
+daily_incomeamt int
+);
+create index indexes_rank_ext on rank_ext (description, bettype, bet_kumiban, pattern, waku);
+
+-- 패턴/승식/구미방/월별 통계
+drop table if exists rank_ext_monthly;
+create table rank_ext_monthly (
+description varchar(10),
+bettype varchar(2),
+bet_kumiban varchar(4),
+pattern varchar(20), 
+ranktype varchar(20),
+waku varchar(3),
+ym varchar(6), 
+betcnt int,
+hitcnt int,
+betamt int,
+hitamt int,
+incomeamt int,
+hitrate numeric(7,2),
+incomerate numeric(7,2),
+monthly_betamt int,
+monthly_hitamt int,
+monthly_incomeamt int
+);
+create index indexes_rank_ext_monthly on rank_ext_monthly (description, bettype, bet_kumiban, pattern, waku, ym);
+
+-- 패턴/승식/구미방/일별 통계
+drop table if exists rank_ext_daily;
+create table rank_ext_daily (
+description varchar(10),
+bettype varchar(2),
+bet_kumiban varchar(4),
+pattern varchar(20), 
+ranktype varchar(20),
+waku varchar(3),
+ymd varchar(8), 
+betcnt int,
+hitcnt int,
+betamt int,
+hitamt int,
+incomeamt int,
+hitrate numeric(7,2),
+incomerate numeric(7,2),
+daily_betamt int,
+daily_hitamt int,
+daily_incomeamt int
+);
+create index indexes_rank_ext_daily on rank_ext_daily (description, bettype, bet_kumiban, pattern, ranktype, waku, ymd);
+
+-- 적중금액 메트릭
+drop table if exists rank_ext_hit;
+create table rank_ext_hit (
+description varchar(10),
+bettype varchar(2),
+bet_kumiban varchar(4),
+pattern varchar(20), 
+ranktype varchar(20),
+waku varchar(3),
+avg_hitamt int,
+dev_hitamt int,
+max_hitamt int
+);
+create index indexes_rank_ext_hit on rank_ext_hit (description, bettype, bet_kumiban, pattern, ranktype, waku);
+
+drop table if exists rank_ext_metric;
+create table rank_ext_metric (
+description varchar(10),
+bettype varchar(2),
+bet_kumiban varchar(4),
+pattern varchar(20), 
+ranktype varchar(20),
+waku varchar(3),
+plus_month_rate numeric(7,2), -- 흑자월수 비율
+plus_days_rate numeric(7,2), -- 흑자일수 비율
+avg_hitamt int,
+dev_hitamt int,
+max_hitamt int,
+total_month int, -- 총월수
+plus_month int, -- 흑자월수
+minus_month int, -- 적자월수
+total_days int, -- 총일수
+plus_days int, -- 흑자일수
+minus_days int -- 적자일수
+);
+create index indexes_rank_ext_metric on rank_ext_metric (bettype, bet_kumiban, pattern, ranktype, waku);
+
+
+========================================= 기본분석테이블
+-- 패턴/승식/구미방 통계
+drop table if exists rank_stat;
+create table rank_stat (
+description varchar(10),
+bettype varchar(2),
+bet_kumiban varchar(4),
+pattern varchar(20), 
+betcnt int,
+hitcnt int,
+betamt int,
+hitamt int,
+incomeamt int,
+hitrate numeric(7,2),
+incomerate numeric(7,2),
+daily_betamt int,
+daily_hitamt int,
+daily_incomeamt int
+);
+create index indexes_rank_stat on rank_stat (description, bettype, pattern, bet_kumiban);
+
+-- 패턴/승식/구미방/월별 통계
+drop table if exists rank_stat_monthly;
+create table rank_stat_monthly (
+description varchar(10),
+bettype varchar(2),
+bet_kumiban varchar(4),
+pattern varchar(20), 
+ym varchar(6), 
+betcnt int,
+hitcnt int,
+betamt int,
+hitamt int,
+incomeamt int,
+hitrate numeric(7,2),
+incomerate numeric(7,2),
+daily_betamt int,
+daily_hitamt int,
+daily_incomeamt int
+);
+create index indexes_rank_stat_monthly on rank_stat_monthly (description, bettype, pattern, bet_kumiban, ym);
+
+-- 패턴/승식/구미방/일별 통계
+drop table if exists rank_stat_daily;
+create table rank_stat_daily (
+description varchar(10),
+bettype varchar(2),
+bet_kumiban varchar(4),
+pattern varchar(20), 
+ymd varchar(8), 
+betcnt int,
+hitcnt int,
+betamt int,
+hitamt int,
+incomeamt int,
+hitrate numeric(7,2),
+incomerate numeric(7,2),
+daily_betamt int,
+daily_hitamt int,
+daily_incomeamt int
+);
+create index indexes_rank_stat_daily on rank_stat_daily (description, bettype, pattern, bet_kumiban, ymd);
+
+-- 통계 메트릭 데이터
+drop table if exists rank_stat_metric;
+create table rank_stat_metric (
+description varchar(10),
+bettype varchar(2),
+bet_kumiban varchar(4),
+pattern varchar(20), 
+plus_month_rate numeric(7,2), -- 흑자월수 비율
+plus_days_rate numeric(7,2), -- 흑자일수 비율
+avg_hitamt int,
+dev_hitamt int,
+max_hitamt int,
+total_month int, -- 총월수
+plus_month int, -- 흑자월수
+minus_month int, -- 적자월수
+total_days int, -- 총일수
+plus_days int, -- 흑자일수
+minus_days int -- 적자일수
+);
+create index indexes_rank_stat_metric on rank_stat_metric (description, bettype, pattern, bet_kumiban);
+
+-- 적중금액 메트릭
+drop table if exists rank_stat_hit;
+create table rank_stat_hit (
+description varchar(10),
+bettype varchar(2),
+bet_kumiban varchar(4),
+pattern varchar(20), 
+avg_hitamt int,
+dev_hitamt int,
+max_hitamt int
+);
+create index indexes_rank_stat_hit on rank_stat_hit (description, bettype, bet_kumiban, pattern);
+
+
+-- 구미방 통계
+drop table if exists rank_stat_kumiban;
+create table rank_stat_kumiban (
+description varchar(10),
+bettype varchar(2),
+bet_kumiban varchar(4),
+betcnt int,
+hitcnt int,
+betamt int,
+hitamt int,
+incomeamt int,
+hitrate numeric(7,2),
+incomerate numeric(7,2),
+daily_betamt int,
+daily_hitamt int,
+daily_incomeamt int
+);
+create index indexes_rank_stat_kumiban on rank_stat_kumiban (description, bettype, bet_kumiban);
+
+========================================= 시뮬레이션결과테이블들
+-- 옺즈 경향 테이블
+drop table if exists odds_trend;
+create table odds_trend (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+odds1 numeric(7,1),
+rank1 int,
+odds2 numeric(7,1),
+rank2 int,
+odds3 numeric(7,1),
+rank3 int,
+odds4 numeric(7,1),
+rank4 int,
+odds5 numeric(7,1),
+rank5 int,
+odds6 numeric(7,1),
+rank6 int,
+odds123 numeric(7,1),
+rank123 int,
+odds213 numeric(7,1),
+rank213 int,
+odds314 numeric(7,1),
+rank314 int,
+odds412 numeric(7,1),
+rank412 int,
+odds512 numeric(7,1),
+rank512 int,
+odds612 numeric(7,1),
+rank612 int
+);
+create index indexes_odds_trend on odds_trend (ymd, jyocd, raceno);
+
+drop table if exists oddsbefore_trend;
+create table oddsbefore_trend (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+odds1 numeric(7,1),
+rank1 int,
+odds2 numeric(7,1),
+rank2 int,
+odds3 numeric(7,1),
+rank3 int,
+odds4 numeric(7,1),
+rank4 int,
+odds5 numeric(7,1),
+rank5 int,
+odds6 numeric(7,1),
+rank6 int,
+odds123 numeric(7,1),
+rank123 int,
+odds213 numeric(7,1),
+rank213 int,
+odds314 numeric(7,1),
+rank314 int,
+odds412 numeric(7,1),
+rank412 int,
+odds512 numeric(7,1),
+rank512 int,
+odds612 numeric(7,1),
+rank612 int
+);
+create index indexes_oddsbefore_trend on oddsbefore_trend (ymd, jyocd, raceno);
+
+-- 통계 메트릭 데이터
+drop table if exists ranks_stat_metric;
+create table ranks_stat_metric (
+condition varchar(20),
+bettype varchar(2),
+pattern varchar(20), 
+bet_kumiban varchar(4),
+plus_month_rate numeric(7,2), -- 흑자월수 비율
+plus_days_rate numeric(7,2), -- 흑자일수 비율
+total_month int, -- 총월수
+plus_month int, -- 흑자월수
+minus_month int, -- 적자월수
+total_days int, -- 총일수
+plus_days int, -- 흑자일수
+minus_days int -- 적자일수
+-- plus_month_avg numeric(7,2), -- 월별흑자 평균
+-- plus_month_devi  numeric(7,2), -- 월별흑자 평균 표준편차
+-- minus_month_ numeric(7,2), -- 월별적자 평균
+-- minus_month_devi numeric(7,2), -- 월별적자 평균 표준편차
+);
+create index indexes_ranks_metric on ranks_metric (bettype, pattern, bet_kumiban);
+
+-- 구미방 통계
+drop table if exists ranks_stat_kumiban;
+create table ranks_stat_kumiban (
+condition varchar(20),
+bettype varchar(2),
+bet_kumiban varchar(4),
+betcnt int,
+hitcnt int,
+betamt int,
+hitamt int,
+incomeamt int,
+hitrate numeric(7,2),
+incomerate numeric(7,2),
+daily_betamt int,
+daily_hitamt int,
+daily_incomeamt int
+);
+create index indexes_ranks_stat_kumiban on ranks_stat_kumiban (bettype, bet_kumiban);
+
+-- 승식 통계
+drop table if exists ranks_stat_bettype;
+create table ranks_stat_bettype (
+condition varchar(20),
+bettype varchar(2),
+betcnt int,
+hitcnt int,
+betamt int,
+hitamt int,
+incomeamt int,
+hitrate numeric(7,2),
+incomerate numeric(7,2),
+daily_betamt int,
+daily_hitamt int,
+daily_incomeamt int
+);
+create index indexes_ranks_stat_bettype on ranks_stat_bettype (bettype);
+
+-- 패턴통계
+drop table if exists ranks_stat_pattern;
+create table ranks_stat_pattern (
+condition varchar(20),
+pattern varchar(20), 
+betcnt int,
+hitcnt int,
+betamt int,
+hitamt int,
+incomeamt int,
+hitrate numeric(7,2),
+incomerate numeric(7,2),
+daily_betamt int,
+daily_hitamt int,
+daily_incomeamt int
+);
+create index indexes_ranks_stat_pattern on ranks_stat_pattern (pattern);
+
+-- 패턴/승식/구미방 통계
+drop table if exists ranks_stat;
+create table ranks_stat (
+condition varchar(20),
+bettype varchar(2),
+pattern varchar(20), 
+bet_kumiban varchar(4),
+betcnt int,
+hitcnt int,
+betamt int,
+hitamt int,
+incomeamt int,
+hitrate numeric(7,2),
+incomerate numeric(7,2),
+daily_betamt int,
+daily_hitamt int,
+daily_incomeamt int
+);
+create index indexes_ranks_stat on ranks_stat ( bettype, pattern, bet_kumiban);
+
+-- 패턴/승식/구미방/월별 통계
+drop table if exists ranks_stat_monthly;
+create table ranks_stat_monthly (
+condition varchar(20),
+bettype varchar(2),
+pattern varchar(20), 
+bet_kumiban varchar(4),
+ym varchar(6), 
+betcnt int,
+hitcnt int,
+betamt int,
+hitamt int,
+incomeamt int,
+hitrate numeric(7,2),
+incomerate numeric(7,2),
+daily_betamt int,
+daily_hitamt int,
+daily_incomeamt int
+);
+create index indexes_ranks_stat_monthly on ranks_stat_monthly ( bettype, pattern, bet_kumiban, ym);
+
+-- 패턴/승식/구미방/일별 통계
+drop table if exists ranks_stat_daily;
+create table ranks_stat_daily (
+condition varchar(20),
+bettype varchar(2),
+pattern varchar(20), 
+bet_kumiban varchar(4),
+ymd varchar(8), 
+betcnt int,
+hitcnt int,
+betamt int,
+hitamt int,
+incomeamt int,
+hitrate numeric(7,2),
+incomerate numeric(7,2),
+daily_betamt int,
+daily_hitamt int,
+daily_incomeamt int
+);
+create index indexes_rank_stat_daily on rank_stat_daily ( bettype, pattern, bet_kumiban, ymd);
+
+-- 시뮬레이션결과 - deprecated
+drop table if exists ranks_result;
+create table ranks_result (
+condition varchar(20),
+ymd varchar(8),
+sime varchar(4),
+jyocd varchar(2),
+raceno smallint,
+description varchar(10),
+pattern varchar(20), 
+bettype varchar(2),
+predict_rank123 varchar(4),
+result_rank123 varchar(4),
+bet_kumiban varchar(4),
+bet_odds numeric(7,2),
+bet_oddsrank int,
+result_kumiban varchar(4),
+result_odds numeric(7,2),
+result_oddsrank int,
+result_amt int, -- 20190818 추가
+hity int, 
+hitn int, 
+betamt int,
+hitamt int,
+duplicate varchar(3)
+);
+
+
+=========================================
+
+20191124
+-- 랭크 필터
+drop table if exists rank_filter;
+create table rank_filter (
+condition varchar(20), 
+-- pattern_name varchar(20),
+-- attributes varchar(20), 
+description varchar(10),
+bettype varchar(2),
+pattern varchar(20), 
+bet_kumiban varchar(4)
+-- betcnt int,
+-- hitcnt int,
+-- betamt int,
+-- hitamt int,
+-- incomeamt int,
+-- hitrate numeric(7,2),
+-- incomerate numeric(7,2),
+-- daily_betamt int,
+-- daily_hitamt int,
+-- daily_incomeamt int,
+-- plus_month_rate numeric(7,2), -- 흑자월수 비율
+-- plus_days_rate numeric(7,2), -- 흑자일수 비율
+-- total_month int, -- 총월수
+-- plus_month int, -- 흑자월수
+-- total_days int, -- 총일수
+-- plus_days int -- 흑자일수
+);
+create index indexes_rank_filter on rank_filter (description, bettype, pattern, bet_kumiban);
+
+
+----------------------
+20191121
+-- 모델 정의 
+drop table if exists rank_model;
+create table rank_model_tmp (
+description varchar(10),
+pattern_name varchar(40),
+attributes varchar(20), 
+algorithm varchar(20),
+training_days int,
+model_interval int,
+betting_rule varchar(20),
+result_term  varchar(20),
+no int
+);
+create index indexes_rank_model on rank_model (description, pattern_name, attributes);
+
+
+----------------------
+20191119
+
+----------------------
+20191117
+drop table if exists rank_result_form;
+create table rank_result_form (
+ymd varchar(8),
+sime varchar(4),
+jyocd varchar(2),
+raceno smallint,
+description varchar(10),
+pattern varchar(20), 
+bettype varchar(2),
+ranktype varchar(20),
+predict_rank123 varchar(4),
+result_rank123 varchar(4),
+bet_kumiban varchar(4),
+bet_odds numeric(7,2),
+bet_oddsrank int,
+result_kumiban varchar(4),
+result_odds numeric(7,2),
+result_oddsrank int,
+result_amt int, -- 20190818 추가
+hity int, 
+hitn int, 
+betamt int,
+hitamt int,
+duplicate varchar(3)
+);
+create index indexes_rank_result_form on rank_result_form (ymd, sime, jyocd, raceno, description, pattern, bettype, ranktype, bet_kumiban);
+
+drop table if exists rank_result;
+create table rank_result (
+ymd varchar(8),
+sime varchar(4),
+jyocd varchar(2),
+raceno smallint,
+description varchar(10),
+pattern varchar(20), 
+bettype varchar(2),
+predict_rank123 varchar(4),
+result_rank123 varchar(4),
+bet_kumiban varchar(4),
+bet_odds numeric(7,2),
+bet_oddsrank int,
+result_kumiban varchar(4),
+result_odds numeric(7,2),
+result_oddsrank int,
+result_amt int, -- 20190818 추가
+hity int, 
+hitn int, 
+betamt int,
+hitamt int,
+duplicate varchar(3)
+);
+create index indexes_rank_result on rank_result (ymd, sime, jyocd, raceno, description, pattern, bettype, bet_kumiban);
+
+----------------------
+20191117
+drop table if exists rec_odds_regr;
+create table rec_odds_regr (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+bettype varchar(2),
+kumiban varchar(3),
+before_odds numeric(6,1),
+odds numeric(6,1),
+before_rank smallint,
+rank smallint
+);
+create index indexes_rec_odds_regr on rec_odds_regr (ymd, jyocd, raceno, bettype, kumiban);
+
+----------------------
+drop table if exists ref_nominals;
+create table ref_nominals (
+name varchar(30),
+wekatype varchar(5),
+nominals text[],
+values numeric(7,2)[]
+);
+
+
+
+drop table if exists stmp_odds_comp;
+create table stmp_odds_comp (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+bettype varchar(2),
+kumiban varchar(10),
+bodds numeric(5,2),
+brank smallint,
+aodds numeric(5,2),
+arank smallint,
+rankchange numeric(5,2),
+oddschange numeric(5,2)
+);
+create index indexes_stmp_odds_comp on stmp_odds_comp (ymd, jyocd, raceno, bettype, kumiban);
+
+
+drop table if exists ref_jyo_stat;
+create table ref_jyo_stat (
+description varchar(200),
+bettype varchar(2),
+jyocd varchar(2),
+kumiban varchar(10),
+ptn varchar(200),
+betcnt int,
+hitcnt int,
+betamt int,
+hitamt int,
+hitrate numeric(7,2),
+incomerate numeric(7,2),
+balance int
+);
+create index indexes_ref_jyo_stat on ref_jyo_stat (bettype, jyocd, kumiban, ptn);
+
+
+
+
+
+-- 20181224 
+-- stat_waku_winは20120101からスタート
+insert into stat_race_gap 
+select 
+  race.ymd, race.jyocd, race.raceno, 
+  racerruncount1 - racerruncount2,
+  racerruncount1 - racerruncount3,
+  racerruncount1 - racerruncount4,
+  racerruncount2 - racerruncount3,
+  racerruncount2 - racerruncount4,
+  racerruncount3 - racerruncount4,
+  racerwiningrate1 - racerwiningrate2,
+  racerwiningrate1 - racerwiningrate3,
+  racerwiningrate1 - racerwiningrate4,
+  racerwiningrate2 - racerwiningrate3,
+  racerwiningrate2 - racerwiningrate4,
+  racerwiningrate3 - racerwiningrate4,
+  racer2winingrate1 - racer2winingrate2,
+  racer2winingrate1 - racer2winingrate3,
+  racer2winingrate1 - racer2winingrate4,
+  racer2winingrate2 - racer2winingrate3,
+  racer2winingrate2 - racer2winingrate4,
+  racer2winingrate3 - racer2winingrate4,
+  motorwiningrate1 - motorwiningrate2,
+  motorwiningrate1 - motorwiningrate3,
+  motorwiningrate1 - motorwiningrate4,
+  motorwiningrate2 - motorwiningrate3,
+  motorwiningrate2 - motorwiningrate4,
+  motorwiningrate3 - motorwiningrate4,
+  motor2winingrate1 - motor2winingrate2,
+  motor2winingrate1 - motor2winingrate3,
+  motor2winingrate1 - motor2winingrate4,
+  motor2winingrate2 - motor2winingrate3,
+  motor2winingrate2 - motor2winingrate4,
+  motor2winingrate3 - motor2winingrate4
+from rec_race race, stat_waku_win statwaku
+where 
+  race.ymd = statwaku.ymd and race.jyocd = statwaku.jyocd and race.raceno = statwaku.raceno
+;
+
+drop table if exists stat_race_gap;
+create table stat_race_gap (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+racerruncount12 numeric(5,2),
+racerruncount13 numeric(5,2),
+racerruncount14 numeric(5,2),
+racerruncount23 numeric(5,2),
+racerruncount24 numeric(5,2),
+racerruncount34 numeric(5,2),
+racerwining12 numeric(5,2),
+racerwining13 numeric(5,2),
+racerwining14 numeric(5,2),
+racerwining23 numeric(5,2),
+racerwining24 numeric(5,2),
+racerwining34 numeric(5,2),
+racer2wining12 numeric(5,2),
+racer2wining13 numeric(5,2),
+racer2wining14 numeric(5,2),
+racer2wining23 numeric(5,2),
+racer2wining24 numeric(5,2),
+racer2wining34 numeric(5,2),
+motorwining12 numeric(5,2),
+motorwining13 numeric(5,2),
+motorwining14 numeric(5,2),
+motorwining23 numeric(5,2),
+motorwining24 numeric(5,2),
+motorwining34 numeric(5,2),
+motor2wining12 numeric(5,2),
+motor2wining13 numeric(5,2),
+motor2wining14 numeric(5,2),
+motor2wining23 numeric(5,2),
+motor2wining24 numeric(5,2),
+motor2wining34 numeric(5,2)
+);
+create index indexes_stat_race_gap on stat_race_gap (ymd, jyocd, raceno);
+
+
+--20181222
+-- rec_fame_rank3にwrwakuを追加した。
+truncate wrwaku_fame_rank3;
+insert into wrwaku_fame_rank3
+select ymd, jyocd, raceno,
+win1_rank1_waku,
+win1_rank1_famerate,
+win1_rank2_waku,
+win1_rank2_famerate,
+win1_rank3_waku,
+win1_rank3_famerate,
+win2_rank1_waku,
+win2_rank1_famerate,
+win2_rank2_waku,
+win2_rank2_famerate,
+win2_rank3_waku,
+win2_rank3_famerate,
+win3_rank1_waku,
+win3_rank1_famerate,
+win3_rank2_waku,
+win3_rank2_famerate,
+win3_rank3_waku,
+win3_rank3_famerate,
+(win1_rank1_waku || win1_rank2_waku) wr1112,
+(win1_rank1_waku || win2_rank1_waku) wr1121,
+(win1_rank1_waku || win1_rank2_waku || win2_rank1_waku) wr111221,
+(win1_rank1_waku || win2_rank1_waku || win1_rank2_waku) wr112112,
+(win1_rank1_waku || win1_rank2_waku || win2_rank1_waku || win2_rank2_waku) wr11122122,
+(win1_rank1_waku || win2_rank1_waku || win1_rank2_waku || win2_rank2_waku) wr11211222
+from rec_fame_rank3;
+
+drop table if exists wrwaku_fame_rank3;
+create table wrwaku_fame_rank3 (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+win1_rank1_waku varchar(1), 
+win1_rank1_famerate numeric(5,2),
+win1_rank2_waku varchar(1), 
+win1_rank2_famerate numeric(5,2),
+win1_rank3_waku varchar(1), 
+win1_rank3_famerate numeric(5,2),
+win2_rank1_waku varchar(1), 
+win2_rank1_famerate numeric(5,2),
+win2_rank2_waku varchar(1), 
+win2_rank2_famerate numeric(5,2),
+win2_rank3_waku varchar(1), 
+win2_rank3_famerate numeric(5,2),
+win3_rank1_waku varchar(1), 
+win3_rank1_famerate numeric(5,2),
+win3_rank2_waku varchar(1), 
+win3_rank2_famerate numeric(5,2),
+win3_rank3_waku varchar(1), 
+win3_rank3_famerate numeric(5,2),
+wr1112 varchar(2),
+wr1121 varchar(2),
+wr111221 varchar(3),
+wr112112 varchar(3),
+wr11122122 varchar(4),
+wr11211222 varchar(4)
+);
+create index indexes_wrwaku_fame_rank3 on wrwaku_fame_rank3 (ymd, jyocd, raceno);
+
+
+-- 20181218
+-- stat_waku_winは20120101からスタート
+insert into rec_race_gap 
+select 
+  race.ymd, race.jyocd, race.raceno, 
+  nationwiningrate1 - nationwiningrate2,
+  nationwiningrate1 - nationwiningrate3,
+  nationwiningrate1 - nationwiningrate4,
+  nationwiningrate2 - nationwiningrate3,
+  nationwiningrate2 - nationwiningrate4,
+  nationwiningrate3 - nationwiningrate4,
+  localwiningrate1 - localwiningrate2,
+  localwiningrate1 - localwiningrate3,
+  localwiningrate1 - localwiningrate4,
+  localwiningrate2 - localwiningrate3,
+  localwiningrate2 - localwiningrate4,
+  localwiningrate3 - localwiningrate4,
+  waku2.motor2winingrate1 - waku2.motor2winingrate2,
+  waku2.motor2winingrate1 - waku2.motor2winingrate3,
+  waku2.motor2winingrate1 - waku2.motor2winingrate4,
+  waku2.motor2winingrate2 - waku2.motor2winingrate3,
+  waku2.motor2winingrate2 - waku2.motor2winingrate4,
+  waku2.motor2winingrate3 - waku2.motor2winingrate4,
+  avgst1 - avgst2,
+  avgst1 - avgst3,
+  avgst1 - avgst4,
+  avgst2 - avgst3,
+  avgst2 - avgst4,
+  avgst3 - avgst4,
+  avgtime1 - avgtime2,
+  avgtime1 - avgtime3,
+  avgtime1 - avgtime4,
+  avgtime2 - avgtime3,
+  avgtime2 - avgtime4,
+  avgtime3 - avgtime4
+from rec_race race, rec_race_waku waku, rec_race_waku2 waku2
+where 
+  race.ymd = waku.ymd and race.jyocd = waku.jyocd and race.raceno = waku.raceno
+  and race.ymd = waku2.ymd and race.jyocd = waku2.jyocd and race.raceno = waku2.raceno
+;
+
+drop table if exists rec_race_gap;
+create table rec_race_gap (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+nationwining12 numeric(5,2),
+nationwining13 numeric(5,2),
+nationwining14 numeric(5,2),
+nationwining23 numeric(5,2),
+nationwining24 numeric(5,2),
+nationwining34 numeric(5,2),
+localwining12 numeric(5,2),
+localwining13 numeric(5,2),
+localwining14 numeric(5,2),
+localwining23 numeric(5,2),
+localwining24 numeric(5,2),
+localwining34 numeric(5,2),
+motor2wining12 numeric(5,2),
+motor2wining13 numeric(5,2),
+motor2wining14 numeric(5,2),
+motor2wining23 numeric(5,2),
+motor2wining24 numeric(5,2),
+motor2wining34 numeric(5,2),
+avgst12 numeric(5,2),
+avgst13 numeric(5,2),
+avgst14 numeric(5,2),
+avgst23 numeric(5,2),
+avgst24 numeric(5,2),
+avgst34 numeric(5,2),
+avgtime12 numeric(5,2),
+avgtime13 numeric(5,2),
+avgtime14 numeric(5,2),
+avgtime23 numeric(5,2),
+avgtime24 numeric(5,2),
+avgtime34 numeric(5,2)
+);
+create index indexes_rec_race_gap on rec_race_gap (ymd, jyocd, raceno);
+
+
+
+
+
+-- 20181215
+delete from ntile_waku_win;
+insert into ntile_waku_win 
+select 
+  ymd, jyocd, raceno, 
+  ntile(6) over (order by racerruncount1 desc),
+  ntile(6) over (order by racerruncount2 desc),
+  ntile(6) over (order by racerruncount3 desc),
+  ntile(6) over (order by racerruncount4 desc),
+  ntile(6) over (order by racerruncount5 desc),
+  ntile(6) over (order by racerruncount6 desc),
+  ntile(6) over (order by racerwiningrate1 desc),
+  ntile(6) over (order by racerwiningrate2 desc),
+  ntile(6) over (order by racerwiningrate3 desc),
+  ntile(6) over (order by racerwiningrate4 desc),
+  ntile(6) over (order by racerwiningrate5 desc),
+  ntile(6) over (order by racerwiningrate6 desc),
+  ntile(6) over (order by racer2winingrate1 desc),
+  ntile(6) over (order by racer2winingrate2 desc),
+  ntile(6) over (order by racer2winingrate3 desc),
+  ntile(6) over (order by racer2winingrate4 desc),
+  ntile(6) over (order by racer2winingrate5 desc),
+  ntile(6) over (order by racer2winingrate6 desc),
+  ntile(6) over (order by racer3winingrate1 desc),
+  ntile(6) over (order by racer3winingrate2 desc),
+  ntile(6) over (order by racer3winingrate3 desc),
+  ntile(6) over (order by racer3winingrate4 desc),
+  ntile(6) over (order by racer3winingrate5 desc),
+  ntile(6) over (order by racer3winingrate6 desc),
+  ntile(6) over (order by motorruncount1 desc),
+  ntile(6) over (order by motorruncount2 desc),
+  ntile(6) over (order by motorruncount3 desc),
+  ntile(6) over (order by motorruncount4 desc),
+  ntile(6) over (order by motorruncount5 desc),
+  ntile(6) over (order by motorruncount6 desc),
+  ntile(6) over (order by motorwiningrate1 desc),
+  ntile(6) over (order by motorwiningrate2 desc),
+  ntile(6) over (order by motorwiningrate3 desc),
+  ntile(6) over (order by motorwiningrate4 desc),
+  ntile(6) over (order by motorwiningrate5 desc),
+  ntile(6) over (order by motorwiningrate6 desc),
+  ntile(6) over (order by motor2winingrate1 desc),
+  ntile(6) over (order by motor2winingrate2 desc),
+  ntile(6) over (order by motor2winingrate3 desc),
+  ntile(6) over (order by motor2winingrate4 desc),
+  ntile(6) over (order by motor2winingrate5 desc),
+  ntile(6) over (order by motor2winingrate6 desc),
+  ntile(6) over (order by motor3winingrate1 desc),
+  ntile(6) over (order by motor3winingrate2 desc),
+  ntile(6) over (order by motor3winingrate3 desc),
+  ntile(6) over (order by motor3winingrate4 desc),
+  ntile(6) over (order by motor3winingrate5 desc),
+  ntile(6) over (order by motor3winingrate6 desc),
+  'tile=6'
+from stat_waku_win
+;
+
+
+drop table if exists ntile_waku_win;
+create table ntile_waku_win (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+racerruncount1 smallint,
+racerruncount2 smallint,
+racerruncount3 smallint,
+racerruncount4 smallint,
+racerruncount5 smallint,
+racerruncount6 smallint,
+racerwiningrate1 smallint,
+racerwiningrate2 smallint,
+racerwiningrate3 smallint,
+racerwiningrate4 smallint,
+racerwiningrate5 smallint,
+racerwiningrate6 smallint,
+racer2winingrate1 smallint,
+racer2winingrate2 smallint,
+racer2winingrate3 smallint,
+racer2winingrate4 smallint,
+racer2winingrate5 smallint,
+racer2winingrate6 smallint,
+racer3winingrate1 smallint,
+racer3winingrate2 smallint,
+racer3winingrate3 smallint,
+racer3winingrate4 smallint,
+racer3winingrate5 smallint,
+racer3winingrate6 smallint,
+motorruncount1 smallint,
+motorruncount2 smallint,
+motorruncount3 smallint,
+motorruncount4 smallint,
+motorruncount5 smallint,
+motorruncount6 smallint,
+motorwiningrate1 smallint,
+motorwiningrate2 smallint,
+motorwiningrate3 smallint,
+motorwiningrate4 smallint,
+motorwiningrate5 smallint,
+motorwiningrate6 smallint,
+motor2winingrate1 smallint,
+motor2winingrate2 smallint,
+motor2winingrate3 smallint,
+motor2winingrate4 smallint,
+motor2winingrate5 smallint,
+motor2winingrate6 smallint,
+motor3winingrate1 smallint,
+motor3winingrate2 smallint,
+motor3winingrate3 smallint,
+motor3winingrate4 smallint,
+motor3winingrate5 smallint,
+motor3winingrate6 smallint,
+description varchar(20)
+);
+create index indexes_ntile_waku_win on ntile_waku_win (ymd, jyocd, raceno);
+
+
+
+delete from ntile_fame_rank3;
+insert into ntile_fame_rank3 
+select 
+  ymd, jyocd, raceno, 
+  ntile(6) over (order by win1_rank1_famerate desc),
+  ntile(6) over (order by win1_rank2_famerate desc),
+  ntile(6) over (order by win1_rank3_famerate desc),
+  ntile(6) over (order by win2_rank1_famerate desc),
+  ntile(6) over (order by win2_rank2_famerate desc),
+  ntile(6) over (order by win2_rank3_famerate desc),
+  ntile(6) over (order by win3_rank1_famerate desc),
+  ntile(6) over (order by win3_rank2_famerate desc),
+  ntile(6) over (order by win3_rank3_famerate desc),
+  'tile=6'
+from rec_fame_rank3
+;
+
+drop table if exists ntile_fame_rank3;
+create table ntile_fame_rank3 (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+win1_rank1_famerate smallint,
+win1_rank2_famerate smallint,
+win1_rank3_famerate smallint,
+win2_rank1_famerate smallint,
+win2_rank2_famerate smallint,
+win2_rank3_famerate smallint,
+win3_rank1_famerate smallint,
+win3_rank2_famerate smallint,
+win3_rank3_famerate smallint,
+description varchar(20)
+);
+create index indexes_ntile_fame_rank3 on ntile_fame_rank3 (ymd, jyocd, raceno, description);
+
+delete from ntile_race_waku;
+insert into ntile_race_waku 
+select 
+  ymd, jyocd, raceno, 
+  ntile(6) over (order by avgtime1),
+  ntile(6) over (order by avgtime2),
+  ntile(6) over (order by avgtime3),
+  ntile(6) over (order by avgtime4),
+  ntile(6) over (order by avgtime5),
+  ntile(6) over (order by avgtime6),
+  ntile(6) over (order by avgst1),
+  ntile(6) over (order by avgst2),
+  ntile(6) over (order by avgst3),
+  ntile(6) over (order by avgst4),
+  ntile(6) over (order by avgst5),
+  ntile(6) over (order by avgst6),
+  ntile(6) over (order by setuavgst1),
+  ntile(6) over (order by setuavgst2),
+  ntile(6) over (order by setuavgst3),
+  ntile(6) over (order by setuavgst4),
+  ntile(6) over (order by setuavgst5),
+  ntile(6) over (order by setuavgst6),
+  'tile=6'
+from rec_race_waku
+;
+
+drop table if exists ntile_race_waku;
+create table ntile_race_waku (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+avgtime1 smallint,
+avgtime2 smallint,
+avgtime3 smallint,
+avgtime4 smallint,
+avgtime5 smallint,
+avgtime6 smallint,
+avgst1 smallint,
+avgst2 smallint,
+avgst3 smallint,
+avgst4 smallint,
+avgst5 smallint,
+avgst6 smallint,
+setuavgst1 smallint,
+setuavgst2 smallint,
+setuavgst3 smallint,
+setuavgst4 smallint,
+setuavgst5 smallint,
+setuavgst6 smallint,
+description varchar(20)
+);
+create index indexes_ntile_race_waku on ntile_race_waku (ymd, jyocd, raceno, description);
+
+  ntile(100) over (order by nation2winingrate1 desc),
+  ntile(100) over (order by nation2winingrate2 desc),
+  ntile(100) over (order by nation2winingrate3 desc),
+  ntile(100) over (order by nation2winingrate4 desc),
+  ntile(100) over (order by nation2winingrate5 desc),
+  ntile(100) over (order by nation2winingrate6 desc),
+  ntile(100) over (order by nation3winingrate1 desc),
+  ntile(100) over (order by nation3winingrate2 desc),
+  ntile(100) over (order by nation3winingrate3 desc),
+  ntile(100) over (order by nation3winingrate4 desc),
+  ntile(100) over (order by nation3winingrate5 desc),
+  ntile(100) over (order by nation3winingrate6 desc),
+  ntile(100) over (order by localwiningrate1 desc),
+  ntile(100) over (order by localwiningrate2 desc),
+  ntile(100) over (order by localwiningrate3 desc),
+  ntile(100) over (order by localwiningrate4 desc),
+  ntile(100) over (order by localwiningrate5 desc),
+  ntile(100) over (order by localwiningrate6 desc),
+  ntile(100) over (order by local2winingrate1 desc),
+  ntile(100) over (order by local2winingrate2 desc),
+  ntile(100) over (order by local2winingrate3 desc),
+  ntile(100) over (order by local2winingrate4 desc),
+  ntile(100) over (order by local2winingrate5 desc),
+  ntile(100) over (order by local2winingrate6 desc),
+  ntile(100) over (order by local3winingrate1 desc),
+  ntile(100) over (order by local3winingrate2 desc),
+  ntile(100) over (order by local3winingrate3 desc),
+  ntile(100) over (order by local3winingrate4 desc),
+  ntile(100) over (order by local3winingrate5 desc),
+  ntile(100) over (order by local3winingrate6 desc),
+  ntile(100) over (order by motor2winingrate1 desc),
+  ntile(100) over (order by motor2winingrate2 desc),
+  ntile(100) over (order by motor2winingrate3 desc),
+  ntile(100) over (order by motor2winingrate4 desc),
+  ntile(100) over (order by motor2winingrate5 desc),
+  ntile(100) over (order by motor2winingrate6 desc),
+  ntile(100) over (order by motor3winingrate1 desc),
+  ntile(100) over (order by motor3winingrate2 desc),
+  ntile(100) over (order by motor3winingrate3 desc),
+  ntile(100) over (order by motor3winingrate4 desc),
+  ntile(100) over (order by motor3winingrate5 desc),
+  ntile(100) over (order by motor3winingrate6 desc),
+  'tile=100'
+truncate ntile_race_waku2;
+insert into ntile_race_waku2 
+select 
+  ymd, jyocd, raceno, 
+  ntile(100) over (order by nationwiningrate1 desc),
+  ntile(100) over (order by nationwiningrate2 desc),
+  ntile(100) over (order by nationwiningrate3 desc),
+  ntile(100) over (order by nationwiningrate4 desc),
+  ntile(100) over (order by nationwiningrate5 desc),
+  ntile(100) over (order by nationwiningrate6 desc)
+from rec_race_waku2
+;
+
+drop table if exists ntile_race_waku2;
+create table ntile_race_waku2 (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+nationwiningrate1 smallint,
+nationwiningrate2 smallint,
+nationwiningrate3 smallint,
+nationwiningrate4 smallint,
+nationwiningrate5 smallint,
+nationwiningrate6 smallint,
+nation2winingrate1 smallint,
+nation2winingrate2 smallint,
+nation2winingrate3 smallint,
+nation2winingrate4 smallint,
+nation2winingrate5 smallint,
+nation2winingrate6 smallint,
+nation3winingrate1 smallint,
+nation3winingrate2 smallint,
+nation3winingrate3 smallint,
+nation3winingrate4 smallint,
+nation3winingrate5 smallint,
+nation3winingrate6 smallint,
+localwiningrate1 smallint,
+localwiningrate2 smallint,
+localwiningrate3 smallint,
+localwiningrate4 smallint,
+localwiningrate5 smallint,
+localwiningrate6 smallint,
+local2winingrate1 smallint,
+local2winingrate2 smallint,
+local2winingrate3 smallint,
+local2winingrate4 smallint,
+local2winingrate5 smallint,
+local2winingrate6 smallint,
+local3winingrate1 smallint,
+local3winingrate2 smallint,
+local3winingrate3 smallint,
+local3winingrate4 smallint,
+local3winingrate5 smallint,
+local3winingrate6 smallint,
+motor2winingrate1 smallint,
+motor2winingrate2 smallint,
+motor2winingrate3 smallint,
+motor2winingrate4 smallint,
+motor2winingrate5 smallint,
+motor2winingrate6 smallint,
+motor3winingrate1 smallint,
+motor3winingrate2 smallint,
+motor3winingrate3 smallint,
+motor3winingrate4 smallint,
+motor3winingrate5 smallint,
+motor3winingrate6 smallint,
+description varchar(20)
+);
+create index indexes_ntile_race_waku2 on ntile_race_waku2 (ymd, jyocd, raceno, description);
+
+
+
+delete from ntile_deviation;
+insert into ntile_deviation 
+select 
+  ymd, jyocd, raceno, 
+  ntile(6) over (order by devi_famewin1),
+  ntile(6) over (order by devi_famewin2),
+  ntile(6) over (order by devi_famewin3),
+  ntile(6) over (order by devi_famerank1),
+  ntile(6) over (order by devi_famerank2),
+  ntile(6) over (order by devi_famerank3),
+  ntile(6) over (order by devi_winingrate_12),
+  ntile(6) over (order by devi_winingrate_23),
+  ntile(6) over (order by devi_winingrate_14),
+  ntile(6) over (order by devi_winingrate_123),
+  ntile(6) over (order by devi_winingrate_123456),
+  'tile=6'
+from stat_deviation
+;
+
+drop table if exists ntile_deviation;
+create table ntile_deviation (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+devi_famewin1 smallint,
+devi_famewin2 smallint,
+devi_famewin3 smallint,
+devi_famerank1 smallint,
+devi_famerank2 smallint,
+devi_famerank3 smallint,
+devi_winingrate_12 smallint,
+devi_winingrate_23 smallint,
+devi_winingrate_14 smallint,
+devi_winingrate_123 smallint,
+devi_winingrate_123456 smallint,
+description varchar(20)
+);
+create index indexes_ntile_deviation on ntile_deviation (ymd, jyocd, raceno, description);
+
+
+-- 20181209
+drop table if exists stat_ml_multiresult;
+create table stat_ml_multiresult (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+description varchar(200),
+bettype varchar(2),
+result_kumiban varchar(4),
+result_odds numeric(7,2),
+result_oddsrank int,
+modelno varchar(200),
+bet_kumiban varchar(200),
+bet_odds varchar(200),
+bet_oddsrank varchar(200),
+hity varchar(200),
+hitn varchar(200),
+betamt varchar(200),
+hitamt varchar(200)
+);
+create index indexes_stat_ml_multiresult on stat_ml_multiresult (ymd, jyocd, raceno, description, bettype);
+
+drop table if exists stat_ml_result_rgr;
+create table stat_ml_result_rgr (
+ymd varchar(8),
+sime varchar(4),
+jyocd varchar(2),
+raceno smallint,
+description varchar(200),
+bettype varchar(2),
+bet_kumiban varchar(4),
+bet_odds numeric(7,2),
+bet_oddsrank int,
+result_kumiban varchar(4),
+result_odds numeric(7,2),
+result_oddsrank int,
+result_amt int, -- 20190818 추가
+hity int, 
+hitn int, 
+betamt int,
+hitamt int, 
+rgramt int  -- regression 예측 수익금 20190901추가
+);
+create index indexes_stat_ml_result_rgr on stat_ml_result_rgr (ymd, jyocd, raceno, description, bettype);
+
+
+drop table if exists stat_deviation;
+create table stat_deviation (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+devi_famewin1 numeric(5,2),
+devi_famewin2 numeric(5,2),
+devi_famewin3 numeric(5,2),
+devi_famerank1 numeric(5,2),
+devi_famerank2 numeric(5,2),
+devi_famerank3 numeric(5,2),
+devi_winingrate_12 numeric(5,2),
+devi_winingrate_23 numeric(5,2),
+devi_winingrate_14 numeric(5,2),
+devi_winingrate_123 numeric(5,2),
+devi_winingrate_123456 numeric(5,2)
+);
+create index indexes_stat_deviation on stat_deviation (ymd, jyocd, raceno);
+
+
+
+-- 20181125
+drop table if exists stat_race;
+create table stat_race (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+recentnationwiningrank varchar(6),
+recentnation2winingrank varchar(6),
+recentnation3winingrank varchar(6),
+recentlocalwiningrank varchar(6),
+recentlocal2winingrank varchar(6),
+recentlocal3winingrank varchar(6),
+recentavgstrank varchar(6),
+recentavgtimerank varchar(6),
+recentmotor2winingrank varchar(6),
+recentmotor3winingrank varchar(6),
+statnationwiningrank varchar(6),
+statnation2winingrank varchar(6),
+statnation3winingrank varchar(6),
+statlocalwiningrank varchar(6),
+statlocal2winingrank varchar(6),
+statlocal3winingrank varchar(6),
+statstartrank varchar(6),
+statmotorwiningrank varchar(6),
+statmotor2winingrank varchar(6),
+statmotor3winingrank varchar(6),
+racerwiningrank varchar(6),
+racer2winingrank varchar(6),
+racer3winingrank varchar(6),
+motorwiningrank varchar(6),
+motor2winingrank varchar(6),
+motor3winingrank varchar(6)
+);
+create index indexes_stat_race on stat_race (ymd, jyocd, raceno);
+
+
+
+drop table if exists stat_waku_win;
+create table stat_waku_win (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+racerruncount1 int,
+racerruncount2 int,
+racerruncount3 int,
+racerruncount4 int,
+racerruncount5 int,
+racerruncount6 int,
+racerwiningrate1 numeric(5,2),
+racerwiningrate2 numeric(5,2),
+racerwiningrate3 numeric(5,2),
+racerwiningrate4 numeric(5,2),
+racerwiningrate5 numeric(5,2),
+racerwiningrate6 numeric(5,2),
+racer2winingrate1 numeric(5,2),
+racer2winingrate2 numeric(5,2),
+racer2winingrate3 numeric(5,2),
+racer2winingrate4 numeric(5,2),
+racer2winingrate5 numeric(5,2),
+racer2winingrate6 numeric(5,2),
+racer3winingrate1 numeric(5,2),
+racer3winingrate2 numeric(5,2),
+racer3winingrate3 numeric(5,2),
+racer3winingrate4 numeric(5,2),
+racer3winingrate5 numeric(5,2),
+racer3winingrate6 numeric(5,2),
+motorruncount1 int,
+motorruncount2 int,
+motorruncount3 int,
+motorruncount4 int,
+motorruncount5 int,
+motorruncount6 int,
+motorwiningrate1 numeric(5,2),
+motorwiningrate2 numeric(5,2),
+motorwiningrate3 numeric(5,2),
+motorwiningrate4 numeric(5,2),
+motorwiningrate5 numeric(5,2),
+motorwiningrate6 numeric(5,2),
+motor2winingrate1 numeric(5,2),
+motor2winingrate2 numeric(5,2),
+motor2winingrate3 numeric(5,2),
+motor2winingrate4 numeric(5,2),
+motor2winingrate5 numeric(5,2),
+motor2winingrate6 numeric(5,2),
+motor3winingrate1 numeric(5,2),
+motor3winingrate2 numeric(5,2),
+motor3winingrate3 numeric(5,2),
+motor3winingrate4 numeric(5,2),
+motor3winingrate5 numeric(5,2),
+motor3winingrate6 numeric(5,2)
+);
+create index indexes_stat_waku_win on stat_waku_win (ymd, jyocd, raceno);
+
+drop table if exists stat_waku_recent;
+create table stat_waku_recent (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+statnationwiningrate1 numeric(5,2),
+statnationwiningrate2 numeric(5,2),
+statnationwiningrate3 numeric(5,2),
+statnationwiningrate4 numeric(5,2),
+statnationwiningrate5 numeric(5,2),
+statnationwiningrate6 numeric(5,2),
+statnation2winingrate1 numeric(5,2),
+statnation2winingrate2 numeric(5,2),
+statnation2winingrate3 numeric(5,2),
+statnation2winingrate4 numeric(5,2),
+statnation2winingrate5 numeric(5,2),
+statnation2winingrate6 numeric(5,2),
+statnation3winingrate1 numeric(5,2),
+statnation3winingrate2 numeric(5,2),
+statnation3winingrate3 numeric(5,2),
+statnation3winingrate4 numeric(5,2),
+statnation3winingrate5 numeric(5,2),
+statnation3winingrate6 numeric(5,2),
+statlocalwiningrate1 numeric(5,2),
+statlocalwiningrate2 numeric(5,2),
+statlocalwiningrate3 numeric(5,2),
+statlocalwiningrate4 numeric(5,2),
+statlocalwiningrate5 numeric(5,2),
+statlocalwiningrate6 numeric(5,2),
+statlocal2winingrate1 numeric(5,2),
+statlocal2winingrate2 numeric(5,2),
+statlocal2winingrate3 numeric(5,2),
+statlocal2winingrate4 numeric(5,2),
+statlocal2winingrate5 numeric(5,2),
+statlocal2winingrate6 numeric(5,2),
+statlocal3winingrate1 numeric(5,2),
+statlocal3winingrate2 numeric(5,2),
+statlocal3winingrate3 numeric(5,2),
+statlocal3winingrate4 numeric(5,2),
+statlocal3winingrate5 numeric(5,2),
+statlocal3winingrate6 numeric(5,2),
+statmotorwiningrate1 numeric(5,2),
+statmotorwiningrate2 numeric(5,2),
+statmotorwiningrate3 numeric(5,2),
+statmotorwiningrate4 numeric(5,2),
+statmotorwiningrate5 numeric(5,2),
+statmotorwiningrate6 numeric(5,2),
+statmotor2winingrate1 numeric(5,2),
+statmotor2winingrate2 numeric(5,2),
+statmotor2winingrate3 numeric(5,2),
+statmotor2winingrate4 numeric(5,2),
+statmotor2winingrate5 numeric(5,2),
+statmotor2winingrate6 numeric(5,2),
+statmotor3winingrate1 numeric(5,2),
+statmotor3winingrate2 numeric(5,2),
+statmotor3winingrate3 numeric(5,2),
+statmotor3winingrate4 numeric(5,2),
+statmotor3winingrate5 numeric(5,2),
+statmotor3winingrate6 numeric(5,2),
+statstart1 numeric(5,2),
+statstart2 numeric(5,2),
+statstart3 numeric(5,2),
+statstart4 numeric(5,2),
+statstart5 numeric(5,2),
+statstart6 numeric(5,2)
+);
+create index indexes_stat_waku_recent on stat_waku_recent (ymd, jyocd, raceno);
+
+
+drop table if exists rec_waku_recent;
+create table rec_waku_recent (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+recentnationwiningrate1 numeric(5,2),
+recentnationwiningrate2 numeric(5,2),
+recentnationwiningrate3 numeric(5,2),
+recentnationwiningrate4 numeric(5,2),
+recentnationwiningrate5 numeric(5,2),
+recentnationwiningrate6 numeric(5,2),
+recentnation2winingrate1 numeric(5,2),
+recentnation2winingrate2 numeric(5,2),
+recentnation2winingrate3 numeric(5,2),
+recentnation2winingrate4 numeric(5,2),
+recentnation2winingrate5 numeric(5,2),
+recentnation2winingrate6 numeric(5,2),
+recentnation3winingrate1 numeric(5,2),
+recentnation3winingrate2 numeric(5,2),
+recentnation3winingrate3 numeric(5,2),
+recentnation3winingrate4 numeric(5,2),
+recentnation3winingrate5 numeric(5,2),
+recentnation3winingrate6 numeric(5,2),
+recentlocalwiningrate1 numeric(5,2),
+recentlocalwiningrate2 numeric(5,2),
+recentlocalwiningrate3 numeric(5,2),
+recentlocalwiningrate4 numeric(5,2),
+recentlocalwiningrate5 numeric(5,2),
+recentlocalwiningrate6 numeric(5,2),
+recentlocal2winingrate1 numeric(5,2),
+recentlocal2winingrate2 numeric(5,2),
+recentlocal2winingrate3 numeric(5,2),
+recentlocal2winingrate4 numeric(5,2),
+recentlocal2winingrate5 numeric(5,2),
+recentlocal2winingrate6 numeric(5,2),
+recentlocal3winingrate1 numeric(5,2),
+recentlocal3winingrate2 numeric(5,2),
+recentlocal3winingrate3 numeric(5,2),
+recentlocal3winingrate4 numeric(5,2),
+recentlocal3winingrate5 numeric(5,2),
+recentlocal3winingrate6 numeric(5,2),
+recentavgst1 numeric(5,2),
+recentavgst2 numeric(5,2),
+recentavgst3 numeric(5,2),
+recentavgst4 numeric(5,2),
+recentavgst5 numeric(5,2),
+recentavgst6 numeric(5,2),
+recentavgtime1 numeric(5,2),
+recentavgtime2 numeric(5,2),
+recentavgtime3 numeric(5,2),
+recentavgtime4 numeric(5,2),
+recentavgtime5 numeric(5,2),
+recentavgtime6 numeric(5,2),
+recentmotor2winingrate1 numeric(5,2),
+recentmotor2winingrate2 numeric(5,2),
+recentmotor2winingrate3 numeric(5,2),
+recentmotor2winingrate4 numeric(5,2),
+recentmotor2winingrate5 numeric(5,2),
+recentmotor2winingrate6 numeric(5,2),
+recentmotor3winingrate1 numeric(5,2),
+recentmotor3winingrate2 numeric(5,2),
+recentmotor3winingrate3 numeric(5,2),
+recentmotor3winingrate4 numeric(5,2),
+recentmotor3winingrate5 numeric(5,2),
+recentmotor3winingrate6 numeric(5,2)
+);
+create index indexes_rec_waku_recent on rec_waku_recent (ymd, jyocd, raceno);
+
+--------------------------------------------------------------------------------------------------
+drop table if exists rec_fame;
+create table rec_fame (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+waku varchar(1),
+entry varchar(4),
+win varchar(1),
+fameodds numeric(6,1), -- 当該wakuがrank着の平均オッズ（例:1枠が１着のオッズ合計/20)
+famerate numeric(5,2) -- fameoddsを百分率の支持率に換算
+);
+create index indexes_rec_fame on rec_fame (ymd, jyocd, raceno);
+
+drop table if exists rec_fame_waku;
+create table rec_fame_waku (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+waku1_fameodds numeric(6,1), -- 1枠の１着支持
+waku1_famerate numeric(5,2),
+waku2_fameodds numeric(6,1), -- 2枠の１着支持
+waku2_famerate numeric(5,2),
+waku3_fameodds numeric(6,1),
+waku3_famerate numeric(5,2),
+waku4_fameodds numeric(6,1),
+waku4_famerate numeric(5,2),
+waku5_fameodds numeric(6,1),
+waku5_famerate numeric(5,2),
+waku6_fameodds numeric(6,1),
+waku6_famerate numeric(5,2)
+);
+create index indexes_rec_fame_waku on rec_fame_waku (ymd, jyocd, raceno);
+
+
+drop table if exists rec_fame_rank3_after;
+create table rec_fame_rank3_after (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+win1_rank1_waku varchar(1),  --１着支持率１位
+win1_rank1_entry varchar(4),
+win1_rank1_fameodds numeric(6,1),
+win1_rank1_famerate numeric(5,2),
+win1_rank2_waku varchar(1),  --１着支持率2位
+win1_rank2_entry varchar(4),
+win1_rank2_fameodds numeric(6,1),
+win1_rank2_famerate numeric(5,2),
+win1_rank3_waku varchar(1),  --１着支持率3位
+win1_rank3_entry varchar(4),
+win1_rank3_fameodds numeric(6,1),
+win1_rank3_famerate numeric(5,2),
+win2_rank1_waku varchar(1),  --2着支持率１位
+win2_rank1_entry varchar(4),
+win2_rank1_fameodds numeric(6,1),
+win2_rank1_famerate numeric(5,2),
+win2_rank2_waku varchar(1),  --2着支持率2位
+win2_rank2_entry varchar(4),
+win2_rank2_fameodds numeric(6,1),
+win2_rank2_famerate numeric(5,2),
+win2_rank3_waku varchar(1),  --2着支持率3位
+win2_rank3_entry varchar(4),
+win2_rank3_fameodds numeric(6,1),
+win2_rank3_famerate numeric(5,2),
+win3_rank1_waku varchar(1),  --3着支持率１位
+win3_rank1_entry varchar(4),
+win3_rank1_fameodds numeric(6,1),
+win3_rank1_famerate numeric(5,2),
+win3_rank2_waku varchar(1),  --3着支持率2位
+win3_rank2_entry varchar(4),
+win3_rank2_fameodds numeric(6,1),
+win3_rank2_famerate numeric(5,2),
+win3_rank3_waku varchar(1),  --3着支持率3位
+win3_rank3_entry varchar(4),
+win3_rank3_fameodds numeric(6,1),
+win3_rank3_famerate numeric(5,2)
+);
+create index indexes_rec_fame_rank3_after on rec_fame_rank3_after (ymd, jyocd, raceno);
+
+drop table if exists rec_fame_rank3;
+create table rec_fame_rank3 (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+win1_rank1_waku varchar(1),  --１着支持率１位
+win1_rank1_entry varchar(4),
+win1_rank1_fameodds numeric(6,1),
+win1_rank1_famerate numeric(5,2),
+win1_rank2_waku varchar(1),  --１着支持率2位
+win1_rank2_entry varchar(4),
+win1_rank2_fameodds numeric(6,1),
+win1_rank2_famerate numeric(5,2),
+win1_rank3_waku varchar(1),  --１着支持率3位
+win1_rank3_entry varchar(4),
+win1_rank3_fameodds numeric(6,1),
+win1_rank3_famerate numeric(5,2),
+win2_rank1_waku varchar(1),  --2着支持率１位
+win2_rank1_entry varchar(4),
+win2_rank1_fameodds numeric(6,1),
+win2_rank1_famerate numeric(5,2),
+win2_rank2_waku varchar(1),  --2着支持率2位
+win2_rank2_entry varchar(4),
+win2_rank2_fameodds numeric(6,1),
+win2_rank2_famerate numeric(5,2),
+win2_rank3_waku varchar(1),  --2着支持率3位
+win2_rank3_entry varchar(4),
+win2_rank3_fameodds numeric(6,1),
+win2_rank3_famerate numeric(5,2),
+win3_rank1_waku varchar(1),  --3着支持率１位
+win3_rank1_entry varchar(4),
+win3_rank1_fameodds numeric(6,1),
+win3_rank1_famerate numeric(5,2),
+win3_rank2_waku varchar(1),  --3着支持率2位
+win3_rank2_entry varchar(4),
+win3_rank2_fameodds numeric(6,1),
+win3_rank2_famerate numeric(5,2),
+win3_rank3_waku varchar(1),  --3着支持率3位
+win3_rank3_entry varchar(4),
+win3_rank3_fameodds numeric(6,1),
+win3_rank3_famerate numeric(5,2)
+);
+create index indexes_rec_fame_rank3 on rec_fame_rank3 (ymd, jyocd, raceno);
+
+drop table if exists rec_odds_rank10;
+create table rec_odds_rank10 (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+bettype varchar(2),
+rank1kumiban varchar(3),
+rank1odds numeric(6,1),
+rank2kumiban varchar(3),
+rank2odds numeric(6,1),
+rank3kumiban varchar(3),
+rank3odds numeric(6,1),
+rank4kumiban varchar(3),
+rank4odds numeric(6,1),
+rank5kumiban varchar(3),
+rank5odds numeric(6,1),
+rank6kumiban varchar(3),
+rank6odds numeric(6,1),
+rank7kumiban varchar(3),
+rank7odds numeric(6,1),
+rank8kumiban varchar(3),
+rank8odds numeric(6,1),
+rank9kumiban varchar(3),
+rank9odds numeric(6,1),
+rank10kumiban varchar(3),
+rank10odds numeric(6,1)
+);
+create index indexes_rec_odds_rank10 on rec_odds_rank10 (ymd, jyocd, raceno, bettype);
+
+drop table if exists rec_odds;
+create table rec_odds (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+bettype varchar(2),
+kumiban varchar(3),
+odds numeric(6,1),
+rank smallint
+);
+create index indexes_rec_odds on rec_odds (ymd, jyocd, raceno, bettype, kumiban);
+
+drop table if exists rec_odds_after;
+create table rec_odds_after (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+bettype varchar(2),
+kumiban varchar(3),
+odds numeric(6,1),
+rank smallint
+);
+create index indexes_rec_odds_after on rec_odds_after (ymd, jyocd, raceno, bettype, kumiban);
+
+--------------------------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------------------------
+insert into rec_race_waku_arr
+select 
+  ymd, jyocd, raceno,
+  array[entry1,entry2,entry3,entry4,entry5,entry6],
+  array[motorno1,motorno2,motorno3,motorno4,motorno5,motorno6],
+  array[avgtime1,avgtime2,avgtime3,avgtime4,avgtime5,avgtime6],
+  array[avgst1,avgst2,avgst3,avgst4,avgst5,avgst6],
+  array[setuavgst1,setuavgst2,setuavgst3,setuavgst4,setuavgst5,setuavgst6],
+  array[setuavgwin1,setuavgwin2,setuavgwin3,setuavgwin4,setuavgwin5,setuavgwin6],
+  array[flcount1,flcount2,flcount3,flcount4,flcount5,flcount6],
+  array[tilt1,tilt2,tilt3,tilt4,tilt5,tilt6],
+  array[homeyn1,homeyn2,homeyn3,homeyn4,homeyn5,homeyn6]
+from rec_race_waku;
+
+drop table if exists rec_race_waku_arr;
+create table rec_race_waku_arr (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+entry smallint[],
+motorno smallint[],
+avgtime numeric(5,2)[],
+avgst numeric(5,2)[],
+setuavgst numeric(5,2)[],
+setuavgwin smallint[],
+flcount smallint[],
+tilt numeric(5,2)[],
+homeyn smallint[]
+);
+create index indexes_rec_race_waku_arr on rec_race_waku_arr (ymd, jyocd, raceno);
+
+
+drop table if exists rec_race_waku;
+create table rec_race_waku (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+entry1 smallint,
+entry2 smallint,
+entry3 smallint,
+entry4 smallint,
+entry5 smallint,
+entry6 smallint,
+motorno1 smallint,
+motorno2 smallint,
+motorno3 smallint,
+motorno4 smallint,
+motorno5 smallint,
+motorno6 smallint,
+avgtime1 numeric(5,2),
+avgtime2 numeric(5,2),
+avgtime3 numeric(5,2),
+avgtime4 numeric(5,2),
+avgtime5 numeric(5,2),
+avgtime6 numeric(5,2),
+avgst1 numeric(5,2),
+avgst2 numeric(5,2),
+avgst3 numeric(5,2),
+avgst4 numeric(5,2),
+avgst5 numeric(5,2),
+avgst6 numeric(5,2),
+setuavgst1 numeric(5,2),
+setuavgst2 numeric(5,2),
+setuavgst3 numeric(5,2),
+setuavgst4 numeric(5,2),
+setuavgst5 numeric(5,2),
+setuavgst6 numeric(5,2),
+setuavgwin1 smallint,
+setuavgwin2 smallint,
+setuavgwin3 smallint,
+setuavgwin4 smallint,
+setuavgwin5 smallint,
+setuavgwin6 smallint,
+flcount1 smallint,
+flcount2 smallint,
+flcount3 smallint,
+flcount4 smallint,
+flcount5 smallint,
+flcount6 smallint,
+tilt1 numeric(5,2),
+tilt2 numeric(5,2),
+tilt3 numeric(5,2),
+tilt4 numeric(5,2),
+tilt5 numeric(5,2),
+tilt6 numeric(5,2),
+homeyn1 smallint,
+homeyn2 smallint,
+homeyn3 smallint,
+homeyn4 smallint,
+homeyn5 smallint,
+homeyn6 smallint
+);
+create index indexes_rec_race_waku on rec_race_waku (ymd, jyocd, raceno);
+
+drop table if exists rec_race_waku2;
+create table rec_race_waku2 (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+nationwiningrate1 numeric(5,2),
+nationwiningrate2 numeric(5,2),
+nationwiningrate3 numeric(5,2),
+nationwiningrate4 numeric(5,2),
+nationwiningrate5 numeric(5,2),
+nationwiningrate6 numeric(5,2),
+nation2winingrate1 numeric(5,2),
+nation2winingrate2 numeric(5,2),
+nation2winingrate3 numeric(5,2),
+nation2winingrate4 numeric(5,2),
+nation2winingrate5 numeric(5,2),
+nation2winingrate6 numeric(5,2),
+nation3winingrate1 numeric(5,2),
+nation3winingrate2 numeric(5,2),
+nation3winingrate3 numeric(5,2),
+nation3winingrate4 numeric(5,2),
+nation3winingrate5 numeric(5,2),
+nation3winingrate6 numeric(5,2),
+localwiningrate1 numeric(5,2),
+localwiningrate2 numeric(5,2),
+localwiningrate3 numeric(5,2),
+localwiningrate4 numeric(5,2),
+localwiningrate5 numeric(5,2),
+localwiningrate6 numeric(5,2),
+local2winingrate1 numeric(5,2),
+local2winingrate2 numeric(5,2),
+local2winingrate3 numeric(5,2),
+local2winingrate4 numeric(5,2),
+local2winingrate5 numeric(5,2),
+local2winingrate6 numeric(5,2),
+local3winingrate1 numeric(5,2),
+local3winingrate2 numeric(5,2),
+local3winingrate3 numeric(5,2),
+local3winingrate4 numeric(5,2),
+local3winingrate5 numeric(5,2),
+local3winingrate6 numeric(5,2),
+motor2winingrate1 numeric(5,2),
+motor2winingrate2 numeric(5,2),
+motor2winingrate3 numeric(5,2),
+motor2winingrate4 numeric(5,2),
+motor2winingrate5 numeric(5,2),
+motor2winingrate6 numeric(5,2),
+motor3winingrate1 numeric(5,2),
+motor3winingrate2 numeric(5,2),
+motor3winingrate3 numeric(5,2),
+motor3winingrate4 numeric(5,2),
+motor3winingrate5 numeric(5,2),
+motor3winingrate6 numeric(5,2)
+);
+drop index if exists indexes_rec_race_waku2;
+create index indexes_rec_race_waku2 on rec_race_waku2 (ymd, jyocd, raceno);
+
+--------------
+insert into rec_racer_arr
+select 
+  ymd, jyocd, raceno, 
+  array_agg(entry),
+  array_agg(sex),
+  array_agg(age),
+  array_agg(level),
+  array_agg(weight),
+  array_agg(branch),
+  array_agg(exhibit),
+  array_agg(startexhibit),
+  array_agg(flying),
+  array_agg(late),
+  array_agg(averagestart),
+  array_agg(avgtime),
+  array_agg(motorno)
+from (
+  select * from rec_racer order by ymd, jyocd, raceno, waku
+) tmp
+group by ymd, jyocd, raceno
+
+
+drop table if exists rec_racer_arr;
+create table rec_racer_arr (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+entry smallint[],
+sex varchar(2)[],
+age smallint[],
+level varchar(2)[],
+weight numeric(3,1)[],
+branch varchar(4)[],
+exhibit numeric(5,2)[],
+startexhibit numeric(5,2)[],
+flying smallint[],
+late smallint[],
+averagestart numeric(5,2)[],
+avgtime numeric(5,2)[],
+motorno smallint[]
+);
+create index indexes_rec_racer_arr on rec_racer_arr (ymd, jyocd, raceno);
+
+
+drop table if exists rec_racer;
+create table rec_racer (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+entry smallint,
+sex varchar(2),
+age smallint,
+level varchar(2),
+weight numeric(3,1),
+branch varchar(4),
+exhibit numeric(5,2),
+startexhibit numeric(5,2),
+flying smallint,
+late smallint,
+averagestart numeric(5,2),
+avgtime numeric(5,2),
+nationwiningrate numeric(5,2),
+nation2winingrate numeric(5,2),
+nation3winingrate numeric(5,2),
+localwiningrate numeric(5,2),
+local2winingrate numeric(5,2),
+local3winingrate numeric(5,2),
+motorno smallint,
+motor2winingrate numeric(5,2),
+motor3winingrate numeric(5,2),
+boatno smallint,
+boat2winingrate numeric(5,2),
+boat3winingrate numeric(5,2),
+waku smallint,
+rank smallint,
+startresult numeric(5,2)
+);
+drop index if exists indexes_rec_racer;
+create index indexes_rec_racer on rec_racer (ymd, jyocd, raceno, entry);
+
+--------------
+drop table if exists rec_race;
+create table rec_race (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+sime varchar(4),
+temparature numeric(3,1),
+weather varchar(8),
+winddirection smallint,
+wind numeric(3,1),
+watertemp numeric(3,1),
+wave smallint,
+grade varchar(2),
+isvenus varchar(2),
+timezone varchar(2),
+turn varchar(2),
+sanrentanno varchar(3),
+sanrentanprize integer,
+sanrentanpopular smallint,
+sanrenhukuno varchar(3),
+sanrenhukuprize integer,
+sanrenhukupopular smallint,
+nirentanno varchar(3),
+nirentanprize integer,
+nirentanpopular smallint,
+nirenhukuno varchar(3),
+nirenhukuprize integer,
+nirenhukupopular smallint,
+tansyono varchar(3),
+tansyoprize integer,
+tansyopopular smallint,
+kimarite varchar(10),
+wakurank varchar(6),
+levelrank varchar(6),
+resultlevelrank varchar(20),
+nationwiningrank varchar(6),
+nation2winingrank varchar(6),
+nation3winingrank varchar(6),
+localwiningrank varchar(6),
+local2winingrank varchar(6),
+local3winingrank varchar(6),
+motor2rank varchar(6),
+motor3rank varchar(6),
+startexhibitrank varchar(6),
+exhibitrank varchar(6),
+averagestartrank varchar(6),
+fixedentrance varchar(6),
+racetype varchar(20),
+wakulevellist varchar(20),
+alevelcount smallint,
+femalecount smallint,
+avgstcondrank varchar(6), -- 平均STコンディションランク
+setuwinrank varchar(6), -- 節着順ランク
+flrank varchar(6), -- 罰点ランク
+racetype_simple varchar(20),
+racekey varchar(12)
+);
+create index indexes_rec_race on rec_race (ymd, jyocd, raceno, racekey);
+
+drop table if exists stmp_rec_race;
+create table stmp_rec_race (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+sime varchar(4),
+temparature numeric(3,1),
+weather varchar(8),
+winddirection smallint,
+wind numeric(3,1),
+watertemp numeric(3,1),
+wave smallint,
+grade varchar(2),
+isvenus varchar(2),
+timezone varchar(2),
+turn varchar(2),
+sanrentanno varchar(3),
+sanrentanprize integer,
+sanrentanpopular smallint,
+sanrenhukuno varchar(3),
+sanrenhukuprize integer,
+sanrenhukupopular smallint,
+nirentanno varchar(3),
+nirentanprize integer,
+nirentanpopular smallint,
+nirenhukuno varchar(3),
+nirenhukuprize integer,
+nirenhukupopular smallint,
+tansyono varchar(3),
+tansyoprize integer,
+tansyopopular smallint,
+kimarite varchar(10),
+wakurank varchar(6),
+levelrank varchar(6),
+resultlevelrank varchar(20),
+nationwiningrank varchar(6),
+nation2winingrank varchar(6),
+nation3winingrank varchar(6),
+localwiningrank varchar(6),
+local2winingrank varchar(6),
+local3winingrank varchar(6),
+motor2rank varchar(6),
+motor3rank varchar(6),
+startexhibitrank varchar(6),
+exhibitrank varchar(6),
+averagestartrank varchar(6),
+fixedentrance varchar(6),
+racetype varchar(20),
+wakulevellist varchar(20),
+alevelcount smallint,
+femalecount smallint,
+avgstcondrank varchar(6), -- 平均STコンディションランク
+setuwinrank varchar(6), -- 節着順ランク
+flrank varchar(6), -- 罰点ランク
+racetype_simple varchar(20),
+racekey varchar(12),
+description varchar(200)
+);
+create index indexes_stmp_rec_race on stmp_rec_race (ymd, jyocd, raceno, racekey, description);
+
+
+--------------------------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------------------------
+drop table if exists stat_result;
+create table stat_result (
+patterntype varchar(20),
+bettype varchar(3),
+jyocd varchar(2),
+pattern varchar(20),
+patterncnt int,
+betamount int,
+kumiban varchar(3),
+hitcount int,
+prize int,
+hitrate numeric(5,2),
+incomerate numeric(7,2)
+);
+create index indexes_stat_result on stat_result (patterntype, bettype, jyocd, pattern);
+
+--------------------------------------------------------------------------------------------------
+�ｽ�ｽ�ｽv�ｽp�ｽ^�ｽ�ｽ�ｽe�ｽ[�ｽu�ｽ�ｽ
+--------------------------------------------------------------------------------------------------
+drop table if exists stat_pattern;
+create table stat_pattern (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+bettype varchar(3),
+patterntype varchar(20),
+ptnracer varchar(20),
+ptnmotor varchar(20),
+ptntime varchar(20)
+);
+create index indexes_stat_pattern on stat_pattern (ymd, jyocd, raceno, bettype, patterntype);
+
+--------------------------------------------------------------------------------------------------
+�ｽ�ｽ�ｽ[�ｽX�ｽ�ｽ�ｽg�ｽﾊ能�ｽﾍ値�ｽ�ｽ�ｽ�ｽ
+--------------------------------------------------------------------------------------------------
+drop table if exists stat_race;
+create table stat_race (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+bettype varchar(3),
+y smallint,
+m smallint,
+d smallint,
+entry1rank smallint,
+entry2rank smallint,
+entry3rank smallint,
+entry4rank smallint,
+entry5rank smallint,
+entry6rank smallint,
+motorno1rank smallint,
+motorno2rank smallint,
+motorno3rank smallint,
+motorno4rank smallint,
+motorno5rank smallint,
+motorno6rank smallint,
+avgtime1rank smallint,
+avgtime2rank smallint,
+avgtime3rank smallint,
+avgtime4rank smallint,
+avgtime5rank smallint,
+avgtime6rank smallint,
+ranksum1 int,
+ranksum2 int,
+ranksum3 int,
+ranksum4 int,
+ranksum5 int,
+ranksum6 int
+
+);
+drop index if exists indexes_stat_race;
+create index indexes_stat_race_waku on stat_race (ymd, jyocd, raceno);
+
+
+--------------------------------------------------------------------------------------------------
+�ｽ�ｽ�ｽﾏタ�ｽC�ｽ�ｽ�ｽi�ｽ�ｽ�ｽ�ｽST�ｽ{�ｽW�ｽ�ｽ�ｽ^�ｽC�ｽ�ｽ�ｽj�ｽ�ｽ�ｽ�ｽ
+--------------------------------------------------------------------------------------------------
+drop table if exists power_avgtime_bettype;
+create table power_avgtime_bettype (
+ymd varchar(8),
+bettype varchar(3),
+avgtime numeric(5,2),
+waku varchar(1),
+powerrank smallint
+);
+drop index if exists indexes_power_avgtime_bettype;
+create index indexes_power_avgtime_bettype on power_avgtime_bettype (ymd, avgtime, bettype, waku);
+
+--------------
+drop table if exists power_avgtime;
+create table power_avgtime (
+ymd varchar(8),
+avgtime numeric(5,2),
+wakurank varchar(2),
+wakurankcnt int,
+wakurankrate numeric(5,2),
+cntrank smallint,
+raterank smallint,
+totalrank smallint
+);
+drop index if exists indexes_power_avgtime;
+create index indexes_power_avgtime on power_avgtime (ymd, avgtime,wakurank);
+
+--------------
+drop table if exists wakurank_avgtime;
+create table wakurank_avgtime (
+ymd varchar(8),
+avgtime numeric(5,2),
+wakurank varchar(2),
+wakurankcnt int,
+wakurankrate numeric(5,2)
+);
+drop index if exists indexes_wakurank_avgtime;
+create index indexes_wakurank_avgtime on wakurank_avgtime (ymd, avgtime,wakurank);
+
+--------------
+drop table if exists total_avgtime;
+create table total_avgtime (
+ymd varchar(8),
+avgtime numeric(5,2),
+racecnt int,
+flyingcnt int,
+latecnt int,
+waku1cnt  int,
+waku2cnt  int,
+waku3cnt  int,
+waku4cnt  int,
+waku5cnt  int,
+waku6cnt  int,
+rank1cnt  int,
+rank2cnt  int,
+rank3cnt  int,
+rank4cnt  int,
+rank5cnt  int,
+rank6cnt  int,
+rank1rate numeric(5,2),
+rank2rate numeric(5,2),
+rank3rate numeric(5,2),
+rank4rate numeric(5,2),
+rank5rate numeric(5,2),
+rank6rate numeric(5,2)
+);
+drop index if exists indexes_total_avgtime;
+create index indexes_total_avgtime on total_avgtime (ymd, avgtime);
+
+--------------------------------------------------------------------------------------------------
+�ｽ�ｽ�ｽ[�ｽ^�ｽ�ｽ�ｽ�ｽ
+--------------------------------------------------------------------------------------------------
+drop table if exists power_jyo_motor_bettype;
+create table power_jyo_motor_bettype (
+ymd varchar(8),
+bettype varchar(3),
+jyocd varchar(2),
+motorno smallint,
+waku varchar(1),
+powerrank smallint
+);
+drop index if exists indexes_power_jyo_motor_bettype;
+create index indexes_power_jyo_motor_bettype on power_jyo_motor_bettype (ymd, jyocd, motorno, bettype, waku);
+
+--------------
+drop table if exists power_jyo_motor;
+create table power_jyo_motor (
+ymd varchar(8),
+jyocd varchar(2),
+motorno smallint,
+wakurank varchar(2),
+wakurankcnt int,
+wakurankrate numeric(5,2),
+cntrank smallint,
+raterank smallint,
+totalrank smallint
+);
+drop index if exists indexes_power_jyo_motor;
+create index indexes_power_jyo_motor on power_jyo_motor (ymd, jyocd, motorno, wakurank);
+
+--------------
+drop table if exists wakurank_jyo_motor;
+create table wakurank_jyo_motor (
+ymd varchar(8),
+jyocd varchar(2),
+motorno smallint,
+wakurank varchar(2),
+wakurankcnt int,
+wakurankrate numeric(5,2)
+);
+drop index if exists indexes_wakurank_jyo_motor;
+create index indexes_wakurank_jyo_motor on wakurank_jyo_motor (ymd, jyocd, motorno, wakurank);
+
+--------------
+drop table if exists total_jyo_motor;
+create table total_jyo_motor (
+ymd varchar(8),
+jyocd varchar(2),
+motorno smallint,
+racecnt int,
+flyingcnt int,
+latecnt int,
+waku1cnt  int,
+waku2cnt  int,
+waku3cnt  int,
+waku4cnt  int,
+waku5cnt  int,
+waku6cnt  int,
+rank1cnt  int,
+rank2cnt  int,
+rank3cnt  int,
+rank4cnt  int,
+rank5cnt  int,
+rank6cnt  int,
+rank1rate numeric(5,2),
+rank2rate numeric(5,2),
+rank3rate numeric(5,2),
+rank4rate numeric(5,2),
+rank5rate numeric(5,2),
+rank6rate numeric(5,2)
+);
+drop index if exists indexes_total_jyo_motor;
+create index indexes_total_jyo_motor on total_jyo_motor (ymd, jyocd, motorno);
+
+--------------------------------------------------------------------------------------------------
+�ｽI�ｽ阨ｪ�ｽ�ｽ
+--------------------------------------------------------------------------------------------------
+drop table if exists power_racer_bettype;
+create table power_racer_bettype (
+ymd varchar(8),
+bettype varchar(3),
+jyocd varchar(2),
+entry smallint,
+waku varchar(1),
+powerrank smallint
+);
+drop index if exists indexes_power_racer_bettype;
+create index indexes_power_racer_bettype on power_racer_bettype (ymd, entry, bettype, waku);
+
+--------------
+drop table if exists power_racer;
+create table power_racer (
+ymd varchar(8),
+jyocd varchar(2),
+entry smallint,
+wakurank varchar(2),
+wakurankcnt int,
+wakurankrate numeric(5,2),
+cntrank smallint,
+raterank smallint,
+totalrank smallint
+);
+drop index if exists indexes_power_racer;
+create index indexes_power_racer on power_racer (ymd, entry, wakurank);
+
+--------------
+drop table if exists wakurank_racer;
+create table wakurank_racer (
+ymd varchar(8),
+jyocd varchar(2),
+entry smallint,
+wakurank varchar(2),
+wakurankcnt int,
+wakurankrate numeric(7,2)
+);
+drop index if exists indexes_wakurank_racer;
+create index indexes_wakurank_racer on wakurank_racer (ymd, entry, wakurank);
+
+--------------
+drop table if exists total_racer;
+create table total_racer (
+ymd varchar(8),
+jyocd varchar(2),
+entry smallint,
+racecnt int,
+flyingcnt int,
+latecnt int,
+waku1cnt  int,
+waku2cnt  int,
+waku3cnt  int,
+waku4cnt  int,
+waku5cnt  int,
+waku6cnt  int,
+rank1cnt  int,
+rank2cnt  int,
+rank3cnt  int,
+rank4cnt  int,
+rank5cnt  int,
+rank6cnt  int,
+rank1rate numeric(5,2),
+rank2rate numeric(5,2),
+rank3rate numeric(5,2),
+rank4rate numeric(5,2),
+rank5rate numeric(5,2),
+rank6rate numeric(5,2)
+);
+drop index if exists indexes_total_racer;
+create index indexes_total_racer on total_racer (ymd, entry);
+--------------------------------------------------------------------------------------------------
+�ｽ�ｽ�ｽv-levelrank
+--------------------------------------------------------------------------------------------------
+drop table if exists zen_pattern;
+create table zen_pattern (
+bettype varchar(8),
+pattern1 varchar(200),
+pattern2 varchar(200),
+patterncnt int,
+betamount int
+);
+create index indexes_zen_pattern on zen_pattern (bettype, pattern1, pattern2);
+
+drop table if exists zen_race;
+create table zen_race (
+bettype varchar(8),
+pattern1 varchar(200),
+pattern2 varchar(200),
+kumiban varchar(3),
+hitcount int,
+prize int
+);
+create index indexes_zen_race on zen_race (bettype, pattern1, pattern2);
+
+drop table if exists zen_stat;
+create table zen_stat 
+(
+bettype varchar(8),
+pattern1 varchar(200),
+pattern2 varchar(200),
+kumiban varchar(3),
+patterncnt int,
+betamount int,
+hitcount int,
+prize int,
+hitrate numeric(7,2),
+incomerate numeric(7,2),
+avgodds numeric(7,2)
+);
+create index indexes_zen_stat on zen_stat (bettype, pattern1, pattern2, kumiban);
+
+drop table if exists zen_filter;
+create table zen_filter 
+(
+bettype varchar(8),
+pattern1 varchar(200),
+pattern2 varchar(200),
+kumiban varchar(3),
+patterncnt int,
+betamount int,
+hitcount int,
+prize int,
+hitrate numeric(7,2),
+incomerate numeric(7,2),
+avgodds numeric(7,2)
+);
+create index indexes_zen_filter on zen_filter (bettype, pattern1, pattern2, kumiban);
+
+drop table if exists zen_overall_real;
+create table zen_overall_real (
+    description character varying(400)
+  , betcnt_total integer
+  , betcnt_daily integer
+  , hitcnt_total integer
+  , hitcnt_daily integer
+  , betamt_total integer
+  , betamt_daily integer
+  , hitamt_total integer
+  , hitamt_daily integer
+  , hitrate_min numeric(10, 2)
+  , hitrate_max numeric(10, 2)
+  , hitrate_avg numeric(10, 2)
+  , hitrate_mode numeric(10, 2)
+  , hitrate_center numeric(10, 2)
+  , incomerate_min numeric(10, 2)
+  , incomerate_max numeric(10, 2)
+  , incomerate_avg numeric(10, 2)
+  , incomerate_mode numeric(10, 2)
+  , incomerate_center numeric(10, 2)
+  , avgodds_min numeric(10, 2)
+  , avgodds_max numeric(10, 2)
+  , avgodds_avg numeric(10, 2)
+  , avgodds_mode numeric(10, 2)
+  , avgodds_center numeric(10, 2)
+  , balance_total integer
+  , balance_daily integer
+);
+create index indexes_zen_overall_real on zen_overall_real (description);
+
+
+drop table if exists zen_result_real;
+create table zen_result_real (
+	ymd varchar(8),
+	jyocd varchar(2),
+	raceno smallint,
+	description varchar(400),
+	bettype varchar(2),
+	pattern1 varchar(200),
+	pattern2 varchar(200),
+	bet_kumiban varchar(4),
+	bet_odds numeric(7,2),
+	bet_oddsrank int,
+	result_kumiban varchar(4),
+	result_odds numeric(7,2),
+	result_oddsrank int,
+	hityn varchar(1)
+);
+create index indexes_zen_result_real on zen_result_real (ymd, jyocd, raceno, description, bettype, pattern1, pattern2);
+
+drop table if exists zen_result_stat_ml;
+create table zen_result_stat_ml (
+	description varchar(400),
+	bettype varchar(2),
+	pattern1 varchar(200),
+	pattern2 varchar(200),
+	kumiban varchar(4),
+	betcnt_total int,
+	betcnt_daily int,
+	hitcnt_total int,
+	hitcnt_daily int,
+	betamt_total int,
+	betamt_daily int,
+	hitamt_total int,
+	hitamt_daily int,
+	hitrate numeric(7,2),
+	incomerate numeric(7,2),
+	balance int,
+	balance_daily int, 
+	betodds_min numeric(7,2),
+	resultodds_min numeric(7,2),
+	betodds_max numeric(7,2),
+	resultodds_max numeric(7,2),
+	betodds_avg numeric(7,2),
+	resultodds_avg numeric(7,2),
+	betodds_mode numeric(7,2),
+	resultodds_mode numeric(7,2),
+	betodds_center numeric(7,2),
+	resultodds_center numeric(7,2),
+	betoddsrank_min int,
+	resultoddsrank_min int,
+	betoddsrank_max int,
+	resultoddsrank_max int,
+	betoddsrank_avg int,
+	resultoddsrank_avg int,
+	betoddsrank_mode int,
+	resultoddsrank_mode int,
+	betoddsrank_center int,
+	resultoddsrank_center int
+);
+create index indexes_zen_result_stat_ml on zen_result_stat_ml (description, bettype, pattern1, pattern2, kumiban);
+
+drop table if exists zen_result_overall_real;
+create table zen_result_overall_real (
+	description varchar(400),
+	betcnt_overall int,
+	betcnt_daily int,
+	hitcnt_overall int,
+	hitcnt_daily int,
+	betamt_overall int,
+	betamt_daily int,
+	hitamt_overall int,
+	hitamt_daily int,
+	hitrate_min numeric(7,2),
+	hitrate_max numeric(7,2),
+	hitrate_avg numeric(7,2),
+	hitrate_mode numeric(7,2),
+	hitrate_center numeric(7,2),
+	incomerate_min numeric(7,2),
+	incomerate_max numeric(7,2),
+	incomerate_avg numeric(7,2),
+	incomerate_mode numeric(7,2),
+	incomerate_center numeric(7,2),
+	balance_overall int,
+	balance_daily int
+);
+create index indexes_zen_result_overall_real on zen_result_overall_real (description);
+
+
+--------------------------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------------------------
+drop table if exists rec_race_waku;
+create table rec_race_waku (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+entry1 smallint,
+entry2 smallint,
+entry3 smallint,
+entry4 smallint,
+entry5 smallint,
+entry6 smallint,
+motorno1 smallint,
+motorno2 smallint,
+motorno3 smallint,
+motorno4 smallint,
+motorno5 smallint,
+motorno6 smallint,
+avgtime1 numeric(5,2),
+avgtime2 numeric(5,2),
+avgtime3 numeric(5,2),
+avgtime4 numeric(5,2),
+avgtime5 numeric(5,2),
+avgtime6 numeric(5,2),
+avgst1 numeric(5,2),
+avgst2 numeric(5,2),
+avgst3 numeric(5,2),
+avgst4 numeric(5,2),
+avgst5 numeric(5,2),
+avgst6 numeric(5,2),
+setuavgst1 numeric(5,2),
+setuavgst2 numeric(5,2),
+setuavgst3 numeric(5,2),
+setuavgst4 numeric(5,2),
+setuavgst5 numeric(5,2),
+setuavgst6 numeric(5,2),
+setuavgwin1 smallint,
+setuavgwin2 smallint,
+setuavgwin3 smallint,
+setuavgwin4 smallint,
+setuavgwin5 smallint,
+setuavgwin6 smallint,
+flcount1 smallint,
+flcount2 smallint,
+flcount3 smallint,
+flcount4 smallint,
+flcount5 smallint,
+flcount6 smallint,
+tilt1 numeric(5,2),
+tilt2 numeric(5,2),
+tilt3 numeric(5,2),
+tilt4 numeric(5,2),
+tilt5 numeric(5,2),
+tilt6 numeric(5,2),
+homeyn1 smallint,
+homeyn2 smallint,
+homeyn3 smallint,
+homeyn4 smallint,
+homeyn5 smallint,
+homeyn6 smallint
+);
+create index indexes_rec_race_waku on rec_race_waku (ymd, jyocd, raceno);
+
+--------------
+drop table if exists rec_race_metric;
+create table rec_race_metric (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+a1count int,
+a2count int,
+b1count int,
+b2count int
+);
+create index indexes_rec_race_metric on rec_race_metric (ymd, jyocd, raceno);
+
+--------------
+drop table if exists rec_racer;
+create table rec_racer (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+entry smallint,
+y smallint,
+m smallint,
+d smallint,
+sex varchar(2),
+age smallint,
+level varchar(2),
+weight numeric(3,1),
+branch varchar(4),
+exhibit numeric(5,2),
+startexhibit numeric(5,2),
+flying smallint,
+late smallint,
+averagestart numeric(5,2),
+avgtime numeric(5,2),
+nationwiningrate numeric(5,2),
+nation2winingrate numeric(5,2),
+nation3winingrate numeric(5,2),
+localwiningrate numeric(5,2),
+local2winingrate numeric(5,2),
+local3winingrate numeric(5,2),
+motorno smallint,
+motor2winingrate numeric(5,2),
+motor3winingrate numeric(5,2),
+boatno smallint,
+boat2winingrate numeric(5,2),
+boat3winingrate numeric(5,2),
+waku smallint,
+rank smallint,
+startresult numeric(5,2)
+);
+drop index if exists indexes_rec_racer;
+create index indexes_rec_racer on rec_racer (ymd, jyocd, raceno, entry);
+
+--------------
+drop table if exists rec_race;
+create table rec_race (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+sime varchar(4),
+temparature numeric(3,1),
+weather varchar(8),
+winddirection smallint,
+wind numeric(3,1),
+watertemp numeric(3,1),
+wave smallint,
+grade varchar(2),
+isvenus varchar(2),
+timezone varchar(2),
+turn varchar(2),
+sanrentanno varchar(3),
+sanrentanprize integer,
+sanrentanpopular smallint,
+sanrenhukuno varchar(3),
+sanrenhukuprize integer,
+sanrenhukupopular smallint,
+nirentanno varchar(3),
+nirentanprize integer,
+nirentanpopular smallint,
+nirenhukuno varchar(3),
+nirenhukuprize integer,
+nirenhukupopular smallint,
+tansyono varchar(3),
+tansyoprize integer,
+tansyopopular smallint,
+kimarite varchar(10),
+wakurank varchar(6),
+levelrank varchar(6),
+resultlevelrank varchar(20),
+nationwiningrank varchar(6),
+nation2winingrank varchar(6),
+nation3winingrank varchar(6),
+localwiningrank varchar(6),
+local2winingrank varchar(6),
+local3winingrank varchar(6),
+motor2rank varchar(6),
+motor3rank varchar(6),
+startexhibitrank varchar(6),
+exhibitrank varchar(6),
+averagestartrank varchar(6),
+fixedentrance varchar(6),
+racetype varchar(20),
+wakulevellist varchar(20),
+alevelcount smallint,
+femalecount smallint
+);
+create index indexes_rec_race on rec_race (ymd, jyocd, raceno);
+
+drop table if exists rec_race_tp;
+create table rec_race_tp (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+y smallint,
+m smallint,
+d smallint,
+sime varchar(4),
+temparature numeric(3,1),
+weather varchar(8),
+winddirection smallint,
+wind numeric(3,1),
+watertemp numeric(3,1),
+wave smallint,
+grade varchar(2),
+isvenus varchar(2),
+timezone varchar(2),
+turn varchar(2),
+sanrentanno varchar(3),
+sanrentanprize integer,
+sanrentanpopular smallint,
+sanrenhukuno varchar(3),
+sanrenhukuprize integer,
+sanrenhukupopular smallint,
+nirentanno varchar(3),
+nirentanprize integer,
+nirentanpopular smallint,
+nirenhukuno varchar(3),
+nirenhukuprize integer,
+nirenhukupopular smallint,
+tansyono varchar(3),
+tansyoprize integer,
+tansyopopular smallint,
+kimarite varchar(10),
+wakurank varchar(6),
+levelrank varchar(6),
+resultlevelrank varchar(20),
+nationwiningrank varchar(6),
+nation2winingrank varchar(6),
+nation3winingrank varchar(6),
+localwiningrank varchar(6),
+local2winingrank varchar(6),
+local3winingrank varchar(6),
+motor2rank varchar(6),
+motor3rank varchar(6),
+startexhibitrank varchar(6),
+exhibitrank varchar(6),
+averagestartrank varchar(6),
+fixedentrance varchar(6),
+racetype varchar(20),
+wakulevellist varchar(20),
+alevelcount smallint,
+femalecount smallint
+);
+drop index if exists indexes_rec_race_tp;
+create index indexes_rec_race_tp on rec_race_tp (ymd, jyocd, raceno);
+
+
+
+create schema boatstat authorization postgres
+
+
+create database boatstat owner postgres encoding 'UTF-8';
+create database boatstat owner postgres encoding 'UTF-8';
+
+
+drop database boatstat2;
+create database boatstat2 with 

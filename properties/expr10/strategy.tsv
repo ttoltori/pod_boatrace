@@ -1,0 +1,5 @@
+#id	java_class	manji_factor	manji_odds
+Default	RCDefault	-1	-1
+ManjiOdds	RCManjiOdds	0.08	80
+ManjiNoOdds	RCManjiOdds	0.08	80
+SCDefault	SCDefault	-1	-1

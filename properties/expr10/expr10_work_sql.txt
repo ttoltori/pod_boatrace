@@ -1,0 +1,1778 @@
+  
+  
+
+
+멜버른 2010.3.27 IWAKI AUDITORIUM
+create database boatonline owner postgres;
+
+
+ml_result 325-648
+ml_result 758-852
+
+--connect
+chcp 932
+psql -h localhost -U postgres -d boatml -p 55432
+
+set client_encoding='SJIS';
+
+cd C:\Dev\workspace\Oxygen\pod_boatrace_test\experiment\expr10
+
+
+
+--------- model, result config update  -----------
+truncate ml_model_config;
+copy ml_model_config from 'C:\Dev\workspace\Oxygen\pod_boatrace\properties\expr10\model_config.upload.tsv' csv delimiter E'\t';
+
+truncate ml_result_config;
+copy ml_result_config from 'C:\Dev\workspace\Oxygen\pod_boatrace\properties\expr10\result_config.upload.tsv' csv delimiter E'\t';
+
+---------- DB Backup -----------
+copy (select * from ml_classification) 
+to 'D:\Dev\tmp\ml_classification.tsv' csv delimiter E'\t' header;
+
+copy (select * from ml_evaluation) 
+to 'D:\Dev\tmp\ml_evaluation.tsv' csv delimiter E'\t' header;
+
+---------- export from desktop -----------
+copy (select * from ml_classification where modelno::int in (99102,99103)) 
+to 'D:\Dev\export\20220503\ml_classification.tsv' csv delimiter E'\t' header;
+
+copy (select * from rec_race where ymd::int >= 20220425)
+to 'D:\Dev\export\20220503\rec_race.tsv' csv delimiter E'\t' header;
+
+copy (select * from rec_racer_arr where ymd::int >= 20220405)
+to 'D:\Dev\export\rec_racer_arr.20220426_1.tsv' csv delimiter E'\t' header;
+
+
+---------- import from desktop -----------
+copy ml_classification from 'C:\Dev\export\ml_classification.20220128_1.tsv' csv delimiter E'\t' header;
+
+copy ml_classification_store from 'G:\!!DevBackup\experiment\expr10\dbbackup\ml_classification.20220207.tsv' csv delimiter E'\t' header;
+
+copy rec_race from 'C:\Dev\export\rec_race.20220426_1.tsv' csv delimiter E'\t' header;
+
+copy rec_racer_arr from 'C:\Dev\export\rec_racer_arr.20220426_1.tsv' csv delimiter E'\t' header;
+
+---------- export from laptop-----------
+copy (select * from ml_classification where modelno::int in (99103) and ymd::int <= 20220309)
+to 'C:\Dev\export\ml_classification.20220427_2.tsv' csv delimiter E'\t' header;
+
+
+---------- import from laptop-----------
+copy ml_classification from 'D:\Dev\export\ml_classification.20220206_1.tsv' csv delimiter E'\t' header;
+
+copy ml_classification from 'D:\Dev\export\ml_classification.20220427_2.tsv' csv delimiter E'\t' header;
+
+insert into ml_classification select * from ml_classification_bk1 where modelno::int in (99069,99072);
+
+!!!노트북에서 ml_classify할때 referential은 model_release, ml_classification도 동기화해두어야 한다.
+
+========================================================================
+20221119
+alter table ml_evaluation
+
+
+
+========================================================================
+20221116
+
+copy (select * from ml_evaluation) to 'C:\Dev\tmp\ml_evaluation.tsv' csv delimiter E'\t' header;
+copy (select * from ml_bork_evaluation) to 'C:\Dev\tmp\ml_bork_evaluation.tsv' csv delimiter E'\t' header;
+copy (select * from ml_pr_evaluation) to 'C:\Dev\tmp\ml_pr_evaluation.tsv' csv delimiter E'\t' header;
+copy (select * from ml_range_evaluation) to 'C:\Dev\tmp\ml_range_evaluation.tsv' csv delimiter E'\t' header;
+
+copy ml_evaluation from 'C:\Dev\temp\ml_evaluation.tsv' csv delimiter E'\t' header;
+copy ml_bork_evaluation from 'C:\Dev\temp\ml_bork_evaluation.tsv' csv delimiter E'\t' header;
+copy ml_pr_evaluation from 'C:\Dev\temp\ml_pr_evaluation.tsv' csv delimiter E'\t' header;
+copy ml_range_evaluation from 'C:\Dev\temp\ml_range_evaluation.tsv' csv delimiter E'\t' header;
+
+========================================================================
+20221116
+drop table ml_evaluation
+
+
+========================================================================
+20221103
+drop table tmp;
+create table tmp as select * from ml_bork_evaluation;
+
+ALTER TABLE ml_bork_evaluation ADD COLUMN bor_min double precision[];
+ALTER TABLE ml_bork_evaluation ADD COLUMN bor_max double precision[];
+
+========================================================================
+20221030
+
+drop table ml_evaluation_bk1;
+drop table ml_bork_evaluation_bk1;
+drop table ml_range_evaluation_bk1;
+drop table ml_rork_evaluation_bk1;
+
+create table ml_evaluation_bk1 as select * from ml_evaluation;
+create table ml_bork_evaluation_bk1 as select * from ml_bork_evaluation;
+create table ml_range_evaluation_bk1 as select * from ml_range_evaluation;
+create table ml_rork_evaluation_bk1 as select * from ml_rork_evaluation;
+create table ml_pr_evaluation_bk1 as select * from ml_pr_evaluation;
+
+truncate ml_evaluation;
+truncate ml_bork_evaluation;
+truncate ml_range_evaluation;
+truncate ml_rork_evaluation;
+truncate ml_pr_evaluation;
+
+
+
+delete from ml_evaluation where bettype in ('2M', '3N', '3M', '3P', '3R', '3U', '3Y');
+delete from ml_bork_evaluation where bettype in ('2M', '3N', '3M', '3P', '3R', '3U', '3Y');
+delete from ml_range_evaluation where bettype in ('2M', '3N', '3M', '3P', '3R', '3U', '3Y');
+delete from ml_rork_evaluation where bettype in ('2M', '3N', '3M', '3P', '3R', '3U', '3Y');
+
+
+
+
+
+;
+
+
+
+========================================================================
+20221001 rec_race에 weekday컬럼 추가
+drop table tmp;
+create table tmp as select * from rec_race;
+truncate rec_race;
+alter table rec_race add column weekday varchar(1);
+
+insert into rec_race 
+select *, (extract(dow from to_date('20221003', 'YYYYMMDD')))::text from tmp;
+
+========================================================================
+20220918 stat_pr테이블 작성`
+delete from ml_evaluation where resultno::int = 93414;
+delete from ml_evaluation where resultno::int = 268319;
+
+create table stat_pr_tmp as
+SELECT result_type, (case when result_type = '21' then 'ip,G3' else 'SG,G1,G2' end) grades, bettype, kumiban, resultno, modelno, patternid, pattern, 
+  sum(incamt[27]/500+incamt[28]/500+incamt[29]/500+incamt[30]/500+incamt[31]/500+incamt[32]/500+incamt[33]/500+incamt[34]/500+incamt[35]/500) i0,
+  sum(incamt[24]/500+incamt[25]/500+incamt[26]/500) i1,
+  sum(incamt[21]/500+incamt[22]/500+incamt[23]) i2,
+  sum(incamt[18]/500+incamt[19]/500+incamt[20]/500) i3,
+  sum(incamt[15]/500+incamt[16]/500+incamt[17]/500) i4,
+  sum(incamt[12]/500+incamt[13]/500+incamt[14]/500) i5,
+  sum(incamt[9]/500+incamt[10]/500+incamt[11]/500) i6,
+  sum(incamt[6]/500+incamt[7]/500+incamt[8]/500) i7,
+  sum(incamt[3]/500+incamt[4]/500+incamt[5]/500) i8,
+  sum(incamt[0]/500+incamt[1]/500+incamt[2]/500) i9
+FROM ml_pr_evaluation
+group by result_type, grades, bettype, kumiban, resultno, modelno, patternid, pattern
+;
+
+insert into stat_pr
+select 
+  result_type, grades, bettype, kumiban, resultno, modelno, patternid, pattern, 
+  i0, i1, i2, i3, i4, i5, i6, i7, i8, i9,
+  i01, i02, i03, i04, i05, i06, i07, i08, i09,
+  i89, i79, i69, i59, i49, i39, i29, i19, 
+  i13, i24, i35, i46, i57, i68, 
+  i14, i25, i36, i47, i58, 
+  i15, i26, i37, i48, i45,
+  incamt, betcnt, incrate, hitrate, bal_pluscnt
+from (
+  select 
+    (case when me.result_type = '21' then 'ip,G3' else 'SG,G1,G2' end) grades, me.bettype, me.kumiban, me.resultno, me.result_type, me.modelno, me.patternid, me.pattern, 
+    sp.i0 i0, sp.i1 i1, sp.i2 i2, sp.i3 i3, sp.i4 i4, 
+    sp.i5 i5, sp.i6 i6, sp.i7 i7, sp.i8 i8, sp.i9 i9, 
+    (sp.i0 + sp.i1) i01, 
+    (sp.i0 + sp.i1 + sp.i2) i02, 
+    (sp.i0 + sp.i1 + sp.i2 + sp.i3) i03, 
+    (sp.i0 + sp.i1 + sp.i2 + sp.i3 + sp.i4) i04, 
+    (sp.i0 + sp.i1 + sp.i2 + sp.i3 + sp.i4 + sp.i5) i05,
+    (sp.i0 + sp.i1 + sp.i2 + sp.i3 + sp.i4 + sp.i5 + sp.i6) i06,
+    (sp.i0 + sp.i1 + sp.i2 + sp.i3 + sp.i4 + sp.i5 + sp.i6 + sp.i7) i07,
+    (sp.i0 + sp.i1 + sp.i2 + sp.i3 + sp.i4 + sp.i5 + sp.i6 + sp.i7 + sp.i8) i08,
+    (sp.i0 + sp.i1 + sp.i2 + sp.i3 + sp.i4 + sp.i5 + sp.i6 + sp.i7 + sp.i8 + sp.i9) i09,
+    (sp.i8 + sp.i9) i89, 
+    (sp.i7 + sp.i8 + sp.i9) i79, 
+    (sp.i6 + sp.i7 + sp.i8 + sp.i9) i69, 
+    (sp.i5 + sp.i6 + sp.i7 + sp.i8 + sp.i9) i59, 
+    (sp.i4 + sp.i5 + sp.i6 + sp.i7 + sp.i8 + sp.i9) i49,
+    (sp.i3 + sp.i4 + sp.i5 + sp.i6 + sp.i7 + sp.i8 + sp.i9) i39,
+    (sp.i2 + sp.i3 + sp.i4 + sp.i5 + sp.i6 + sp.i7 + sp.i8 + sp.i9) i29,
+    (sp.i1 + sp.i2 + sp.i3 + sp.i4 + sp.i5 + sp.i6 + sp.i7 + sp.i8 + sp.i9) i19,
+    (sp.i1 + sp.i2 + sp.i3) i13,
+    (sp.i2 + sp.i3 + sp.i4) i24,
+    (sp.i3 + sp.i4 + sp.i5) i35,
+    (sp.i4 + sp.i5 + sp.i6) i46,
+    (sp.i5 + sp.i6 + sp.i7) i57,
+    (sp.i6 + sp.i7 + sp.i8) i68,
+    -- (sp.i7 + sp.i8 + sp.i9) i79,
+    (sp.i1 + sp.i2 + sp.i3 + sp.i4) i14, 
+    (sp.i2 + sp.i3 + sp.i4 + sp.i5) i25, 
+    (sp.i3 + sp.i4 + sp.i5 + sp.i6) i36, 
+    (sp.i4 + sp.i5 + sp.i6 + sp.i7) i47, 
+    (sp.i5 + sp.i6 + sp.i7 + sp.i8) i58, 
+    -- (sp.i6 + sp.i7 + sp.i8 + sp.i9) i69,
+	(sp.i1 + sp.i2 + sp.i3 + sp.i4 + sp.i5) i15,    
+	(sp.i2 + sp.i3 + sp.i4 + sp.i5 + sp.i6) i26,    
+	(sp.i3 + sp.i4 + sp.i5 + sp.i6 + sp.i7) i37,    
+	(sp.i4 + sp.i5 + sp.i6 + sp.i7 + sp.i8) i48,    
+	(sp.i4 + sp.i5) i45,    
+	-- (sp.i5 + sp.i6 + sp.i7 + sp.i8 + sp.i9) i59,    
+    (me.hitamt - me.betamt) incamt, me.betcnt, 
+    (me.hitamt::float / me.betamt::float)::numeric(5,2) incrate, (me.hitcnt::float / me.betcnt::float)::numeric(5,2) hitrate, me.bal_pluscnt,     
+    'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bk, 'x' range_selector, 'x' bonus_bkbor
+  from ml_evaluation me, stat_pr_tmp sp
+  where me.resultno = sp.resultno and me.result_type = sp.result_type and me.bettype = sp.bettype and me.kumiban = sp.kumiban and me.modelno = sp.modelno and me.patternid  = sp.patternid and me.pattern = sp.pattern
+--    and me.result_type in  ('1', '11')
+-- and me.resultno::int between 2278 and 2671
+) tblset
+;
+
+========================================================================
+20220913
+simul;1_24, 27를 조건 첨삭해서 재실행한다.		
+	incr=0, term그래프 일괄생성한다.	
+
+========================================================================
+20220911
+test
+  3U:  92724-92843
+sim
+  3U:  267539-267658
+
+========================================================================
+20220907
+test
+  3P,3R:  92484-92723
+  2N,3X,3Y : 92971-93150
+sim
+  3P,3R:  267299-267538
+  2N,3X,3Y : 268139-268318
+  
+
+
+========================================================================
+20220904
+drop table ml_evaluation_bk6;
+create table ml_evaluation_bk6 as select * from ml_evaluation;
+
+drop table ml_bork_evaluation_bk1;
+create table ml_bork_evaluation_bk1 as select * from ml_bork_evaluation;
+
+drop table ml_range_evaluation_bk1;
+create table ml_range_evaluation_bk1 as select * from ml_range_evaluation;
+
+delete from ml_evaluation where resultno::int between 266993 and 268138;
+delete from ml_bork_evaluation where resultno::int between 266993 and 268138;
+delete from ml_range_evaluation where resultno::int between 266993 and 268138;
+
+delete from ml_evaluation where resultno::int between 91818 and 92963;
+delete from ml_bork_evaluation where resultno::int between 91818 and 92963;
+delete from ml_range_evaluation where resultno::int between 91818 and 92963;
+
+
+========================================================================
+20220828 期間定義削除
+term_833_1=20180601~20220131
+term_833_2=20220201~20220430
+term_833_3=20220501~20220731
+
+term_1211_1=20180601~20220531
+term_1211_2=20220601~20220630
+term_1211_3=20220701~20220731
+
+term_77_1=20180601~20210601
+term_77_2=20210602~20211231
+term_77_3=20220101~20220731
+
+term_877_1=20180601~20211231
+term_877_2=20210602~20211231
+term_877_3=20220101~20220731
+
+term_733_1=20180601~20211231
+term_733_2=20210602~20211231
+term_733_3=20220101~20220331
+term_733_4=20220401~20220630
+
+#term_a742_1=20180601~20211231
+term_a742_2=20210602~20211231
+term_a742_3=20210602~20220430
+term_a742_4=20220501~20220630
+
+term_553_1=20180601~20211031
+term_553_2=20210602~20211031
+term_553_3=20211101~20220331
+term_553_4=20220401~20220630
+
+term_661_2=20210602~20211130
+term_661_3=20211201~20220531
+term_661_4=20220601~20220630
+
+
+
+20220823
+残作業
+ml_simulation_worker 116465-117052 ./properties/simul1_13.properties
+ml_simulation_worker 115877-116464 ./properties/simul1_13.properties
+ml_simulation_worker 110585-111643 ./properties/simul1_12.properties
+ml_simulation_worker 111644-112702 ./properties/simul1_12.properties
+ml_simulation_worker 112703-113761 ./properties/simul1_12.properties
+ml_simulation_worker 113762-114820 ./properties/simul1_12.properties
+ml_simulation_worker 114821-115879 ./properties/simul1_12.properties
+
+
+
+
+create table ml_evaluation_sim as
+select * from ml_evaluation where evaluations_id like 'sim_%';
+create index indexes_ml_evaluation_sim on ml_evaluation_sim (resultno, modelno, patternid, pattern, bettype, kumiban, result_type);
+create index indexes_ml_evaluation_sim_evaluationsid on ml_evaluation_sim (evaluations_id);
+
+
+
+update ml_evaluation set evaluations_id = 'sim_3_default_ip_10' where resultno::int between 30283 and 31164;
+update ml_evaluation set evaluations_id = 'sim_3_default_SG_10' where resultno::int between 31165 and 32046;
+update ml_evaluation set evaluations_id = 'sim_3_digit1_ip_10' where resultno::int between  32047 and 32928;
+update ml_evaluation set evaluations_id = 'sim_3_digit1_SG_10' where resultno::int between 32929 and 33810;
+update ml_evaluation set evaluations_id = 'sim_3_dist12_ip_10' where resultno::int between 45571 and 46542;
+update ml_evaluation set evaluations_id = 'sim_3_dist12_SG_10' where resultno::int between 46453 and 47334;
+update ml_evaluation set evaluations_id = 'sim_6_default_ip_10' where resultno::int between 52336 and 55275;
+update ml_evaluation set evaluations_id = 'sim_6_default_SG_10' where resultno::int between 24403 and 27342;
+update ml_evaluation set evaluations_id = 'sim_6_digit1_ip_10' where resultno::int between  55276 and 58215;
+update ml_evaluation set evaluations_id = 'sim_6_digit1_SG_10' where resultno::int between  27343 and 30282;
+update ml_evaluation set evaluations_id = 'sim_6_dist12_ip_10' where resultno::int between  39691 and 42630;
+update ml_evaluation set evaluations_id = 'sim_6_dist12_SG_10' where resultno::int between 42631 and 45570;
+update ml_evaluation set evaluations_id = 'sim_7_digit1_ip_10' where resultno::int between 64096 and 68505;
+update ml_evaluation set evaluations_id = 'sim_7_digit1_SG_10' where resultno::int between 72916 and 77315;
+update ml_evaluation set evaluations_id = 'sim_8_default_ip_10' where resultno::int between 84676 and 87651;
+update ml_evaluation set evaluations_id = 'sim_8_default_SG_10' where resultno::int between 36751 and 39690;
+update ml_evaluation set evaluations_id = 'sim_8_digit1_ip_10' where resultno::int between 81736 and 84675;
+update ml_evaluation set evaluations_id = 'sim_8_digit1_SG_10' where resultno::int between 33811 and 36750;
+
+
+20220818
+create table ml_evaluation_bk5 as select * from ml_evaluation me;
+
+truncate 
+
+
+
+
+ml_result 1-151
+ml_result 152-302
+ml_result 303-453
+ml_result 454-604
+ml_result 605-755
+ml_result 756-906
+ml_result 907-1052
+
+create table stat_bork as
+select '~' sel, row_number() over (partition by result_type, bettype, kumiban order by ( betcnt ) desc ) as ranking, *
+from (
+  select 
+    'ip,G3' grades, me.bettype, me.kumiban, me.resultno, me.result_type, me.modelno, me.patternid, me.pattern, 
+    bk.incamt[0]/500 i0, bk.incamt[1]/500 i1, bk.incamt[2]/500 i2, bk.incamt[3]/500 i3, bk.incamt[4]/500 i4, 
+    bk.incamt[5]/500 i5, bk.incamt[6]/500 i6, bk.incamt[7]/500 i7, bk.incamt[8]/500 i8, bk.incamt[9]/500 i9, 
+    (bk.incamt[0]/500 + bk.incamt[1]/500 + bk.incamt[2]/500) i02, 
+    (bk.incamt[1]/500 + bk.incamt[2]/500 + bk.incamt[3]/500) i13, 
+    (bk.incamt[2]/500 + bk.incamt[3]/500 + bk.incamt[4]/500) i24, 
+    (bk.incamt[3]/500 + bk.incamt[4]/500 + bk.incamt[5]/500) i35, 
+    (bk.incamt[4]/500 + bk.incamt[5]/500 + bk.incamt[6]/500) i46, 
+    (bk.incamt[5]/500 + bk.incamt[6]/500 + bk.incamt[7]/500) i57, 
+    (bk.incamt[6]/500 + bk.incamt[7]/500 + bk.incamt[8]/500) i68, 
+    (bk.incamt[7]/500 + bk.incamt[8]/500 + bk.incamt[9]/500) i79, 
+    (bk.incamt[0]/500 + bk.incamt[1]/500 + bk.incamt[2]/500 + bk.incamt[3]/500 + bk.incamt[4]/500 + bk.incamt[5]/500) i05,
+    (bk.incamt[0]/500 + bk.incamt[1]/500 + bk.incamt[2]/500 + bk.incamt[3]/500 + bk.incamt[4]/500 + bk.incamt[5]/500 + bk.incamt[6]/500 + bk.incamt[7]/500 + bk.incamt[8]/500 + bk.incamt[9]/500) i09,
+    (me.hitamt - me.betamt) incamt, me.betcnt, me.bal_pluscnt,     
+    'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bk, 'x' range_selector, 'x' bonus_bkbor
+  from ml_evaluation me, ml_bork_evaluation bk
+  where me.resultno = bk.resultno and me.result_type = bk.result_type and me.bettype = bk.bettype and me.kumiban = bk.kumiban and me.modelno = bk.modelno and me.patternid  = bk.patternid and me.pattern = bk.pattern
+    and me.result_type in  ('1', '11')
+) tblset
+where i09 > 0 and modelno <> '99103'
+
+
+
+
+
+
+#ip,G3  , 'x' bonus_borkbor
+--    ( bork.incamt[0] + bork.incamt[1] + bork.incamt[2] + bork.incamt[3] + bork.incamt[4]  + bork.incamt[5]) bork_incamt,
+--    ( bork.betcnt[0] + bork.betcnt[1] + bork.betcnt[2] + bork.betcnt[3] + bork.betcnt[4]  + bork.betcnt[5]) bork_betcnt,
+
+select *
+from (
+  select 
+--    '~' sel, row_number() over (partition by me.result_type, me.bettype, me.kumiban order by ( bork.betcnt[0]+bork.betcnt[1]+bork.betcnt[2]+bork.betcnt[3] ) desc ) as ranking, 
+    '~' sel, row_number() over (partition by me.result_type, me.bettype, me.kumiban order by ( me.betcnt ) desc ) as ranking, 
+    'ip,G3' grades, me.bettype, me.kumiban, me.resultno, me.result_type, me.modelno, me.patternid, me.pattern, me.betcnt, (me.hitamt - me.betamt) incamt,
+    ( bork.incamt[0] + bork.incamt[1] + bork.incamt[2] ) bork_incamt,
+    ( bork.betcnt[0] + bork.betcnt[1] + bork.betcnt[2] ) bork_betcnt,
+    'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+  from ml_evaluation me, ml_bork_evaluation bork
+  where me.resultno = bork.resultno and me.result_type = bork.result_type and me.bettype = bork.bettype and me.kumiban = bork.kumiban and me.modelno = bork.modelno and me.patternid  = bork.patternid and me.pattern = bork.pattern
+    and me.result_type = '1' and me.bettype = '3T' and me.kumiban = '125'
+    and me.patternid like '%prob%' and me.patternid not like '%nw%'
+    and incamt[0] > 0 
+    and (incamt[0]+incamt[1]+incamt[2]+incamt[3]) > 0
+    and me.modelno <> '99103'
+) tblset
+where ranking between 1 and 30
+order by ranking;
+
+
+
+select *
+from (
+  select 
+    -- '~' sel, row_number() over (partition by me.result_type, me.bettype, me.kumiban order by ( rpr_bestmax - pr_bestmax ) asc ) as ranking, ( rpr_bestmax - pr_bestmax )::numeric(5,2) distance,
+    -- '~' sel, row_number() over (partition by me.result_type, me.bettype, me.kumiban order by ( pr_hitamt - pr_betamt ) desc ) as ranking, ( rpr_bestmax - pr_bestmax )::numeric(5,2) distance,
+    '~' sel, row_number() over (partition by me.result_type, me.bettype, me.kumiban order by ( mre.lbork_betcnt ) desc ) as ranking, ( rpr_bestmax - pr_bestmax )::numeric(5,2) distance,
+    'ip,G3' grades, me.bettype, me.kumiban, me.resultno, me.result_type, me.modelno, me.patternid, me.pattern, me.betcnt, (me.hitamt - me.betamt) incamt,
+    me.pr_betrate, me.pr_hitrate, me.pr_betcnt, me.pr_incomerate,  mre.rpr_betcnt, 
+    (pr_bestmin || '~' || pr_bestmax || '=1') bonus_pr,
+    'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+    -- (rpr_bestmin || '~' || rpr_bestmax || '=1') bonus_pr
+  from ml_evaluation me, ml_range_evaluation mre, ml_bork_evaluation mbe 
+  where me.resultno = mre.resultno and me.result_type = mre.result_type and me.bettype = mre.bettype and me.kumiban = mre.kumiban and me.modelno = mre.modelno and me.patternid  = mre.patternid and me.pattern = mre.pattern
+    and me.resultno = mbe.resultno and me.result_type = mbe.result_type and me.bettype = mbe.bettype and me.kumiban = mbe.kumiban and me.modelno = mbe.modelno and me.patternid  = mbe.patternid and me.pattern = mbe.pattern
+    and me.result_type = '12' and me.bettype = '3T' and me.kumiban = '124'
+    and me.patternid like 'prob%' and me.patternid not like '%nw%'
+    and mre.lbork_bestmin = 1 and mbe.incamt[0] > 0
+    -- and (me.hitamt - me.betamt) > 0 
+    -- and me.pr_bestmin = mre.rpr_bestmin 
+    -- and me.modelno not in ('99103')
+    -- and me.betcnt > 260
+) tblset
+where ranking between 1 and 100
+order by ranking;
+
+
+select 
+'~' sel, ranking, 'ip,G3' grades, me_bettype bettype, me_kumiban kumiban, me_resultno resultno, me_result_type result_type, me_modelno modelno, me_patternid patternid, me_pattern pattern, me_betcnt betcnt, me_incamt incamt, 
+ rpr_betrate, rpr_betcnt, (rpr_hitamt - rpr_betamt) rpr_incamt, rpr_hitrate, rpr_incomerate, 
+ -- lbor_betrate, lbor_betcnt, (lbor_hitamt - lbor_betamt) lbor_incamt, lbor_hitrate, lbor_incomerate, 
+ 'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_pr, 'x' bonus_borkbor
+ -- bonusをconcatして自動代入
+from (
+select
+  row_number() over (partition by me.result_type, me.bettype, me.kumiban order by ( rng.rpr_betcnt ) desc ) as ranking,
+  me.bettype me_bettype, me.kumiban me_kumiban, me.resultno me_resultno, me.result_type me_result_type, me.modelno me_modelno, me.patternid me_patternid, me.pattern me_pattern, me.betcnt me_betcnt, (me.hitamt-me.betamt) me_incamt, 
+  rng.*
+from 
+	(
+	select
+       *
+	from ml_evaluation me
+	-- where  bal_pluscnt >= 2
+	--  where bal_pluscnt >= 2  and (hitamt - betamt) > 0
+	 -- where bal_pluscnt >= 2  and (hitamt - betamt) > 3000
+	-- where balance[0] > 100000 and balance[1] > 100000 and balance[2] > 100000
+	-- where bal_slope[0] > 8 and bal_slope[1] > 8 and bal_slope[2] > 8   
+	) me,
+	(	 
+	 select
+	   *
+	 from ml_range_evaluation
+	 where
+	  result_type = '1'
+	  and bettype = '3T' and kumiban = '123'
+	  -- and rpr_betrate = 1
+	  -- and rpr_hitrate > 0.15
+	  -- and (rpr_hitamt - rpr_betamt) > 0
+	  -- and patternid = 'nopattern'
+	  -- and modelno::int in (99103)
+	  --and modelno::int = 99100 and patternid = 'wk1' and pattern = 'B1'
+	  -- and (incamt[0] + incamt[1] + incamt[2] + incamt[3] + incamt[4] + incamt[5]) > 0
+	  -- and incamt[0] > 0
+	  -- and ( (patternid like '%wk%') or  (patternid like '%prob%') ) 
+	  -- and ( (patternid not like '%prob%') )
+	  -- and (patternid not like '%nw%')
+	) rng
+where me.resultno = rng.resultno and me.result_type = rng.result_type and me.bettype = rng.bettype and me.kumiban = rng.kumiban and me.modelno = rng.modelno and me.patternid  = rng.patternid and me.pattern = rng.pattern
+   and me.pr_bestmin = rng.rpr_bestmin
+) tblset
+where ranking between 1 and 30
+;
+
+
+
+
+
+select 
+'~' sel, ranking, 'ip,G3' grades, bettype, kumiban, resultno, result_type, modelno, patternid, pattern, betcnt, incamt, bork_betcnt, bork_incamt, bork_betrate,
+pr_bestmin, pr_bestmax,
+ 'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_pr, 'x' bonus_borkbor
+from (
+select
+  --row_number() over (partition by me.result_type, me.bettype, me.kumiban order by ( bork.betcnt[0] + bork.betcnt[1] + bork.betcnt[2] + bork.betcnt[3] + bork.betcnt[4] ) desc ) as ranking,
+  -- row_number() over (partition by me.result_type, me.bettype, me.kumiban order by ( bork.incamt[0] + bork.incamt[1] + bork.incamt[2] + bork.incamt[3] + bork.incamt[4]  + bork.incamt[5]) desc ) as ranking,
+  row_number() over (partition by me.result_type, me.bettype, me.kumiban order by ( me.betcnt ) desc ) as ranking,
+  ( bork.incamt[0] + bork.incamt[1] + bork.incamt[2] + bork.incamt[3] + bork.incamt[4]  + bork.incamt[5]) bork_incamt,
+  ( bork.betcnt[0] + bork.betcnt[1] + bork.betcnt[2] + bork.betcnt[3] + bork.betcnt[4]  + bork.betcnt[5]) bork_betcnt,
+  (( bork.betrate[0] + bork.betrate[1] + bork.betrate[2] + bork.betrate[3] + bork.betrate[4]  + bork.betrate[5]) / 6.0)::numeric(5,2) bork_betrate,
+  me.*
+from 
+	(
+	select
+	  resultno, result_type, bettype, kumiban, modelno, patternid, pattern,
+	  -- row_number() over (partition by result_type, bettype, kumiban order by (hitamt - betamt) desc ) as ranking,
+	  betcnt,  (hitamt - betamt) incamt,  hitrate,  incomerate,  (hodds_median * hitrate)::numeric(10,2) exprate, pr_betcnt, bor_betrate, pr_bestmin, pr_bestmax, pr_betrate,
+	  prob_mean
+	from ml_evaluation
+	-- where pr_incomerate > 1 
+	--where (prob_min - prob_median) > 0
+	-- where bor_betrate > 0.5
+	-- where  (hitamt - betamt) > 4000
+	 -- where bal_pluscnt >= 2  and (hitamt - betamt) > 3000
+	-- where balance[0] > 100000 and balance[1] > 100000 and balance[2] > 100000
+	-- where bal_slope[0] > 8 and bal_slope[1] > 8 and bal_slope[2] > 8   
+	) me,
+	(	 
+	 select
+	   resultno, result_type, bettype, kumiban, modelno, patternid, pattern, incamt, betcnt, hitcnt, betrate
+	 from ml_bork_evaluation bork
+	 where
+	  result_type = '1'
+	  and bettype = '1T' and kumiban = '4'
+	  -- and patternid = 'nopattern'
+	  and modelno::int in (99100, 99080) and patternid = 'nopattern'
+	  --and modelno::int = 99100 and patternid = 'wk1' and pattern = 'B1'
+	  -- and (incamt[0] + incamt[1] + incamt[2] + incamt[3] + incamt[4] + incamt[5]) > 0
+	  -- and incamt[0] > 0
+	  -- and ( (patternid like '%wk%') or  (patternid like '%prob%') ) 
+	  -- and ( (patternid like '%prob%') )
+	  -- and (patternid not like '%nw%')
+	) bork
+where me.resultno = bork.resultno and me.result_type = bork.result_type and me.bettype = bork.bettype and me.kumiban = bork.kumiban and me.modelno = bork.modelno and me.patternid  = bork.patternid and me.pattern = bork.pattern
+order by betcnt desc
+) tblset
+where ranking between 1 and 30
+;
+
+
+----------------------------
+#SG,G1,G2
+
+select 
+'~' sel, ranking, 'SG,G1,G2' grades, bettype, kumiban, resultno, result_type, modelno, patternid, pattern, betcnt, incamt, bork_betcnt, bork_incamt, bork_betrate,
+ 'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_pr
+from (
+select 
+  row_number() over (partition by me.result_type, me.bettype, me.kumiban order by (bork.betcnt[0]) desc ) as ranking,
+  bork.betcnt[0] bork_betcnt, bork.incamt[0] bork_incamt, bork.betrate[0] bork_betrate,
+  me.*
+from 
+	(
+	select
+	  resultno, result_type, bettype, kumiban, modelno, patternid, pattern,
+	  -- row_number() over (partition by result_type, bettype, kumiban order by (hitamt - betamt) desc ) as ranking,
+	  betcnt,  (hitamt - betamt) incamt,  hitrate,  incomerate,  (hodds_median * hitrate)::numeric(10,2) exprate,
+	  hodds_mean,  hodds_max,  hodds_stddev,  hitcnt,  betamt,  hitamt,
+	  pr_betcnt,  pr_betamt,  pr_hitcnt,  pr_hitamt,  (pr_hitamt - pr_betamt) princamt,
+	  (pr_hitcnt::float / pr_betcnt::float)::numeric(10,2) prhitrate,
+	  (pr_hitamt::float / pr_betamt::float)::numeric(10,2) princrate,
+	  bor_betcnt,  bor_betamt,  bor_hitcnt,  bor_hitamt,  (bor_hitamt - bor_betamt) borincamt,
+	  (bor_hitcnt::float / bor_betcnt::float)::numeric(10,2) borhitrate,
+	  (bor_hitamt::float / bor_betamt::float)::numeric(10,2) borincrate,
+	  ( (bal_slope[0]+bal_slope[1]+bal_slope[2]) / 3 )::numeric(7,2)  balslope_avg
+	from ml_evaluation
+	where  incomerate >= 1.01
+	) me,
+	(	 
+	 select
+	   resultno, result_type, bettype, kumiban, modelno, patternid, pattern, incamt, betcnt, hitcnt, betrate
+	 from ml_bork_evaluation bork
+	 where
+	  result_type = '11'
+	  and bettype = '1T' and kumiban = '1'
+	  and incamt[0] > 0 
+	  and (patternid like '%prob%')
+	) bork
+where me.resultno = bork.resultno and me.result_type = bork.result_type and me.bettype = bork.bettype and me.kumiban = bork.kumiban and me.modelno = bork.modelno and me.patternid  = bork.patternid and me.pattern = bork.pattern
+order by ranking
+) tblset
+where ranking between 1 and 50
+;
+
+	where  (hitamt - betamt) > 0
+--	  and modelno::int = 99100
+--	  and betcnt[0] > 40
+--	  and (patternid like '%prob%' and pattern like '%0.6%')
+--	  and patternid not like '%nw%'
+--	  and patternid = 'nopattern'
+--  row_number() over (partition by me.result_type, me.bettype, me.kumiban order by me.incamt desc ) as ranking,
+--  row_number() over (partition by me.result_type, me.bettype, me.kumiban order by bork.incamt[0] desc ) as ranking,
+--  row_number() over (partition by me.result_type, me.bettype, me.kumiban order by (bork.betcnt[0] + bork.betcnt[1]+bork.betcnt[2]) desc ) as ranking,
+--  row_number() over (partition by me.result_type, me.bettype, me.kumiban order by me.betcnt desc ) as ranking,
+--	where bal_slope[0] > 8 and bal_slope[1] > 8 and bal_slope[2] > 8
+
+
+
+2022/6/12
+ml_result 1053-1103
+ml_result 1104-1154
+ml_result 1155-1205
+ml_result 1206-1256
+ml_result 1257-1292
+
+
+
+#ip,G3
+
+select 
+'~' sel, ranking, 'ip,G3' grades, bettype, kumiban, resultno, result_type, modelno, patternid, pattern, betcnt, incamt, bork_betcnt, bork_incamt, bork_betrate,
+ 'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_pr
+from (
+select 
+  row_number() over (partition by me.result_type, me.bettype, me.kumiban order by (bork.betcnt[0] + bork.betcnt[1] + bork.betcnt[2]) desc ) as ranking,
+  bork.betcnt[0] bork_betcnt, bork.incamt[0] bork_incamt, bork.betrate[0] bork_betrate,
+  me.*
+from 
+	(
+	select
+	  resultno, result_type, bettype, kumiban, modelno, patternid, pattern,
+	  -- row_number() over (partition by result_type, bettype, kumiban order by (hitamt - betamt) desc ) as ranking,
+	  betcnt,  (hitamt - betamt) incamt,  hitrate,  incomerate,  (hodds_median * hitrate)::numeric(10,2) exprate,
+	  hodds_mean,  hodds_max,  hodds_stddev,  hitcnt,  betamt,  hitamt,
+	  pr_betcnt,  pr_betamt,  pr_hitcnt,  pr_hitamt,  (pr_hitamt - pr_betamt) princamt,
+	  (pr_hitcnt::float / pr_betcnt::float)::numeric(10,2) prhitrate,
+	  (pr_hitamt::float / pr_betamt::float)::numeric(10,2) princrate,
+	  bor_betcnt,  bor_betamt,  bor_hitcnt,  bor_hitamt,  (bor_hitamt - bor_betamt) borincamt,
+	  (bor_hitcnt::float / bor_betcnt::float)::numeric(10,2) borhitrate,
+	  (bor_hitamt::float / bor_betamt::float)::numeric(10,2) borincrate,
+	  ( (bal_slope[0]+bal_slope[1]+bal_slope[2]) / 3 )::numeric(7,2)  balslope_avg
+	from ml_evaluation
+	where  (hitamt - betamt) > 0
+	) me,
+	(	 
+	 select
+	   resultno, result_type, bettype, kumiban, modelno, patternid, pattern, incamt, betcnt, hitcnt, betrate
+	 from ml_bork_evaluation bork
+	 where
+	  result_type = '1'
+	  and bettype = '1T' and kumiban = '4'
+	  and incamt[0] > 0 and incamt[1] > 0 and incamt[2] > 0
+	  and (patternid like '%prob%')
+	) bork
+where me.resultno = bork.resultno and me.result_type = bork.result_type and me.bettype = bork.bettype and me.kumiban = bork.kumiban and me.modelno = bork.modelno and me.patternid  = bork.patternid and me.pattern = bork.pattern
+order by ranking
+) tblset
+where ranking between 1 and 30
+;
+
+
+----------------------------
+#SG,G1,G2
+
+select 
+'~' sel, ranking, 'SG,G1,G2' grades, bettype, kumiban, resultno, result_type, modelno, patternid, pattern, betcnt, incamt, bork_betcnt, bork_incamt, bork_betrate,
+ 'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_pr
+from (
+select 
+  row_number() over (partition by me.result_type, me.bettype, me.kumiban order by (bork.betcnt[0]) desc ) as ranking,
+  bork.betcnt[0] bork_betcnt, bork.incamt[0] bork_incamt, bork.betrate[0] bork_betrate,
+  me.*
+from 
+	(
+	select
+	  resultno, result_type, bettype, kumiban, modelno, patternid, pattern,
+	  -- row_number() over (partition by result_type, bettype, kumiban order by (hitamt - betamt) desc ) as ranking,
+	  betcnt,  (hitamt - betamt) incamt,  hitrate,  incomerate,  (hodds_median * hitrate)::numeric(10,2) exprate,
+	  hodds_mean,  hodds_max,  hodds_stddev,  hitcnt,  betamt,  hitamt,
+	  pr_betcnt,  pr_betamt,  pr_hitcnt,  pr_hitamt,  (pr_hitamt - pr_betamt) princamt,
+	  (pr_hitcnt::float / pr_betcnt::float)::numeric(10,2) prhitrate,
+	  (pr_hitamt::float / pr_betamt::float)::numeric(10,2) princrate,
+	  bor_betcnt,  bor_betamt,  bor_hitcnt,  bor_hitamt,  (bor_hitamt - bor_betamt) borincamt,
+	  (bor_hitcnt::float / bor_betcnt::float)::numeric(10,2) borhitrate,
+	  (bor_hitamt::float / bor_betamt::float)::numeric(10,2) borincrate,
+	  ( (bal_slope[0]+bal_slope[1]+bal_slope[2]) / 3 )::numeric(7,2)  balslope_avg
+	from ml_evaluation
+	where  incomerate >= 1.01
+	) me,
+	(	 
+	 select
+	   resultno, result_type, bettype, kumiban, modelno, patternid, pattern, incamt, betcnt, hitcnt, betrate
+	 from ml_bork_evaluation bork
+	 where
+	  result_type = '11'
+	  and bettype = '1T' and kumiban = '1'
+	  and incamt[0] > 0 
+	  and (patternid like '%prob%')
+	) bork
+where me.resultno = bork.resultno and me.result_type = bork.result_type and me.bettype = bork.bettype and me.kumiban = bork.kumiban and me.modelno = bork.modelno and me.patternid  = bork.patternid and me.pattern = bork.pattern
+order by ranking
+) tblset
+where ranking between 1 and 50
+;
+
+	where  (hitamt - betamt) > 0
+--	  and modelno::int = 99100
+--	  and betcnt[0] > 40
+--	  and (patternid like '%prob%' and pattern like '%0.6%')
+--	  and patternid not like '%nw%'
+--	  and patternid = 'nopattern'
+--  row_number() over (partition by me.result_type, me.bettype, me.kumiban order by me.incamt desc ) as ranking,
+--  row_number() over (partition by me.result_type, me.bettype, me.kumiban order by bork.incamt[0] desc ) as ranking,
+--  row_number() over (partition by me.result_type, me.bettype, me.kumiban order by (bork.betcnt[0] + bork.betcnt[1]+bork.betcnt[2]) desc ) as ranking,
+--  row_number() over (partition by me.result_type, me.bettype, me.kumiban order by me.betcnt desc ) as ranking,
+--	where bal_slope[0] > 8 and bal_slope[1] > 8 and bal_slope[2] > 8
+
+
+
+
+
+2022/3/29
+select count(1) from rec_race 
+where 
+ ymd::int between 20180601 and 20211130;
+
+
+2022/3/13
+update ml_evaluation set result_type = '1' where resultno::int <= 1078;
+
+  and (     (balance[0] between {bal123_min} and {bal123_max})
+        and (balance[1] between {bal123_min} and {bal123_max})
+        and (balance[2] between {bal123_min} and {bal123_max})
+      )
+
+
+2022/2/19
+select bettype, kumiban, min(ymd), max(ymd) from odds_monitor group by bettype, kumiban;
+select bettype, kumiban, min(ymd), max(ymd) from odds_result group by bettype, kumiban;
+
+
+2022/2/18
+select bettype, kumiban, min(ymd), max(ymd) from odds_monitor group by bettype, kumiban;
+
+
+2022/2/15
+
+2022/2/14
+graph_harvestor.bat 1T_1-verify
+evaluation_harvestor.bat D:/Dev/experiment/expr10/work/2.graph_selected/1T_1-016 1T_1-016.selected
+
+
+
+ymd,jyocd,raceno,model_cnt,kumiban_cnt,patternid_cnt,pattern_cnt,modelnos,kumibans,patternids,patterns
+
+
+2022/2/7
+  ml_classification을 ml_classkfication_bk1으로 백업
+  ml_classification을 파일백업
+    copy (select * from ml_classification_bk1) to 'G:\!!DevBackup\experiment\expr10\dbbackup\ml_classification.20220207.tsv' csv delimiter E'\t' header;
+  ml_classification은 모델 99080이전을 삭제
+  ml_evaluation을 ml_evaluation_bk1으로 백업
+  ml_evaluation을 파일백업
+    copy (select * from ml_evaluation) to 'G:\!!DevBackup\experiment\expr10\dbbackup\ml_evaluation.20220207.tsv' csv delimiter E'\t' header;
+  ml_evaluation을 전삭제
+
+2022/2/6
+pc
+ml_model_classify 99094
+
+laptop
+ml_model_classify 99095
+ml_model_classify 99096
+
+
+
+
+2022/1/29
+# 그래프 3line을 1라인으로 재생성
+create table tmp_ml_evaluation as select * from ml_evaluation where resultno::int between 557 and 710;
+delete from ml_evaluation where resultno::int between 557 and 710;
+
+ml_classify 99092
+ml_classify 99093
+
+
+2022/1/28
+select
+  clf.modelno mno, prediction1 digit1, 
+  mc.class_rank1 cr1, mc.class_rank2 cr2, mc.class_rank3 cr3,
+  mc.algorithm_rank1 a1, mc.features_rank1 f1,
+  count(1) betcnt, 
+  sum(case when substring(sanrentanno from 1 for 1) = prediction1 then 1 else 0 end) hitcnt,
+  (sum(case when substring(sanrentanno from 1 for 1) = prediction1 then 1 else 0 end)::float / count(1)::float)::numeric(5,2) hitrate
+from rec_race race, ml_classification clf, ml_model_config mc
+where race.ymd = clf.ymd and race.jyocd = clf.jyocd and race.raceno = clf.raceno
+  and clf.modelno = mc.modelno and mc.class_rank2 <> 'x'
+  and clf.modelno::int = 99066
+group by mno, digit1,cr1,cr2,cr3,a1,f1
+order by mno desc, digit1 desc;
+
+
+
+pc
+ml_model_classify 99086
+ml_model_classify 99087
+ml_model_classify 99088
+ml_model_classify 99089
+ml_model_classify 99090
+ml_model_classify 99091
+
+
+laptop
+ml_classify 99080
+ml_model_classify 99081
+ml_model_classify 99082
+ml_model_classify 99083
+ml_model_classify 99084
+ml_model_classify 99085
+
+
+
+
+2022/1/20
+LGBM evaluation
+
+pc
+ml_model_classify 99066
+
+laptop
+ml_model_classify 99065
+ml_model_classify 99067
+
+
+2022/1/16
+
+select ymd, jyocd, raceno, 
+from ml_classification
+where modelno::int = 99053 and prediction1 = '1'
+
+pc 
+ml_result 350
+
+ml_classify 99060
+
+
+laptop
+ml_model_classify 99062
+ml_classify 99061
+
+
+
+
+
+2022/1/15
+
+
+2022/1/14
+select count(*) from rec_race race where sanrentanno <> '不成立' and race.ymd ::int >= 20180601 and race.ymd ::int <= 20210601;
+162590
+
+select '3F' bettype, sanrenhukuno kumiban, 
+  count(1) hitcnt, 
+  (count(1)::float / 162590::float)::numeric(5,3) hitrate, 
+  (sum(sanrenhukuprize)::float / (162590*100)::float)::numeric(5,2) incrate,
+  avg(sanrenhukuprize::float / 100::float)::numeric(5,2) avg_hitodds, 
+  (stddev(sanrenhukuprize)::float / 100::float)::numeric(5,2) stddev_hitodds,
+  ((percentile_disc(0.5) within group (order by sanrenhukuprize))::float / 100::float)::numeric(5,2) center_hitodds, -- 中央値
+  ((mode() within group (order by sanrenhukuprize))::float / 100::float)::numeric(5,2) mostlot_hitodds, --最頻値
+  (sum(sanrenhukuprize) - (162590*100))::int incamt
+from rec_race race
+where sanrentanno <> '不成立' and race.ymd ::int >= 20180601 and race.ymd ::int <= 20210601
+group by bettype, kumiban
+order by kumiban;
+
+
+
+ml_result_multi "339,340"
+ml_result_multi "341,342"
+ml_result_multi "343,344"
+ml_result_multi "345,346"
+ml_result_multi "347,348"
+
+2022/1/13
+ml_model_classify 99049  pc
+ml_classify 99050 laptop
+
+
+2022/1/11
+
+2022/1/10
+ml_model_classify 99049
+ml_model_classify 99050
+ml_model 99051
+ml_model 99052
+ml_classify 99051
+ml_classify 99052
+
+ml_model_classify 99054
+ml_model_classify 99056
+ml_model 99053
+ml_model 99058
+
+ml_classify 99053
+ml_classify 99055
+ml_classify 99057
+ml_classify 99058
+
+
+2022/1/9
+ml_model_classify 99045
+ml_model_classify 99046
+ml_model_classify 99047
+ml_model_classify 99048
+
+
+ml_model_classify 80001
+ml_model_classify 80012
+ml_model_classify 80123
+ml_model_classify 90001
+ml_model_classify 90012
+ml_model_classify 90123
+
+2022/1/8
+ml_model_classify 99037
+ml_model_classify 99041
+ml_model_classify 99042
+
+ml_model_classify 99043
+ml_model_classify 99044
+
+
+delete from ml_evaluation where resultno::int > 286;
+
+2022/1/7
+delete from ml_evaluation where resultno::int > 286;
+
+
+
+2022/1/4
+ml_model_classify 99036
+ml_model_classify 99037
+ml_model_classify 99038
+ml_model_classify 99039
+
+
+2022/1/1
+ml_model_classify 99018
+ml_model_classify 99019
+ml_model_classify 99020
+ml_model_classify 99021
+
+
+
+select count(*) from bak_ml_result 
+where resultno = '2805' and bettype = '1T' and bet_kumiban = '1';
+
+
+select count(*) from ml_classification_old
+where modelno = '5' and kumiban1 = '1'
+
+select count(*) from rec_race
+where ymd::int between 20160101 and 20210917
+
+ml_result_multi "77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94"
+ml_result_multi "95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112"
+ml_result_multi "113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130"
+ml_result_multi "131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148"
+ml_result_multi "149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164"
+
+
+--1Tの的中した各組番のオッズ分布
+select 
+  odds.bettype, odds.kumiban, odds.odds, count(1)
+from rec_race race, ml_classification clf, odds_result odds
+where race.ymd = clf.ymd and race.jyocd = clf.jyocd and race.raceno = clf.raceno and sanrentanno <> '不成立' 
+    and race.ymd = odds.ymd and race.jyocd = odds.jyocd and race.raceno = odds.raceno 
+    and race.tansyono = clf.prediction1 -- 的中した番組
+    and odds.bettype = '1T' and odds.kumiban = clf.prediction1 -- odds_resultとml_classificationをJOIN
+    and race.ymd::int between 20180601 and 20210601
+    and clf.modelno = '99012'
+group by odds.bettype, odds.kumiban, odds.odds
+order by odds.bettype, odds.kumiban, odds.odds;
+
+
+----------------------------------------------------------------------------------------------
+2021/12/31
+ml_classify 99014
+ml_classify 99015
+ml_classify 99016
+ml_classify 99017
+
+
+select (turn || '-' raceno) ptn, count(*) cnt from rec_race
+group by ptn order by cnt desc;
+
+----------------------------------------------------------------------------------------------
+2021/12/30
+select femalecount, count(*) cnt from rec_race
+  where ymd::int > 20110101 group by femalecount order by femalecount;
+select fixedentrance, count(*) cnt from rec_race
+  where ymd::int > 20110101 group by fixedentrance order by fixedentrance;
+  
+
+----------------------------------------------------------------------------------------------
+20211228
+ml_result_multi "25,26,27,28"
+ml_result_multi "29,30,31,32"
+
+========================================================================
+20211227
+ml_classify 99010
+ml_classify 99011
+
+ml_result_multi "17,18,19,20"
+ml_result_multi "21,22,23,24"
+========================================================================
+20211224
+ml_model 99001
+ml_model 99002
+ml_model 99003
+ml_model 99004
+ml_model 99005
+ml_model 99006
+
+
+
+
+jyo,race,turn,raty,alvt,time,en1,en2,en3,en4,en5,en6,nw1,nw2,nw3,nw4,nw5,nw6
+
+java -cp C:/D/workspace/Oxygen/pod_boatrace_test/lib/weka.jar;C:/Dev/workspace/Oxygen/pod_boatrace/target/classes; weka.classifiers.bayes.BayesNet -t "D:/Dev/experiment/expr10/arff/00001_rank1.arff" -d "D:/Dev/experiment/expr10/model_release/00001/1/nopattern/00001_nopattern_20151231_rank1.model" -no-cv -split-percentage 66 -D -Q weka.classifiers.bayes.net.search.local.K2 -- -P 1 -S BAYES -E weka.classifiers.bayes.net.estimate.SimpleEstimator -- -A 0.5
+
+create
+
+copy(select * from rec_race) to 'D:\Dev\export\20211013\db\rec_race.tsv' csv delimiter E'\t' header;
+copy(select * from rec_race_waku ) to 'D:\Dev\export\20211013\db\rec_race_waku.tsv' csv delimiter E'\t' header;
+copy(select * from rec_race_waku2 ) to 'D:\Dev\export\20211013\db\rec_race_waku2.tsv' csv delimiter E'\t' header;
+copy(select * from rec_racer ) to 'D:\Dev\export\20211013\db\rec_racer.tsv' csv delimiter E'\t' header;
+copy(select * from rec_racer_arr ) to 'D:\Dev\export\20211013\db\rec_racer_arr.tsv' csv delimiter E'\t' header;
+copy(select * from ml_classification where modelno::int between 1 and 5) to 'D:\Dev\export\20211013\db\ml_classification_5.tsv' csv delimiter E'\t' header;
+copy(select * from ml_classification where modelno::int between 6 and 10) to 'D:\Dev\export\20211013\db\ml_classification_10.tsv' csv delimiter E'\t' header;
+copy(select * from ml_classification where modelno::int between 11 and 15) to 'D:\Dev\export\20211013\db\ml_classification_15.tsv' csv delimiter E'\t' header;
+copy(select * from ml_classification where modelno::int between 16 and 20) to 'D:\Dev\export\20211013\db\ml_classification_20.tsv' csv delimiter E'\t' header;
+copy(select * from ml_result where modelno::int between 1 and 5) to 'D:\Dev\export\20211013\db\ml_result_5.tsv' csv delimiter E'\t' header;
+copy(select * from ml_result where modelno::int between 6 and 10) to 'D:\Dev\export\20211013\db\ml_result_10.tsv' csv delimiter E'\t' header;
+copy(select * from ml_result where modelno::int between 11 and 15) to 'D:\Dev\export\20211013\db\ml_result_15.tsv' csv delimiter E'\t' header;
+copy(select * from ml_result where modelno::int between 16 and 20) to 'D:\Dev\export\20211013\db\ml_result_20.tsv' csv delimiter E'\t' header;
+copy(select * from odds_monitor) to 'D:\Dev\export\20211013\db\odds_monitor.tsv' csv delimiter E'\t' header;
+copy(select * from odds_result) to 'D:\Dev\export\20211013\db\odds_result.tsv' csv delimiter E'\t' header;
+
+
+
+
+odds regression 
+% 0
+@RELATION expr_10
+
+@ATTRIBUTE odds1 NUMERIC
+@ATTRIBUTE odds2 NUMERIC
+@ATTRIBUTE odds3 NUMERIC
+@ATTRIBUTE odds4 NUMERIC
+@ATTRIBUTE odds5 NUMERIC
+@ATTRIBUTE odds6 NUMERIC
+@ATTRIBUTE odds7 NUMERIC
+@ATTRIBUTE odds8 NUMERIC
+@ATTRIBUTE odds9 NUMERIC
+@ATTRIBUTE odds10 NUMERIC
+@ATTRIBUTE odds11 NUMERIC
+@ATTRIBUTE odds12 NUMERIC
+@ATTRIBUTE odds13 NUMERIC
+@ATTRIBUTE odds14 NUMERIC
+@ATTRIBUTE odds15 NUMERIC
+@ATTRIBUTE class NUMERIC
+@DATA
+
+copy (
+select
+  oddslist[lastindex-25], oddslist[lastindex-24], oddslist[lastindex-23], oddslist[lastindex-22], oddslist[lastindex-21], 
+  oddslist[lastindex-20], oddslist[lastindex-19], oddslist[lastindex-18], oddslist[lastindex-17], oddslist[lastindex-16], 
+  oddslist[lastindex-15], oddslist[lastindex-14], oddslist[lastindex-13], oddslist[lastindex-12], oddslist[lastindex-11], 
+  oddslist[lastindex-10], oddslist[lastindex-9], oddslist[lastindex-8], oddslist[lastindex-7], oddslist[lastindex-6], 
+  oddslist[lastindex-5], oddslist[lastindex-4], oddslist[lastindex-3], oddslist[lastindex-2], oddslist[lastindex-1],
+  resultodds
+from odds_monitor
+where bettype = '3T' and kumiban = '123' and lastindex > 14
+order by ymd,jyocd,raceno
+) to 'D:\Dev\experiment\expr10\tmp\regr_123.csv' csv;
+
+
+
+----------------------------------------
+delete from ml_classification where ymd::int = 20210701;
+delete from ml_result where ymd::int = 20210701;
+
+
+ml_result_multi "3141,3142,3143,3144"
+ml_result_multi "3145,3146,3147,3148"
+ml_result_multi "3149,3150,3151,3152"
+ml_result_multi "3153,3154,3155,3156"
+ml_result_multi "3157,3158,3159,3160"
+
+
+ml_result_multi "3137,3138,3139,3140,,"
+ml_result_multi ",,3161,3162,3163,3164,3165,3166,3167,3168"
+ml_result_multi "3169,3170,3171,3172,3173,3174,3175,3176,3177,3178,3179,3180,3181,3182,3183,3184"
+ml_result_multi "3185,3186,3187,3188,3189,3190,3191,3192,3193,3194,3195,3196,3197,3198,3199,3200"
+
+
+select
+  race.raceno ptn,
+  sum(1) betcnt,
+  sum(hity) hitcnt,
+  sum(betamt) betamt,
+  sum(hitamt) hitamt,
+  sum(hitamt) - sum(betamt) incomeamt, 
+  (sum(hity)::float / sum(1)::float)::numeric(7,2) hitrate,
+  (sum(hitamt)::float / sum(betamt)::float)::numeric(7,2) incomerate
+from rec_race race, 
+  ml_result res, 
+  ml_classification cls, 
+  odds_monitor omon
+where race.ymd = res.ymd and race.jyocd = res.jyocd and race.raceno = res.raceno and sanrentanno <> '不成立' 
+    and race.ymd = cls.ymd and race.jyocd = cls.jyocd and race.raceno = cls.raceno 
+    and race.ymd = omon.ymd and race.jyocd = omon.jyocd and race.raceno = omon.raceno and res.bettype = omon.bettype and res.bet_kumiban = omon.kumiban
+    and res.modelno = cls.modelno 
+    and (race.ymd::int between 20210607 and 20210922)
+    and resultno::int = 9
+    and res.bettype = '3T' and res.bet_kumiban = '123'
+    -- and (ores.odds * probability1) > 1.2
+    -- and (ores.odds between 2 and 10)
+    -- and ores.odds > 1
+    -- and omon.beforeodds > 20
+  group by ptn
+  order by ptn
+;
+
+select
+  -- race.turn || '_' || substring(wakulevellist from 1 for 2) ptn,
+  -- ores.odds::int ptn,
+  resultno ptn1,
+  -- substring((ores.odds * (probability1 * probability2))::text from 1 for 3) ptn2,
+  race.jyocd ptn2,
+  sum(1) betcnt,
+  sum(hity) hitcnt,
+  sum(betamt) betamt,
+  sum(hitamt) hitamt,
+  sum(hitamt) - sum(betamt) incomeamt, 
+  (sum(hity)::float / sum(1)::float)::numeric(7,2) hitrate,
+  (sum(hitamt)::float / sum(betamt)::float)::numeric(7,2) incomerate
+from 
+  rec_race race,
+  ml_result res, 
+  ml_classification cls, 
+  odds_result ores
+where res.ymd = ores.ymd and res.jyocd = ores.jyocd and res.raceno = ores.raceno and res.bettype = ores.bettype and res.bet_kumiban = ores.kumiban
+    and res.ymd = cls.ymd and res.jyocd = cls.jyocd and res.raceno = cls.raceno and res.modelno = cls.modelno
+    and race.ymd = res.ymd and race.jyocd = res.jyocd and race.raceno = res.raceno and sanrentanno <> '不成立' 
+    and (race.ymd::int between 20160101 and 20210922)
+    and resultno::int in (2811,2812,2813,2814,2815)
+    and res.bettype = '2T' and res.bet_kumiban = '12'
+    -- and ores.odds between 10 and 30
+    -- and (probability_mul * ores.odds) > 1
+    and (ores.odds * (probability1 * probability2)) between 1 and 1.99
+  group by ptn1, ptn2
+  order by ptn1, ptn2
+;
+
+select
+  resultno ptn,
+  sum(1) betcnt,
+  sum(hity) hitcnt,
+  sum(betamt) betamt,
+  sum(hitamt) hitamt,
+  sum(hitamt) - sum(betamt) incomeamt, 
+  (sum(hity)::float / sum(1)::float)::numeric(7,2) hitrate,
+  (sum(hitamt)::float / sum(betamt)::float)::numeric(7,2) incomerate
+from 
+  ml_result res, 
+  ml_classification cls, 
+  odds_monitor omon
+where res.ymd = omon.ymd and res.jyocd = omon.jyocd and res.raceno = omon.raceno and res.bettype = omon.bettype and res.bet_kumiban = omon.kumiban
+    and res.ymd = cls.ymd and res.jyocd = cls.jyocd and res.raceno = cls.raceno and res.modelno = cls.modelno
+    and (res.ymd::int between 20210607 and 20210922)
+    and resultno::int in (2804)
+    and res.bettype = '3T' and res.bet_kumiban = '123'
+    and omon.beforeodds > 4
+  group by ptn
+  order by ptn
+;
+
+select
+  race.turn || '_' || substring(wakulevellist from 1 for 2) ptn,
+  sum(1) betcnt,
+  sum(hity) hitcnt,
+  sum(betamt) betamt,
+  sum(hitamt) hitamt,
+  sum(hitamt) - sum(betamt) incomeamt, 
+  (sum(hity)::float / sum(1)::float)::numeric(7,2) hitrate,
+  (sum(hitamt)::float / sum(betamt)::float)::numeric(7,2) incomerate
+from 
+  ml_result res, 
+  ml_classification cls, 
+  odds_monitor omon
+where res.ymd = omon.ymd and res.jyocd = omon.jyocd and res.raceno = omon.raceno and res.bettype = omon.bettype and res.bet_kumiban = omon.kumiban
+    and res.ymd = cls.ymd and res.jyocd = cls.jyocd and res.raceno = cls.raceno and res.modelno = cls.modelno
+    and (res.ymd::int between 20210607 and 20210922)
+    and resultno::int in (2804)
+    and res.bettype = '3T' and res.bet_kumiban = '123'
+    and omon.beforeodds > 4
+  group by ptn
+  order by ptn
+;
+
+  select 'nopattern' pattern,
+    cls.modelno, race.ymd, race.jyocd, race.raceno, race.sime,  
+    tansyono, nirentanno, nirenhukuno, sanrentanno, sanrenhukuno, 
+    tansyoprize, nirentanprize, nirenhukuprize, sanrentanprize, sanrenhukuprize,
+    tansyopopular, nirentanpopular, nirenhukupopular, sanrentanpopular, sanrenhukupopular,
+    kumiban1, kumiban2, kumiban3,
+    probability1, probability2, probability3, probability_sum, probability_mul
+  from rec_race race, ml_result res, ml_classification cls, odds_monitor omon
+  where race.ymd = res.ymd and race.jyocd = res.jyocd and race.raceno = res.raceno 
+    and race.ymd = cls.ymd and race.jyocd = cls.jyocd and race.raceno = cls.raceno 
+    and res.modelno = cls.modelno
+    and res.ymd = omon.ymd and res.jyocd = omon.jyocd and res.raceno = omon.raceno 
+    and res.bettype = omon.bettype and res.bet_kumiban = omon.kumiban
+    and race.ymd >= '20210607' and race.ymd <= '20210922' 
+    and resultno = '2814' and custom = ''
+    and omon.beforeodds > 4;
+    
+
+select ('nopattern') pattern, 
+  cls.modelno, race.ymd, race.jyocd, race.raceno, race.sime, 
+  tansyono, nirentanno, nirenhukuno, sanrentanno, sanrenhukuno, 
+  tansyoprize, nirentanprize, nirenhukuprize, sanrentanprize, sanrenhukuprize, 
+  tansyopopular, nirentanpopular, nirenhukupopular, sanrentanpopular, sanrenhukupopular, 
+  kumiban1, kumiban2, kumiban3, 
+  probability1, probability2, probability3, probability_sum, probability_mul 
+from rec_race race, ml_result res, ml_classification cls, odds_monitor omon 
+where race.ymd = res.ymd and race.jyocd = res.jyocd and race.raceno = res.raceno 
+  and race.ymd = cls.ymd and race.jyocd = cls.jyocd and race.raceno = cls.raceno 
+  and res.modelno = cls.modelno 
+  and res.ymd = omon.ymd and res.jyocd = omon.jyocd and res.raceno = omon.raceno 
+  and res.bettype = omon.bettype and res.bet_kumiban = omon.kumiban 
+  and race.ymd >= '20210607' and race.ymd <= '20210922' 
+  and resultno = '2814' and custom = '' 
+  and kumiban1 = '1' and kumiban2 = '2' and kumiban3 = '3' 
+  and omon.beforeodds > 4 
+  
+
+
+
+select 
+  bettype, bet_kumiban,
+  count(*) cnt 
+from ml_result
+where resultno = '2814' and custom = ''
+  and ymd::int between 20210607 and 20210922
+group by bettype, bet_kumiban
+order by bettype, bet_kumiban;
+
+select 
+  bettype, kumiban,
+  count(*) cnt 
+from odds_monitor
+where ymd::int between 20210607 and 20210922
+group by bettype, kumiban
+order by bettype, kumiban;
+
+
+
+
+select count(*) from ml_result 
+  where (ymd::int between 20210607 and 20210831) and bettype = '3T' and bet_kumiban = '123' and resultno = '2814';
+  
+select count(*) from odds_monitor
+  where (ymd::int between 20210607 and 20210831) and bettype = '3T' and kumiban = '123';
+
+select count(*) from ml_classification
+  where (ymd::int between 20210607 and 20210831) and modelno = '14';
+
+select
+  -- race.raceno ptn,
+  -- substring(wakulevellist from 1 for 2) ptn,
+  resultno ptn,
+  -- (bet_odds * probability_mul)::numeric(5,1) ptn, 
+  sum(1) betcnt,
+  sum(hity) hitcnt,
+  sum(betamt) betamt,
+  sum(hitamt) hitamt,
+  sum(hitamt) - sum(betamt) incomeamt, 
+  (sum(hity)::float / sum(1)::float)::numeric(7,2) hitrate,
+  (sum(hitamt)::float / sum(betamt)::float)::numeric(7,2) incomerate
+from 
+  ml_result res
+where 
+    (res.ymd::int between 20190110 and 20200603)
+    -- and (res.ymd::int between 20210822 and 20210922)
+    -- and (res.ymd::int between 20160101 and 20181231)
+    and (resultno::int between 2801 and 2820) 
+    -- and resultno::int = 2805
+    -- and res.bettype = '1T' and res.bet_kumiban = '1'
+    and res.bettype = '3T' and res.bet_kumiban = '123'
+    -- and bet_odds between 20 and 30
+  group by ptn
+  order by ptn
+;
+
+
+select nirenhukuno, count(nirenhukuno), min(nirenhukuprize) min , max(nirenhukuprize) max, 
+avg(nirenhukuprize) avg, 
+percentile_disc(0.5) within group (order by nirenhukuprize) center, -- 中央値
+mode() within group (order by nirenhukuprize) mod, --最頻値
+percentile_disc(0.25) within group (order by nirenhukuprize) mod35, -- 2分位値
+percentile_disc(0.75) within group (order by nirenhukuprize) mod75, -- 3分位値
+stddev (nirenhukuprize) deviation, -- 標準偏差
+variance (nirenhukuprize) vari -- 分散標本
+from rec_race race
+where race.ymd >= '20120101' and race.ymd <= '20161231'
+group by nirenhukuno order by nirenhukuno;
+
+select
+  resultno ptn,
+  count(1) cnt,
+  min(abs(bet_odds - result_odds)) min,
+  max(abs(bet_odds - result_odds)) max,
+  avg(abs(bet_odds - result_odds)) avg,  --平均
+  stddev (abs(bet_odds - result_odds)) deviation, -- 標準偏差
+  percentile_disc(0.5) within group (order by abs(bet_odds - result_odds)) center, -- 中央値
+  mode() within group (order by abs(bet_odds - result_odds)) mod --最頻値
+from ml_result res
+where 
+  (ymd::int between 20210607 and 20210922)
+  -- (ymd::int between 20200101 and 20200603)
+  and res.bettype = '2T' and res.bet_kumiban = '12'
+  and (resultno::int between 2801 and 2820) 
+group by ptn
+order by ptn
+;
+
+
+select
+  count(1) cnt,
+  min(abs(beforeodds - resultodds)) min,
+  max(abs(beforeodds - resultodds)) max,
+  avg(abs(beforeodds - resultodds)) avg,  --平均
+  stddev (abs(beforeodds - resultodds)) deviation, -- 標準偏差
+  percentile_disc(0.5) within group (order by abs(beforeodds - resultodds)) center, -- 中央値
+  mode() within group (order by abs(beforeodds - resultodds)) mod --最頻値
+from odds_monitor omon
+where 
+  (ymd::int between 20210607 and 20210922)
+  and omon.bettype = '2T' and omon.kumiban = '12'
+group by ptn
+order by ptn
+;
+
+select count(*) from odds_monitor where bettype = '3T' and kumiban = '123';
+select count(*) from odds_monitor where bettype = '2T' and kumiban = '12' and beforeodds = 0;
+
+
+select count(*) from ml_result where resultno = '2834';
+
+
+select distinct (kumiban1 || kumiban2 || kumiban3) kumiban
+from ml_classification where modelno = '21';
+
+delete from ml_classification where modelno::int > 12;
+
+delete from ml_result where resultno::int between 2801 and 2840;
+
+select max(ymd) from ml_classification where modelno::int = 21 
+
+
+ml_result_multi "401,402,403,404"
+ml_result_multi "405,406,407,408"
+ml_result_multi "409,410,411,412"
+ml_result_multi "413,414,415,416"
+ml_result_multi "417,418,419,420"
+
+ml_result_multi "2821,2822,2823,2824,2825,2826,2827,2828,2829,2830,2831,2832,2833,2834,2835,2836,2837,2838,2839,2840,2841,2842,2843,2844,2845,2846,2847,2848,2849,2850,2851,2852,2853,2854,2855,2856,2857,2858,2859,2860,2861,2862,2863,2864,2865,2866,2867,2868,2869,2870,2871,2872,2873,2874,2875,2876,2877,2878,2879,2880"
+ml_result_multi "2881,2882,2883,2884,2885,2886,2887,2888,2889,2890,2891,2892,2893,2894,2895,2896,2897,2898,2899,2900,2901,2902,2903,2904,2905,2906,2907,2908,2909,2910,2911,2912,2913,2914,2915,2916,2917,2918,2919,2920,2921,2922,2923,2924,2925,2926,2927,2928,2929,2930,2931,2932,2933,2934,2935,2936,2937,2938,2939,2940"
+ml_result_multi "2941,2942,2943,2944,2945,2946,2947,2948,2949,2950,2951,2952,2953,2954,2955,2956,2957,2958,2959,2960,2961,2962,2963,2964,2965,2966,2967,2968,2969,2970,2971,2972,2973,2974,2975,2976,2977,2978,2979,2980,2981,2982,2983,2984,2985,2986,2987,2988,2989,2990,2991,2992,2993,2994,2995,2996,2997,2998,2999,3000"
+ml_result_multi "3001,3002,3003,3004,3005,3006,3007,3008,3009,3010,3011,3012,3013,3014,3015,3016,3017,3018,3019,3020,3021,3022,3023,3024,3025,3026,3027,3028,3029,3030,3031,3032,3033,3034,3035,3036,3037,3038,3039,3040,3041,3042,3043,3044,3045,3046,3047,3048,3049,3050,3051,3052,3053,3054,3055,3056,3057,3058,3059,3060"
+ml_result_multi "3061,3062,3063,3064,3065,3066,3067,3068,3069,3070,3071,3072,3073,3074,3075,3076,3077,3078,3079,3080,3081,3082,3083,3084,3085,3086,3087,3088,3089,3090,3091,3092,3093,3094,3095,3096,3097,3098,3099,3100,3101,3102,3103,3104,3105,3106,3107,3108,3109,3110,3111,3112,3113,3114,3115,3116,3117,3118,3119,3120"
+
+ml_result_multi "2801,2802,2803,2804,2805,2806,2807,2808,2809,2810"
+ml_result_multi "2811,2812,2813,2814,2815,2816,2817,2818,2819,2820"
+
+
+ml_result_multi "2401,2402,2403,2404"
+ml_result_multi "2405,2406,2407,2408"
+ml_result_multi "2409,2410,2411,2412"
+ml_result_multi "2413,2414,2415,2416"
+ml_result_multi "2417,2418,2419,2420"
+
+ml_result_multi "2441,2442,2443,2444,2445,2446,2447,2448,2449,2450,2451,2452,2453,2454,2455,2456,2457,2458,2459,2460,2461,2462,2463,2464,2465,2466,2467,2468,2469,2470,2471,2472,2473,2474,2475,2476,2477,2478,2479,2480"
+ml_result_multi "2481,2482,2483,2484,2485,2486,2487,2488,2489,2490,2491,2492,2493,2494,2495,2496,2497,2498,2499,2500,2501,2502,2503,2504,2505,2506,2507,2508,2509,2510,2511,2512,2513,2514,2515,2516,2517,2518,2519,2520,2521,2522,2523,2524,2525,2526,2527,2528,2529,2530,2531,2532,2533,2534,2535,2536,2537,2538,2539,2540"
+ml_result_multi "2541,2542,2543,2544,2545,2546,2547,2548,2549,2550,2551,2552,2553,2554,2555,2556,2557,2558,2559,2560,2561,2562,2563,2564,2565,2566,2567,2568,2569,2570,2571,2572,2573,2574,2575,2576,2577,2578,2579,2580,2581,2582,2583,2584,2585,2586,2587,2588,2589,2590,2591,2592,2593,2594,2595,2596,2597,2598,2599,2600"
+ml_result_multi "2601,2602,2603,2604,2605,2606,2607,2608,2609,2610,2611,2612,2613,2614,2615,2616,2617,2618,2619,2620,2621,2622,2623,2624,2625,2626,2627,2628,2629,2630,2631,2632,2633,2634,2635,2636,2637,2638,2639,2640,2641,2642,2643,2644,2645,2646,2647,2648,2649,2650,2651,2652,2653,2654,2655,2656,2657,2658,2659,2660"
+ml_result_multi "2661,2662,2663,2664,2665,2666,2667,2668,2669,2670,2671,2672,2673,2674,2675,2676,2677,2678,2679,2680,2681,2682,2683,2684,2685,2686,2687,2688,2689,2690,2691,2692,2693,2694,2695,2696,2697,2698,2699,2700,2701,2702,2703,2704,2705,2706,2707,2708,2709,2710,2711,2712,2713,2714,2715,2716,2717,2718,2719,2720"
+
+ml_result_multi "3201,3202,3203,3204,3205,3206,3207,3208,3209,3210,3211,3212,3213,3214,3215,3216,3217,3218,3219,3220,3221,3222,3223,3224,3225,3226,3227,3228,3229,3230,3231,3232,3233,3234,3235,3236,3237,3238,3239,3240,3241,3242,3243,3244,3245,3246,3247,3248,3249,3250,3251,3252,3253,3254,3255,3256,3257,3258,3259,3260,3261,3262,3263,3264,3265,3266,3267,3268,3269,3270,3271,3272,3273,3274,3275,3276,3277,3278,3279,3280"
+ml_result_multi "3281,3282,3283,3284,3285,3286,3287,3288,3289,3290,3291,3292,3293,3294,3295,3296,3297,3298,3299,3300,3301,3302,3303,3304,3305,3306,3307,3308,3309,3310,3311,3312,3313,3314,3315,3316,3317,3318,3319,3320,3321,3322,3323,3324,3325,3326,3327,3328,3329,3330,3331,3332,3333,3334,3335,3336,3337,3338,3339,3340,3341,3342,3343,3344,3345,3346,3347,3348,3349,3350,3351,3352,3353,3354,3355,3356,3357,3358,3359,3360"
+ml_result_multi "3361,3362,3363,3364,3365,3366,3367,3368,3369,3370,3371,3372,3373,3374,3375,3376,3377,3378,3379,3380,3381,3382,3383,3384,3385,3386,3387,3388,3389,3390,3391,3392,3393,3394,3395,3396,3397,3398,3399,3400,3401,3402,3403,3404,3405,3406,3407,3408,3409,3410,3411,3412,3413,3414,3415,3416,3417,3418,3419,3420,3421,3422,3423,3424,3425,3426,3427,3428,3429,3430,3431,3432,3433,3434,3435,3436,3437,3438,3439,3440"
+ml_result_multi "3441,3442,3443,3444,3445,3446,3447,3448,3449,3450,3451,3452,3453,3454,3455,3456,3457,3458,3459,3460,3461,3462,3463,3464,3465,3466,3467,3468,3469,3470,3471,3472,3473,3474,3475,3476,3477,3478,3479,3480,3481,3482,3483,3484,3485,3486,3487,3488,3489,3490,3491,3492,3493,3494,3495,3496,3497,3498,3499,3500,3501,3502,3503,3504,3505,3506,3507,3508,3509,3510,3511,3512,3513,3514,3515,3516,3517,3518,3519,3520"
+ml_result_multi "3521,3522,3523,3524,3525,3526,3527,3528,3529,3530,3531,3532,3533,3534,3535,3536,3537,3538,3539,3540,3541,3542,3543,3544,3545,3546,3547,3548,3549,3550,3551,3552,3553,3554,3555,3556,3557,3558,3559,3560,3561,3562,3563,3564,3565,3566,3567,3568,3569,3570,3571,3572,3573,3574,3575,3576,3577,3578,3579,3580,3581,3582,3583,3584,3585,3586,3587,3588,3589,3590,3591,3592,3593,3594,3595,3596,3597,3598,3599,3600"
+
+ml_model_classify 1
+ml_model_classify 2
+ml_model_classify 3
+ml_model_classify 4
+ml_model_classify 5
+ml_model_classify 6
+ml_model_classify 7
+ml_model_classify 8
+ml_model_classify 9
+ml_model_classify 10
+ml_model_classify 11
+ml_model_classify 12
+ml_model_classify 13
+ml_model_classify 14
+ml_model_classify 15
+ml_model_classify 16
+ml_model_classify 17
+ml_model_classify 18
+ml_model_classify 19
+ml_model_classify 20
+
+ml_model_classify 102
+ml_model_classify 103
+ml_model_classify 104
+ml_model_classify 105
+ml_model_classify 106
+ml_model_classify 107
+ml_model_classify 108
+ml_model_classify 109
+ml_model_classify 110
+ml_model_classify 111
+ml_model_classify 112
+ml_model_classify 113
+ml_model_classify 114
+ml_model_classify 115
+ml_model_classify 116
+ml_model_classify 117
+ml_model_classify 118
+ml_model_classify 119
+ml_model_classify 120
+ml_classify 121
+ml_classify 122
+ml_classify 123
+ml_classify 124
+ml_classify 125
+ml_classify 126
+ml_classify 127
+ml_classify 128
+ml_classify 129
+ml_classify 130
+ml_classify 131
+ml_classify 132
+ml_classify 133
+ml_classify 134
+ml_classify 135
+ml_classify 136
+ml_classify 137
+ml_classify 138
+ml_classify 139
+ml_classify 140
+ml_classify 141
+ml_classify 142
+ml_classify 143
+ml_classify 144
+ml_classify 145
+ml_classify 146
+ml_classify 147
+ml_classify 148
+ml_classify 149
+ml_classify 150
+ml_classify 151
+ml_classify 152
+ml_classify 153
+ml_classify 154
+ml_classify 155
+ml_classify 156
+ml_classify 157
+ml_classify 158
+ml_classify 159
+ml_classify 160
+ml_classify 161
+ml_classify 162
+ml_classify 163
+ml_classify 164
+ml_classify 165
+ml_classify 166
+ml_classify 167
+ml_classify 168
+ml_classify 169
+ml_classify 170
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20210731 20210805
+
+
+select 
+  -- distinct substring(probability1::text from 1 for 3) ptn
+  -- distinct substring((probability1 + probability2)::text from 1 for 3) ptn
+  -- distinct substring((probability1 * probability2)::text from 1 for 3) ptn
+  -- distinct substring(probability_sum::text from 1 for 3) ptn
+  -- distinct substring(probability_mul::text from 1 for 3) ptn
+from ml_classification 
+where modelno = '13' order by ptn;
+
+
+chcp 932
+psql -h localhost -U postgres -d boatml -p 55432
+
+set client_encoding='SJIS';
+
+cd C:\Dev\workspace\Oxygen\pod_boatrace_test\experiment\expr10
+
+=====================================================
+ml_model_classify 1
+
+
+select 
+    (case when bet_odds::int <= 20 then (bet_odds::int)::text else 'else' end) ptn, 
+    count(*) cnt
+from ml_result 
+where resultno = '1' and ymd between '20190110' and '20191231'
+group by ptn order by ptn;
+
+select 
+    (case when bet_oddsrank <= 20 then (bet_oddsrank)::text else 'else' end) ptn, 
+    count(*) cnt
+from ml_result 
+where resultno = '1' and ymd between '20190110' and '20191231'
+group by ptn order by ptn;
+
+
+
+delete from ml_result where resultno <= '20';
+
+select distinct resultno
+from ml_result
+where resultno <= '20';
+
+select bet_kumiban, count(*) cnt from ml_result where resultno = '7' group by bet_kumiban order by bet_kumiban;
+
+ml_result 1
+ml_result 2
+ml_result 3
+ml_result 4
+
+ml_result 5
+ml_result 6
+ml_result 7
+ml_result 8
+
+ml_result 9
+ml_result 10
+ml_result 11
+ml_result 12
+
+ml_result 13
+ml_result 14
+ml_result 15
+ml_result 16
+
+ml_result 17
+ml_result 18
+ml_result 19
+ml_result 20
+
+ml_result 21
+ml_result 22
+ml_result 23
+ml_result 24
+
+ml_result 25
+ml_result 26
+ml_result 27
+ml_result 28
+ml_result 29
+
+ml_result 30
+ml_result 31
+ml_result 32
+ml_result 33
+ml_result 34
+
+ml_result 35
+ml_result 36
+ml_result 37
+ml_result 38
+
+select distinct resultno from ml_result order by resultno;
+
+select distinct modelno from ml_classification order by modelno;
+
+
+select (bet_odds::int)::text from ml_result;
+
+
+rec_race에서 ymd='20180415' 레코드 177건 삭제했다. Racetype, wakulevellist가 공백이고 alevelcount가 -1임
+delete from rec_race where ymd='20180415';
+delete from rec_race_waku where ymd='20180415';
+delete from rec_race_waku2 where ymd='20180415';
+delete from rec_racer where ymd='20180415';
+delete from rec_racer_arr where ymd='20180415';
+
+
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/weka.jar;C:/Dev/workspace/Oxygen/pod_boatrace/target/classes; weka.classifiers.bayes.BayesNet -t "D:/Dev/experiment/expr10/arff/0007_rank1.arff" -d "D:/Dev/experiment/expr10/model_release/0007/1/nopattern/0007_nopattern_20180430_rank1.model" -no-cv -split-percentage 66 -D -Q weka.classifiers.bayes.net.search.local.K2 -- -P 1 -S BAYES -E weka.classifiers.bayes.net.estimate.SimpleEstimator -- -A 0.5
+
+delete from ml_result where resultno in ('8', '9','10');
+delete from ml_result where resultno in ('7', '11','12','13','14','15','16','17','18','19');
+delete from ml_result where resultno = '13';
+delete from ml_result where resultno = '14';
+delete from ml_result where resultno = '16';
+delete from ml_result where resultno = '17';
+delete from ml_result where resultno = '19';
+
+
+select com_confidence conf, count(*) cnt from rec_race
+where substring(com_predict from 1 for 1) = '1'
+group by conf order by conf;
+
+
+
+select com_confidence from rec_race
+where ymd = '20191231';
+
+select com_predict from rec_race
+where ymd = '20191231';
+
+select bet_odds from ml_result 
+where resultno = '7' and bet_odds <> 0 order by ymd;
+
+
+
+select 'nopattern' pattern, cls.modelno, race.ymd, race.jyocd, race.raceno, race.sime, tansyono, nirentanno, nirenhukuno, sanrentanno, sanrenhukuno, tansyoprize, nirentanprize, nirenhukuprize, sanrentanprize, sanrenhukuprize, tansyopopular, nirentanpopular, nirenhukupopular, sanrentanpopular, sanrenhukupopular, kumiban1, kumiban2, kumiban3 from rec_race race, ml_classification cls where race.ymd = cls.ymd and race.jyocd = cls.jyocd and race.raceno = cls.raceno and sanrentanno <> '不成立' and race.ymd >= '20180101' and race.ymd <= '20191231' and modelno = '1'  and cls.kumiban1 = '1' and cls.kumiban1 = '2' order by pattern, race.ymd, race.sime
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/weka.jar;C:/Dev/workspace/Oxygen/pod_boatrace/target/classes; weka.classifiers.bayes.BayesNet -D -t "D:/Dev/experiment/expr10/arff/0003_rank1.arff" -d "D:/Dev/experiment/expr10/model_release/0003/1/nopattern/0003_nopattern_20171231_rank1.model" -no-cv -split-percentage 80 -Q weka.classifiers.bayes.net.search.local.K2 -- -P 1 -S BAYES -E weka.classifiers.bayes.net.estimate.SimpleEstimator -- -A 0.5
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/weka.jar;C:/Dev/workspace/Oxygen/pod_boatrace/target/classes; weka.classifiers.bayes.BayesNet -D -t "D:/Dev/experiment/expr10/arff/0003_rank1.arff" -d "D:/Dev/experiment/expr10/model_release/0003/1/nopattern/0003_nopattern_20171231_rank1.model" -no-cv -Q weka.classifiers.bayes.net.search.local.K2 -- -P 1 -S BAYES -E weka.classifiers.bayes.net.estimate.SimpleEstimator -- -A 0.5
+
+
+ml_model_classify 1
+ml_model_classify 2
+
+select distinct (kumiban1||kumiban2||kumiban3) kumiban from ml_classification where modelno = '2' order by kumiban;
+
+
+select sanrentanno, count(*) cnt from rec_race group by sanrentanno order by cnt desc;
+
+select substring(probability1::text from 1 for 3) from ml_classification limit 1;
+select substring(probability1::text from 1 for 3) || '_' || substring(probability2::text from 1 for 3) from ml_classification limit 1;
+
+
+copy(select * from ml_classification where ymd between '20180101' and '20191231') to 'D:\Dev\export\20210824\db\ml_classification.tsv' csv delimiter E'\t' header;
+copy(select * from ml_result where ymd between '20180101' and '20191231') to 'D:\Dev\export\20210824\db\ml_result.tsv' csv delimiter E'\t' header;
+
+
+copy(select * from rec_race where ymd between '20180101' and '20191231' ) to 'D:\Dev\export\20210823\db\rec_race.tsv' csv delimiter E'\t' header;
+copy(select * from rec_race_waku where ymd between '20180101' and '20191231') to 'D:\Dev\export\20210823\db\rec_race_waku.tsv' csv delimiter E'\t' header;
+copy(select * from rec_race_waku2 where ymd between '20180101' and '20191231') to 'D:\Dev\export\20210823\db\rec_race_waku2.tsv' csv delimiter E'\t' header;
+copy(select * from rec_racer where ymd between '20180101' and '20191231') to 'D:\Dev\export\20210823\db\rec_racer.tsv' csv delimiter E'\t' header;
+copy(select * from rec_racer_arr where ymd between '20180101' and '20191231') to 'D:\Dev\export\20210823\db\rec_racer_arr.tsv' csv delimiter E'\t' header;
+copy(select * from ml_classification where ymd between '20180101' and '20191231') to 'D:\Dev\export\20210823\db\ml_classification.tsv' csv delimiter E'\t' header;
+copy(select * from ml_result where ymd between '20180101' and '20191231') to 'D:\Dev\export\20210823\db\ml_result.tsv' csv delimiter E'\t' header;
+
+
+copy (
+select
+  race.ymd, substring(race.ymd from 1 for 4) yyyy, race.jyocd, race.raceno, sanrentanprize, 
+  race.grade, sanrentanpopular, turn, kimarite, alevelcount, femalecount
+from rec_race race, rec_racer_arr arr
+where race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno
+  and sanrentanno <> '不成立' 
+  and sanrentanno = '123' 
+order by ymd, jyocd, raceno
+) to 'C:\Dev\workspace\Oxygen\pod_boatrace_test\experiment\expr10\data_exploration\stat_123.tsv' csv delimiter E'\t' header;
+
+select count(1) 
+from rec_race race, 
+where sanrentanno = '123';
+
+select grade, 
+  min(sanrentanprize) min , max(sanrentanprize) max, avg(sanrentanprize)::int avg, 
+percentile_disc(0.5) within group (order by sanrentanprize) median50, -- 中央値
+mode() within group (order by sanrentanprize) modeval, --最頻値
+percentile_disc(0.25) within group (order by sanrentanprize) median25, -- 2分位値
+percentile_disc(0.75) within group (order by sanrentanprize) median75 -- 3分位値
+from rec_race race
+where and race.ymd >= '20100101' and race.ymd <= '20151231' and sanrentanprize <> '不成立'
+group by grade order by grade;
+
+select count(*) from rec_race
+where sanrentanno in ('特払','不成立','発売無');
+
+select 
+
+select (sanrentanprize / 10)::numeric(7,1) sanrentanodds, count(1)
+from rec_race race
+where race.ymd >= '20100101' and race.ymd <= '20151231' 
+  and sanrentanno <> '不成立'
+  and grade in ('ip', 'G3') 
+group by sanrentanodds order by sanrentanodds;
+
+----------------------------------------------------------------------------------------------
+박기영
+조규남
+조규찬
+
+----------------------------------------------------------------------------------------------
+데이터 없데이트 수순
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220923 20221105
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*;. ^
+  com.pengkong.boatrace.util.RaceFileUploader 20220923 20221105 C:/Dev/workspace/Oxygen/pod_boatrace_test/properties/race_result_rebuild.properties
+
+insert into rec_racer_arr
+select 
+  ymd, jyocd, raceno, 
+  array_agg(entry),
+  array_agg(sex),
+  array_agg(age),
+  array_agg(level),
+  array_agg(weight),
+  array_agg(branch),
+  array_agg(exhibit),
+  array_agg(startexhibit),
+  array_agg(flying),
+  array_agg(late),
+  array_agg(averagestart),
+  array_agg(avgtime),
+  array_agg(nationwiningrate),
+  array_agg(nation2winingrate),
+  array_agg(nation3winingrate),
+  array_agg(localwiningrate),
+  array_agg(local2winingrate),
+  array_agg(local3winingrate),
+  array_agg(motorno),
+  array_agg(motor2winingrate),
+  array_agg(motor3winingrate),
+  array_agg(waku),
+  array_agg(rank),
+  array_agg(startresult)
+from (
+  select * from rec_racer 
+   where ymd >= '20220923' and ymd <= '20221105'
+   order by ymd, jyocd, raceno, waku 
+) tmp
+group by ymd, jyocd, raceno;
+
+update rec_race set racetype = 
+	( case 
+	  when racetype = '予選' then '1'
+	  when racetype in ('予選特選', '予選特賞') then '2'
+	  when racetype in ('一般戦', '一般') then '3'
+	  when racetype like '%選抜%' then '4'
+	  when racetype in ('特選', '特賞') then '5'
+	  when racetype in ('準優勝戦', '準優勝') then '6'
+	  when racetype = '優勝戦' then '7'
+	  else 'else' end )
+where ymd >= '20220923' and ymd <= '20221105';
+
+update rec_race set fixedentrance = 
+	( case 
+	  when fixedentrance = 'N' then 'N'
+	  when fixedentrance = '安定板使用' then 'Y'
+	  when fixedentrance = '進入固定' then 'F'
+	  end )
+where ymd >= '20220923' and ymd <= '20221105';
+

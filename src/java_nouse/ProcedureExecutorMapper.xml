@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pengkong.boatrace.mybatis.client.ProcedureExecutorMapper">
+  <update id="executeGeneratePower" parameterType="com.pengkong.boatrace.mybatis.entity.ParamGeneratePower" statementType="CALLABLE">
+  	{call generate_power(
+  		#{ymd, jdbcType = VARCHAR, mode = IN},
+  		#{paramSectionRacer, jdbcType = SMALLINT, mode = IN},
+  		#{paramSectionAvgtime, jdbcType = SMALLINT, mode = IN},
+  		#{paramSectionJyoMotor, jdbcType = SMALLINT, mode = IN},
+  		#{paramPath, jdbcType = VARCHAR, mode = IN}
+  	)}
+  </update>
+  <update id="executeGenerateStat" parameterType="com.pengkong.boatrace.mybatis.entity.ParamGenerateStat" statementType="CALLABLE">
+  	{call generate_stat(
+  		#{ymd, jdbcType = VARCHAR, mode = IN},
+  		#{paramBettype, jdbcType = VARCHAR, mode = IN},
+  		#{paramMinPattenrCnt, jdbcType = INTEGER, mode = IN},
+  		#{paramMaxPattenrCnt, jdbcType = INTEGER, mode = IN},
+  		#{paramMinHitRate, jdbcType = NUMERIC, mode = IN},
+  		#{paramMaxHitRate, jdbcType = NUMERIC, mode = IN},
+  		#{paramMinIncomeRate, jdbcType = NUMERIC, mode = IN},
+  		#{paramMaxIncomeRate, jdbcType = NUMERIC, mode = IN},
+  		#{paramPath, jdbcType = VARCHAR, mode = IN}
+  	)}
+  </update>
+  <update id="executeStatMakePattern" statementType="CALLABLE">
+  	{call stat_make_pattern()}
+  </update>
+  <update id="executeGenerateStatLevelRank" parameterType="com.pengkong.boatrace.mybatis.entity.ParamGenerateStatLevelRank" statementType="CALLABLE">
+  	{call generate_stat_levelrank(
+  		#{ymd, jdbcType = VARCHAR, mode = IN},
+  		#{paramBettype, jdbcType = VARCHAR, mode = IN},
+  		#{paramStatStartYmd, jdbcType = VARCHAR, mode = IN},
+  		#{paramMinPattenrCnt, jdbcType = INTEGER, mode = IN},
+  		#{paramMaxPattenrCnt, jdbcType = INTEGER, mode = IN},
+  		#{paramMinHitRate, jdbcType = NUMERIC, mode = IN},
+  		#{paramMaxHitRate, jdbcType = NUMERIC, mode = IN},
+  		#{paramMinIncomeRate, jdbcType = NUMERIC, mode = IN},
+  		#{paramMaxIncomeRate, jdbcType = NUMERIC, mode = IN},
+  		#{paramPath, jdbcType = VARCHAR, mode = IN}
+  	)}
+  </update>
+  <!-- 20180909 -->
+  <update id="executeGenerateBoatStat" parameterType="com.pengkong.boatrace.mybatis.entity.ParamGenerateBoatStat" statementType="CALLABLE">
+  	{call generate_boatstat(
+  		#{fromYmd, jdbcType = VARCHAR, mode = IN},
+  		#{toYmd, jdbcType = VARCHAR, mode = IN},
+  		#{betType, jdbcType = VARCHAR, mode = IN},
+  		#{betTypeName, jdbcType = VARCHAR, mode = IN},
+  		#{kumiban, jdbcType = VARCHAR, mode = IN},
+  		#{pattern, jdbcType = VARCHAR, mode = IN},
+  		#{table, jdbcType = VARCHAR, mode = IN},
+  		#{minPatternCnt, jdbcType = INTEGER, mode = IN},
+  		#{minIncomeRate, jdbcType = NUMERIC, mode = IN},
+  		#{maxIncomeRate, jdbcType = NUMERIC, mode = IN},
+  		#{path, jdbcType = VARCHAR, mode = IN}
+  	)}
+  </update>
+  
+</mapper>

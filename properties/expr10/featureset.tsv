@@ -1,0 +1,42 @@
+#id	feature_ids
+x	x
+fixed	en1
+en	en1,en2,en3,en4,en5,en6
+en_lv	en1,en2,en3,en4,en5,en6,lv1,lv2,lv3,lv4,lv5,lv6
+nw	nw1,nw2,nw3,nw4,nw5,nw6
+nw_n2w	nw1,nw2,nw3,nw4,nw5,nw6,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6
+nw_n2w_n3w	nw1,nw2,nw3,nw4,nw5,nw6,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6,n3w1,n3w2,n3w3,n3w4,n3w5,n3w6
+en_nw_ext_1	jyo,race,turn,raty,alvt,time,en1,en2,en3,en4,en5,en6,nw1,nw2,nw3,nw4,nw5,nw6
+en_ext_1	jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,wa12,en1,en2,en3,en4,en5,en6
+en_nw	en1,en2,en3,en4,en5,en6,nw1,nw2,nw3,nw4,nw5,nw6
+en_nw_ext_2	jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,wa12,en1,en2,en3,en4,en5,en6,nw1,nw2,nw3,nw4,nw5,nw6
+en_ext_5	mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,wa123,comp123,comconf,en1,en2,en3,en4,en5,en6
+en_nw_ext_5	mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,wa123,comp123,comconf,en1,en2,en3,en4,en5,en6,nw1,nw2,nw3,nw4,nw5,nw6
+odds_mon	om00,om01,om02,om03,om04,om05,om06,om07,om08,om09,om10,om11,om12,om13,om14,om15,om16,om17,om18,om19,om20,om21,om22,om23,om24,om25,om26,om27,om28,om29,om30,om31,om32,om33,om34,om35,om36,om37,om38,om39
+en_nw_ext_9	mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,en1,en2,en3,en4,en5,en6,nw1,nw2,nw3,nw4,nw5,nw6,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6,n3w1,n3w2,n3w3,n3w4,n3w5,n3w6
+nw_ext_1	jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,wa12,nw1,nw2,nw3,nw4,nw5,nw6
+nw_ext_5	mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,wa123,comp123,comconf,nw1,nw2,nw3,nw4,nw5,nw6
+nw_ext_6	mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,wa123,comp123,comconf,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6
+nw_ext_7	mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,wa123,comp123,comconf,nw1,nw2,nw3,nw4,nw5,nw6,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6
+nw_ext_8	mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,wa123,comp123,comconf,nw1,nw2,nw3,nw4,nw5,nw6,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6,n3w1,n3w2,n3w3,n3w4,n3w5,n3w6
+nw_ext_9	mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,nw1,nw2,nw3,nw4,nw5,nw6,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6,n3w1,n3w2,n3w3,n3w4,n3w5,n3w6
+nw_ext_24	mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,nw1,nw2,nw3,nw4,nw5,nw6,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6,n3w1,n3w2,n3w3,n3w4,n3w5,n3w6,lw1,lw2,lw3,lw4,lw5,lw6,l2w1,l2w2,l2w3,l2w4,l2w5,l2w6,l3w1,l3w2,l3w3,l3w4,l3w5,l3w6,m2w1,m2w2,m2w3,m2w4,m2w5,m2w6,en1n,en2n,en3n,en4n,en5n,en6n,sex1,sex2,sex3,sex4,sex5,sex6,lv1n,lv2n,lv3n,lv4n,lv5n,lv6n,age1,age2,age3,age4,age5,age6,weit1,weit2,weit3,weit4,weit5,weit6,exhi1,exhi2,exhi3,exhi4,exhi5,exhi6,stexhi1,stexhi2,stexhi3,stexhi4,stexhi5,stexhi6,fly1,fly2,fly3,fly4,fly5,fly6,late1,late2,late3,late4,late5,late6,avgst1,avgst2,avgst3,avgst4,avgst5,avgst6,avgtm1,avgtm2,avgtm3,avgtm4,avgtm5,avgtm6
+en_nw_ext_24	mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,en1,en2,en3,en4,en5,en6,nw1,nw2,nw3,nw4,nw5,nw6,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6,n3w1,n3w2,n3w3,n3w4,n3w5,n3w6,lw1,lw2,lw3,lw4,lw5,lw6,l2w1,l2w2,l2w3,l2w4,l2w5,l2w6,l3w1,l3w2,l3w3,l3w4,l3w5,l3w6,m2w1,m2w2,m2w3,m2w4,m2w5,m2w6,en1n,en2n,en3n,en4n,en5n,en6n,sex1,sex2,sex3,sex4,sex5,sex6,lv1n,lv2n,lv3n,lv4n,lv5n,lv6n,age1,age2,age3,age4,age5,age6,weit1,weit2,weit3,weit4,weit5,weit6,exhi1,exhi2,exhi3,exhi4,exhi5,exhi6,stexhi1,stexhi2,stexhi3,stexhi4,stexhi5,stexhi6,fly1,fly2,fly3,fly4,fly5,fly6,late1,late2,late3,late4,late5,late6,avgst1,avgst2,avgst3,avgst4,avgst5,avgst6,avgtm1,avgtm2,avgtm3,avgtm4,avgtm5,avgtm6
+# nw_ext_24를 간소화 (importance낮은 것 정리)	
+nw_ext_25	mm,jyo,race,turn,raty,femcnt,alvt,fixent,nw1,nw2,nw3,nw4,nw5,nw6,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6,n3w1,n3w2,n3w3,n3w4,n3w5,n3w6,lw1,lw2,lw3,lw4,lw5,lw6,l2w1,l2w2,l2w3,l2w4,l2w5,l2w6,l3w1,l3w2,l3w3,l3w4,l3w5,l3w6,m2w1,m2w2,m2w3,m2w4,m2w5,m2w6,en1n,en2n,en3n,en4n,en5n,en6n,sex1,sex2,sex3,sex4,sex5,sex6,lv1n,lv2n,lv3n,lv4n,lv5n,lv6n,age1,age2,age3,age4,age5,age6,weit1,weit2,weit3,weit4,weit5,weit6,exhi1,exhi2,exhi3,exhi4,exhi5,exhi6,stexhi1,stexhi2,stexhi3,stexhi4,stexhi5,stexhi6,fly1,fly2,fly3,fly4,fly5,fly6,avgst1,avgst2,avgst3,avgst4,avgst5,avgst6,avgtm1,avgtm2,avgtm3,avgtm4,avgtm5,avgtm6
+# nw_ext_25에 importance높은 category feature를 추가하고 lv1n…을 추가 삭제	
+nw_ext_26	mm,jyo,race,turn,raty,femcnt,alvt,fixent,wa1234,comp123,comconf,nw1,nw2,nw3,nw4,nw5,nw6,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6,n3w1,n3w2,n3w3,n3w4,n3w5,n3w6,lw1,lw2,lw3,lw4,lw5,lw6,l2w1,l2w2,l2w3,l2w4,l2w5,l2w6,l3w1,l3w2,l3w3,l3w4,l3w5,l3w6,m2w1,m2w2,m2w3,m2w4,m2w5,m2w6,en1n,en2n,en3n,en4n,en5n,en6n,sex1,sex2,sex3,sex4,sex5,sex6,age1,age2,age3,age4,age5,age6,weit1,weit2,weit3,weit4,weit5,weit6,exhi1,exhi2,exhi3,exhi4,exhi5,exhi6,stexhi1,stexhi2,stexhi3,stexhi4,stexhi5,stexhi6,fly1,fly2,fly3,fly4,fly5,fly6,avgst1,avgst2,avgst3,avgst4,avgst5,avgst6,avgtm1,avgtm2,avgtm3,avgtm4,avgtm5,avgtm6
+# nw_ext_26에서 오피셜 컴퓨터예측은 제거 	
+nw_ext_27	mm,jyo,race,turn,raty,femcnt,alvt,fixent,wa1234,nw1,nw2,nw3,nw4,nw5,nw6,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6,n3w1,n3w2,n3w3,n3w4,n3w5,n3w6,lw1,lw2,lw3,lw4,lw5,lw6,l2w1,l2w2,l2w3,l2w4,l2w5,l2w6,l3w1,l3w2,l3w3,l3w4,l3w5,l3w6,m2w1,m2w2,m2w3,m2w4,m2w5,m2w6,en1n,en2n,en3n,en4n,en5n,en6n,sex1,sex2,sex3,sex4,sex5,sex6,age1,age2,age3,age4,age5,age6,weit1,weit2,weit3,weit4,weit5,weit6,exhi1,exhi2,exhi3,exhi4,exhi5,exhi6,stexhi1,stexhi2,stexhi3,stexhi4,stexhi5,stexhi6,fly1,fly2,fly3,fly4,fly5,fly6,avgst1,avgst2,avgst3,avgst4,avgst5,avgst6,avgtm1,avgtm2,avgtm3,avgtm4,avgtm5,avgtm6
+# en_nw_ext_24에서 직전정보를 제외한 것	
+en_nw_ext_25	mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,en1,en2,en3,en4,en5,en6,nw1,nw2,nw3,nw4,nw5,nw6,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6,n3w1,n3w2,n3w3,n3w4,n3w5,n3w6,lw1,lw2,lw3,lw4,lw5,lw6,l2w1,l2w2,l2w3,l2w4,l2w5,l2w6,l3w1,l3w2,l3w3,l3w4,l3w5,l3w6,m2w1,m2w2,m2w3,m2w4,m2w5,m2w6,sex1,sex2,sex3,sex4,sex5,sex6,lv1,lv2,lv3,lv4,lv5,lv6,age1,age2,age3,age4,age5,age6,weit1,weit2,weit3,weit4,weit5,weit6,fly1,fly2,fly3,fly4,fly5,fly6,late1,late2,late3,late4,late5,late6,avgst1,avgst2,avgst3,avgst4,avgst5,avgst6
+# nw_ext_27을 en화	
+en_ext_27	mm,jyo,race,turn,raty,femcnt,alvt,fixent,wa123,en1,en2,en3,en4,en5,en6
+# old_expr10의 selected result를 근거로 최소화한 featureset을 정의하고 weka와 lgbm모델을 생성하자	
+## en, nw, en_nw는 예전것을 그대로 사용	
+en_30	jyo,race,turn,raty,alvt,time,fixent,en1,en2,en3,en4,en5,en6
+nw_30	jyo,race,turn,raty,alvt,time,fixent,nw1,nw2,nw3,nw4,nw5,nw6
+en_nw_30	jyo,race,turn,raty,alvt,time,fixent,en1,en2,en3,en4,en5,en6,nw1,nw2,nw3,nw4,nw5,nw6
+rg_sim_1	bodds,pd1,pd2,pd3,prob1,prob2,prob3,lv1,lv2,lv3,lv4,lv5,lv6
+pork_25	bettype,bkumiban,bork,bodds,mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,en1,en2,en3,en4,en5,en6,nw1,nw2,nw3,nw4,nw5,nw6,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6,n3w1,n3w2,n3w3,n3w4,n3w5,n3w6,lw1,lw2,lw3,lw4,lw5,lw6,l2w1,l2w2,l2w3,l2w4,l2w5,l2w6,l3w1,l3w2,l3w3,l3w4,l3w5,l3w6,m2w1,m2w2,m2w3,m2w4,m2w5,m2w6,sex1,sex2,sex3,sex4,sex5,sex6,lv1,lv2,lv3,lv4,lv5,lv6,age1,age2,age3,age4,age5,age6,weit1,weit2,weit3,weit4,weit5,weit6,fly1,fly2,fly3,fly4,fly5,fly6,late1,late2,late3,late4,late5,late6,avgst1,avgst2,avgst3,avgst4,avgst5,avgst6
+bork_25	bork,bodds,mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,en1,en2,en3,en4,en5,en6,nw1,nw2,nw3,nw4,nw5,nw6,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6,n3w1,n3w2,n3w3,n3w4,n3w5,n3w6,lw1,lw2,lw3,lw4,lw5,lw6,l2w1,l2w2,l2w3,l2w4,l2w5,l2w6,l3w1,l3w2,l3w3,l3w4,l3w5,l3w6,m2w1,m2w2,m2w3,m2w4,m2w5,m2w6,sex1,sex2,sex3,sex4,sex5,sex6,lv1,lv2,lv3,lv4,lv5,lv6,age1,age2,age3,age4,age5,age6,weit1,weit2,weit3,weit4,weit5,weit6,fly1,fly2,fly3,fly4,fly5,fly6,late1,late2,late3,late4,late5,late6,avgst1,avgst2,avgst3,avgst4,avgst5,avgst6

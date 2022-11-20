@@ -1,0 +1,167 @@
+#id	sql
+nopattern	('nopattern')
+# 레이스 정보 중심	
+jyo	race.jyocd
+turn	race.turn
+race	race.raceno::text
+grade	race.grade
+rtype	race.racetype::text
+alcnt	race.alevelcount::text
+jyo+turn	race.jyocd || '-' || race.turn
+#jyo+race	race.jyocd || '-' || race.raceno::text
+jyo+grade	race.jyocd || '-' || race.grade
+jyo+rtype	race.jyocd || '-' || race.racetype
+jyo+alcnt	race.jyocd || '-' || race.alevelcount::text
+turn+race	race.turn || '-' || race.raceno
+turn+grade	race.turn || '-' || race.grade
+turn+rtype	race.turn || '-' || race.racetype::text
+turn+alcnt	race.turn || '-' || race.alevelcount
+race+grade	race.raceno::text || '-' || race.grade
+race+rtype	race.raceno::text || '-' || race.racetype::text
+race+alcnt	race.raceno::text || '-' || race.alevelcount
+grade+rtype	race.grade || '-' || race.racetype::text
+grade+alcnt	race.grade || '-' || race.alevelcount
+rtype+alcnt	race.racetype::text || '-' || race.alevelcount
+# 확률	
+prob1	substring(probability1::text from 1 for 3)
+prob1-2dig	substring(probability1::text from 1 for 4)
+prob12	substring(probability1::text from 1 for 3) || '-' || substring(probability2::text from 1 for 3)
+prob123	substring(probability1::text from 1 for 3) || '-' || substring(probability2::text from 1 for 3) || '-' || substring(probability3::text from 1 for 3)
+# 레벨	
+wk1	substring(wakulevellist from 1 for 2)
+wk12	substring(wakulevellist from 1 for 5)
+wk123	substring(wakulevellist from 1 for 8)
+wk1234	substring(wakulevellist from 1 for 11)
+#전국승률	
+nw1	substring(nationwiningrate[1]::text from 1 for 1) 
+nw1-2dig	substring(nationwiningrate[1]::text from 1 for 3) 
+nw12	substring(nationwiningrate[1]::text from 1 for 1) || '-' || substring(nationwiningrate[2]::text from 1 for 1)
+nw123	substring(nationwiningrate[1]::text from 1 for 1) || '-' || substring(nationwiningrate[2]::text from 1 for 1) || '-' || substring(nationwiningrate[3]::text from 1 for 1)
+# ML예측	
+pd12	prediction1 || prediction2
+pd123	prediction1 || prediction2 || prediction3
+# 키 항목간 조합 1단위+1단위	
+prob1+wk1	substring(probability1::text from 1 for 3) || '-' || substring(wakulevellist from 1 for 2)
+prob1+nw1	substring(probability1::text from 1 for 3) || '-' || substring(nationwiningrate[1]::text from 1 for 1)
+wk1+nw1	substring(wakulevellist from 1 for 2) || '-' || substring(nationwiningrate[1]::text from 1 for 1)
+# 키 항목간 조합 1단위+2단위	
+prob1+wk12	substring(probability1::text from 1 for 3) || '-' || substring(wakulevellist from 1 for 5)
+prob1+nw12	substring(probability1::text from 1 for 3) || '-' || substring(nationwiningrate[1]::text from 1 for 1) || '-' || substring(nationwiningrate[2]::text from 1 for 1)
+prob1+pd12	substring(probability1::text from 1 for 3) || '-' || prediction1 || prediction2
+wk1+prob12	substring(wakulevellist from 1 for 2) || '-' || substring(probability1::text from 1 for 3) || '-' || substring(probability2::text from 1 for 3)
+wk1+nw12	substring(wakulevellist from 1 for 2) || '-' || substring(nationwiningrate[1]::text from 1 for 1) || '-' || substring(nationwiningrate[2]::text from 1 for 1)
+wk1+pd12	substring(wakulevellist from 1 for 2) || '-' || prediction1 || prediction2
+nw1+prob12	substring(nationwiningrate[1]::text from 1 for 1) || '-' || substring(probability1::text from 1 for 3) || '-' || substring(probability2::text from 1 for 3)
+nw1+wk12	substring(nationwiningrate[1]::text from 1 for 1) || '-' || substring(wakulevellist from 1 for 5)
+nw1+pd12	substring(nationwiningrate[1]::text from 1 for 1) || '-' || prediction1 || prediction2
+# 키 항목간 조합 2단위+2단위	
+#prob12+wk12	substring(probability1::text from 1 for 3) || '-' || substring(probability2::text from 1 for 3)  || '-' || substring(wakulevellist from 1 for 5)
+#prob12+nw12	substring(probability1::text from 1 for 3) || '-' || substring(probability2::text from 1 for 3)  || '-' || substring(nationwiningrate[1]::text from 1 for 1) || '-' || substring(nationwiningrate[2]::text from 1 for 1)
+#prob12+pd12	substring(probability1::text from 1 for 3) || '-' || substring(probability2::text from 1 for 3)  || '-' || prediction1 || prediction2
+#wk12+nw12	substring(wakulevellist from 1 for 5) || '-' || substring(nationwiningrate[1]::text from 1 for 1) || '-' || substring(nationwiningrate[2]::text from 1 for 1)
+#wk12+pd12	substring(wakulevellist from 1 for 5) || '-' ||  prediction1 || prediction2
+#nw12+pd12	substring(nationwiningrate[1]::text from 1 for 1) || '-' || substring(nationwiningrate[2]::text from 1 for 1) || '-' ||  prediction1 || prediction2
+# 키 항목간 조합 1단위+3단위	
+prob1+wk123	substring(probability1::text from 1 for 3) || '-' || substring(wakulevellist from 1 for 8)
+#prob1+nw123	substring(probability1::text from 1 for 3) || '-' || substring(nationwiningrate[1]::text from 1 for 1) || '-' || substring(nationwiningrate[2]::text from 1 for 1) || '-' || substring(nationwiningrate[3]::text from 1 for 1)
+#prob1+pd123	substring(probability1::text from 1 for 3) || '-' || prediction1 || prediction2 || prediction3
+#wk1+prob123	substring(wakulevellist from 1 for 2) || '-' || substring(probability1::text from 1 for 3) || '-' || substring(probability2::text from 1 for 3) || '-' || substring(probability3::text from 1 for 3)
+#wk1+nw123	substring(wakulevellist from 1 for 2) || '-' || substring(nationwiningrate[1]::text from 1 for 1) || '-' || substring(nationwiningrate[2]::text from 1 for 1) || '-' || substring(nationwiningrate[3]::text from 1 for 1)
+#wk1+pd123	substring(wakulevellist from 1 for 2) || '-' || prediction1 || prediction2 || prediction3
+#nw1+prob123	substring(nationwiningrate[1]::text from 1 for 1) || '-' || substring(probability1::text from 1 for 3) || '-' || substring(probability2::text from 1 for 3) || '-' || substring(probability3::text from 1 for 3)
+nw1+wk123	substring(nationwiningrate[1]::text from 1 for 1) || '-' || substring(wakulevellist from 1 for 8)
+#nw1+pd123	substring(nationwiningrate[1]::text from 1 for 1) || '-' || prediction1 || prediction2 || prediction3
+# 확률 1단위 + 레이스정보	
+prob1+jyo	substring(probability1::text from 1 for 3) || '-' || race.jyocd
+prob1+turn	substring(probability1::text from 1 for 3) || '-' || race.turn
+prob1+race	substring(probability1::text from 1 for 3) || '-' || race.raceno::text
+prob1+grade	substring(probability1::text from 1 for 3) || '-' || race.grade
+prob1+rtype	substring(probability1::text from 1 for 3) || '-' || race.racetype
+prob1+alcnt	substring(probability1::text from 1 for 3) || '-' || race.alevelcount::text
+# 레벨 1단위 + 레이스정보	
+wk1+jyo	substring(wakulevellist from 1 for 2) || '-' || race.jyocd
+wk1+turn	substring(wakulevellist from 1 for 2) || '-' || race.turn
+wk1+race	substring(wakulevellist from 1 for 2) || '-' || race.raceno
+wk1+grade	substring(wakulevellist from 1 for 2) || '-' || race.grade
+wk1+rtype	substring(wakulevellist from 1 for 2) || '-' || race.racetype
+wk1+alcnt	substring(wakulevellist from 1 for 2) || '-' || race.alevelcount
+# 전국승률 1단위 + 레이스정보	
+nw1+jyo	substring(nationwiningrate[1]::text from 1 for 1)  || '-' || race.jyocd
+nw1+turn	substring(nationwiningrate[1]::text from 1 for 1)  || '-' || race.turn
+nw1+race	substring(nationwiningrate[1]::text from 1 for 1)  || '-' || race.raceno::text
+nw1+grade	substring(nationwiningrate[1]::text from 1 for 1)  || '-' || race.grade
+nw1+rtype	substring(nationwiningrate[1]::text from 1 for 1)  || '-' || race.racetype
+nw1+alcnt	substring(nationwiningrate[1]::text from 1 for 1)  || '-' || race.alevelcount::text
+# ML예측 2단위 + 레이스정보	
+#pd12+jyo	prediction1 || prediction2 || '-' || race.jyocd
+pd12+turn	prediction1 || prediction2 || '-' || race.turn
+pd12+race	prediction1 || prediction2 || '-' || race.raceno::text
+pd12+grade	prediction1 || prediction2 || '-' || race.grade
+pd12+rtype	prediction1 || prediction2 || '-' || race.racetype
+pd12+alcnt	prediction1 || prediction2 || '-' || race.alevelcount::text
+# 확률 2단위 + 레이스정보	
+#prob12+jyo	substring(probability1::text from 1 for 3) || '-' || substring(probability2::text from 1 for 3) || '-' || race.jyocd
+prob12+turn	substring(probability1::text from 1 for 3) || '-' || substring(probability2::text from 1 for 3) || '-' || race.turn
+#prob12+race	substring(probability1::text from 1 for 3) || '-' || substring(probability2::text from 1 for 3) || '-' || race.raceno::text
+prob12+grade	substring(probability1::text from 1 for 3) || '-' || substring(probability2::text from 1 for 3) || '-' || race.grade
+prob12+rtype	substring(probability1::text from 1 for 3) || '-' || substring(probability2::text from 1 for 3) || '-' || race.racetype
+prob12+alcnt	substring(probability1::text from 1 for 3) || '-' || substring(probability2::text from 1 for 3) || '-' || race.alevelcount::text
+# 레벨 2단위 + 레이스정보	
+wk12+jyo	substring(wakulevellist from 1 for 5) || '-' || race.jyocd
+wk12+turn	substring(wakulevellist from 1 for 5) || '-' || race.turn
+wk12+race	substring(wakulevellist from 1 for 5) || '-' || race.raceno
+wk12+grade	substring(wakulevellist from 1 for 5) || '-' || race.grade
+wk12+rtype	substring(wakulevellist from 1 for 5) || '-' || race.racetype
+wk12+alcnt	substring(wakulevellist from 1 for 5) || '-' || race.alevelcount
+# 전국승률 2단위 + 레이스정보	
+#nw12+jyo	substring(nationwiningrate[1]::text from 1 for 1) || '-' || substring(nationwiningrate[2]::text from 1 for 1) || '-' || race.jyocd
+nw12+turn	substring(nationwiningrate[1]::text from 1 for 1) || '-' || substring(nationwiningrate[2]::text from 1 for 1) || '-' || race.turn
+#nw12+race	substring(nationwiningrate[1]::text from 1 for 1) || '-' || substring(nationwiningrate[2]::text from 1 for 1) || '-' || race.raceno::text
+nw12+grade	substring(nationwiningrate[1]::text from 1 for 1) || '-' || substring(nationwiningrate[2]::text from 1 for 1) || '-' || race.grade
+nw12+rtype	substring(nationwiningrate[1]::text from 1 for 1) || '-' || substring(nationwiningrate[2]::text from 1 for 1) || '-' || race.racetype
+nw12+alcnt	substring(nationwiningrate[1]::text from 1 for 1) || '-' || substring(nationwiningrate[2]::text from 1 for 1) || '-' || race.alevelcount::text
+# 레벨 3단위 + 레이스정보	
+#wk123+jyo	substring(wakulevellist from 1 for 8) || '-' || race.jyocd
+wk123+turn	substring(wakulevellist from 1 for 8) || '-' || race.turn
+wk123+race	substring(wakulevellist from 1 for 8) || '-' || race.raceno
+wk123+grade	substring(wakulevellist from 1 for 8) || '-' || race.grade
+wk123+rtype	substring(wakulevellist from 1 for 8) || '-' || race.racetype
+wk123+alcnt	substring(wakulevellist from 1 for 8) || '-' || race.alevelcount
+# 키항목 1단위 레이스정보 2단위	
+prob1+turn+grade	substring(probability1::text from 1 for 3) || '-' || race.turn || '-' || race.grade
+wk1+turn+grade	substring(wakulevellist from 1 for 2) || '-' || race.turn || '-' || race.grade
+nw1+turn+grade	substring(nationwiningrate[1]::text from 1 for 1) || '-' || race.turn || '-' || race.grade
+prob1+turn+rtype	substring(probability1::text from 1 for 3) || '-' || race.turn || '-' || race.racetype
+wk1+turn+rtype	substring(wakulevellist from 1 for 2) || '-' || race.turn || '-' || race.racetype
+nw1+turn+rtype	substring(nationwiningrate[1]::text from 1 for 1) || '-' || race.turn || '-' || race.racetype
+prob1+turn+alcnt	substring(probability1::text from 1 for 3) || '-' || race.turn || '-' || race.alevelcount::text
+wk1+turn+alcnt	substring(wakulevellist from 1 for 2) || '-' || race.turn || '-' || race.alevelcount::text
+nw1+turn+alcnt	substring(nationwiningrate[1]::text from 1 for 1) || '-' || race.turn || '-' || race.alevelcount::text
+prob1+grade+rtype	substring(probability1::text from 1 for 3) || '-' || race.grade || '-' || race.racetype::text
+wk1+grade+rtype	substring(wakulevellist from 1 for 2) || '-' || race.grade || '-' || race.racetype::text
+nw1+grade+rtype	substring(nationwiningrate[1]::text from 1 for 1) || '-' || race.grade || '-' || race.racetype::text
+prob1+grade+alcnt	substring(probability1::text from 1 for 3) || '-' || race.grade || '-' || race.alevelcount
+wk1+grade+alcnt	substring(wakulevellist from 1 for 2) || '-' || race.grade || '-' || race.alevelcount
+nw1+grade+alcnt	substring(nationwiningrate[1]::text from 1 for 1) || '-' || race.grade || '-' || race.alevelcount
+prob1+rtype+alcnt	substring(probability1::text from 1 for 3) || '-' || race.racetype::text || '-' || race.alevelcount
+wk1+rtype+alcnt	substring(wakulevellist from 1 for 2) || '-' || race.racetype::text || '-' || race.alevelcount
+nw1+rtype+alcnt	substring(nationwiningrate[1]::text from 1 for 1) || '-' || race.racetype::text || '-' || race.alevelcount
+# 시뮬레이션 결과를 반영하기위한 패턴. 반드시 "sim+"으로 시작해야하고 AbstractSimulationCreator에 처리를 추가해야한다.	
+sim+ptncnt	('sim+ptncnt')
+sim+patterns	('sim+patterns')
+sim+evaluations	('sim+evaluations')
+sim+groups	('sim+groups')
+sim+grpcnt	('sim+grpcnt')
+sim+each	('sim+each')
+sim+ptnids	('sim+ptnids')
+# 2022/10/30 追加  2N(4bet), 3X(8bet) 対応	
+pd12+wk1	prediction1 || prediction2 || '-' || substring(wakulevellist from 1 for 2)
+pd12+wk12	prediction1 || prediction2 || '-' || substring(wakulevellist from 1 for 5)
+pd12+wk123	prediction1 || prediction2 || '-' || substring(wakulevellist from 1 for 8)
+pd123+wk1	prediction1 || prediction2  || prediction3 || '-' || substring(wakulevellist from 1 for 2)
+pd123+wk12	prediction1 || prediction2  || prediction3 || '-' || substring(wakulevellist from 1 for 5)
+pd123+wk123	prediction1 || prediction2  || prediction3 || '-' || substring(wakulevellist from 1 for 8)
+wk13	substring(wakulevellist from 1 for 2) || '-' || substring(wakulevellist from 7 for 2)
+wk14	substring(wakulevellist from 1 for 2) || '-' || substring(wakulevellist from 10 for 2)
+wk15	substring(wakulevellist from 1 for 2) || '-' || substring(wakulevellist from 13 for 2)
+wk125	substring(wakulevellist from 1 for 5) || '-' || substring(wakulevellist from 13 for 2)

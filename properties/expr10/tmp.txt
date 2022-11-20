@@ -1,0 +1,2590 @@
+ml_result 3436
+ml_result 3437
+ml_result 3438
+ml_result 3439
+ml_result 3440
+ml_result 3441
+ml_result 3442
+ml_result 3443
+ml_result 3444
+ml_result 3445
+ml_result 3446
+ml_result 3447
+ml_result 3448
+ml_result 3449
+ml_result 3450
+ml_result 3451
+ml_result 3452
+ml_result 3453
+ml_result 3454
+ml_result 3455
+ml_result 3456
+ml_result 3457
+ml_result 3458
+ml_result 3459
+ml_result 3460
+ml_result 3461
+ml_result 3462
+ml_result 3463
+ml_result 3464
+ml_result 3465
+ml_result 3466
+ml_result 3467
+ml_result 3468
+ml_result 3469
+ml_result 3470
+ml_result 3471
+ml_result 3472
+ml_result 3473
+ml_result 3474
+ml_result 3475
+ml_result 3476
+ml_result 3477
+ml_result 3478
+ml_result 3479
+ml_result 3480
+ml_result 3481
+ml_result 3482
+ml_result 3483
+ml_result 3484
+ml_result 3485
+ml_result 3486
+ml_result 3487
+ml_result 3488
+ml_result 3489
+ml_result 3490
+ml_result 3491
+ml_result 3492
+ml_result 3493
+ml_result 3494
+ml_result 3495
+ml_result 3496
+ml_result 3497
+ml_result 3498
+ml_result 3499
+ml_result 3500
+ml_result 3501
+ml_result 3502
+ml_result 3503
+ml_result 3504
+ml_result 3505
+ml_result 3506
+ml_result 3507
+ml_result 3508
+ml_result 3509
+ml_result 3510
+ml_result 3511
+ml_result 3512
+ml_result 3513
+ml_result 3514
+ml_result 3515
+ml_result 3516
+ml_result 3517
+ml_result 3518
+ml_result 3519
+ml_result 3520
+ml_result 3521
+ml_result 3522
+ml_result 3523
+ml_result 3524
+ml_result 3525
+ml_result 3526
+ml_result 3527
+ml_result 3528
+ml_result 3529
+ml_result 3530
+ml_result 3531
+ml_result 3532
+ml_result 3533
+ml_result 3534
+ml_result 3535
+ml_result 3536
+ml_result 3537
+ml_result 3538
+ml_result 3539
+ml_result 3540
+ml_result 3541
+ml_result 3542
+ml_result 3543
+ml_result 3544
+ml_result 3545
+ml_result 3546
+ml_result 3547
+ml_result 3548
+ml_result 3549
+ml_result 3550
+ml_result 3551
+ml_result 3552
+ml_result 3553
+ml_result 3554
+ml_result 3555
+ml_result 3556
+ml_result 3557
+ml_result 3558
+ml_result 3559
+ml_result 3560
+ml_result 3561
+ml_result 3562
+ml_result 3563
+ml_result 3564
+ml_result 3565
+
+ml_result 3566
+ml_result 3567
+ml_result 3568
+ml_result 3569
+ml_result 3570
+ml_result 3571
+ml_result 3572
+ml_result 3573
+ml_result 3574
+ml_result 3575
+ml_result 3576
+ml_result 3577
+ml_result 3578
+ml_result 3579
+ml_result 3580
+ml_result 3581
+ml_result 3582
+ml_result 3583
+ml_result 3584
+ml_result 3585
+ml_result 3586
+ml_result 3587
+ml_result 3588
+ml_result 3589
+ml_result 3590
+ml_result 3591
+ml_result 3592
+ml_result 3593
+ml_result 3594
+ml_result 3595
+ml_result 3596
+ml_result 3597
+ml_result 3598
+ml_result 3599
+ml_result 3600
+ml_result 3601
+ml_result 3602
+ml_result 3603
+ml_result 3604
+ml_result 3605
+ml_result 3606
+ml_result 3607
+ml_result 3608
+ml_result 3609
+ml_result 3610
+ml_result 3611
+ml_result 3612
+ml_result 3613
+ml_result 3614
+ml_result 3615
+ml_result 3616
+ml_result 3617
+ml_result 3618
+ml_result 3619
+ml_result 3620
+ml_result 3621
+ml_result 3622
+ml_result 3623
+ml_result 3624
+ml_result 3625
+ml_result 3626
+ml_result 3627
+ml_result 3628
+ml_result 3629
+ml_result 3630
+ml_result 3631
+ml_result 3632
+ml_result 3633
+ml_result 3634
+ml_result 3635
+ml_result 3636
+ml_result 3637
+ml_result 3638
+ml_result 3639
+ml_result 3640
+ml_result 3641
+ml_result 3642
+ml_result 3643
+ml_result 3644
+ml_result 3645
+ml_result 3646
+ml_result 3647
+ml_result 3648
+ml_result 3649
+ml_result 3650
+ml_result 3651
+ml_result 3652
+ml_result 3653
+ml_result 3654
+ml_result 3655
+ml_result 3656
+ml_result 3657
+ml_result 3658
+ml_result 3659
+ml_result 3660
+ml_result 3661
+ml_result 3662
+ml_result 3663
+ml_result 3664
+ml_result 3665
+ml_result 3666
+ml_result 3667
+ml_result 3668
+ml_result 3669
+ml_result 3670
+ml_result 3671
+ml_result 3672
+ml_result 3673
+ml_result 3674
+ml_result 3675
+ml_result 3676
+ml_result 3677
+ml_result 3678
+ml_result 3679
+ml_result 3680
+ml_result 3681
+ml_result 3682
+ml_result 3683
+ml_result 3684
+ml_result 3685
+ml_result 3686
+ml_result 3687
+ml_result 3688
+ml_result 3689
+ml_result 3690
+ml_result 3691
+ml_result 3692
+ml_result 3693
+ml_result 3694
+ml_result 3695
+
+
+ml_result 3176-3240
+ml_result 3241-3305
+ml_result 3306-3370
+ml_result 3371-3435
+
+
+ml_classify 98080
+ml_classify 98083
+ml_classify 98102
+
+ml_classify 98100
+ml_classify 98103
+
+
+
+
+
+boosting_type=gbdt::learning_rate=0.1::class_weight=balanced D:/Dev/experiment/expr10/arff/99100_rank2.csv D:/Dev/tmp/tmp.model mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,en1,en2,en3,en4,en5,en6,nw1,nw2,nw3,nw4,nw5,nw6,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6,n3w1,n3w2,n3w3,n3w4,n3w5,n3w6,lw1,lw2,lw3,lw4,lw5,lw6,l2w1,l2w2,l2w3,l2w4,l2w5,l2w6,l3w1,l3w2,l3w3,l3w4,l3w5,l3w6,m2w1,m2w2,m2w3,m2w4,m2w5,m2w6,sex1,sex2,sex3,sex4,sex5,sex6,lv1,lv2,lv3,lv4,lv5,lv6,age1,age2,age3,age4,age5,age6,weit1,weit2,weit3,weit4,weit5,weit6,fly1,fly2,fly3,fly4,fly5,fly6,late1,late2,late3,late4,late5,late6,avgst1,avgst2,avgst3,avgst4,avgst5,avgst6,class category,category,category,category,category,category,float,float,category,category,category,category,category,category,category,category,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,category,category,category,category,category,category,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,category
+
+
+pydev debugger: starting (pid: 27604)
+Backend TkAgg is interactive backend. Turning interactive mode on.
+Training set score: 0.7788
+Test set score: 0.5513
+              precision    recall  f1-score   support
+
+           1       0.60      0.89      0.72     44398
+           2       0.36      0.22      0.27     11478
+           3       0.32      0.13      0.19     10108
+           4       0.29      0.10      0.15      8054
+           5       0.22      0.06      0.09      4426
+           6       0.21      0.05      0.08      2551
+
+    accuracy                           0.55     81015
+   macro avg       0.34      0.24      0.25     81015
+weighted avg       0.47      0.55      0.48     81015
+
+Training set score: 0.7233
+Test set score: 0.4105
+              precision    recall  f1-score   support
+
+           1       0.71      0.49      0.58     44398
+           2       0.29      0.36      0.32     11478
+           3       0.25      0.32      0.28     10108
+           4       0.21      0.29      0.24      8054
+           5       0.14      0.24      0.18      4426
+           6       0.13      0.23      0.17      2551
+
+    accuracy                           0.41     81015
+   macro avg       0.29      0.32      0.30     81015
+weighted avg       0.50      0.41      0.44     81015
+
+
+Training set score: 0.6912
+Test set score: 0.2644
+              precision    recall  f1-score   support
+
+           1       0.20      0.16      0.18     13859
+           2       0.31      0.45      0.36     20338
+           3       0.28      0.30      0.29     17148
+           4       0.25      0.22      0.23     13578
+           5       0.21      0.13      0.16      9554
+           6       0.20      0.11      0.14      6538
+
+    accuracy                           0.26     81015
+   macro avg       0.24      0.23      0.23     81015
+weighted avg       0.25      0.26      0.25     81015
+
+
+
+
+
+271769_1T_1_L_1~30_FBI-2_1232_2_4_ip_80_wk12_yes_1~99
+
+270245_1T_1_1~99_L_1~10_no_FBI_1232_2_4_80_ip_wk12
+270245_1T_1_1~99_L_1~10_no_FBI_1232_2_4_80_ip_wk12.tsv
+
+ml_model_classify 99083
+ml_model_classify 99100
+ml_model_classify 99102
+ml_model_classify 99103
+
+class_weight={'1':88,'2':23,'3':19,'4':16,'5':8,'6':5}
+
+ml_simulation3 272231
+ml_simulation3 272232
+
+ml_simulation3 272233
+ml_simulation3 272234
+
+ml_simulation3 272235
+ml_simulation3 272236
+
+ml_simulation3 272237
+ml_simulation3 272238
+
+ml_simulation3 272239
+ml_simulation3 272240
+
+ml_simulation3 272241
+ml_simulation3 272242
+
+
+ml_result 3157
+ml_result 3158
+ml_result 3159
+ml_result 3160
+ml_result 3161
+
+ml_result 3162
+ml_result 3163
+ml_result 3164
+ml_result 3165
+ml_result 3166
+
+ml_result 3167
+ml_result 3168
+ml_result 3169
+ml_result 3170
+ml_result 3171
+ml_result 3172
+
+
+271769	271845
+271846	271922
+271923	271999
+272000	272076
+272077	272153
+272154	272230
+
+ml_simulation3 271661-271678
+ml_simulation3 271679-271696
+ml_simulation3 271697-271714
+ml_simulation3 271715-271732
+ml_simulation3 271733-271750
+ml_simulation3 271751-271768
+
+
+ml_result 3125-3132
+ml_result 3133-3140
+
+
+
+ml_simulation3 270599-270716
+ml_simulation3 270717-270834
+ml_simulation3 270835-270952
+
+# simul3_1_FBI_1.0에 대해 아래 더 실행할 것
+ml_simulation3 270317-270316
+
+
+ml_simulation3 270351-270362
+ml_simulation3 270365-270421
+ml_simulation3 270596-270598
+ml_simulation3 270425-270475
+ml_simulation3 270559-270571
+
+
+ml_simulation3 270245-270303
+ml_simulation3 270304-270362
+ml_simulation3 270363-270421
+ml_simulation3 270422-270480
+ml_simulation3 270481-270539
+ml_simulation3 270540-270598
+
+
+
+
+ml_result 3121
+ml_result 3122
+
+ml_result 3123
+ml_result 3124
+
+
+ml_result 3085
+ml_result 3086
+ml_result 3087
+ml_result 3088
+ml_result 3089
+ml_result 3090
+ml_result 3091
+ml_result 3092
+ml_result 3093
+ml_result 3094
+ml_result 3095
+ml_result 3096
+ml_result 3097
+ml_result 3098
+ml_result 3099
+ml_result 3100
+
+ml_result 3101
+ml_result 3102
+ml_result 3103
+ml_result 3104
+ml_result 3105
+ml_result 3106
+ml_result 3107
+ml_result 3108
+ml_result 3109
+ml_result 3110
+ml_result 3111
+ml_result 3112
+ml_result 3113
+ml_result 3114
+ml_result 3115
+ml_result 3116
+ml_result 3117
+ml_result 3118
+ml_result 3119
+ml_result 3120
+
+
+12개월 evaluation                              
+  모든 흑자 패턴                            
+                              
+  흑자 패턴에서 흑자bork만 추출한다                    흑자 bork추출방식        
+                              
+  모든패턴에서 흑자bork만 추출한다                      Ltrim      
+                        LRtrim      
+                        Selective LRtrim      
+                        Selective      
+                              
+  3개월 evaluation을 번호단위로 평가                            
+    3T에 대해서 투표방식 결정                          
+      3T, 2N, 3X~                        
+                              
+    번호별로 model, 패턴ID결정                          
+      모델, 패턴ID, bork추출방식 결정                        
+                              
+  2개월 evaluation으로 최종결정                            
+
+
+ml_result 3085
+ml_result 3086
+ml_result 3087
+ml_result 3088
+ml_result 3089
+ml_result 3090
+
+
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220923 20220928
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220929 20221003
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20221004 20221009
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20221010 20221016
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20221017 20221023
+
+
+
+boosting_type=gbdt,learning_rate=0.1 D:/Dev/experiment/expr10/arff/99201_rank1.csv D:/Dev/tmp/tmp.model bettype,bkumiban,bork,bodds,mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,en1,en2,en3,en4,en5,en6,nw1,nw2,nw3,nw4,nw5,nw6,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6,n3w1,n3w2,n3w3,n3w4,n3w5,n3w6,lw1,lw2,lw3,lw4,lw5,lw6,l2w1,l2w2,l2w3,l2w4,l2w5,l2w6,l3w1,l3w2,l3w3,l3w4,l3w5,l3w6,m2w1,m2w2,m2w3,m2w4,m2w5,m2w6,sex1,sex2,sex3,sex4,sex5,sex6,lv1,lv2,lv3,lv4,lv5,lv6,age1,age2,age3,age4,age5,age6,weit1,weit2,weit3,weit4,weit5,weit6,fly1,fly2,fly3,fly4,fly5,fly6,late1,late2,late3,late4,late5,late6,avgst1,avgst2,avgst3,avgst4,avgst5,avgst6,class category,float,category,float,category,category,category,category,category,category,float,float,category,category,category,category,category,category,category,category,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,category,category,category,category,category,category,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,category
+
+
+
+
+
+Training set score: 0.6909
+Test set score: 0.5519
+              precision    recall  f1-score   support
+
+           1       0.81      0.77      0.79     26992
+          10       0.08      0.12      0.09       458
+          11       0.05      0.09      0.06       403
+          12       0.07      0.12      0.09       269
+          13       0.05      0.12      0.07       226
+          14       0.06      0.13      0.08       193
+          15       0.05      0.12      0.07       138
+          16       0.05      0.11      0.07       125
+          17       0.03      0.08      0.04       122
+          18       0.03      0.10      0.04        80
+          19       0.02      0.12      0.04        76
+           2       0.49      0.43      0.46     10582
+          20       0.01      0.05      0.02        63
+           3       0.42      0.37      0.39      5631
+           4       0.40      0.32      0.35      3179
+           5       0.30      0.25      0.28      1954
+           6       0.24      0.22      0.23      1328
+           7       0.20      0.17      0.18       944
+           8       0.12      0.16      0.14       737
+           9       0.12      0.16      0.14       606
+           x       0.23      0.67      0.34       695
+
+    accuracy                           0.55     54801
+   macro avg       0.18      0.22      0.19     54801
+weighted avg       0.59      0.55      0.57     54801
+
+
+
+
+bork	bork	numeric	mr.bet_oddsrank::text bork	cast'mr.bet_oddsrank as double precision) bork
+
+
+3084	99100	nopattern	nopattern	20180601	18	4
+
+
+	_2N("2N"),  // ３連単1-2-3456, 4点 (통계단위 2자리)
+	_3X("3X"),  // ３連単1-2-3456, 1-3456-2  8点 (통계단위 2자리)
+	_3Y("3Y");  // ３連単1-3456-2, 2-3456-1 8点 (통계단위 2자리)
+
+	_3M("3M"),  // ３連単1-2-3, 1-3-2, 2-1-3, 3-1-2 4点 (통계단위 3자리)
+	_3P("3P"),  // ３連単1-2-3, 1-3-2, 2-1-3, 2-3-1, 3-1-2, 3-2-1 6点 (통계단위 3자리)
+	_3R("3R"),  // ３連単1-2-3456, 1-3-2456  8点 (통계단위 3자리)
+	_3U("3U"),  // ３連単1-2-3456, 1-3456-2  8点 (통계단위 3자리)
+
+
+ml_result 3074-3075
+ml_result 3076-3077
+ml_result 3078-3079
+ml_result 3080-3081
+ml_result 3082-3083
+
+
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220828 20220829
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220830 20220902
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220903 20220905
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220906 20220908
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220909 20220910
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220911 20220912
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220913 20220914
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220915 20220916
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220917 20220919
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220920 20220922
+
+
+ml_simulation_worker 269939-269964 ./properties/simul1_29_FPH3.properties
+ml_simulation_worker 270225-270244 ./properties/simul1_29_FPH3.properties
+
+ml_simulation_worker 269965-269990 ./properties/simul1_29_FPH3.properties
+ml_simulation_worker 270199-270224 ./properties/simul1_29_FPH3.properties
+
+ml_simulation_worker 269991-270016 ./properties/simul1_29_FPH3.properties
+ml_simulation_worker 270173-270198 ./properties/simul1_29_FPH3.properties
+
+ml_simulation_worker 270017-270042 ./properties/simul1_29_FPH3.properties
+ml_simulation_worker 270147-270172 ./properties/simul1_29_FPH3.properties
+
+ml_simulation_worker 270043-270068 ./properties/simul1_29_FPH3.properties
+ml_simulation_worker 270121-270146 ./properties/simul1_29_FPH3.properties
+
+ml_simulation_worker 270069-270094 ./properties/simul1_29_FPH3.properties
+ml_simulation_worker 270095-270120 ./properties/simul1_29_FPH3.properties
+
+
+
+ml_result 2876-2925
+ml_result 3026-3073
+
+ml_result 2926-2975
+ml_result 2976-3025
+
+--------------------------------------------------------
+simul1_29_FPH2 추가
+
+ml_simulation_worker 269849-269863 ./properties/simul1_29_FPH2.properties
+ml_simulation_worker 269924-269938 ./properties/simul1_29_FPH2.properties
+
+ml_simulation_worker 269864-269878 ./properties/simul1_29_FPH2.properties
+ml_simulation_worker 269909-269923 ./properties/simul1_29_FPH2.properties
+
+ml_simulation_worker 269879-269893 ./properties/simul1_29_FPH2.properties
+ml_simulation_worker 269894-269908 ./properties/simul1_29_FPH2.properties
+
+--------------------------------------------------------
+simul1_29_FPH3
+
+ml_simulation_worker 269279-269326 ./properties/simul1_29_FPH3.properties
+ml_simulation_worker 269807-269854 ./properties/simul1_29_FPH3.properties
+
+ml_simulation_worker 269327-269374 ./properties/simul1_29_FPH3.properties
+ml_simulation_worker 269759-269806 ./properties/simul1_29_FPH3.properties
+
+ml_simulation_worker 269375-269422 ./properties/simul1_29_FPH3.properties
+ml_simulation_worker 269711-269758 ./properties/simul1_29_FPH3.properties
+
+ml_simulation_worker 269423-269470 ./properties/simul1_29_FPH3.properties
+ml_simulation_worker 269663-269710 ./properties/simul1_29_FPH3.properties
+
+ml_simulation_worker 269471-269518 ./properties/simul1_29_FPH3.properties
+ml_simulation_worker 269615-269662 ./properties/simul1_29_FPH3.properties
+
+ml_simulation_worker 269519-269566 ./properties/simul1_29_FPH3.properties
+ml_simulation_worker 269567-269614 ./properties/simul1_29_FPH3.properties
+
+
+
+--------------------------------------------------------
+simul1_29_FPH2
+
+ml_simulation_worker 268799-268838 ./properties/simul1_29_FPH2.properties
+ml_simulation_worker 269239-269278 ./properties/simul1_29_FPH2.properties
+
+ml_simulation_worker 268839-268878 ./properties/simul1_29_FPH2.properties
+ml_simulation_worker 269199-269238 ./properties/simul1_29_FPH2.properties
+
+ml_simulation_worker 268879-268918 ./properties/simul1_29_FPH2.properties
+ml_simulation_worker 269159-269198 ./properties/simul1_29_FPH2.properties
+
+ml_simulation_worker 268919-268958 ./properties/simul1_29_FPH2.properties
+ml_simulation_worker 269119-269158 ./properties/simul1_29_FPH2.properties
+
+ml_simulation_worker 268959-268998 ./properties/simul1_29_FPH2.properties
+ml_simulation_worker 269079-269118 ./properties/simul1_29_FPH2.properties
+
+ml_simulation_worker 268999-269038 ./properties/simul1_29_FPH2.properties
+ml_simulation_worker 269039-269078 ./properties/simul1_29_FPH2.properties
+
+
+--------------------------------------------------------
+resulttype 21,22 추가생성
+ml_simulation 93494-93573
+
+ml_simulation_worker 268639-268718 ./properties/simul1_28_FPH.properties
+
+ml_simulation 93734-93813
+
+ml_simulation_worker 268399-268478 ./properties/simul1_28_FPH.properties
+
+--
+ml_simulation 93414-93493
+ml_simulation_worker 268719-268798 ./properties/simul1_28_FPH.properties
+
+
+ml_simulation 93574-93653
+ml_simulation_worker 268559-268638 ./properties/simul1_28_FPH.properties
+
+ml_simulation 93654-93733
+ml_simulation_worker 268479-268558 ./properties/simul1_28_FPH.properties
+
+
+ml_simulation 93814-93893
+ml_simulation_worker 268319-268398 ./properties/simul1_28_FPH.properties
+
+
+ml_result 2678-2727
+ml_result 2828-2877
+ml_result 2728-2777
+ml_result 2778-2827
+
+
+--------------------------------------------------------
+incr=0.0 추가생성. 3P,3R,3U,3X,3Y
+----------
+mix
+
+ml_simulation 93106-93110
+ml_simulation 93111-93115
+ml_simulation 93116-93120
+ml_simulation_worker 267299-267358 ./properties/simul1_24_FIH.properties
+ml_simulation_worker 267359-267418 ./properties/simul1_24_FIH.properties
+ml_simulation_worker 267419-267478 ./properties/simul1_24_FIH.properties
+
+ml_simulation 93091-93095
+ml_simulation 93096-93100
+ml_simulation 93101-93105
+ml_simulation_worker 267479-267538 ./properties/simul1_24_FIH.properties
+ml_simulation_worker 267539-267598 ./properties/simul1_24_FIH.properties
+ml_simulation_worker 267599-267658 ./properties/simul1_24_FIH.properties
+
+ml_simulation 93046-93050
+ml_simulation 93051-93055
+ml_simulation 93056-93060
+ml_simulation_worker 268199-268203 ./properties/simul1_27_FIH.properties
+ml_simulation_worker 268204-268208 ./properties/simul1_27_FIH.properties
+ml_simulation_worker 268209-268213 ./properties/simul1_27_FIH.properties
+
+ml_simulation 93031-93035
+ml_simulation 93036-93040
+ml_simulation 93041-93045
+ml_simulation_worker 268214-268218 ./properties/simul1_27_FIH.properties
+ml_simulation_worker 268219-268223 ./properties/simul1_27_FIH.properties
+ml_simulation_worker 268224-268228 ./properties/simul1_27_FIH.properties
+
+ml_simulation 92664-92723
+ml_simulation 92724-92783
+ml_simulation 92784-92843
+ml_simulation_worker 268259-268263 ./properties/simul1_27_FIH.properties
+ml_simulation_worker 268264-268268 ./properties/simul1_27_FIH.properties
+ml_simulation_worker 268269-268273 ./properties/simul1_27_FIH.properties
+
+ml_simulation 92484-92543
+ml_simulation 92544-92603
+ml_simulation 92604-92663
+ml_simulation_worker 268274-268278 ./properties/simul1_27_FIH.properties
+ml_simulation_worker 268279-268283 ./properties/simul1_27_FIH.properties
+ml_simulation_worker 268284-268288 ./properties/simul1_27_FIH.properties
+
+
+
+
+
+
+
+
+
+----------
+sim24
+3P,R,U
+ml_simulation_worker 267299-267358 ./properties/simul1_24_FIH.properties
+ml_simulation_worker 267359-267418 ./properties/simul1_24_FIH.properties
+ml_simulation_worker 267419-267478 ./properties/simul1_24_FIH.properties
+ml_simulation_worker 267479-267538 ./properties/simul1_24_FIH.properties
+ml_simulation_worker 267539-267598 ./properties/simul1_24_FIH.properties
+ml_simulation_worker 267599-267658 ./properties/simul1_24_FIH.properties
+
+sim27
+3X
+ml_simulation_worker 268199-268203 ./properties/simul1_27_FIH.properties
+ml_simulation_worker 268204-268208 ./properties/simul1_27_FIH.properties
+ml_simulation_worker 268209-268213 ./properties/simul1_27_FIH.properties
+ml_simulation_worker 268214-268218 ./properties/simul1_27_FIH.properties
+ml_simulation_worker 268219-268223 ./properties/simul1_27_FIH.properties
+ml_simulation_worker 268224-268228 ./properties/simul1_27_FIH.properties
+
+sim27
+3Y
+ml_simulation_worker 268259-268263 ./properties/simul1_27_FIH.properties
+ml_simulation_worker 268264-268268 ./properties/simul1_27_FIH.properties
+ml_simulation_worker 268269-268273 ./properties/simul1_27_FIH.properties
+ml_simulation_worker 268274-268278 ./properties/simul1_27_FIH.properties
+ml_simulation_worker 268279-268283 ./properties/simul1_27_FIH.properties
+ml_simulation_worker 268284-268288 ./properties/simul1_27_FIH.properties
+
+test4
+3P,R,U
+ml_simulation 92484-92543
+ml_simulation 92544-92603
+ml_simulation 92604-92663
+ml_simulation 92664-92723
+ml_simulation 92724-92783
+ml_simulation 92784-92843
+
+test4
+3X
+ml_simulation 93031-93035
+ml_simulation 93036-93040
+ml_simulation 93041-93045
+ml_simulation 93046-93050
+ml_simulation 93051-93055
+ml_simulation 93056-93060
+
+
+test4
+3Y
+ml_simulation 93091-93095
+ml_simulation 93096-93100
+ml_simulation 93101-93105
+ml_simulation 93106-93110
+ml_simulation 93111-93115
+ml_simulation 93116-93120
+
+
+--------------------------------------------------------
+3U 생성작업
+ml_simulation 92724
+ml_simulation_worker 267539 ./properties/simul1_24_FIH.properties
+
+
+ml_simulation 92724-92743
+ml_simulation_worker 267639-267658 ./properties/simul1_24_FIH.properties
+
+ml_simulation 92744-92763
+ml_simulation_worker 267619-267638 ./properties/simul1_24_FIH.properties
+
+ml_simulation 92764-92783
+ml_simulation_worker 267599-267618 ./properties/simul1_24_FIH.properties
+
+ml_simulation 92784-92803
+ml_simulation_worker 267579-267598 ./properties/simul1_24_FIH.properties
+
+ml_simulation 92804-92823
+ml_simulation_worker 267559-267578 ./properties/simul1_24_FIH.properties
+
+ml_simulation 92824-92843
+ml_simulation_worker 267539-267558 ./properties/simul1_24_FIH.properties
+
+
+
+
+--------------------------------------------------------
+통계분석용 테이블로 옮기는 작업
+
+test
+  3U:  92724-92843
+sim
+  3U:  267539-267658
+  
+test
+  3P,3R:  92484-92723
+  2N,3X,3Y : 92971-93150
+sim
+  3P,3R:  267299-267538
+  2N,3X,3Y : 268139-268318
+  
+
+insert into st_evaluation
+select
+  *,
+  split_part(evaluations_id, '_', 3),
+  split_part(evaluations_id, '_', 4),
+  split_part(evaluations_id, '_', 5),
+  split_part(evaluations_id, '_', 7),
+  split_part(evaluations_id, '_', 8),
+  split_part(evaluations_id, '_', 9),
+  split_part(evaluations_id, '_', 10),
+  split_part(evaluations_id, '_', 11),
+  split_part(evaluations_id, '_', 12),
+  split_part(evaluations_id, '_', 13)
+from ml_evaluation
+where resultno::int between 267539 and 267658;
+
+insert into st_range_evaluation
+select
+  *,
+  split_part(evaluations_id, '_', 3),
+  split_part(evaluations_id, '_', 4),
+  split_part(evaluations_id, '_', 5),
+  split_part(evaluations_id, '_', 7),
+  split_part(evaluations_id, '_', 8),
+  split_part(evaluations_id, '_', 9),
+  split_part(evaluations_id, '_', 10),
+  split_part(evaluations_id, '_', 11),
+  split_part(evaluations_id, '_', 12),
+  split_part(evaluations_id, '_', 13)
+from ml_range_evaluation
+where resultno::int between 267539 and 267658;
+
+--------------------------------------------------------
+simul1_24 조건조정후 재생성
+ml_simulation 92524
+ml_simulation_worker 267339 ./properties/simul1_24_FIH.properties
+
+ml_simulation 92484-92523
+ml_simulation_worker 267499-267538 ./properties/simul1_24_FIH.properties
+
+ml_simulation 92524-92563
+ml_simulation_worker 267459-267498 ./properties/simul1_24_FIH.properties
+
+ml_simulation 92564-92603
+ml_simulation_worker 267419-267458 ./properties/simul1_24_FIH.properties
+
+ml_simulation 92604-92643
+ml_simulation_worker 267379-267418 ./properties/simul1_24_FIH.properties
+
+ml_simulation 92644-92683
+ml_simulation_worker 267339-267378 ./properties/simul1_24_FIH.properties
+
+ml_simulation 92684-92723
+ml_simulation_worker 267299-267338 ./properties/simul1_24_FIH.properties
+
+
+
+
+--------------------------------------------------------
+simul1_27
+
+ml_simulation 93023
+93009_5_842_3_2N_25_i01_10_1.0_FIH_102_ip_digit1
+ml_simulation_worker 268299 ./properties/simul1_27_FIH.properties
+
+ml_simulation 92971-93000
+ml_simulation_worker 268289-268318 ./properties/simul1_27_FIH.properties
+
+ml_simulation 93001-93030
+ml_simulation_worker 268259-268288 ./properties/simul1_27_FIH.properties
+
+ml_simulation 93031-93060
+ml_simulation_worker 268229-268258 ./properties/simul1_27_FIH.properties
+
+ml_simulation 93061-93090
+ml_simulation_worker 268199-268228 ./properties/simul1_27_FIH.properties
+
+ml_simulation 93091-93120
+ml_simulation_worker 268169-268198 ./properties/simul1_27_FIH.properties
+
+ml_simulation 93121-93150
+ml_simulation_worker 268139-268168 ./properties/simul1_27_FIH.properties
+
+
+
+
+--------------------------------------------------------
+
+simul1_25 DB 재생성
+delete from ml_evaluation me where resultno::int between 268299 and 268299;
+delete from ml_bork_evaluation me where resultno::int between 268299 and 268299;
+delete from ml_range_evaluation me where resultno::int between 268299 and 268299;
+delete from ml_evaluation where resultno::int between 93009 and 93009;
+
+select * from ml_evaluation me where resultno::int between 92844 and 92903;
+sekect * from ml_evaluation me where resultno::int between 268019 and 268078;
+
+
+--------------------------------------------------------
+3X,3Y 생성  simul1_26
+
+ml_simulation 92904-92913
+ml_simulation_worker 268129-268138 ./properties/simul1_26_FIH.properties
+
+ml_simulation 92914-92923
+ml_simulation_worker 268119-268128 ./properties/simul1_26_FIH.properties
+
+ml_simulation 92924-92933
+ml_simulation_worker 268109-268118 ./properties/simul1_26_FIH.properties
+
+ml_simulation 92934-92943
+ml_simulation_worker 268099-268108 ./properties/simul1_26_FIH.properties
+
+ml_simulation 92944-92953
+ml_simulation_worker 268089-268098 ./properties/simul1_26_FIH.properties
+
+ml_simulation 92954-92963
+ml_simulation_worker 268079-268088 ./properties/simul1_26_FIH.properties
+
+
+ml_result 2278-2310
+ml_result 2377-2409
+
+ml_result 2311-2343
+ml_result 2410-2442
+
+ml_result 2344-2376
+ml_result 2443-2475
+
+ml_result 2476-2508
+ml_result 2575-2607
+
+ml_result 2509-2541
+ml_result 2608-2640
+
+ml_result 2542-2574
+ml_result 2641-2673
+
+
+--------------------------------------------------------
+3X,3Y 생성
+
+  ml_simulation 92844-92853
+  ml_simulation_worker 268069-268078 ./properties/simul1_25_FIH.properties
+
+  ml_simulation 92854-92863
+  ml_simulation_worker 268059-268068 ./properties/simul1_25_FIH.properties
+
+  ml_simulation 92864-92873
+  ml_simulation_worker 268049-268058 ./properties/simul1_25_FIH.properties
+
+  ml_simulation 92874-92883
+  ml_simulation_worker 268039-268048 ./properties/simul1_25_FIH.properties
+
+  ml_simulation 92884-92893
+ml_simulation_worker 268029-268038 ./properties/simul1_25_FIH.properties
+
+  ml_simulation 92894-92903
+ml_simulation_worker 268019-268028 ./properties/simul1_25_FIH.properties
+
+ml_simulation_worker 268025 ./properties/simul1_25_FIH.properties
+ml_simulation_worker 268026 ./properties/simul1_25_FIH.properties
+ml_simulation_worker 268027 ./properties/simul1_25_FIH.properties
+ml_simulation_worker 268028 ./properties/simul1_25_FIH.properties
+
+
+  ml_result 2081-2113
+  ml_result 2114-2146
+  ml_result 2147-2179
+  ml_result 2180-2212
+  ml_result 2213-2245
+  ml_result 2246-2277
+
+ml_result 1884-1916
+ml_result 1917-1949
+ml_result 1950-1982
+ml_result 1983-2015
+ml_result 2016-2048
+ml_result 2049-2081
+
+-----------------------------------------------
+3P,3R,3U 중간에 실행포기. 너무 오래걸리고 의미가 적어 보여서
+
+ml_simulation 92124-92243
+ml_simulation_worker 267899-268018 ./properties/simul1_24_FIH.properties
+
+ml_simulation 92244-92363
+ml_simulation_worker 267779-267898 ./properties/simul1_24_FIH.properties
+
+ml_simulation 92364-92483
+ml_simulation_worker 267659-267778 ./properties/simul1_24_FIH.properties
+
+ml_simulation 92484-92603
+ml_simulation_worker 267539-267658 ./properties/simul1_24_FIH.properties
+
+ml_simulation 92604-92723
+ml_simulation_worker 267419-267538 ./properties/simul1_24_FIH.properties
+
+ml_simulation 92724-92843
+ml_simulation_worker 267299-267418 ./properties/simul1_24_FIH.properties
+
+ml_result 1490-1555
+ml_result 1556-1621
+ml_result 1622-1687
+ml_result 1688-1753
+ml_result 1754-1819
+ml_result 1820-1883
+
+-----------------------------------------------
+ml_simulation_worker 267057-267059 ./properties/simul1_23_FIH.properties
+ml_simulation_worker 267060-267062 ./properties/simul1_23_FIH.properties
+ml_simulation_worker 267063-267065 ./properties/simul1_23_FIH.properties
+ml_simulation_worker 267066-267068 ./properties/simul1_23_FIH.properties
+
+ml_simulation_worker 267200-267203 ./properties/simul1_23_FIH.properties
+ml_simulation_worker 267204-267206 ./properties/simul1_23_FIH.properties
+
+
+
+
+ml_simulation 92078-92123
+ml_simulation_worker 267023-267068 ./properties/simul1_23_FIH.properties
+
+ml_simulation 92032-92077
+ml_simulation_worker 267069-267114 ./properties/simul1_23_FIH.properties
+
+#ml_simulation 91986-92031
+ml_simulation 92016-92031
+ml_simulation_worker 267115-267160 ./properties/simul1_23_FIH.properties
+
+ml_simulation 91940-91985
+ml_simulation_worker 267161-267206 ./properties/simul1_23_FIH.properties
+
+ml_simulation 91894-91939
+ml_simulation_worker 267207-267252 ./properties/simul1_23_FIH.properties
+
+#ml_simulation 91848-91893
+ml_simulation 91880-91893
+ml_simulation_worker 267253-267298 ./properties/simul1_23_FIH.properties
+
+
+ml_result 1293-1325
+ml_result 1326-1358
+ml_result 1359-1391
+ml_result 1392-1424
+ml_result 1425-1457
+ml_result 1458-1489
+
+---------------------------
+
+ml_simulation_worker 266993-266997 ./properties/simul1_22_FIH.properties
+ml_simulation_worker 266998-267002 ./properties/simul1_22_FIH.properties
+ml_simulation_worker 267003-267007 ./properties/simul1_22_FIH.properties
+ml_simulation_worker 267008-267012 ./properties/simul1_22_FIH.properties
+ml_simulation_worker 267013-267017 ./properties/simul1_22_FIH.properties
+ml_simulation_worker 267018-267022 ./properties/simul1_22_FIH.properties
+
+ml_simulation 91818-91822
+ml_simulation 91823-91827
+ml_simulation 91828-91832
+ml_simulation 91833-91837
+ml_simulation 91838-91842
+ml_simulation 91843-91847
+
+
+ml_simulation_worker 266998 ./properties/simul1_22_FIH.properties
+
+---------------------------
+ml_simulation 91524-91572
+ml_simulation 91573-91621
+ml_simulation 91622-91670
+ml_simulation 91671-91719
+ml_simulation 91720-91768
+ml_simulation 91769-91817
+
+ml_simulation_worker 259151-259232 ./properties/simul1_21_FIH.properties
+ml_simulation_worker 259233-259314 ./properties/simul1_21_FIH.properties
+ml_simulation_worker 259315-259396 ./properties/simul1_21_FIH.properties
+ml_simulation_worker 259397-259478 ./properties/simul1_21_FIH.properties
+ml_simulation_worker 259479-259560 ./properties/simul1_21_FIH.properties
+ml_simulation_worker 259561-259642 ./properties/simul1_21_FIH.properties
+
+
+ml_simulation_worker 258173-259642 ./properties/simul1_21_FIH.properties
+ml_simulation_worker 259643-261112 ./properties/simul1_21_FIH.properties
+ml_simulation_worker 261113-262582 ./properties/simul1_21_FIH.properties
+ml_simulation_worker 262583-264052 ./properties/simul1_21_FIH.properties
+ml_simulation_worker 264053-265522 ./properties/simul1_21_FIH.properties
+ml_simulation_worker 265523-266992 ./properties/simul1_21_FIH.properties
+
+ml_simulation_worker 217601-220246 ./properties/simul1_18_FIH.properties
+ml_simulation_worker 220247-222892 ./properties/simul1_18_FIH.properties
+ml_simulation_worker 249353-250822 ./properties/simul1_20_FIH.properties
+ml_simulation_worker 250823-252292 ./properties/simul1_20_FIH.properties
+
+ml_simulation_worker 222893-225538 ./properties/simul1_18_FIH.properties
+ml_simulation_worker 225539-228184 ./properties/simul1_18_FIH.properties
+ml_simulation_worker 252293-253762 ./properties/simul1_20_FIH.properties
+ml_simulation_worker 253763-255232 ./properties/simul1_20_FIH.properties
+
+ml_simulation_worker 228185-230830 ./properties/simul1_18_FIH.properties
+ml_simulation_worker 230831-233476 ./properties/simul1_18_FIH.properties
+ml_simulation_worker 255233-256702 ./properties/simul1_20_FIH.properties
+ml_simulation_worker 256703-258172 ./properties/simul1_20_FIH.properties
+
+ml_simulation_worker 233477-236122 ./properties/simul1_19_FIH.properties
+ml_simulation_worker 236123-238768 ./properties/simul1_19_FIH.properties
+
+ml_simulation_worker 238769-241414 ./properties/simul1_19_FIH.properties
+ml_simulation_worker 241415-244060 ./properties/simul1_19_FIH.properties
+
+ml_simulation_worker 244061-246706 ./properties/simul1_19_FIH.properties
+ml_simulation_worker 246707-249352 ./properties/simul1_19_FIH.properties
+
+
+ml_model_classify 99080
+ml_model_classify 99083
+ml_model_classify 99100
+ml_model_classify 99102
+ml_model_classify 99103
+
+ml_simulation_worker 118817-121462 ./properties/simul1_14_FIB.properties
+ml_simulation_worker 121463-124108 ./properties/simul1_14_FIB.properties
+ml_simulation_worker 124109-126754 ./properties/simul1_14_FIB.properties
+ml_simulation_worker 126755-129400 ./properties/simul1_14_FIB.properties
+ml_simulation_worker 129401-132046 ./properties/simul1_14_FIB.properties
+ml_simulation_worker 132047-134692 ./properties/simul1_14_FIB.properties
+
+ml_simulation_worker 134693-137338 ./properties/simul1_14_FIH.properties
+ml_simulation_worker 137339-139984 ./properties/simul1_14_FIH.properties
+ml_simulation_worker 139985-142630 ./properties/simul1_14_FIH.properties
+ml_simulation_worker 142631-145276 ./properties/simul1_14_FIH.properties
+ml_simulation_worker 145277-147922 ./properties/simul1_14_FIH.properties
+ml_simulation_worker 147923-150568 ./properties/simul1_14_FIH.properties
+
+ml_simulation_worker 150569-153214 ./properties/simul1_15_FIB.properties
+ml_simulation_worker 153215-155860 ./properties/simul1_15_FIB.properties
+ml_simulation_worker 155861-158506 ./properties/simul1_15_FIB.properties
+ml_simulation_worker 158507-161152 ./properties/simul1_15_FIB.properties
+ml_simulation_worker 161153-163798 ./properties/simul1_15_FIB.properties
+ml_simulation_worker 163799-166444 ./properties/simul1_15_FIB.properties
+
+ml_simulation_worker 166445-169090 ./properties/simul1_15_FIH.properties
+ml_simulation_worker 169091-171736 ./properties/simul1_15_FIH.properties
+ml_simulation_worker 171737-174382 ./properties/simul1_15_FIH.properties
+ml_simulation_worker 174383-177028 ./properties/simul1_15_FIH.properties
+ml_simulation_worker 177029-179674 ./properties/simul1_15_FIH.properties
+ml_simulation_worker 179675-182320 ./properties/simul1_15_FIH.properties
+
+ml_simulation_worker 182321-183790 ./properties/simul1_16_FIB.properties
+ml_simulation_worker 183791-185260 ./properties/simul1_16_FIB.properties
+ml_simulation_worker 185261-186730 ./properties/simul1_16_FIB.properties
+ml_simulation_worker 186731-188200 ./properties/simul1_16_FIB.properties
+ml_simulation_worker 188201-189670 ./properties/simul1_16_FIB.properties
+ml_simulation_worker 189671-191140 ./properties/simul1_16_FIB.properties
+
+ml_simulation_worker 191141-192610 ./properties/simul1_16_FIH.properties
+ml_simulation_worker 192611-194080 ./properties/simul1_16_FIH.properties
+ml_simulation_worker 194081-195550 ./properties/simul1_16_FIH.properties
+ml_simulation_worker 195551-197020 ./properties/simul1_16_FIH.properties
+ml_simulation_worker 197021-198490 ./properties/simul1_16_FIH.properties
+ml_simulation_worker 198491-199960 ./properties/simul1_16_FIH.properties
+
+--------------
+ml_simulation_worker 199961-201430 ./properties/simul1_17_FIB.properties
+ml_simulation_worker 208781-210250 ./properties/simul1_17_FIH.properties
+
+ml_simulation_worker 201431-202900 ./properties/simul1_17_FIB.properties
+ml_simulation_worker 210251-211720 ./properties/simul1_17_FIH.properties
+
+ml_simulation_worker 202901-204370 ./properties/simul1_17_FIB.properties
+ml_simulation_worker 211721-213190 ./properties/simul1_17_FIH.properties
+
+ml_simulation_worker 204371-205840 ./properties/simul1_17_FIB.properties
+ml_simulation_worker 213191-214660 ./properties/simul1_17_FIH.properties
+
+ml_simulation_worker 205841-207310 ./properties/simul1_17_FIB.properties
+ml_simulation_worker 214661-216130 ./properties/simul1_17_FIH.properties
+
+ml_simulation_worker 207311-208780 ./properties/simul1_17_FIB.properties
+ml_simulation_worker 216131-217600 ./properties/simul1_17_FIH.properties
+
+
+
+
+
+simul1_6_SG
+ml_simulation 24403-25578
+ml_simulation 25579-26754
+ml_simulation 26755-27930
+ml_simulation 27931-29106
+ml_simulation 29107-30282
+
+simul1_3
+ml_simulation 30283-30870
+ml_simulation 30871-31458
+ml_simulation 31459-32046
+ml_simulation 32047-32634
+ml_simulation 32635-33222
+ml_simulation 33223-33810
+
+simul1_8_SG
+ml_simulation 33811-34790
+ml_simulation 34791-35770
+ml_simulation 35771-36750
+ml_simulation 36751-37730
+ml_simulation 37731-38710
+ml_simulation 38711-39690
+
+simul1_3_dist
+ml_simulation 45571-45864
+ml_simulation 45865-46158
+ml_simulation 46159-46452
+ml_simulation 46453-46746
+ml_simulation 46747-47040
+ml_simulation 47041-47334
+
+simul1_6_dist
+ml_simulation 39691-40866
+ml_simulation 40867-42042
+ml_simulation 42043-43218
+ml_simulation 43219-44394
+ml_simulation 44395-45570
+
+simul1_9
+ml_simulation 10001-11176
+ml_simulation 11177-12352
+ml_simulation 12353-13528
+ml_simulation 13529-14704
+ml_simulation 14705-15880
+
+
+select
+  me.modelno, me.bettype, me.kumiban, sum(me.incamt) in,
+  sum(bk.incamt[0]) in0, sum(bk.incamt[1]) in1, sum(bk.incamt[2]) in2, sum(bk.incamt[3]) in3, sum(bk.incamt[4]) in4, 
+  sum(bk.incamt[5]) in5, sum(bk.incamt[6]) in6, sum(bk.incamt[7]) in7, sum(bk.incamt[8]) in8, sum(bk.incamt[9]) in9
+from ml_evaluation me, ml_bork_evaluation bk
+where 
+  me.resultno = bk.resultno and me.result_type = bk.result_type and me.bettype = bk.bettype and me.kumiban = bk.kumiban and me.modelno = bk.modelno and me.patternid  = bk.patternid and me.pattern = bk.pattern
+  and me.patternid = 'nopattern'
+  and me.result_type in  ('1') 
+  and me.modelno = '99100'
+--  and me.ymd::int between 20210602 and 20220131
+group by me.modelno, me.bettype, me.kumiban
+order by me.modelno, me.bettype, me.kumiban
+;
+ 'ip','G3'
+
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220709 20220711
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220712 20220714
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220715 20220717
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220718 20220720
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220721 20220723
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220724 20220726
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220727 20220729
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220730 20220801
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220802 20220804
+
+
+
+ml_result 1053-1100
+ml_result 1101-1148
+ml_result 1149-1196
+ml_result 1197-1244
+ml_result 1245-1292
+
+
+
+
+#1T-1	
+1	50001	4	1	99100	prob1+wk1	1T	1
+2	50002	4	2	99100	prob1+wk123	1T	1
+3	50004	4	4	99100	wk1+prob12	1T	1
+4	50007	4	7	99100	wk12+jyo	1T	1
+5	50009	4	9	99100	prob1+wk12	1T	1
+6	60001	4	7996	99102	prob1+wk12	1T	1
+7	60003	4	7998	99102	wk12+jyo	1T	1
+8	62058	4	10053	99080	wk123+race	1T	1
+9	62059	4	10054	99080	prob1+wk1	1T	1
+10	62060	4	10055	99080	prob1+wk12	1T	1
+#1T-2	
+11	53654	4	3654	99103	nw12+alcnt	1T	2
+12	60012	4	8007	99102	prob1+wk12	1T	2
+13	60016	4	8011	99102	prob1+wk123	1T	2
+14	60020	4	8015	99102	wk12+turn	1T	2
+15	61275	41	9270	99102	wk12+jyo	1T	2
+16	61278	41	9273	99102	nw1+jyo	1T	2
+#1T-3	
+17	50022	4	22	99100	nw1+jyo	1T	3
+18	53664	4	3664	99103	wk123+rtype	1T	3
+19	60024	4	8019	99102	wk1+rtype+alcnt	1T	3
+20	60027	4	8022	99102	nw12+turn	1T	3
+21	61281	41	9276	99102	wk1	1T	3
+22	61283	41	9278	99102	wk1+alcnt	1T	3
+23	62074	4	10069	99080	jyo+rtype	1T	3
+24	62075	4	10070	99080	nw12+turn	1T	3
+25	65664	4	13659	99083	prob1+wk123	1T	3
+#1T-4	
+26	50031	4	31	99100	nopattern	1T	4
+27	50039	4	39	99100	nw12	1T	4
+28	60032	4	8027	99102	prob1+nw1	1T	4
+29	60034	4	8029	99102	prob1+rtype+alcnt	1T	4
+30	60040	4	8035	99102	nw123	1T	4
+31	62081	4	10076	99080	nopattern	1T	4
+32	62090	4	10085	99080	nw1+rtype	1T	4
+33	65670	4	13665	99083	race+alcnt	1T	4
+34	65671	4	13666	99083	turn+race	1T	4
+35	65676	4	13671	99083	prob1+jyo	1T	4
+#1T-5	
+36	65684	4	13679	99083	nw12+rtype	1T	5
+37	50045	4	45	99100	wk1+prob12	1T	5
+#1T-6	
+38	50051	4	51	99100	wk123+grade	1T	6
+39	50054	4	54	99100	wk1+pd12	1T	6
+40	60056	4	8051	99102	wk123+rtype	1T	6
+41	65689	4	13684	99083	nw1-2dig	1T	6
+42	65692	4	13687	99083	nw123	1T	6
+43	65696	4	13691	99083	nw12+turn	1T	6
+#2T-12	
+44	50363	4	363	99100	wk123+turn	2T	12
+45	50362	4	362	99100	wk123+race	2T	12
+46	50364	4	364	99100	wk123+rtype	2T	12
+47	50366	4	366	99100	wk123+alcnt	2T	12
+48	50368	4	368	99100	prob1+wk123	2T	12
+49	52953	41	2953	99100	nw1+jyo	2T	12
+50	52957	41	2957	99100	nw1+prob12	2T	12
+51	56636	41	6636	99103	jyo+turn	2T	12
+52	56637	41	6637	99103	turn+race	2T	12
+53	56643	41	6643	99103	nw1+jyo	2T	12
+54	60970	4	8965	99102	nw1+jyo	2T	12
+55	61882	41	9877	99102	turn+race	2T	12
+56	61887	41	9882	99102	prob1+grade	2T	12
+57	61889	41	9884	99102	prob1+turn+alcnt	2T	12
+58	61890	41	9885	99102	prob1+turn+grade	2T	12
+59	66005	4	14000	99083	nw1+wk123	2T	12
+#2T-13	
+60	67612	41	15607	99083	jyo+turn	2T	13
+61	52961	41	2961	99100	jyo+alcnt	2T	13
+62	52962	41	2962	99100	jyo+rtype	2T	13
+63	52964	41	2964	99100	wk1+jyo	2T	13
+64	52966	41	2966	99100	prob12+turn	2T	13
+#2T-14	
+65	50387	4	387	99100	prob1+turn+rtype	2T	14
+66	52968	41	2968	99100	prob1+turn+grade	2T	14
+67	52970	41	2970	99100	nw1+race	2T	14
+68	52971	41	2971	99100	wk1+race	2T	14
+69	52975	41	2975	99100	prob1+nw12	2T	14
+70	52976	41	2976	99100	wk123+race	2T	14
+71	62435	4	10430	99080	prob1+jyo	2T	14
+72	62440	4	10435	99080	nw1+turn+alcnt	2T	14
+73	64983	41	12978	99080	jyo+turn	2T	14
+74	64984	41	12979	99080	jyo+grade	2T	14
+75	64988	41	12983	99080	prob1+nw12	2T	14
+76	67624	41	15619	99083	wk1+turn+alcnt	2T	14
+77	67625	41	15620	99083	prob1+turn	2T	14
+78	67626	41	15621	99083	wk123+turn	2T	14
+#2T-15	
+79	56674	41	6674	99103	turn+race	2T	15
+80	61920	41	9915	99102	jyo+turn	2T	15
+#2T-16	
+81	50401	4	401	99100	grade+rtype	2T	16
+82	50402	4	402	99100	wk1+turn	2T	16
+83	50403	4	403	99100	nw12+grade	2T	16
+84	50405	4	405	99100	wk123+grade	2T	16
+85	50406	4	406	99100	nw1+grade+rtype	2T	16
+86	50407	4	407	99100	wk1+turn+grade	2T	16
+87	50408	4	408	99100	nw12	2T	16
+88	50409	4	409	99100	nw1+turn+grade	2T	16
+89	52988	41	2988	99100	nopattern	2T	16
+90	52989	41	2989	99100	alcnt	2T	16
+91	52990	41	2990	99100	wk1	2T	16
+92	52991	41	2991	99100	wk1+alcnt	2T	16
+93	52992	41	2992	99100	wk12	2T	16
+94	62451	4	10446	99080	prob1+grade	2T	16
+95	62452	4	10447	99080	nw12+grade	2T	16
+96	62457	4	10452	99080	nw12+alcnt	2T	16
+97	62458	4	10453	99080	prob1+turn+alcnt	2T	16
+98	62459	4	10454	99080	wk123+race	2T	16
+99	65004	41	12999	99080	wk1+grade	2T	16
+100	65007	41	13002	99080	nw12+turn	2T	16
+101	66047	4	14042	99083	wk1+turn+rtype	2T	16
+#2T-21	
+#102	50414	4	414	99100	nw1+rtype	2T	21
+#103	50416	4	416	99100	prob1	2T	21
+104	50417	4	417	99100	nw1+alcnt	2T	21
+105	50420	4	420	99100	wk1+turn+rtype	2T	21
+106	52998	41	2998	99100	nopattern	2T	21
+107	52999	41	2999	99100	prob1+alcnt	2T	21
+108	54054	4	4054	99103	nw12+rtype	2T	21
+109	61020	4	9015	99102	wk12+jyo	2T	21
+110	61931	41	9926	99102	nw12+rtype	2T	21
+111	61932	41	9927	99102	prob1+rtype+alcnt	2T	21
+112	61935	41	9930	99102	prob1+race	2T	21
+113	61939	41	9934	99102	turn+race	2T	21
+114	62461	4	10456	99080	nopattern	2T	21
+115	62464	4	10459	99080	wk1+grade	2T	21
+116	62466	4	10461	99080	prob12	2T	21
+117	62467	4	10462	99080	prob12+grade	2T	21
+#2T-23	
+118	50423	4	423	99100	nw12+rtype	2T	23
+119	50424	4	424	99100	nw1-2dig	2T	23
+120	54057	4	4057	99103	wk123+turn	2T	23
+121	54061	4	4061	99103	wk123+rtype	2T	23
+122	54063	4	4063	99103	nw1+turn+alcnt	2T	23
+123	61021	4	9016	99102	nw1+jyo	2T	23
+124	61022	4	9017	99102	jyo+turn	2T	23
+125	61023	4	9018	99102	jyo	2T	23
+126	61024	4	9019	99102	prob1+jyo	2T	23
+127	61025	4	9020	99102	wk1+jyo	2T	23
+128	61028	4	9023	99102	prob1+turn+alcnt	2T	23
+129	61029	4	9024	99102	wk12+race	2T	23
+130	62474	4	10469	99080	prob1-2dig	2T	23
+131	62477	4	10472	99080	wk1+jyo	2T	23
+132	66062	4	14057	99083	nw1+jyo	2T	23
+133	66066	4	14061	99083	wk123+grade	2T	23
+#3T-123	
+134	51790	4	1790	99100	wk123+race	3T	123
+135	55348	4	5348	99103	jyo+alcnt	3T	123
+136	57661	41	7661	99103	wk1	3T	123
+137	57664	41	7664	99103	turn+race	3T	123
+138	57665	41	7665	99103	jyo+turn	3T	123
+139	63851	4	11846	99080	prob1+turn	3T	123
+140	63854	4	11849	99080	nw1+alcnt	3T	123
+141	63858	4	11853	99080	prob1+grade+rtype	3T	123
+142	65423	41	13418	99080	jyo+turn	3T	123
+143	67832	41	15827	99083	prob1+wk12	3T	123
+144	67833	41	15828	99083	wk12+grade	3T	123
+145	67834	41	15829	99083	nw1+prob12	3T	123
+146	67835	41	15830	99083	turn+grade	3T	123
+147	67836	41	15831	99083	prob1+nw1	3T	123
+148	67837	41	15832	99083	wk1+turn+rtype	3T	123
+149	67838	41	15833	99083	wk12+race	3T	123
+150	67839	41	15834	99083	wk1+nw12	3T	123
+151	67840	41	15835	99083	wk123+race	3T	123
+#2T-31	
+152	50465	4	465	99100	prob12+turn	2T	31
+153	50469	4	469	99100	prob1+turn+rtype	2T	31
+154	54101	4	4101	99103	wk12+race	2T	31
+155	61068	4	9063	99102	prob1+wk123	2T	31
+156	62514	4	10509	99080	nw1+jyo	2T	31
+157	62517	4	10512	99080	jyo+turn	2T	31
+158	62518	4	10513	99080	prob12+turn	2T	31
+159	62519	4	10514	99080	prob1+jyo	2T	31
+#2T-24	
+160	50433	4	433	99100	nw12+alcnt	2T	24
+161	50435	4	435	99100	prob12+alcnt	2T	24
+162	50436	4	436	99100	jyo+turn	2T	24
+163	54066	4	4066	99103	race+rtype	2T	24
+164	54067	4	4067	99103	wk12+rtype	2T	24
+165	54069	4	4069	99103	wk1+turn+rtype	2T	24
+166	54075	4	4075	99103	wk12+jyo	2T	24
+167	61031	4	9026	99102	turn+race	2T	24
+168	61034	4	9029	99102	nw1+wk123	2T	24
+169	61038	4	9033	99102	jyo+turn	2T	24
+170	62492	4	10487	99080	wk12+rtype	2T	25
+171	62497	4	10492	99080	nw1+jyo	2T	25
+172	50451	4	451	99100	nw1+rtype	2T	26
+173	50453	4	453	99100	race	2T	26
+174	50454	4	454	99100	nw123	2T	26
+175	50456	4	456	99100	prob1+nw12	2T	26
+176	50458	4	458	99100	nw1+turn+alcnt	2T	26
+#2T-32	
+177	50471	4	471	99100	prob12+rtype	2T	32
+178	50472	4	472	99100	wk1+nw12	2T	32
+179	50473	4	473	99100	prob1+nw12	2T	32
+180	50474	4	474	99100	wk1+turn+rtype	2T	32
+181	50475	4	475	99100	wk12+race	2T	32
+182	50477	4	477	99100	nw12+rtype	2T	32
+183	50478	4	478	99100	nw12+turn	2T	32
+184	50479	4	479	99100	wk12+jyo	2T	32
+185	50480	4	480	99100	wk123+race	2T	32
+186	54106	4	4106	99103	rtype	2T	32
+187	54108	4	4108	99103	race+rtype	2T	32
+188	54109	4	4109	99103	wk1+turn+alcnt	2T	32
+189	54110	4	4110	99103	nw1+turn+rtype	2T	32
+190	61073	4	9068	99102	nopattern	2T	32
+191	61074	4	9069	99102	grade	2T	32
+192	61076	4	9071	99102	nw1	2T	32
+193	61078	4	9073	99102	wk1+grade	2T	32
+194	62521	4	10516	99080	nopattern	2T	32
+195	62522	4	10517	99080	grade	2T	32
+196	62524	4	10519	99080	prob12+grade	2T	32
+197	62525	4	10520	99080	prob12	2T	32
+198	62526	4	10521	99080	pd123	2T	32
+199	62527	4	10522	99080	wk1+jyo	2T	32
+200	62529	4	10524	99080	jyo+turn	2T	32
+201	62530	4	10525	99080	prob1+jyo	2T	32
+202	66109	4	14104	99083	rtype+alcnt	2T	32
+203	66110	4	14105	99083	wk1+grade+rtype	2T	32
+204	66112	4	14107	99083	turn+alcnt	2T	32
+205	66114	4	14109	99083	wk123+rtype	2T	32
+#2T-34	
+206	54117	4	4117	99103	wk12+alcnt	2T	34
+207	54118	4	4118	99103	wk123+alcnt	2T	34
+208	54119	4	4119	99103	wk12+race	2T	34
+209	54123	4	4123	99103	nw12+turn	2T	34
+210	54125	4	4125	99103	wk123+race	2T	34
+#2T-41	
+211	50518	4	518	99100	prob1+nw12	2T	41
+212	62562	4	10557	99080	wk12+grade	2T	41
+213	62564	4	10559	99080	nw1+wk123	2T	41
+214	62565	4	10560	99080	wk123	2T	41
+215	62570	4	10565	99080	jyo+turn	2T	41
+#2T-42	
+216	50521	4	521	99100	nopattern	2T	42
+217	50526	4	526	99100	wk123+alcnt	2T	42
+218	50530	4	530	99100	jyo+turn	2T	42
+219	66159	4	14154	99083	prob1+wk1	2T	42
+220	66160	4	14155	99083	prob123	2T	42
+#2T-43	
+221	54168	4	4168	99103	nw1+jyo	2T	43
+222	61135	4	9130	99102	rtype	2T	43
+#3T-124	
+223	51791	4	1791	99100	prob1+turn+alcnt	3T	124
+224	51792	4	1792	99100	jyo+alcnt	3T	124
+225	51799	4	1799	99100	prob1+jyo	3T	124
+226	53426	41	3426	99100	prob1+turn+grade	3T	124
+227	53429	41	3429	99100	jyo+turn	3T	124
+228	53431	41	3431	99100	nw1+jyo	3T	124
+229	53434	41	3434	99100	turn+race	3T	124
+230	55358	4	5358	99103	wk1+turn+alcnt	3T	124
+231	55359	4	5359	99103	nw123	3T	124
+232	55360	4	5360	99103	wk123+turn	3T	124
+233	55362	4	5362	99103	wk1+rtype+alcnt	3T	124
+234	63870	4	11865	99080	wk123+race	3T	124
+235	65424	41	13419	99080	race	3T	124
+236	65426	41	13421	99080	prob1+jyo	3T	124
+237	65428	41	13423	99080	prob1-2dig	3T	124
+238	65429	41	13424	99080	prob12+turn	3T	124
+239	65431	41	13426	99080	prob1+race	3T	124
+240	65432	41	13427	99080	prob1+turn+grade	3T	124
+241	66943	4	14938	99083	jyo+alcnt	3T	124
+242	66946	4	14941	99083	jyo+rtype	3T	124
+243	66949	4	14944	99083	prob1+wk123	3T	124
+244	67849	41	15844	99083	nw1+jyo	3T	124
+#3T-126	
+245	51811	4	1811	99100	jyo+rtype	3T	126
+246	51812	4	1812	99100	prob1+rtype+alcnt	3T	126
+247	51813	4	1813	99100	jyo+turn	3T	126
+248	51814	4	1814	99100	wk12+jyo	3T	126
+249	51815	4	1815	99100	wk123+alcnt	3T	126
+250	51818	4	1818	99100	jyo+alcnt	3T	126
+251	51820	4	1820	99100	wk123+race	3T	126
+252	63883	4	11878	99080	wk1+nw1	3T	126
+253	63885	4	11880	99080	grade+rtype	3T	126
+254	63886	4	11881	99080	rtype	3T	126
+255	63887	4	11882	99080	prob12+grade	3T	126
+256	65444	41	13439	99080	nopattern	3T	126
+257	66964	4	14959	99083	nw1+rtype	3T	126
+258	66969	4	14964	99083	wk123+race	3T	126
+#3T-132	
+259	53464	41	3464	99100	prob1+jyo	3T	132
+260	55387	4	5387	99103	wk123+turn	3T	132
+261	55391	4	5391	99103	wk123+race	3T	132
+262	55395	4	5395	99103	wk123+rtype	3T	132
+263	57704	41	7704	99103	turn+race	3T	132
+264	57705	41	7705	99103	jyo+turn	3T	132
+265	63891	4	11886	99080	wk12+turn	3T	132
+266	63893	4	11888	99080	race+alcnt	3T	132
+267	63894	4	11889	99080	wk1+rtype+alcnt	3T	132
+268	63895	4	11890	99080	wk1+turn+rtype	3T	132
+269	63896	4	11891	99080	nw12+turn	3T	132
+270	63897	4	11892	99080	prob1+rtype+alcnt	3T	132
+271	63898	4	11893	99080	wk123+turn	3T	132
+272	63899	4	11894	99080	nw1+turn+alcnt	3T	132
+273	63900	4	11895	99080	prob1+turn+alcnt	3T	132
+274	66970	4	14965	99083	wk12	3T	132
+275	66976	4	14971	99083	jyo+turn	3T	132
+276	66979	4	14974	99083	prob1+rtype+alcnt	3T	132
+#3T-134	
+277	53466	41	3466	99100	wk1	3T	134
+278	53470	41	3470	99100	nw1+alcnt	3T	134
+279	53474	41	3474	99100	wk123+rtype	3T	134
+280	63907	4	11902	99080	nw1-2dig	3T	134
+281	63908	4	11903	99080	prob1+turn+rtype	3T	134
+282	65465	41	13460	99080	nw1+turn+grade	3T	134
+283	65468	41	13463	99080	prob1+jyo	3T	134
+284	65469	41	13464	99080	nw1+jyo	3T	134
+285	65470	41	13465	99080	prob1+turn+grade	3T	134
+286	65471	41	13466	99080	turn+race	3T	134
+287	65473	41	13468	99080	jyo+turn	3T	134
+288	67884	41	15879	99083	race	3T	134
+289	67885	41	15880	99083	wk12+race	3T	134
+290	67886	41	15881	99083	wk1+race	3T	134
+291	67889	41	15884	99083	turn+race	3T	134
+#3T-136	
+292	51851	4	1851	99100	wk1+turn+alcnt	3T	136
+293	51853	4	1853	99100	wk1+turn+rtype	3T	136
+294	51854	4	1854	99100	prob1+rtype+alcnt	3T	136
+295	51858	4	1858	99100	prob1+turn+alcnt	3T	136
+296	51859	4	1859	99100	wk123+race	3T	136
+297	51860	4	1860	99100	wk12+jyo	3T	136
+298	55416	4	5416	99103	wk12+turn	3T	136
+299	63921	4	11916	99080	race+grade	3T	136
+300	63922	4	11917	99080	turn+alcnt	3T	136
+301	63923	4	11918	99080	nw1+turn+alcnt	3T	136
+302	63924	4	11919	99080	nw1+rtype+alcnt	3T	136
+303	63927	4	11922	99080	jyo+turn	3T	136
+304	63929	4	11924	99080	prob1+turn+alcnt	3T	136
+305	63930	4	11925	99080	wk123+race	3T	136
+306	67007	4	15002	99083	turn+race	3T	136
+307	67008	4	15003	99083	nw1+wk123	3T	136
+308	67009	4	15004	99083	prob1+nw12	3T	136
+#3T-142	
+309	51868	4	1868	99100	jyo+alcnt	3T	142
+310	55429	4	5429	99103	turn	3T	142
+311	55435	4	5435	99103	wk123+race	3T	142
+312	63932	4	11927	99080	prob1+alcnt	3T	142
+313	63937	4	11932	99080	nw1+rtype+alcnt	3T	142
+314	63938	4	11933	99080	prob1+turn+alcnt	3T	142
+
+
+ml_result 1-211
+ml_result 212-422
+ml_result 423-633
+ml_result 634-844
+ml_result 845-1052
+
+
+ml_simulation 50001-50540
+ml_simulation 50541-51080
+ml_simulation 51081-51620
+ml_simulation 51621-52160
+ml_simulation 52161-52700
+
+1,4,7,8,9,10054,3654,8007,8011,8015,22,3656,3664,8019,8023,10069,10070,13659,39,8027,10076,13665,13671,13672,51,8051,13684,13685,13687,13691,13693,2953,6636,6637,6643,9882,9884,9885,1790,7665,11849,11853,13416,15829,15830,15831,15832,15833,15834,15835
+
+ml_simulation 50001-52570
+ml_simulation 52571-55140
+ml_simulation 55141-57710
+ml_simulation 57711-60280
+ml_simulation 60281-62850
+ml_simulation 62851-65420
+ml_simulation 65421-67991
+
+
+ml_simulation 62051-62899
+ml_simulation 62900-63748
+ml_simulation 63749-64597
+ml_simulation 64598-65446
+ml_simulation 65447-66295
+ml_simulation 66296-67144
+ml_simulation 67145-67991
+
+8007,8011,8010,8019,3664,9277,3681,9296,2741,54,51,56,3699,3701,3704,8069,6405,2787,2788,6408,6407,2791,105,109,2809,8115,3751,2811,3758,3763,3764,8126,8127,8133,143,148,144,3795,151,8147,3804,8162,6483,178,174,8180,3832,8186,192,3838,8197,8203,220,6526,6535,3860,3858,3863,3868,3871,8228,245,241,242,3886,3887,3891,8258,262,261,3911,3912,3910,3919,3924,8282,3928,3930,3931,301,302,305,321,322,325,8326,8329,8328,8345,8344,8348,8349,8351,8413,8412,8426,8427,8428,8441,8471,8485,8488,8526,8527,8529,8554,8561,8566,8578,8577,8586,8590,8591,8620,8626,8627,8628,8640,8717,8718,8722,8741,8744,8748,8747,8749,8773,8789,8795,8807,8811,8812,8828,8829,8831,8857,8862,8881,8882,8889,8888,8891,8902,8931,8934,8929,8965,6637,6645,2970,2971,2975,6669,6674,6675,401,402,406,9015,9013,4054,9016,9017,9024,4071,4068,4075,441,9044,4093,4092,452,469,6728,9068,9069,9071,4117,4118,4119,9093,4140,4143,4141,4149,4154,6778,521,522,523,9129,9131,4170,541,547,543,4189,554,560,4200,4198,9157,4208,4210,4209,9179,9182,9183,4226,4230,4228,9198,614,615,618,622,621,623,9229,9231,9232,9244,651,4294,3112,3108,3119,3127,6869,689,6882,6880,691,693,700,3151,3157,712,3166,6915,721,3174,6916,734,737,4358,6937,6938,6942,3200,3199,3204,765,4387,780,3218,6975,4413,3235,3232,4421,3238,805,803,801,820,4444,4449,4452,821,831,834,832,4473,4474,845,857,859,4482,3309,3318,893,894,891,4528,904,7100,911,912,913,921,4570,4572,4574,952,951,957,4586,4593,4595,971,975,972,4609,4614,4621,4624,4619,1001,1002,1006,4648,4649,1021,4656,4658,4659,4674,4691,4686,4692,4705,4710,4709,4708,4716,4718,4717,4736,4742,1112,1121,1123,1124,4756,4764,1142,1143,1145,4780,4783,4785,4786,4787,4793,4796,4806,4823,4825,1193,4826,4829,4834,4839,4888,4887,4890,4904,1273,4910,4915,1282,4919,4920,4923,4930,4932,1302,4939,4944,4941,4954,1329,1324,4956,4957,4960,4973,4975,1341,1351,1352,1353,1361,4991,4992,4996,4998,5001,1381,7447,7451,1394,5028,5045,1413,5046,5047,5054,5064,5056,5065,5067,5072,5075,5091,5098,5103,5105,1496,1495,5142,5141,5140,5153,5174,5169,5166,5183,5212,5230,5234,5256,5257,5263,5280,5277,5284,1691,1692,1790,7665,5361,3427,3429,5366,5368,7678,1812,1814,1813,5394,3463,3464,3466,3467,3470,5407,3477,7725,1851,1854,5418,5429,5430,5433,1871,1875,3506,7756,7766,7769,3526,5467,5478,1914,5480,1921,1926,1923,5497,5500,5498,5507,5510,5508,1952,1951,1956,1962,1963,1966,1971,1975,1973,1986,1984,1989,1998,1999,5567,5572,2002,2017,2019,2020,5586,5587,5592,5601,5600,2037,5606,5609,5611,5627,5632,5633,5644,5645,2072,5646,2081,2095,2097,2098,5679,5685,2123,2124,2125,2133,2134,2141,2142,2151,2152,2153,5754,2186,5768,5767,5771,2214,2212,2218,5796,5797,5798,2241,2242,2243,5816,5820,5821,2263,5837,2273,2274,5847,5848,5850,2294,2295,5896,5897,2321,2381,2382,2383,2392,2391,5981,6007,2425,6011,6017,2461,2462,2463,6056,6057,6061,2481,2491,2492,2501,6110,6113,6196,6198,6199,6276,6277,6278,2693
+
+update ml_evaluation set result_type = '21' where resultno::int between 52701 and 53635;
+update ml_evaluation set result_type = '21' where resultno::int between 56316 and 57995;
+update ml_evaluation set result_type = '21' where resultno::int between 61261 and 62050;
+
+
+select 
+  resultno, result_type, bettype, kumiban, modelno, patternid, 
+  count(distinct pattern) ptnnum,  
+  (sum(betcnt) / nullif(count(distinct pattern),0)) ptnbetcnt,
+  sum(betcnt) betcnt,
+  (sum(hitamt) - sum(betamt)) incamt,
+  (sum(hitcnt)::float / sum(betcnt)::float)::numeric(10,2) hitrate,
+  (sum(hitamt)::float / sum(betamt)::float)::numeric(10,2) incrate,
+  avg(hodds_median * hitrate)::numeric(10,2) exprate,
+  avg(hodds_mean)::numeric(10,2) avg_hoddsmean,
+  avg(hodds_max)::numeric(10,2) avg_hoddsmax,
+  avg(hodds_stddev)::numeric(10,2) avg_hoddsstddev,
+  sum(hitcnt) hitcnt,
+  sum(betamt) betamt,
+  sum(hitamt) hitamt,
+  sum(pr_betcnt) prbetcnt,
+  sum(pr_betamt) prbetamt,
+  sum(pr_hitcnt) prhitcnt,
+  sum(pr_hitamt) prhitamt,
+  (sum(pr_hitamt) - sum(pr_betamt)) princamt,
+  (sum(pr_hitcnt)::float / sum(pr_betcnt)::float)::numeric(10,2) prhitrate,
+  (sum(pr_hitamt)::float / sum(pr_betamt)::float)::numeric(10,2) princrate,
+  sum(bor_betcnt) borbetcnt,
+  sum(bor_betamt) borbetamt,
+  sum(bor_hitcnt) borhitcnt,
+  sum(bor_hitamt) borhitamt,
+  (sum(bor_hitamt) - sum(bor_betamt)) borincamt,
+  (sum(bor_hitcnt)::float / sum(bor_betcnt)::float)::numeric(10,2) borhitrate,
+  (sum(bor_hitamt)::float / sum(bor_betamt)::float)::numeric(10,2) borincrate,
+  avg( (bal_slope[0]+bal_slope[1]+bal_slope[2]) / 3 )::numeric(7,2)  balslope_avg
+from ml_evaluation ev
+where (hitamt - betamt) > 0 
+  and result_type = '2' and pattern = '!all'
+group by resultno, result_type, bettype, kumiban, modelno, patternid
+
+
+
+
+and (     (balance[0] between -999999 and 999999)
+and (balance[1] between -999999 and 999999)
+and (balance[2] between -999999 and 999999)
+)
+and (     (bal_slope[0] between -100 and 99999)
+and (bal_slope[1] between -100 and 99999)
+and (bal_slope[2] between -100 and 99999)
+)
+
+
+select min(bal_slope[2]), max(bal_slope[2]) from ml_evaluation;
+
+select * from ml_evaluation where result_type = '1' order by modelno, bettype, kumiban, patternid, pattern limit 2000; 
+
+select *
+ from ml_evaluation ev where ev.bettype = '1T' and ev.kumiban = '3'  and ev.result_type = '1' 
+and (     (balance[0] between -999999 and 999999)
+and (balance[1] between -999999 and 999999)
+and (balance[2] between -999999 and 999999)
+)
+and (     (bal_slope[0] between -100 and 99999)
+and (bal_slope[1] between -100 and 99999)
+and (bal_slope[2] between -100 and 99999)
+)
+and ( betcnt between 0 and 999999 )
+and ( (hitamt - betamt) between 1 and 9999999 )
+and ( hitrate between 0 and 1 )
+and ( modelno::int in (99100) )
+and (patternid in ('race'))
+and (true)
+order by ev.modelno, ev.patternid, ev.pattern, ev.resultno
+
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220310 20220318
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220319 20220328
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220329 20220406
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220407 20220416
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220417 20220425
+  
+
+
+case "prob1+turn+grade":
+	return String.join("-", , , );
+case "wk1+turn+grade":
+	return String.join("-", , , );
+case "nw1+turn+grade":
+	return String.join("-", , , );
+case "prob1+turn+rtype":
+	return String.join("-", , , );
+case "wk1+turn+rtype":
+	return String.join("-", , , );
+case "nw1+turn+rtype":
+	return String.join("-", , , );
+case "prob1+turn+alcnt":
+	return String.join("-", , , );
+case "wk1+turn+alcnt":
+	return String.join("-", , , );
+case "nw1+turn+alcnt":
+	return String.join("-", , , );
+case "prob1+grade+rtype":
+	return String.join("-", , , );
+case "wk1+grade+rtype":
+	return String.join("-", , , );
+case "nw1+grade+rtype":
+	return String.join("-", , , );
+case "prob1+grade+alcnt":
+	return String.join("-", , , );
+case "wk1+grade+alcnt":
+	return String.join("-", , , );
+case "nw1+grade+alcnt":
+	return String.join("-", , , );
+case "prob1+rtype+alcnt":
+	return String.join("-", , , );
+case "wk1+rtype+alcnt":
+	return String.join("-", , , );
+case "nw1+rtype+alcnt":
+	return String.join("-", , , );
+
+
+
+case "jyo":
+	return "";
+case "turn":
+	return "";
+case "race":
+	return "";
+case "grade":
+	return "";
+case "rtype":
+	return "";
+case "alcnt":
+	return "";
+case "jyo+turn":
+	return "";
+case "jyo+grade":
+	return "";
+case "jyo+rtype":
+	return "";
+case "jyo+alcnt":
+	return "";
+case "turn+race":
+	return "";
+case "turn+grade":
+	return "";
+case "turn+rtype":
+	return "";
+case "turn+alcnt":
+	return "";
+case "race+grade":
+	return "";
+case "race+rtype":
+	return "";
+case "race+alcnt":
+	return "";
+case "grade+rtype":
+	return "";
+case "grade+alcnt":
+	return "";
+case "rtype+alcnt":
+	return "";
+case "prob1":
+	return "";
+case "prob1-2dig":
+	return "";
+case "prob12":
+	return "";
+case "prob123":
+	return "";
+case "wk1":
+	return "";
+case "wk12":
+	return "";
+case "wk123":
+	return "";
+case "nw1":
+	return "";
+case "nw1-2dig":
+	return "";
+case "nw12":
+	return "";
+case "nw123":
+	return "";
+case "pd12":
+	return "";
+case "pd123":
+	return "";
+case "prob1+wk1":
+	return "";
+case "prob1+nw1":
+	return "";
+case "wk1+nw1":
+	return "";
+case "prob1+wk12":
+	return "";
+case "prob1+nw12":
+	return "";
+case "prob1+pd12":
+	return "";
+case "wk1+prob12":
+	return "";
+case "wk1+nw12":
+	return "";
+case "wk1+pd12":
+	return "";
+case "nw1+prob12":
+	return "";
+case "nw1+wk12":
+	return "";
+case "nw1+pd12":
+	return "";
+case "prob12+wk12":
+	return "";
+case "prob12+nw12":
+	return "";
+case "prob12+pd12":
+	return "";
+case "wk12+nw12":
+	return "";
+case "wk12+pd12":
+	return "";
+case "nw12+pd12":
+	return "";
+case "prob1+wk123":
+	return "";
+case "prob1+nw123":
+	return "";
+case "prob1+pd123":
+	return "";
+case "wk1+prob123":
+	return "";
+case "wk1+nw123":
+	return "";
+case "wk1+pd123":
+	return "";
+case "nw1+prob123":
+	return "";
+case "nw1+wk123":
+	return "";
+case "nw1+pd123":
+	return "";
+case "prob1+jyo":
+	return "";
+case "prob1+turn":
+	return "";
+case "prob1+race":
+	return "";
+case "prob1+grade":
+	return "";
+case "prob1+rtype":
+	return "";
+case "prob1+alcnt":
+	return "";
+case "wk1+jyo":
+	return "";
+case "wk1+turn":
+	return "";
+case "wk1+race":
+	return "";
+case "wk1+grade":
+	return "";
+case "wk1+rtype":
+	return "";
+case "wk1+alcnt":
+	return "";
+case "nw1+jyo":
+	return "";
+case "nw1+turn":
+	return "";
+case "nw1+race":
+	return "";
+case "nw1+grade":
+	return "";
+case "nw1+rtype":
+	return "";
+case "nw1+alcnt":
+	return "";
+case "pd12+jyo":
+	return "";
+case "pd12+turn":
+	return "";
+case "pd12+race":
+	return "";
+case "pd12+grade":
+	return "";
+case "pd12+rtype":
+	return "";
+case "pd12+alcnt":
+	return "";
+case "prob12+jyo":
+	return "";
+case "prob12+turn":
+	return "";
+case "prob12+race":
+	return "";
+case "prob12+grade":
+	return "";
+case "prob12+rtype":
+	return "";
+case "prob12+alcnt":
+	return "";
+case "wk12+jyo":
+	return "";
+case "wk12+turn":
+	return "";
+case "wk12+race":
+	return "";
+case "wk12+grade":
+	return "";
+case "wk12+rtype":
+	return "";
+case "wk12+alcnt":
+	return "";
+case "nw12+jyo":
+	return "";
+case "nw12+turn":
+	return "";
+case "nw12+race":
+	return "";
+case "nw12+grade":
+	return "";
+case "nw12+rtype":
+	return "";
+case "nw12+alcnt":
+	return "";
+case "wk123+jyo":
+	return "";
+case "wk123+turn":
+	return "";
+case "wk123+race":
+	return "";
+case "wk123+grade":
+	return "";
+case "wk123+rtype":
+	return "";
+case "wk123+alcnt":
+	return "";
+
+
+select count(*) from 
+ml_evaluation ev, tmp
+where ev.result_type = '11'
+  and ev.resultno = tmp.resultno
+  and ev.modelno = tmp.modelno
+  and ev.patternid = tmp.patternid
+  and ev.pattern = tmp.pattern
+  and ev.bettype = tmp.bettype
+  and ev.kumiban = tmp.kumiban
+
+select tansyono, count(1), 
+(count(1)::float / 193231::float)::numeric(5,2) hitrate, 
+(count(1) / 1309) dailycnt
+from rec_race
+where ymd::int between 20180601 and 20211231
+group by tansyono order by tansyono;
+
+
+mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,en1,en2,en3,en4,en5,en6,nw1,nw2,nw3,nw4,nw5,nw6,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6,n3w1,n3w2,n3w3,n3w4,n3w5,n3w6,lw1,lw2,lw3,lw4,lw5,lw6,l2w1,l2w2,l2w3,l2w4,l2w5,l2w6,l3w1,l3w2,l3w3,l3w4,l3w5,l3w6,m2w1,m2w2,m2w3,m2w4,m2w5,m2w6,sex1,sex2,sex3,sex4,sex5,sex6,lv1,lv2,lv3,lv4,lv5,lv6,age1,age2,age3,age4,age5,age6,weit1,weit2,weit3,weit4,weit5,weit6,fly1,fly2,fly3,fly4,fly5,fly6,late1,late2,late3,late4,late5,late6,avgst1,avgst2,avgst3,avgst4,avgst5,avgst6
+
+select '1T' bettype, tansyono kumiban, 
+  count(1) hitcnt, 
+  (count(1) / 1309) dailycnt,
+  (count(1)::float / 193113::float)::numeric(5,2) hitrate, 
+  (sum(tansyoprize)::float / (193113*100)::float)::numeric(5,2) incrate,
+  avg(tansyoprize::float / 100::float)::numeric(5,2) avg_hitodds, 
+  ((percentile_disc(0.5) within group (order by tansyoprize))::float / 100::float)::numeric(5,2) center_hitodds, -- 荳ｭ螟ｮ蛟､  
+  ((mode() within group (order by tansyoprize))::float / 100::float)::numeric(5,2) mostlot_hitodds, --譛�鬆ｻ蛟､
+  (stddev(tansyoprize)::float / 100::float)::numeric(5,2) stddev_hitodds,
+  (sum(tansyoprize) - (193113*100))::int incamt
+from rec_race race
+where sanrentanno <> '荳肴��遶�' 
+  and race.ymd ::int >= 20180601 
+  and race.ymd ::int <= 20211231
+group by bettype, kumiban
+order by kumiban;
+
+
+select count(1) from rec_race where ymd::int between 20180601 and 20211231 and sanrentanno <> '荳肴��遶�';
+
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220216 20220220
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220221 20220225
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220226 20220303
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20220304 20220309
+
+url=https://www.boatrace.jp/owpc/pc/race/pcexpect?rno=2&jcd=04&hd=20220216
+
+ml_result_multi "731,732,733,734,735,736,737,738,739,740,741,742,743,744,745,746,747,748,749,750,751,752,753,754,755,756,757,758,759,760,761,762,763,764,765,766,767,768,769,770,771,772,773,774,775,776,777,778,779,780,781,782,783,784,785,786,787,788,789,790,791,792,793,794,795,796,797,1066"
+ml_result_multi "798,799,800,801,802,803,804,805,806,807,808,809,810,811,812,813,814,815,816,817,818,819,820,821,822,823,824,825,826,827,828,829,830,831,832,833,834,835,836,837,838,839,840,841,842,843,844,845,846,847,848,849,850,851,852,853,854,855,856,857,858,859,860,861,862,863,864"
+ml_result_multi "865,866,867,868,869,870,871,872,873,874,875,876,877,878,879,880,881,882,883,884,885,886,887,888,889,890,891,892,893,894,895,896,897,898,899,900,901,902,903,904,905,906,907,908,909,910,911,912,913,914,915,916,917,918,919,920,921,922,923,924,925,926,927,928,929,930,931"
+ml_result_multi "932,933,934,935,936,937,938,939,940,941,942,943,944,945,946,947,948,949,950,951,952,953,954,955,956,957,958,959,960,961,962,963,964,965,966,967,968,969,970,971,972,973,974,975,976,977,978,979,980,981,982,983,984,985,986,987,988,989,990,991,992,993,994,995,996,997,998"
+ml_result_multi "999,1000,1001,1002,1003,1004,1005,1006,1007,1008,1009,1010,1011,1012,1013,1014,1015,1016,1017,1018,1019,1020,1021,1022,1023,1024,1025,1026,1027,1028,1029,1030,1031,1032,1033,1034,1035,1036,1037,1038,1039,1040,1041,1042,1043,1044,1045,1046,1047,1048,1049,1050,1051,1052,1053,1054,1055,1056,1057,1058,1059,1060,1061,1062,1063,1064,1065"
+
+ml_result_multi "1067,1068,1069,1070,1071,1072,1073,1074,1075,1076,1077,1078"
+
+ml_simulation_multi "70130,70131"
+ml_simulation_multi "70132,70133"
+ml_simulation_multi "70134,70135"
+ml_simulation_multi "70136,70137"
+
+"bettype","kumiban","resultno","modelno","patternid","pattern","betcnt","betamt","hitcnt","hitamt","betrate","incamt","hitrate","incomerate","r_betcnt","r_betrate","r_wmin","r_wmax","r_bmin","r_bmax","ro_betcnt","ro_betrate","ro_wmin","ro_wmax","ro_bmin","ro_bmax","hitodds_median","hitodds_mean","hitodds_stddev","hitodds_min","hitodds_max","balance","balance","balance","bal_slope","bal_slope","bal_slope"
+
+sb.append(rec.getString("bettype")); sb.append("\t");
+sb.append(rec.getString("kumiban")); sb.append("\t");
+sb.append(rec.getString("resultno")); sb.append("\t");
+sb.append(rec.getString("modelno")); sb.append("\t");
+sb.append(rec.getString("patternid")); sb.append("\t");
+sb.append(rec.getString("pattern")); sb.append("\t");
+sb.append(rec.getString("betcnt")); sb.append("\t");
+sb.append(rec.getString("betamt")); sb.append("\t");
+sb.append(rec.getString("hitcnt")); sb.append("\t");
+sb.append(rec.getString("hitamt")); sb.append("\t");
+sb.append(rec.getString("betrate")); sb.append("\t");
+sb.append(rec.getString("incamt")); sb.append("\t");
+sb.append(rec.getString("hitrate")); sb.append("\t");
+sb.append(rec.getString("incomerate")); sb.append("\t");
+sb.append(rec.getString("r_betcnt")); sb.append("\t");
+sb.append(rec.getString("r_betrate")); sb.append("\t");
+sb.append(rec.getString("r_wmin")); sb.append("\t");
+sb.append(rec.getString("r_wmax")); sb.append("\t");
+sb.append(rec.getString("r_bmin")); sb.append("\t");
+sb.append(rec.getString("r_bmax")); sb.append("\t");
+sb.append(rec.getString("ro_betcnt")); sb.append("\t");
+sb.append(rec.getString("ro_betrate")); sb.append("\t");
+sb.append(rec.getString("ro_wmin")); sb.append("\t");
+sb.append(rec.getString("ro_wmax")); sb.append("\t");
+sb.append(rec.getString("ro_bmin")); sb.append("\t");
+sb.append(rec.getString("ro_bmax")); sb.append("\t");
+sb.append(rec.getString("hitodds_median")); sb.append("\t");
+sb.append(rec.getString("hitodds_mean")); sb.append("\t");
+sb.append(rec.getString("hitodds_stddev")); sb.append("\t");
+sb.append(rec.getString("hitodds_min")); sb.append("\t");
+sb.append(rec.getString("hitodds_max")); sb.append("\t");
+sb.append(rec.getString("balance")); sb.append("\t");
+sb.append(rec.getString("balance")); sb.append("\t");
+sb.append(rec.getString("balance")); sb.append("\t");
+sb.append(rec.getString("bal_slope")); sb.append("\t");
+sb.append(rec.getString("bal_slope")); sb.append("\t");
+sb.append(rec.getString("bal_slope")); sb.append("\t");
+
+
+
+jyocd
+turn
+raceno
+racetype
+alevelcount
+wakulevel1
+wakulevel12
+wakulevel13
+probr1-1dig
+probr1-2dig
+compred1
+compred12
+ml_simulate
+
+mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,en1,en2,en3,en4,en5,en6,nw1,nw2,nw3,nw4,nw5,nw6,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6,n3w1,n3w2,n3w3,n3w4,n3w5,n3w6,lw1,lw2,lw3,lw4,lw5,lw6,l2w1,l2w2,l2w3,l2w4,l2w5,l2w6,l3w1,l3w2,l3w3,l3w4,l3w5,l3w6,m2w1,m2w2,m2w3,m2w4,m2w5,m2w6,lv1n,lv2n,lv3n,lv4n,lv5n,lv6n,weit1,weit2,weit3,weit4,weit5,weit6,exhi1,exhi2,exhi3,exhi4,exhi5,exhi6,fly1,fly2,fly3,fly4,fly5,fly6,avgtm1,avgtm2,avgtm3,avgtm4,avgtm5,avgtm6
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/weka.jar;C:/Dev/workspace/Oxygen/pod_boatrace/target/classes; weka.classifiers.bayes.BayesNet -t "D:/Dev/experiment/expr10/arff/99068_rank1.arff" -d "D:/Dev/experiment/expr10/model_release/99068/1/nopattern/99068_nopattern_20180531_rank1.model" -no-cv -split-percentage 66 -D -Q weka.classifiers.bayes.net.search.local.K2 -- -P 1 -S BAYES -E weka.classifiers.bayes.net.estimate.SimpleEstimator -- -A 0.5
+
+ml_result_multi "443,444,445,446"
+ml_result_multi "447,448,449,450"
+ml_result_multi "451,452,453,454"
+ml_result_multi "455,456,457,458"
+ml_result_multi "459,460,461,462,463,464"
+
+classification
+
+boosting_type=gbdt,learning_rate=0.1 D:/Dev/experiment/expr10/arff/99067_rank3.csv D:/Dev/tmp/tmp.model mm,jyo,race,turn,raty,femcnt,alvt,fixent,wa1234,nw1,nw2,nw3,nw4,nw5,nw6,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6,n3w1,n3w2,n3w3,n3w4,n3w5,n3w6,lw1,lw2,lw3,lw4,lw5,lw6,l2w1,l2w2,l2w3,l2w4,l2w5,l2w6,l3w1,l3w2,l3w3,l3w4,l3w5,l3w6,m2w1,m2w2,m2w3,m2w4,m2w5,m2w6,en1n,en2n,en3n,en4n,en5n,en6n,sex1,sex2,sex3,sex4,sex5,sex6,age1,age2,age3,age4,age5,age6,weit1,weit2,weit3,weit4,weit5,weit6,exhi1,exhi2,exhi3,exhi4,exhi5,exhi6,stexhi1,stexhi2,stexhi3,stexhi4,stexhi5,stexhi6,fly1,fly2,fly3,fly4,fly5,fly6,avgst1,avgst2,avgst3,avgst4,avgst5,avgst6,avgtm1,avgtm2,avgtm3,avgtm4,avgtm5,avgtm6,class category,category,category,category,category,float,float,category,category,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,category
+
+
+99065_rank1=r1-123456::cf_lgbm-1_py::mm,jyo,race,turn,raty,femcnt,alvt,fixent,nw1,nw2,nw3,nw4,nw5,nw6,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6,n3w1,n3w2,n3w3,n3w4,n3w5,n3w6,lw1,lw2,lw3,lw4,lw5,lw6,l2w1,l2w2,l2w3,l2w4,l2w5,l2w6,l3w1,l3w2,l3w3,l3w4,l3w5,l3w6,m2w1,m2w2,m2w3,m2w4,m2w5,m2w6,en1n,en2n,en3n,en4n,en5n,en6n,sex1,sex2,sex3,sex4,sex5,sex6,lv1n,lv2n,lv3n,lv4n,lv5n,lv6n,age1,age2,age3,age4,age5,age6,weit1,weit2,weit3,weit4,weit5,weit6,exhi1,exhi2,exhi3,exhi4,exhi5,exhi6,stexhi1,stexhi2,stexhi3,stexhi4,stexhi5,stexhi6,fly1,fly2,fly3,fly4,fly5,fly6,avgst1,avgst2,avgst3,avgst4,avgst5,avgst6,avgtm1,avgtm2,avgtm3,avgtm4,avgtm5,avgtm6::category,category,category,category,category,float,float,category,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float
+
+
+select '3T-rank1',
+  substring(sanrentanno from 1 for 1) keta1,
+  count(1) cnt,
+  avg(sanrentanprize::float / 100::float)::numeric(5,2) avg_hitodds,
+  (count(1)::float / 162590::float)::numeric(5,2) hitrate,
+  (sum(sanrentanprize)::float / (162590*100)::float)::numeric(5,2) incrate, 
+  (sum(sanrentanprize) - (162590*100))::int incamt, 
+  (stddev(sanrentanprize)::float / 100::float)::numeric(5,2) stddev_hitodds, 
+  ((percentile_disc(0.5) within group (order by sanrentanprize))::float / 100::float)::numeric(5,2) center_hitodds, -- 荳ｭ螟ｮ蛟､
+  ((mode() within group (order by sanrentanprize))::float / 100::float)::numeric(5,2) mostlot_hitodds --譛�鬆ｻ蛟､
+from rec_race race where sanrentanno <> '荳肴��遶�' 
+  and race.ymd ::int >= 20180601 and race.ymd ::int <= 20210601
+group by keta1 order by keta1;
+
+
+ml_result_multi "352,353,354,355,356,357,358,359,360,361"
+ml_result_multi "362,363,364,365,366,367,368,369,370,371"
+ml_result_multi "372,373,374,375,376,377,378,379,380,381"
+ml_result_multi "382,383,384,385,386,387,388,389,390,391"
+ml_result_multi "392,393,394,395,396,397,398,399"
+
+ml_result_multi "373,374,375,376,377"
+ml_result_multi "378,379,380,381,382"
+ml_result_multi "383,384,385,386,387"
+ml_result_multi "388,389,390,391,392"
+ml_result_multi "393,394,395,396,397"
+
+m2w1	m2w1	numeric	motor2winingrate[1]::text m2w1
+m2w2	m2w2	numeric	motor2winingrate[2]::text m2w2
+m2w3	m2w3	numeric	motor2winingrate[3]::text m2w3
+m2w4	m2w4	numeric	motor2winingrate[4]::text m2w4
+m2w5	m2w5	numeric	motor2winingrate[5]::text m2w5
+m2w6	m2w6	numeric	motor2winingrate[6]::text m2w6
+
+cast(motor2winingrate[1] as double precision) m2w1
+cast(motor2winingrate[2] as double precision) m2w2
+cast(motor2winingrate[3] as double precision) m2w3
+cast(motor2winingrate[4] as double precision) m2w4
+cast(motor2winingrate[5] as double precision) m2w5
+cast(motor2winingrate[6] as double precision) m2w6
+
+
+
+select
+  (case when level[1]='A1' then 4 when level[1]='A2' then 3 when level[1]='B1' then 2 when level[1]='B2' then 1 end)
+from rec_racer_arr;
+
+cast(age[1] as double precision) age1
+cast(age[2] as double precision) age2
+cast(age[3] as double precision) age3
+cast(age[4] as double precision) age4
+cast(age[5] as double precision) age5
+cast(age[6] as double precision) age6
+
+cast((case when level[1]='A1' then 4 when level[1]='A2' then 3 when level[1]='B1' then 2 when level[1]='B2' then 1 end) as double precision) lvl1
+cast((case when level[2]='A1' then 4 when level[2]='A2' then 3 when level[2]='B1' then 2 when level[2]='B2' then 1 end) as double precision) lvl2
+cast((case when level[3]='A1' then 4 when level[3]='A2' then 3 when level[3]='B1' then 2 when level[3]='B2' then 1 end) as double precision) lvl3
+cast((case when level[4]='A1' then 4 when level[4]='A2' then 3 when level[4]='B1' then 2 when level[4]='B2' then 1 end) as double precision) lvl4
+cast((case when level[5]='A1' then 4 when level[5]='A2' then 3 when level[5]='B1' then 2 when level[5]='B2' then 1 end) as double precision) lvl5
+cast((case when level[6]='A1' then 4 when level[6]='A2' then 3 when level[6]='B1' then 2 when level[6]='B2' then 1 end) as double precision) lvl6
+
+
+select 'nopattern' patternid, ('nopattern') pattern, cls.modelno, race.ymd, race.jyocd, race.raceno, race.sime, tansyono, nirentanno, nirenhukuno, sanrentanno, sanrenhukuno, tansyoprize, nirentanprize, nirenhukuprize, sanrentanprize, sanrenhukuprize, tansyopopular, nirentanpopular, nirenhukupopular, sanrentanpopular, sanrenhukupopular, prediction1, prediction2, prediction3 from rec_race race, ml_classification cls where race.ymd = cls.ymd and race.jyocd = cls.jyocd and race.raceno = cls.raceno and sanrentanno <> '荳肴��遶�' and race.ymd >= '20180601' and race.ymd <= '20210601' and modelno = '99308'  order by pattern, race.ymd, race.sime
+
+modelno	ymd	jyocd	raceno	sime	pattern	prediction1	probability1	probabilities1	skewness1	kurtosis1	prediction2	probability2	probabilities2	skewness2	kurtosis2	prediction3	probability3	probabilities3	skewness3	kurtosis3
+99001	20190306	01	7	1804	nopattern	1	0.553	[0:5]={0.553,0.13,0.146,0.025,0.008,0.134}	1.954	4.283	ﾂｫ NULL ﾂｻ	ﾂｫ NULL ﾂｻ	ﾂｫ NULL ﾂｻ	ﾂｫ NULL ﾂｻ	ﾂｫ NULL ﾂｻ	ﾂｫ NULL ﾂｻ	ﾂｫ NULL ﾂｻ	ﾂｫ NULL ﾂｻ	ﾂｫ NULL ﾂｻ	ﾂｫ NULL ﾂｻ
+
+select sort_desc(probabilities1)[0] from ml_classification;
+
+
+python C:/Dev/workspace/Oxygen/py_boatrace/boatrace/classification/lgbm/BoatLGBMRegressorTrainer.py boosting_type=gbdt,learning_rate=0.1 D:/Dev/experiment/expr10/arff/80001_rank1.csv D:/Dev/experiment/expr10/model_release/80001/1/nopattern/80001_nopattern_20210906_rank1.model om00,om01,om02,om03,om04,om05,om06,om07,om08,om09,om10,om11,om12,om13,om14,om15,om16,om17,om18,om19,om20,om21,om22,om23,om24,om25,om26,om27,om28,om29,om30,om31,om32,om33,om34,om35,om36,om37,om38,om39,class float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,category
+
+boosting_type=gbdt,learning_rate=0.1 D:/Dev/experiment/expr10/arff/80123_rank1.csv D:/Dev/experiment/expr10/evaluation/model_release/80123/1/nopattern/80123_nopattern_yyyymmdd_rank1.model om00,om01,om02,om03,om04,om05,om06,om07,om08,om09,om10,om11,om12,om13,om14,om15,om16,om17,om18,om19,om20,om21,om22,om23,om24,om25,om26,om27,om28,om29,om30,om31,om32,om33,om34,om35,om36,om37,om38,om39,class float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float
+
+0.9722312948326335
+
+select 'nopattern' pattern, race.ymd, sanrentanprize::double precision, substring(race.ymd from 5 for 2) mm,race.jyocd,race.raceno::text,turn::text,grade,racetype::text,femalecount::text,alevelcount::text,timezone::text,fixedentrance,substring(wakulevellist from 1 for 8) wakulevel123,substring(com_predict from 1 for 3) compredict123,com_confidence::text comconfidence,nationwiningrate[1]::text,nationwiningrate[2]::text,nationwiningrate[3]::text,nationwiningrate[4]::text,nationwiningrate[5]::text,nationwiningrate[6]::text,nation2winingrate[1]::text,nation2winingrate[2]::text,nation2winingrate[3]::text,nation2winingrate[4]::text,nation2winingrate[5]::text,nation2winingrate[6]::text,nation3winingrate[1]::text,nation3winingrate[2]::text,nation3winingrate[3]::text,nation3winingrate[4]::text,nation3winingrate[5]::text,nation3winingrate[6]::text, (oddsr.odds)::text classes from rec_race race, rec_racer_arr arr, odds_result oddsr where race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno and race.ymd = oddsr.ymd and race.jyocd = oddsr.jyocd and race.raceno = oddsr.raceno and sanrentanno <> '荳肴��遶�' and grade in ('ip', 'G3', 'G2', 'G1', 'SG') and race.ymd >= '20130601' and race.ymd <= '20180531' and (oddsr.bettype = '1T' and oddsr.kumiban = '1') order by pattern, race.ymd, race.sime 
+
+ml_result_multi "287,288,289,290"
+ml_result_multi "291,292,293,294"
+ml_result_multi "295,296,297,298"
+ml_result_multi "299,300,301,302"
+ml_result_multi "303,304"
+
+123,124,125,126,132,134,135,136,142,143,145,146,152,153,154,156,162,163,164,165,213,214,215,216,231,234,235,236,241,243,245,246,251,253,254,256,261,263,264,265,312,314,315,316,321,324,325,326,341,342,345,346,351,352,354,356,361,362,364,365,412,413,415,416,421,423,425,426,431,432,435,436,451,452,453,456,461,462,463,465,512,513,514,516,521,523,524,526,531,532,534,536,541,542,543,546,561,562,563,564,612,613,614,615,621,623,624,625,631,632,634,635,641,642,643,645,651,652,653,654
+
+https://www.pydev.org/update_sites/8.2.0/
+
+select 'nopattern' pattern, race.ymd, sanrentanprize::double precision, substring(race.ymd from 5 for 2),race.jyocd,race.raceno::text,turn::text,grade,racetype::text,femalecount::text,alevelcount::text,timezone::text,fixedentrance,substring(wakulevellist from 1 for 8) wakulevel123,substring(com_predict from 1 for 3) ,com_confidence::text,entry1::text,entry2::text,entry3::text,entry4::text,entry5::text,entry6::text, substring(sanrentanno from 1 for 1) classes from rec_race race, rec_race_waku waku, rec_race_waku2 waku2, rec_racer_arr arr where race.ymd = waku.ymd and race.jyocd = waku.jyocd and race.raceno = waku.raceno and race.ymd = waku2.ymd and race.jyocd = waku2.jyocd and race.raceno = waku2.raceno and race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno and sanrentanno <> '荳肴��遶�' and grade in ('ip', 'G3', 'G2', 'G1', 'SG') and race.ymd >= '20130601' and race.ymd <= '20211223' and (true) order by pattern, race.ymd, race.sime 
+
+cd C:\Dev\workspace\Oxygen\pod_boatrace_test\experiment\expr10
+
+
+nationwiningrate[1]::text nationwiningrate1
+nationwiningrate[2]::text nationwiningrate2
+nationwiningrate[3]::text nationwiningrate3
+nationwiningrate[4]::text nationwiningrate4
+nationwiningrate[5]::text nationwiningrate5
+nationwiningrate[6]::text nationwiningrate6
+nation2winingrate[1]::text nation2winingrate1
+nation2winingrate[2]::text nation2winingrate2
+nation2winingrate[3]::text nation2winingrate3
+nation2winingrate[4]::text nation2winingrate4
+nation2winingrate[5]::text nation2winingrate5
+nation2winingrate[6]::text nation2winingrate6
+nation3winingrate[1]::text nation3winingrate1
+nation3winingrate[2]::text nation3winingrate2
+nation3winingrate[3]::text nation3winingrate3
+nation3winingrate[4]::text nation3winingrate4
+nation3winingrate[5]::text nation3winingrate5
+nation3winingrate[6]::text nation3winingrate6
+localwiningrate[1]::text localwiningrate1
+localwiningrate[2]::text localwiningrate2
+localwiningrate[3]::text localwiningrate3
+localwiningrate[4]::text localwiningrate4
+localwiningrate[5]::text localwiningrate5
+localwiningrate[6]::text localwiningrate6
+local2winingrate[1]::text local2winingrate1
+local2winingrate[2]::text local2winingrate2
+local2winingrate[3]::text local2winingrate3
+local2winingrate[4]::text local2winingrate4
+local2winingrate[5]::text local2winingrate5
+local2winingrate[6]::text local2winingrate6
+local3winingrate[1]::text local3winingrate1
+local3winingrate[2]::text local3winingrate2
+local3winingrate[3]::text local3winingrate3
+local3winingrate[4]::text local3winingrate4
+local3winingrate[5]::text local3winingrate5
+local3winingrate[6]::text local3winingrate6
+motor2winingrate[1]::text motor2winingrate1
+motor2winingrate[2]::text motor2winingrate2
+motor2winingrate[3]::text motor2winingrate3
+motor2winingrate[4]::text motor2winingrate4
+motor2winingrate[5]::text motor2winingrate5
+motor2winingrate[6]::text motor2winingrate6
+motor3winingrate[1]::text motor3winingrate1
+motor3winingrate[2]::text motor3winingrate2
+motor3winingrate[3]::text motor3winingrate3
+motor3winingrate[4]::text motor3winingrate4
+motor3winingrate[5]::text motor3winingrate5
+motor3winingrate[6]::text motor3winingrate6
+entry[1]::text entry1
+entry[2]::text entry2
+entry[3]::text entry3
+entry[4]::text entry4
+entry[5]::text entry5
+entry[6]::text entry6
+entry[1]::text entry1
+entry[2]::text entry2
+entry[3]::text entry3
+entry[4]::text entry4
+entry[5]::text entry5
+entry[6]::text entry6
+
+
+
+
+
+(case when substring(sanrentanno from 1 for 3) in ('123','124','132','134','142','125','143','135','126','213','136','145','214','152','146','15') then substring(sanrentanno from 1 for 3) else 'x' end) classes
+
+ml_model 99033
+ml_model 99034
+ml_model 99035
+ml_model 99033
+ml_model 99033
+
+ml_classify 99038
+
+ml_model_classify 99033
+ml_model_classify 99034
+ml_model_classify 99035
+ml_model_classify 99036
+ml_model_classify 99037
+
+ml_model_classify 99039
+ml_model_classify 99038
+ml_model_classify 99040
+ml_model_classify 99041
+ml_model_classify 99042
+
+ml_classify 99033
+ml_classify 99034
+ml_classify 99035
+    #propfile_expr10:str = 'C:/Dev/workspace/Oxygen/pod_boatrace/properties/expr10/expr10.properties'
+    #propfile_model:str = 'C:/Dev/workspace/Oxygen/pod_boatrace/properties/expr10/model.properties'
+
+
+ml_result_multi "242,243,244,245,246,247,248,249"
+ml_result_multi "250,251,252,253,254,255,256,257"
+ml_result_multi "258,259,260,261,262,263,264,265"
+ml_result_multi "266,267,268,269,270,271,272,273"
+ml_result_multi "274,275,276,277,278,279,280,281"
+
+
+race.turn || '-' || race.raceno || '-' || grade
+race.raceno || '-' || grade
+
+ml_result_multi "35,36,37,38,39,40,41,42"
+ml_result_multi "43,44,45,46,47,48,49,50"
+ml_result_multi "51,52,53,54,55,56,57,58"
+ml_result_multi "59,60,61,62,63,64,65,66"
+ml_result_multi "67,68,69,70,71,72,73,74"
+
+
+ml_result_multi "4,5,6"
+ml_result_multi "7,8,9,10"
+ml_result_multi "11,12,13,14"
+ml_result_multi "15,16"
+
+,
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20211222 20211224
+
+
+		ResultStat stat = mapStat.getOrDefault(key, new ResultStat(result.getPattern(), result.getBettype(), result.getBetKumiban(), statStartBalance));
+
+ = mapStat.get(key);
+ 
+pydev debugger: starting (pid: 9336)
+Backend TkAgg is interactive backend. Turning interactive mode on.
+['4' '4']
+[[0.16306104 0.07447593 0.0761449  0.35710812 0.25521042 0.07399959]
+ [0.04550849 0.0711075  0.15889891 0.56684175 0.15364584 0.0039975 ]]
+
+python C:/Dev/workspace/Oxygen/py_boatrace/boatrace/classification/lgbm/BoatLGBMClassifierTrainer.py boosting_type=gbdt,learning_rate=0.1 D:/Dev/experiment/expr10/arff/00002_rank1.csv D:/Dev/experiment/expr10/model_release/00002/1/nopattern/00002_nopattern_20151231_rank1.model nw1,nw2,nw3,nw4,nw5,nw6,class float,float,float,float,float,float,category
+PYTHONPATH=C:/Dev/workspace/Oxygen/py_boatrace
+
+boosting_type=gbdt,learning_rate=0.1,categorical_feature='auto' D:/Dev/experiment/expr10/arff/00005_rank1.csv D:/Dev/experiment/expr10/model_release/00005/1/nopattern/00005_nopattern_20160229_rank1.model en1,en2,en3,en4,en5,en6,class category,category,category,category,category,category,category
+
+boosting_type=gbdt,learning_rate=0.1 D:/Dev/experiment/expr10/arff/00005_rank1.csv D:/Dev/experiment/expr10/model_release/00005/1/nopattern/00005_nopattern_20160229_rank1.model en1,en2,en3,en4,en5,en6,class category,category,category,category,category,category,category
+
+
+boosting_type=gbdt,learning_rate=0.1 D:/Dev/experiment/expr10/arff/00005_rank1.csv D:/Dev/experiment/expr10/model_release/00005/1/nopattern/00005_nopattern_20160229_rank1.model nw1,nw2,nw3,nw4,nw5,nw6,class float,float,float,float,float,float,category
+
+boosting_type=gbdt,learning_rate=0.1 D:/Dev/experiment/expr10/arff/00005_rank1.csv D:/Dev/experiment/expr10/model_release/00005/1/nopattern/00005_nopattern_20160229_rank1.model en1,en2,en3,nw4,nw5,nw6,class category,category,category,float,float,float,category
+
+C:\Dev\pleiades\python\3\lib\site-packages\sklearn\utils\validation.py:63: FutureWarning: Arrays of bytes/strings is being converted to decimal numbers if dtype='numeric'. This behavior is deprecated in 0.24 and will be removed in 1.1 (renaming of 0.26). Please convert your data to numeric values explicitly instead.
+  return f(*args, **kwargs)
+C:\Dev\pleiades\python\3\lib\site-packages\sklearn\utils\validation.py:63: FutureWarning: Arrays of bytes/strings is being converted to decimal numbers if dtype='numeric'. This behavior is deprecated in 0.24 and will be removed in 1.1 (renaming of 0.26). Please convert your data to numeric values explicitly instead.
+  return f(*args, **kwargs)
+C:\Dev\pleiades\python\3\lib\site-packages\sklearn\utils\validation.py:63: FutureWarning: Arrays of bytes/strings is being converted to decimal numbers if dtype='numeric'. This behavior is deprecated in 0.24 and will be removed in 1.1 (renaming of 0.26). Please convert your data to numeric values explicitly instead.
+  return f(*args, **kwargs)
+
+
+
+['4']
+[[0.16251839 0.10207251 0.09179652 0.33110628 0.22068976 0.09181654]]
+['4']
+[[0.16251839 0.10207251 0.09179652 0.33110628 0.22068976 0.09181654]]
+
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20210923 20211130
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20210923 20210927
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20210928 20211002
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20211003 20211007
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20211008 20211012
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20211013 20211017
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20211018 20211022
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20211023 20211027
+  
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20211028 20211101
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20211102 20211106
+  
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20211107 20211111
+  
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20211112 20211116
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20211117 20211121
+
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20211122 20211126
+java -cp C:/Dev/workspace/Oxygen/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20211127 20211130
+
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 265493 entries, 0 to 265492
+Data columns (total 19 columns):
+ #   Column  Non-Null Count   Dtype   
+---  ------  --------------   -----   
+ 0   jyo     265493 non-null  category
+ 1   turn    265493 non-null  category
+ 2   race    265493 non-null  category
+ 3   raty    265493 non-null  category
+ 4   alvt    265493 non-null  float64 
+ 5   time    265493 non-null  category
+ 6   en1     265493 non-null  category
+ 7   en2     265493 non-null  category
+ 8   en3     265493 non-null  category
+ 9   en4     265493 non-null  category
+ 10  en5     265493 non-null  category
+ 11  en6     265493 non-null  category
+ 12  nw1     265493 non-null  float64 
+ 13  nw2     265493 non-null  float64 
+ 14  nw3     265493 non-null  float64 
+ 15  nw4     265493 non-null  float64 
+ 16  nw5     265493 non-null  float64 
+ 17  nw6     265493 non-null  float64 
+ 18  class   265493 non-null  category
+dtypes: category(12), float64(7)
+memory usage: 19.2 MB
+LightGBM Model accuracy score: 0.5158
+Training-set accuracy score: 0.7333
+Training set score: 0.7333
+Test set score: 0.5158
+Confusion matrix
+
+ [[37052  2702  1850  1420   507   251]
+ [ 7799  3899  1028   790   303   176]
+ [ 6753  1395  2150   644   245   129]
+ [ 5995  1196   742  1483   178   105]
+ [ 3493   664   464   310   398    60]
+ [ 2108   521   308   209    75   211]]
+
+True Positives(TP) =  37052
+
+True Negatives(TN) =  3899
+
+False Positives(FP) =  2702
+
+False Negatives(FN) =  7799
+              precision    recall  f1-score   support
+
+           1       0.59      0.85      0.69     43782
+           2       0.38      0.28      0.32     13995
+           3       0.33      0.19      0.24     11316
+           4       0.31      0.15      0.20      9699
+           5       0.23      0.07      0.11      5389
+           6       0.23      0.06      0.10      3432
+
+    accuracy                           0.52     87613
+   macro avg       0.34      0.27      0.28     87613
+weighted avg       0.45      0.52      0.46     87613
+
+
+argv = {params} {csv_file_path} {eval_file_path} {model_file_path} {feature_name_list} {feature_type_list}
+params #algorithm.tsv縺ｫ螳夂ｾｩ  boosting_type=gbdt,learning_rate=0.1
+D:/Dev/experiment/expr10/arff/9997_rank1.csv
+D:/Dev/experiment/expr10/evaluation/9997_rank1_eval.txt 
+D:/Dev/experiment/expr10/evaluation/model_release/9997/1/nopattern/9997_nopattern_yyyymmdd_rank1.model
+nw1,nw2,nw3,nw4,nw5,nw6,class
+float,float,float,float,float,float,category
+
+boosting_type=gbdt,learning_rate=0.1 D:/Dev/experiment/expr10/arff/9997_rank1.csv D:/Dev/experiment/expr10/evaluation/9997_rank1_eval.txt D:/Dev/experiment/expr10/evaluation/model_release/9997/1/nopattern/9997_nopattern_yyyymmdd_rank1.model nw1,nw2,nw3,nw4,nw5,nw6,class float,float,float,float,float,float,category
+
+"jyo","turn","race","raty","alvt","time","en1","en2","en3","en4","en5","en6","nw1","nw2","nw3","nw4","nw5","nw6","class"
+
+"nw1","nw2","nw3","nw4","nw5","nw6","class"

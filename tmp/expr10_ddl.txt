@@ -1,0 +1,572 @@
+
+drop table if exists ml_simulation;
+create table ml_simulation (
+resultno varchar(5),
+bettype varchar(30),
+kumiban varchar(30), -- predictions
+modelnos varchar(5)[],
+patternids varchar(20)[],
+patterns varchar(20)[],
+betcnt int,
+hitcnt int,
+betamt int,
+hitamt int,
+hitrate double precision,
+incomerate double precision,
+inc_min double precision,
+inc_max double precision,
+inc_mean double precision,
+hitodds_min double precision,
+hitodds_max double precision,
+hitodds_mean double precision
+);
+drop index if exists indexes_ml_simulation;
+create index indexes_ml_simulation on ml_simulation (resultno,bettype,kumiban);
+
+drop table if exists ml_model_config;
+create table ml_model_config (
+modelno varchar(5),
+model_start_ymd varchar(8),
+model_end_ymd varchar(8),
+class_rank1 varchar(30),
+class_rank2 varchar(30),
+class_rank3 varchar(30),
+algorithm_rank1 varchar(30),
+algorithm_rank2 varchar(30),
+algorithm_rank3 varchar(30),
+features_rank1 varchar(30),
+features_rank2 varchar(30),
+features_rank3 varchar(30),
+arff_sql_id varchar(30),
+classification_sql_id varchar(30),
+grade_condition varchar(30),
+data_use_range varchar(3),
+outlier_method varchar(20),
+outlier_field varchar(20),
+model_data_days varchar(5),
+model_interval_days varchar(5)
+);
+drop index if exists indexes_ml_model_config;
+create index indexes_ml_model_config on ml_model_config (modelno);
+
+drop table if exists ml_result_config;
+create table ml_result_config (
+resultno varchar(5),
+modelno varchar(5),
+result_start_ymd varchar(8),
+result_end_ymd varchar(8),
+split varchar(2),
+result_sql_id varchar(30),
+bettype varchar(30),
+kumiban varchar(30),
+result_class_id varchar(30),
+simul_class_id varchar(30),
+evaluations_id varchar(30),
+pattern_selector varchar(30),
+prediction_selector varchar(30),
+model_selector varchar(30),
+pattern_id varchar(30),
+min_betrate double precision,
+min_betcnt int,
+save_stat varchar(3),
+save_graph varchar(3),
+save_result varchar(3),
+grade_condition varchar(30)
+);
+drop index if exists indexes_ml_result_config;
+create index indexes_ml_result_config on ml_result_config (resultno, modelno);
+
+
+CREATE OR REPLACE FUNCTION sort_desc (ANYARRAY)
+RETURNS ANYARRAY LANGUAGE SQL
+AS $$
+SELECT ARRAY(SELECT unnest($1) ORDER BY 1 desc)
+$$;
+
+080-3277-5363
+
+
+drop table if exists ml_evaluation;
+create table ml_evaluation (
+resultno varchar(5),
+modelno varchar(5),
+patternid varchar(20),
+pattern varchar(200),
+bettype varchar(30),
+kumiban varchar(30),
+betcnt int,
+hitcnt int,
+betamt int,
+hitamt int,
+betrate double precision,
+hitrate double precision,
+incomerate double precision,
+ hmeanrate double precision,      -- betrate,hitrate,incomerateの調和平均（総合性能指標）2002/2/23 追加
+balance int[],                  -- 区間毎の残高評価
+bal_slope double precision[],
+pt_precision double precision,     -- MLのconfusion matrix評価 (bettype,kumiban,patternの組み合わせ）
+pt_recall double precision,
+pt_fmeasure double precision,
+inc_min double precision,       -- 払戻金の記述統計量（安定性評価）
+inc_max double precision,
+inc_mean double precision,
+inc_stddev double precision,
+inc_skewness double precision,
+inc_kurtosis double precision,
+hitodds_min double precision,   -- 的中オッズの記述統計量
+hitodds_max double precision,
+hitodds_mean double precision,
+hitodds_stddev double precision,
+  hitodds_median double precision, -- 的中オッズの中央値 (的中オッズの代表値）2002/2/23 追加
+hitodds_skewness double precision,
+hitodds_kurtosis double precision,
+odds_min double precision,      -- 確定オッズの記述統計量
+odds_max double precision,
+odds_mean double precision,
+odds_stddev double precision,
+  odds_median double precision, -- 確定オッズの中央値 (確定オッズの代表値）2002/2/23 追加
+odds_skewness double precision,
+odds_kurtosis double precision,
+-- 直前オッズの記述統計量2002/2/23 追加
+  beforeodds_min double precision,     
+  beforeodds_max double precision,
+  beforeodds_mean double precision,
+  beforeodds_stddev double precision,
+  beforeodds_median double precision, 
+  beforeodds_skewness double precision,
+  beforeodds_kurtosis double precision,
+betr_slope double precision,    -- 投票率変化推移
+hitr_slope double precision,    -- 的中率変化推移
+incr_slope double precision,    -- 収益率変化推移
+-- 以下2002/2/23 追加
+probability_min double precision,   -- MLの的中予想確率の記述統計量
+probability_max double precision,
+probability_mean double precision,
+probability_stddev double precision,
+probability_skewness double precision,
+probability_kurtosis double precision,
+probability_median double precision,  -- 的中オッズの中央値 (的中オッズの代表値）
+-- 2002/2/23 追加 以下はMLの予測的中確率からの最適値計算情報
+range_bestmin double precision,       -- 黒字となった的中予想確率の最適範囲min（全体的中予想確率からもっとも合計黒字が高い範囲を探索した結果）
+range_bestmax double precision,       -- 黒字となった的中予想確率の最適範囲max
+range_worstmin double precision,       -- 赤字となった的中予想確率の最適範囲min（全体的中予想確率からもっとも合計黒字が高い範囲を探索した結果）
+range_worstmax double precision,       -- 赤字となった的中予想確率の最適範囲max
+range_betcnt int,                    -- 最適的中予想確率範囲内のデータ数
+range_hitcnt int,                 -- 最適的中予想確率範囲内の的中したデータ数
+range_hitamt int,                 -- 最適的中予想確率範囲内の的中金額合計
+range_betrate double precision,   -- range_cnt / betcnt
+range_hitrate double precision,   -- range_hitcnt / range_betcnt
+range_incomerate double precision,      -- range_hitamt / range_betamt
+range_hitbetrate double precision,   -- range_hitcnt / hitcnt
+range_hitamtrate double precision,   -- range_hitamt / hitamt
+range_hitrslope double precision,    -- 範囲内で的中率のslope
+range_incrslope double precision,    -- 範囲内で収益率のslope
+range_incmslope double precision,    -- 範囲内で収益金額のslope
+range_hmeanrate double precision,  -- range_[betrate,hitrate,incomerate,hitbetrate,hitamtrateの調和平均
+-- 2002/3/8 追加 以下は直前オッズからの最適値計算情報
+rangeodds_bestmin double precision,       -- 黒字となった直前オッズの最適範囲min（全体直前オッズからもっとも合計黒字が高い範囲を探索した結果）
+rangeodds_bestmax double precision,       -- 黒字となった直前オッズの最適範囲max
+rangeodds_worstmin double precision,       -- 赤字となった直前オッズの最適範囲min（全体直前オッズからもっとも合計黒字が高い範囲を探索した結果）
+rangeodds_worstmax double precision,       -- 赤字となった直前オッズの最適範囲max
+rangeodds_betcnt int,                    -- 最適直前オッズ範囲内のデータ数
+rangeodds_hitcnt int,                 -- 最適直前オッズ範囲内の的中したデータ数
+rangeodds_hitamt int,                 -- 最適直前オッズ範囲内の的中金額合計
+rangeodds_betrate double precision,   -- rangeodds_cnt / betcnt
+rangeodds_hitrate double precision,   -- rangeodds_hitcnt / rangeodds_betcnt
+rangeodds_incomerate double precision,      -- rangeodds_hitamt / rangeodds_betamt
+rangeodds_hitbetrate double precision,   -- rangeodds_hitcnt / hitcnt
+rangeodds_hitamtrate double precision,   -- rangeodds_hitamt / hitamt
+rangeodds_hitrslope double precision,    -- 範囲内で的中率のslope
+rangeodds_incrslope double precision,    -- 範囲内で収益率のslope
+rangeodds_incmslope double precision,    -- 範囲内で収益金額のslope
+rangeodds_hmeanrate double precision,  -- rangeodds_[betrate,hitrate,incomerate,hitbetrate,hitamtrateの調和平均
+bal_pluscnt int,                       -- 黒字の基数
+result_type varchar(10),               -- 実験のタイプ 
+evaluations_id varchar(20)             -- simulationの場合、関連group no
+);
+drop index if exists indexes_ml_evaluation;
+create index indexes_ml_evaluation on ml_evaluation (resultno, modelno, patternid, pattern, bettype, kumiban);
+
+-- 以下2022/3/19 削除 evaluaton戦略変更
+
+
+
+drop table if exists ml_result;
+create table ml_result (
+resultno varchar(5),
+modelno varchar(5),
+patternid varchar(20),                  -- 追加 2022/3/17
+pattern varchar(200),
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+sime varchar(4),
+predict_rank123 varchar(4),
+result_rank123 varchar(4),
+bettype varchar(2),
+stat_bettype varchar(2),                -- 追加 2022/3/17
+bet_kumiban varchar(4),
+bet_odds double precision,
+bet_oddsrank int,
+result_kumiban varchar(4),
+result_odds double precision,
+result_oddsrank int,
+result_amt int,
+hity int,
+hitn int,
+betamt int,
+hitamt int,
+probability double precision,           -- 追加 2022/3/17 MLから算出した予想的中確率
+result_type varchar(10),                -- 実験のタイプ 
+custom varchar(3),
+hitrate_transition double precision,
+incomerate_transition double precision,
+balance int
+);
+drop index if exists indexes_ml_result;
+create index indexes_ml_result on ml_result (resultno, ymd, jyocd, raceno, sime);
+
+
+drop table if exists odds_predict;
+create table odds_predict (
+modelno varchar(5),
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+bettype varchar(2),
+kumiban varchar(4),
+odds double precision
+);
+drop index if exists indexes_odds_predict;
+create index indexes_odds_predict on odds_predict (modelno, ymd, jyocd, raceno);
+
+drop table if exists odds_before;
+create table odds_before (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+bettype varchar(2),
+kumiban varchar(4),
+odds double precision
+);
+drop index if exists indexes_odds_before;
+create index indexes_odds_before on odds_before (ymd, jyocd, raceno);
+
+drop table if exists odds_result;
+create table odds_result (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+bettype varchar(2),
+kumiban varchar(4),
+odds double precision
+);
+drop index if exists indexes_odds_result;
+create index indexes_odds_result on odds_result (ymd, jyocd, raceno);
+
+drop table if exists odds_monitor;
+create table odds_monitor (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+bettype varchar(2),
+kumiban varchar(4),
+oddslist double precision[],
+lastindex smallint,
+beforeodds double precision,
+resultodds double precision
+);
+drop index if exists indexes_odds_monitor;
+create index indexes_odds_monitor on odds_monitor (ymd, jyocd, raceno);
+
+
+drop table if exists ml_classification;
+create table ml_classification (
+modelno varchar(5),
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+sime varchar(4),
+pattern varchar(20),
+prediction1 varchar(3),
+-- kumiban1 varchar(1),
+probability1 double precision,
+probabilities1 double precision[], 
+skewness1 double precision,
+kurtosis1 double precision,
+prediction2 varchar(3),
+-- kumiban2 varchar(1),
+probability2 double precision,
+probabilities2 double precision[], 
+skewness2 double precision,
+kurtosis2 double precision,
+prediction3 varchar(3),
+-- kumiban3 varchar(1),
+probability3 double precision,
+probabilities3 double precision[], 
+skewness3 double precision,
+kurtosis3 double precision
+-- probability_sum double precision,
+-- probability_mul double precision,
+-- skewness123 double precision,
+-- kurtosis123 double precision
+);
+drop index if exists indexes_ml_classification;
+create index indexes_ml_classification on ml_classification (ymd, jyocd, raceno, sime);
+
+drop table if exists rec_racer_arr;
+create table rec_racer_arr (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+entry smallint[],
+sex varchar(2)[],
+age smallint[],
+level varchar(2)[],
+weight numeric(3,1)[],
+branch varchar(4)[],
+exhibit numeric(5,2)[],
+startexhibit numeric(5,2)[],
+flying smallint[],
+late smallint[],
+averagestart numeric(5,2)[],
+avgtime numeric(5,2)[],
+nationwiningrate numeric(5,2)[],
+nation2winingrate numeric(5,2)[],
+nation3winingrate numeric(5,2)[],
+localwiningrate numeric(5,2)[],
+local2winingrate numeric(5,2)[],
+local3winingrate numeric(5,2)[],
+motorno smallint[],
+motor2winingrate numeric(5,2)[],
+motor3winingrate numeric(5,2)[],
+waku smallint[],
+rank smallint[],
+startresult numeric(5,2)[]
+);
+create index indexes_rec_racer_arr on rec_racer_arr (ymd, jyocd, raceno);
+
+drop table if exists rec_race_waku2;
+create table rec_race_waku2 (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+nationwiningrate1 numeric(5,2),
+nationwiningrate2 numeric(5,2),
+nationwiningrate3 numeric(5,2),
+nationwiningrate4 numeric(5,2),
+nationwiningrate5 numeric(5,2),
+nationwiningrate6 numeric(5,2),
+nation2winingrate1 numeric(5,2),
+nation2winingrate2 numeric(5,2),
+nation2winingrate3 numeric(5,2),
+nation2winingrate4 numeric(5,2),
+nation2winingrate5 numeric(5,2),
+nation2winingrate6 numeric(5,2),
+nation3winingrate1 numeric(5,2),
+nation3winingrate2 numeric(5,2),
+nation3winingrate3 numeric(5,2),
+nation3winingrate4 numeric(5,2),
+nation3winingrate5 numeric(5,2),
+nation3winingrate6 numeric(5,2),
+localwiningrate1 numeric(5,2),
+localwiningrate2 numeric(5,2),
+localwiningrate3 numeric(5,2),
+localwiningrate4 numeric(5,2),
+localwiningrate5 numeric(5,2),
+localwiningrate6 numeric(5,2),
+local2winingrate1 numeric(5,2),
+local2winingrate2 numeric(5,2),
+local2winingrate3 numeric(5,2),
+local2winingrate4 numeric(5,2),
+local2winingrate5 numeric(5,2),
+local2winingrate6 numeric(5,2),
+local3winingrate1 numeric(5,2),
+local3winingrate2 numeric(5,2),
+local3winingrate3 numeric(5,2),
+local3winingrate4 numeric(5,2),
+local3winingrate5 numeric(5,2),
+local3winingrate6 numeric(5,2),
+motor2winingrate1 numeric(5,2),
+motor2winingrate2 numeric(5,2),
+motor2winingrate3 numeric(5,2),
+motor2winingrate4 numeric(5,2),
+motor2winingrate5 numeric(5,2),
+motor2winingrate6 numeric(5,2),
+motor3winingrate1 numeric(5,2),
+motor3winingrate2 numeric(5,2),
+motor3winingrate3 numeric(5,2),
+motor3winingrate4 numeric(5,2),
+motor3winingrate5 numeric(5,2),
+motor3winingrate6 numeric(5,2)
+);
+drop index if exists indexes_rec_race_waku2;
+create index indexes_rec_race_waku2 on rec_race_waku2 (ymd, jyocd, raceno);
+------------------------
+drop table if exists rec_race_waku;
+create table rec_race_waku (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+entry1 smallint,
+entry2 smallint,
+entry3 smallint,
+entry4 smallint,
+entry5 smallint,
+entry6 smallint,
+motorno1 smallint,
+motorno2 smallint,
+motorno3 smallint,
+motorno4 smallint,
+motorno5 smallint,
+motorno6 smallint,
+avgtime1 numeric(5,2),
+avgtime2 numeric(5,2),
+avgtime3 numeric(5,2),
+avgtime4 numeric(5,2),
+avgtime5 numeric(5,2),
+avgtime6 numeric(5,2),
+avgst1 numeric(5,2),
+avgst2 numeric(5,2),
+avgst3 numeric(5,2),
+avgst4 numeric(5,2),
+avgst5 numeric(5,2),
+avgst6 numeric(5,2),
+setuavgst1 numeric(5,2),
+setuavgst2 numeric(5,2),
+setuavgst3 numeric(5,2),
+setuavgst4 numeric(5,2),
+setuavgst5 numeric(5,2),
+setuavgst6 numeric(5,2),
+setuavgwin1 smallint,
+setuavgwin2 smallint,
+setuavgwin3 smallint,
+setuavgwin4 smallint,
+setuavgwin5 smallint,
+setuavgwin6 smallint,
+flcount1 smallint,
+flcount2 smallint,
+flcount3 smallint,
+flcount4 smallint,
+flcount5 smallint,
+flcount6 smallint,
+tilt1 numeric(5,2),
+tilt2 numeric(5,2),
+tilt3 numeric(5,2),
+tilt4 numeric(5,2),
+tilt5 numeric(5,2),
+tilt6 numeric(5,2),
+homeyn1 smallint,
+homeyn2 smallint,
+homeyn3 smallint,
+homeyn4 smallint,
+homeyn5 smallint,
+homeyn6 smallint
+);
+create index indexes_rec_race_waku on rec_race_waku (ymd, jyocd, raceno);
+
+--------------
+drop table if exists rec_racer;
+create table rec_racer (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+entry smallint,
+sex varchar(2),
+age smallint,
+level varchar(2),
+weight numeric(3,1),
+branch varchar(4),
+exhibit numeric(5,2),
+startexhibit numeric(5,2),
+flying smallint,
+late smallint,
+averagestart numeric(5,2),
+avgtime numeric(5,2),
+nationwiningrate numeric(5,2),
+nation2winingrate numeric(5,2),
+nation3winingrate numeric(5,2),
+localwiningrate numeric(5,2),
+local2winingrate numeric(5,2),
+local3winingrate numeric(5,2),
+motorno smallint,
+motor2winingrate numeric(5,2),
+motor3winingrate numeric(5,2),
+boatno smallint,
+boat2winingrate numeric(5,2),
+boat3winingrate numeric(5,2),
+waku smallint,
+rank smallint,
+startresult numeric(5,2)
+);
+drop index if exists indexes_rec_racer;
+create index indexes_rec_racer on rec_racer (ymd, jyocd, raceno, entry);
+
+--------------
+drop table if exists rec_race;
+create table rec_race (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+sime varchar(4),
+temparature numeric(3,1),
+weather varchar(8),
+winddirection smallint,
+wind numeric(3,1),
+watertemp numeric(3,1),
+wave smallint,
+grade varchar(2),
+isvenus varchar(2),
+timezone varchar(2),
+turn varchar(2),
+sanrentanno varchar(3),
+sanrentanprize integer,
+sanrentanpopular smallint,
+sanrenhukuno varchar(3),
+sanrenhukuprize integer,
+sanrenhukupopular smallint,
+nirentanno varchar(3),
+nirentanprize integer,
+nirentanpopular smallint,
+nirenhukuno varchar(3),
+nirenhukuprize integer,
+nirenhukupopular smallint,
+tansyono varchar(3),
+tansyoprize integer,
+tansyopopular smallint,
+kimarite varchar(10),
+wakurank varchar(6),
+levelrank varchar(6),
+resultlevelrank varchar(20),
+nationwiningrank varchar(6),
+nation2winingrank varchar(6),
+nation3winingrank varchar(6),
+localwiningrank varchar(6),
+local2winingrank varchar(6),
+local3winingrank varchar(6),
+motor2rank varchar(6),
+motor3rank varchar(6),
+startexhibitrank varchar(6),
+exhibitrank varchar(6),
+averagestartrank varchar(6),
+fixedentrance varchar(6),
+racetype varchar(20),
+wakulevellist varchar(20),
+alevelcount smallint,
+femalecount smallint,
+avgstcondrank varchar(6),
+setuwinrank varchar(6),
+flrank varchar(6),
+com_predict varchar(4),
+com_confidence smallint
+);
+create index indexes_rec_race on rec_race (ymd, jyocd, raceno);
+
+create schema boatstat authorization postgres
+
+create database boatml owner postgres enocding 'UTF8';
+create database boatstat2 owner postgres encoding 'UTF8';
+
+
+drop database boatstat2;
+create database boatstat2 with 

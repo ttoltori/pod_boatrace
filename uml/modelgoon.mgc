@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ClassDiagram>
+    <Class name="com.pengkong.boatrace.exp02.RankPatternManager" x="715" y="545">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="com.pengkong.boatrace.exp02.RankPatternManager.RankPattern"
+            endpointName="mapPattern" kind="Simple"/>
+    </Class>
+    <Class name="com.pengkong.boatrace.exp02.RankModelManager.RankModel"
+        x="81" y="263">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="com.pengkong.boatrace.exp02.BoatClassifierInfo" x="102" y="844">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="com.pengkong.boatrace.exp02.BoatClassifier"
+            endpointName="classifier" kind="Simple"/>
+        <Communication destinationClassName="com.pengkong.boatrace.exp02.BoatClassifier"/>
+    </Class>
+    <Class name="com.pengkong.boatrace.exp02.RankArffCreator" x="638" y="119">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="com.pengkong.boatrace.exp02.RankResultGenerator"
+        x="1064" y="713">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Communication destinationClassName="com.pengkong.boatrace.exp02.RankClassifierManager"/>
+        <Communication destinationClassName="com.pengkong.boatrace.exp02.RankBoatClassifier"/>
+    </Class>
+    <Class name="com.pengkong.boatrace.exp02.RankFilterManager" x="43" y="162">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="com.pengkong.boatrace.exp02.RankClassifierManager"
+        x="32" y="656">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="com.pengkong.boatrace.exp02.RankPatternManager"
+            endpointName="patternMgr" kind="Simple"/>
+        <Association
+            destinationClassName="com.pengkong.boatrace.exp02.RankModelManager"
+            endpointName="modelMgr" kind="Simple"/>
+        <Association
+            destinationClassName="com.pengkong.boatrace.exp02.RankBoatClassifierInfo"
+            endpointName="mapClsInfo" kind="Simple"/>
+        <Association
+            destinationClassName="com.pengkong.boatrace.exp02.RankBoatClassifierInfo"
+            endpointName="listClsInfo" kind="Simple"/>
+        <Communication destinationClassName="com.pengkong.boatrace.exp02.RankPatternManager"/>
+        <Communication destinationClassName="com.pengkong.boatrace.exp02.BoatClassifierInfo"/>
+        <Communication destinationClassName="com.pengkong.boatrace.exp02.RankModelManager"/>
+        <Communication destinationClassName="com.pengkong.boatrace.exp02.RankBoatClassifier"/>
+        <Communication destinationClassName="com.pengkong.boatrace.exp02.RankBoatClassifierInfo"/>
+    </Class>
+    <Class name="com.pengkong.boatrace.exp02.RankBoatClassifier" x="537" y="680">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="com.pengkong.boatrace.exp02.BoatClassifier"
+            endpointName="mapCls" kind="Simple"/>
+        <Communication destinationClassName="com.pengkong.boatrace.exp02.BoatClassifier"/>
+    </Class>
+    <Class name="com.pengkong.boatrace.exp02.RankModelGenerator" x="427" y="279">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="com.pengkong.boatrace.exp02.RankPatternManager"
+            endpointName="patternMgr" kind="Simple"/>
+        <Association
+            destinationClassName="com.pengkong.boatrace.exp02.RankModelManager"
+            endpointName="modelMgr" kind="Simple"/>
+        <Communication destinationClassName="com.pengkong.boatrace.exp02.RankPatternManager"/>
+        <Communication destinationClassName="com.pengkong.boatrace.exp02.RankArffCreator"/>
+        <Communication destinationClassName="com.pengkong.boatrace.exp02.RankModelManager"/>
+    </Class>
+    <Class name="com.pengkong.boatrace.exp02.RankClassifierCenterMock"
+        x="960" y="88">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Extension destinationClassName="com.pengkong.boatrace.exp02.RankClassifierCenter"/>
+    </Class>
+    <Class name="com.pengkong.boatrace.exp02.RankClassifierCenter"
+        x="1072" y="529">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="com.pengkong.boatrace.exp02.RankClassifierManager"
+            endpointName="mapManager" kind="Simple"/>
+        <Communication destinationClassName="com.pengkong.boatrace.exp02.RankClassifierManager"/>
+        <Communication destinationClassName="com.pengkong.boatrace.exp02.RankBoatClassifier"/>
+    </Class>
+    <Class
+        name="com.pengkong.boatrace.exp02.RankPatternManager.RankPattern"
+        x="678" y="367">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="com.pengkong.boatrace.exp02.BoatClassifier" x="526" y="853">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+    </Class>
+    <Class name="com.pengkong.boatrace.exp02.RankModelManager" x="48" y="458">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="com.pengkong.boatrace.exp02.RankModelManager.RankModel"
+            endpointName="mapModel" kind="Simple"/>
+        <Communication destinationClassName="com.pengkong.boatrace.exp02.RankModelManager.RankModel"/>
+    </Class>
+    <Class name="com.pengkong.boatrace.exp02.RankPredictor" x="154" y="29">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="com.pengkong.boatrace.exp02.RankClassifierCenter"
+            endpointName="clsCenter" kind="Simple"/>
+        <Association
+            destinationClassName="com.pengkong.boatrace.exp02.RankFilterManager"
+            endpointName="ptnManager" kind="Simple"/>
+        <Communication destinationClassName="com.pengkong.boatrace.exp02.RankClassifierCenter"/>
+        <Communication destinationClassName="com.pengkong.boatrace.exp02.RankFilterManager"/>
+    </Class>
+    <Class name="com.pengkong.boatrace.exp02.RankBoatClassifierInfo"
+        x="383" y="736">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Association
+            destinationClassName="com.pengkong.boatrace.exp02.RankBoatClassifier"
+            endpointName="rankClassifier" kind="Simple"/>
+        <Association
+            destinationClassName="com.pengkong.boatrace.exp02.BoatClassifierInfo"
+            endpointName="mapClsInfo" kind="Simple"/>
+        <Communication destinationClassName="com.pengkong.boatrace.exp02.BoatClassifierInfo"/>
+    </Class>
+    <Class name="com.pengkong.boatrace.exp02.RankBalanceGenerator"
+        x="1052" y="876">
+        <AttributesDisplayFilter public-accepted="true"
+            private-accepted="true" protected-accepted="true"
+            default-accepted="true" static-accepted="false"/>
+        <MethodDisplayFilter public-accepted="true"
+            private-accepted="false" protected-accepted="false"
+            default-accepted="false" static-accepted="false"
+            accessors-accepted="false" constructors-accepted="false"/>
+        <Communication destinationClassName="com.pengkong.boatrace.exp02.RankModelManager"/>
+    </Class>
+</ClassDiagram>

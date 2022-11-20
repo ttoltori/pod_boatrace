@@ -1,0 +1,14 @@
+#id	cmd
+cf_bayesnet_wk	java -cp {classpath} weka.classifiers.bayes.BayesNet -t "{arff_filepath}" -d "{model_filepath}" -no-cv -split-percentage 66 -D -Q weka.classifiers.bayes.net.search.local.K2 -- -P 1 -S BAYES -E weka.classifiers.bayes.net.estimate.SimpleEstimator -- -A 0.5
+cf_bayesnet-filtered-1_wk	java -cp {classpath} weka.classifiers.meta.FilteredClassifier -t "{arff_filepath}" -d "{model_filepath}" -no-cv -split-percentage 66 -F "weka.filters.supervised.instance.ClassBalancer -num-intervals 10" -S 1 -W weka.classifiers.bayes.BayesNet -- -D -Q weka.classifiers.bayes.net.search.local.K2 -- -P 1 -S BAYES -E weka.classifiers.bayes.net.estimate.SimpleEstimator -- -A 0.5
+cf_naivebayes-1_wk	java -cp {classpath} weka.classifiers.bayes.NaiveBayes -t "{arff_filepath}" -d "{model_filepath}" -no-cv -split-percentage 66
+cf_randomforest_wk	java -cp {classpath} weka.classifiers.trees.RandomForest -t "{arff_filepath}" -d "{model_filepath}" -no-cv -split-percentage 66 -P 100 -I 100 -num-slots 1 -K 0 -M 1.0 -V 0.001 -S 1
+cf_j48_wk	java -cp {classpath} weka.classifiers.trees.J48 -t "{arff_filepath}" -d "{model_filepath}" -no-cv -split-percentage 66 -C 0.25 -M 2
+cf_logistic_wk	java -cp {classpath} weka.classifiers.functions.Logistic -t "{arff_filepath}" -d "{model_filepath}" -no-cv -split-percentage 66 -R 1.0E-8 -M -1 -num-decimal-places 4
+cf_lgbm-1_py	python C:/Dev/workspace/Oxygen/py_boatrace/boatrace/classification/lgbm/BoatLGBMClassifierTrainer.py boosting_type=gbdt,learning_rate=0.1 {csv_filepath} {model_filepath} {feature_name_list} {feature_type_list}
+cf_lgbm-2_py	python C:/Dev/workspace/Oxygen/py_boatrace/boatrace/classification/lgbm/BoatLGBMClassifierTrainer.py boosting_type=gbdt,learning_rate=0.01 {csv_filepath} {model_filepath} {feature_name_list} {feature_type_list}
+cf_lgbm-3_py	python C:/Dev/workspace/Oxygen/py_boatrace/boatrace/classification/lgbm/BoatLGBMClassifierTrainer.py boosting_type=gbdt,learning_rate=0.001 {csv_filepath} {model_filepath} {feature_name_list} {feature_type_list}
+cf_lgbm-4_py	python C:/Dev/workspace/Oxygen/py_boatrace/boatrace/classification/lgbm/BoatLGBMClassifierTrainer.py boosting_type=gbdt,learning_rate=0.2 {csv_filepath} {model_filepath} {feature_name_list} {feature_type_list}
+cf_lgbm-5_py	python C:/Dev/workspace/Oxygen/py_boatrace/boatrace/classification/lgbm/BoatLGBMClassifierTrainer.py boosting_type=gbdt,learning_rate=0.4 {csv_filepath} {model_filepath} {feature_name_list} {feature_type_list}
+rg_lgbm-1_py	python C:/Dev/workspace/Oxygen/py_boatrace/boatrace/classification/lgbm/BoatLGBMRegressorTrainer.py boosting_type=gbdt,learning_rate=0.1 {csv_filepath} {model_filepath} {feature_name_list} {feature_type_list}
+cf_lgbm-6_py	python C:/Dev/workspace/Oxygen/py_boatrace/boatrace/classification/lgbm/BoatLGBMClassifierTrainer.py boosting_type=gbdt,learning_rate=0.1,class_weight=balanced {csv_filepath} {model_filepath} {feature_name_list} {feature_type_list}

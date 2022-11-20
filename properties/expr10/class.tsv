@@ -1,0 +1,54 @@
+#id	sql_class_condition	values	sql_class_features
+r1-1x	true	1,x	(case when substring(sanrentanno from 1 for 1) = '1' then '1' else 'x' end) classes
+r1-2x	true	2,x	(case when substring(sanrentanno from 1 for 1) = '2' then '2' else 'x' end) classes
+r2-1-2x	substring(sanrentanno from 1 for 1) = '1'	2,x	(case when substring(sanrentanno from 2 for 1) = '2' then '2' else 'x' end) classes
+r2-2-1x	substring(sanrentanno from 1 for 1) = '2'	1,x	(case when substring(sanrentanno from 2 for 1) = '1' then '1' else 'x' end) classes
+r3-12-3x	substring(sanrentanno from 1 for 2) = '12'	3,x	(case when substring(sanrentanno from 3 for 1) = '3' then '3' else 'x' end) classes
+r3-21-3x	substring(sanrentanno from 1 for 2) = '21'	3,x	(case when substring(sanrentanno from 3 for 1) = '3' then '3' else 'x' end) classes
+r2-1x	true	1,x	(case when substring(sanrentanno from 2 for 1) = '1' then '2' else 'x' end) classes
+r2-2x	true	2,x	(case when substring(sanrentanno from 2 for 1) = '2' then '2' else 'x' end) classes
+r3-3x	true	3,x	(case when substring(sanrentanno from 3 for 1) = '3' then '3' else 'x' end) classes
+r3-4x	true	4,x	(case when substring(sanrentanno from 3 for 1) = '4' then '4' else 'x' end) classes
+r3-12-4x	substring(sanrentanno from 1 for 2) = '12'	4,x	(case when substring(sanrentanno from 3 for 1) = '4' then '4' else 'x' end) classes
+r3-1-23456	substring(sanrentanno from 1 for 1) = '1'	2,3,4,5,6	substring(sanrentanno from 3 for 1) classes
+r1-123456	true	1,2,3,4,5,6	substring(sanrentanno from 1 for 1) classes
+r2-123456	true	1,2,3,4,5,6	substring(sanrentanno from 2 for 1) classes
+r3-123456	true	1,2,3,4,5,6	substring(sanrentanno from 3 for 1) classes
+r2-1-23456	substring(sanrentanno from 1 for 1) = '1'	2,3,4,5,6	substring(sanrentanno from 2 for 1) classes
+r3-1-23456	substring(sanrentanno from 1 for 1) = '1'	2,3,4,5,6	substring(sanrentanno from 3 for 1) classes
+r3-12-3456	substring(sanrentanno from 1 for 2) = '12'	3,4,5,6	substring(sanrentanno from 3 for 1) classes
+r3-13-2456	substring(sanrentanno from 1 for 2) = '13'	2,4,5,6	substring(sanrentanno from 3 for 1) classes
+r3-14-2356	substring(sanrentanno from 1 for 2) = '14'	2,3,5,6	substring(sanrentanno from 3 for 1) classes
+r3-15-2346	substring(sanrentanno from 1 for 2) = '15'	2,3,4,6	substring(sanrentanno from 3 for 1) classes
+r3-16-2345	substring(sanrentanno from 1 for 2) = '16'	2,3,4,5	substring(sanrentanno from 3 for 1) classes
+r2-2-13456	substring(sanrentanno from 1 for 1) = '2'	1,3,4,5,6	substring(sanrentanno from 2 for 1) classes
+r3-2-13456	substring(sanrentanno from 1 for 1) = '2'	1,3,4,5,6	substring(sanrentanno from 3 for 1) classes
+r3-21-3456	substring(sanrentanno from 1 for 2) = '21'	3,4,5,6	substring(sanrentanno from 3 for 1) classes
+r3-23-1456	substring(sanrentanno from 1 for 2) = '23'	1,4,5,6	substring(sanrentanno from 3 for 1) classes
+r3-24-1356	substring(sanrentanno from 1 for 2) = '24'	1,3,5,6	substring(sanrentanno from 3 for 1) classes
+r3-25-1346	substring(sanrentanno from 1 for 2) = '25'	1,3,4,6	substring(sanrentanno from 3 for 1) classes
+r3-26-1345	substring(sanrentanno from 1 for 2) = '26'	1,3,4,5	substring(sanrentanno from 3 for 1) classes
+r2-3-12456	substring(sanrentanno from 1 for 1) = '3'	1,2,4,5,6	substring(sanrentanno from 2 for 1) classes
+r3-3-12456	substring(sanrentanno from 1 for 1) = '3'	1,2,4,5,6	substring(sanrentanno from 3 for 1) classes
+r3-31-2456	substring(sanrentanno from 1 for 2) = '31'	2,4,5,6	substring(sanrentanno from 3 for 1) classes
+r3-32-1456	substring(sanrentanno from 1 for 2) = '32'	1,4,5,6	substring(sanrentanno from 3 for 1) classes
+r3-34-1256	substring(sanrentanno from 1 for 2) = '34'	1,2,5,6	substring(sanrentanno from 3 for 1) classes
+r3-35-1246	substring(sanrentanno from 1 for 2) = '35'	1,2,4,6	substring(sanrentanno from 3 for 1) classes
+r3-36-1245	substring(sanrentanno from 1 for 2) = '36'	1,2,4,5	substring(sanrentanno from 3 for 1) classes
+r123x-type1	true	123,124,132,134,142,125,143,135,126,213,136,145,214,152,146,153,x	(case when sanrentanno in ('123','124','132','134','142','125','143','135','126','213','136','145','214','152','146','153') then sanrentanno else 'x' end) classes
+r12-all	true	12,13,14,15,16,21,23,24,25,26,31,32,34,35,36,41,42,43,45,46,51,52,53,54,56,61,62,63,64,65	substring(sanrentanno from 1 for 2) classes
+r123-all	true	123,124,125,126,132,134,135,136,142,143,145,146,152,153,154,156,162,163,164,165,213,214,215,216,231,234,235,236,241,243,245,246,251,253,254,256,261,263,264,265,312,314,315,316,321,324,325,326,341,342,345,346,351,352,354,356,361,362,364,365,412,413,415,416,421,423,425,426,431,432,435,436,451,452,453,456,461,462,463,465,512,513,514,516,521,523,524,526,531,532,534,536,541,542,543,546,561,562,563,564,612,613,614,615,621,623,624,625,631,632,634,635,641,642,643,645,651,652,653,654	(case when sanrentanno::int in (123,124,125,126,132,134,135,136,142,143,145,146,152,153,154,156,162,163,164,165,213,214,215,216,231,234,235,236,241,243,245,246,251,253,254,256,261,263,264,265,312,314,315,316,321,324,325,326,341,342,345,346,351,352,354,356,361,362,364,365,412,413,415,416,421,423,425,426,431,432,435,436,451,452,453,456,461,462,463,465,512,513,514,516,521,523,524,526,531,532,534,536,541,542,543,546,561,562,563,564,612,613,614,615,621,623,624,625,631,632,634,635,641,642,643,645,651,652,653,654) then sanrentanno else 'x' end) classes
+rg-1T-1	odds.bettype = '1T' and odds.kumiban = '1'	numeric	(odds.resultodds)::text classes
+rgbet-1T-1	odds.bettype = '1T' and odds.kumiban = '1'	numeric	(case when tansyono = '1' then odds.resultodds else 0 end)::text classes 
+rg-2T-12	odds.bettype = '2T' and odds.kumiban = '12'	numeric	(odds.resultodds)::text classes
+rgbet-2T-12	odds.bettype = '2T' and odds.kumiban = '12'	numeric	(case when nirentanno = '12' then odds.resultodds else 0 end)::text classes 
+rg-3T-123	odds.bettype = '3T' and odds.kumiban = '123'	numeric	(odds.resultodds)::text classes
+rgbet-3T-123	odds.bettype = '3T' and odds.kumiban = '123'	numeric	(case when sanrentanno = '123' then odds.resultodds else 0 end)::text classes 
+r1-23456	substring(sanrentanno from 1 for 1) <> '1'	2,3,4,5,6	substring(sanrentanno from 1 for 1) classes
+r2-123456-ect1	substring(sanrentanno from 1 for 1) <> '1'	1,2,3,4,5,6	substring(sanrentanno from 2 for 1) classes
+r3-123456-ect1	substring(sanrentanno from 1 for 1) <> '1'	1,2,3,4,5,6	substring(sanrentanno from 3 for 1) classes
+r2-123456-inc1	substring(sanrentanno from 1 for 1) = '1'	1,2,3,4,5,6	substring(sanrentanno from 2 for 1) classes
+r3-123456-inc1	substring(sanrentanno from 1 for 1) = '1'	1,2,3,4,5,6	substring(sanrentanno from 3 for 1) classes
+rgsim-1T-1	true	numeric	(res.hitamt::float - res.betamt::float)::text classes
+r1-pork	true	1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,x	(case when mr.result_oddsrank between 1 and 20 then (mr.result_oddsrank::text) else 'x' end) classes
+r1-12x	true	12,x	(case when substring(sanrentanno from 1 for 2) = '12' then '12' else 'x' end) classes

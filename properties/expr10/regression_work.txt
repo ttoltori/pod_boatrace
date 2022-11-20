@@ -1,0 +1,103 @@
+% 0
+@RELATION expr_10
+
+@ATTRIBUTE odds1 NUMERIC
+@ATTRIBUTE odds2 NUMERIC
+@ATTRIBUTE odds3 NUMERIC
+@ATTRIBUTE odds4 NUMERIC
+@ATTRIBUTE odds5 NUMERIC
+@ATTRIBUTE odds6 NUMERIC
+@ATTRIBUTE odds7 NUMERIC
+@ATTRIBUTE odds8 NUMERIC
+@ATTRIBUTE odds9 NUMERIC
+@ATTRIBUTE odds10 NUMERIC
+@ATTRIBUTE odds11 NUMERIC
+@ATTRIBUTE odds12 NUMERIC
+@ATTRIBUTE odds13 NUMERIC
+@ATTRIBUTE odds14 NUMERIC
+@ATTRIBUTE odds15 NUMERIC
+@ATTRIBUTE class NUMERIC
+@DATA
+
+
+copy (
+select
+  oddslist[lastindex-10], oddslist[lastindex-9], oddslist[lastindex-8], oddslist[lastindex-7], oddslist[lastindex-6], 
+  oddslist[lastindex-5], oddslist[lastindex-4], oddslist[lastindex-3], oddslist[lastindex-2], oddslist[lastindex-1],
+  resultodds
+from odds_monitor
+where bettype = '3T' and kumiban = '123' and lastindex > 9
+  and ymd::int between 20210607 and 20210830
+order by ymd,jyocd,raceno
+) to 'D:\Dev\experiment\expr10\tmp\regr_3T_123.arff' csv;
+
+
+copy (
+select
+  oddslist[lastindex-15], oddslist[lastindex-14], oddslist[lastindex-13], oddslist[lastindex-12], oddslist[lastindex-11], 
+  oddslist[lastindex-10], oddslist[lastindex-9], oddslist[lastindex-8], oddslist[lastindex-7], oddslist[lastindex-6], 
+  oddslist[lastindex-5], oddslist[lastindex-4], oddslist[lastindex-3], oddslist[lastindex-2], oddslist[lastindex-1],
+  resultodds
+from odds_monitor
+where bettype = '3F' and kumiban = '123' and lastindex > 14
+order by ymd,jyocd,raceno
+) to 'D:\Dev\experiment\expr10\tmp\regr_3F_123.arff' csv;
+
+
+copy (
+select
+  oddslist[lastindex-15], oddslist[lastindex-14], oddslist[lastindex-13], oddslist[lastindex-12], oddslist[lastindex-11], 
+  oddslist[lastindex-10], oddslist[lastindex-9], oddslist[lastindex-8], oddslist[lastindex-7], oddslist[lastindex-6], 
+  oddslist[lastindex-5], oddslist[lastindex-4], oddslist[lastindex-3], oddslist[lastindex-2], oddslist[lastindex-1],
+  resultodds
+from odds_monitor
+where bettype = '3T' and kumiban = '124' and lastindex > 14
+order by ymd,jyocd,raceno
+) to 'D:\Dev\experiment\expr10\tmp\regr_3T_124.csv' csv;
+
+copy (
+select
+  oddslist[lastindex-15], oddslist[lastindex-14], oddslist[lastindex-13], oddslist[lastindex-12], oddslist[lastindex-11], 
+  oddslist[lastindex-10], oddslist[lastindex-9], oddslist[lastindex-8], oddslist[lastindex-7], oddslist[lastindex-6], 
+  oddslist[lastindex-5], oddslist[lastindex-4], oddslist[lastindex-3], oddslist[lastindex-2], oddslist[lastindex-1],
+  resultodds
+from odds_monitor
+where bettype = '3T' and kumiban = '124' and lastindex > 14
+order by ymd,jyocd,raceno
+) to 'D:\Dev\experiment\expr10\tmp\regr_3T_124.csv' csv;
+
+copy (
+select
+  oddslist[lastindex-15], oddslist[lastindex-14], oddslist[lastindex-13], oddslist[lastindex-12], oddslist[lastindex-11], 
+  oddslist[lastindex-10], oddslist[lastindex-9], oddslist[lastindex-8], oddslist[lastindex-7], oddslist[lastindex-6], 
+  oddslist[lastindex-5], oddslist[lastindex-4], oddslist[lastindex-3], oddslist[lastindex-2], oddslist[lastindex-1],
+  resultodds
+from odds_monitor
+where bettype = '3T' and kumiban = '126' and lastindex > 14
+  and ymd::int between 20210617 and 20210717
+order by ymd,jyocd,raceno
+) to 'D:\Dev\experiment\expr10\tmp\regr_3T_126.arff' csv;
+
+
+copy (
+select
+  oddslist[lastindex-15], oddslist[lastindex-14], oddslist[lastindex-13], oddslist[lastindex-12], oddslist[lastindex-11], 
+  oddslist[lastindex-10], oddslist[lastindex-9], oddslist[lastindex-8], oddslist[lastindex-7], oddslist[lastindex-6], 
+  oddslist[lastindex-5], oddslist[lastindex-4], oddslist[lastindex-3], oddslist[lastindex-2], oddslist[lastindex-1],
+  resultodds
+from odds_monitor
+where bettype = '2T' and kumiban = '12' and lastindex > 14
+order by ymd,jyocd,raceno
+) to 'D:\Dev\experiment\expr10\tmp\regr_12.arff' csv;
+
+copy (
+select
+  oddslist[lastindex-15], oddslist[lastindex-14], oddslist[lastindex-13], oddslist[lastindex-12], oddslist[lastindex-11], 
+  oddslist[lastindex-10], oddslist[lastindex-9], oddslist[lastindex-8], oddslist[lastindex-7], oddslist[lastindex-6], 
+  oddslist[lastindex-5], oddslist[lastindex-4], oddslist[lastindex-3], oddslist[lastindex-2], oddslist[lastindex-1],
+  resultodds
+from odds_monitor
+where bettype = '1T' and kumiban = '1' and lastindex > 14
+order by ymd,jyocd,raceno
+) to 'D:\Dev\experiment\expr10\tmp\regr_1T_1.arff' csv;
+

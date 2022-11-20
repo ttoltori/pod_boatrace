@@ -1,0 +1,198 @@
+#id	name	arff type	sql_model_features	sql_instance_features
+mm	mm	nominal	substring(race.ymd from 5 for 2) mm	substring(race.ymd from 5 for 2) mm
+jyo	jyocd	nominal	race.jyocd	race.jyocd
+race	raceno	nominal	race.raceno::text	race.raceno::text
+turn	turn	nominal	turn::text	turn::text
+grade	grade	nominal	grade	race.grade
+fixent	fixedentrance	nominal	fixedentrance	fixedentrance
+raty	racetype	nominal	racetype::text	racetype::text
+time	timezone	nominal	timezone::text	timezone::text
+femcnt	femalecount	numeric	femalecount::text	cast(femalecount as double precision)
+alvt	alevelcount	numeric	alevelcount::text	cast(alevelcount as double precision)
+en1	entry1	nominal	entry[1]::text entry1	entry[1]::text entry1
+en2	entry2	nominal	entry[2]::text entry2	entry[2]::text entry2
+en3	entry3	nominal	entry[3]::text entry3	entry[3]::text entry3
+en4	entry4	nominal	entry[4]::text entry4	entry[4]::text entry4
+en5	entry5	nominal	entry[5]::text entry5	entry[5]::text entry5
+en6	entry6	nominal	entry[6]::text entry6	entry[6]::text entry6
+wa12	wakulevel12	nominal	substring(wakulevellist from 1 for 5) wakulevel12	substring(wakulevellist from 1 for 5) wakulevel12
+wa123	wakulevel123	nominal	substring(wakulevellist from 1 for 8) wakulevel123	substring(wakulevellist from 1 for 8) wakulevel123
+comp1	compredict1	nominal	substring(com_predict from 1 for 1) compredict1	substring(com_predict from 1 for 1) compredict1
+comp12	compredict12	nominal	substring(com_predict from 1 for 2) compredict12	substring(com_predict from 1 for 2) compredict12
+comp123	compredict123	nominal	substring(com_predict from 1 for 3) compredict123	substring(com_predict from 1 for 3) compredict123
+comconf	comconfidence	numeric	com_confidence::text comconfidence	cast(com_confidence as double precision) comconfidence
+wa1234	wa1234	nominal	substring(wakulevellist from 1 for 11) wa1234	substring(wakulevellist from 1 for 11) wa123456
+lv1	level1	nominal	level[1] level1	level[1] level1
+lv2	level2	nominal	level[2] level2	level[2] level2
+lv3	level3	nominal	level[3] level3	level[3] level3
+lv4	level4	nominal	level[4] level4	level[4] level4
+lv5	level5	nominal	level[5] level5	level[5] level5
+lv6	level6	nominal	level[6] level6	level[6] level6
+nw1	nationwiningrate1	numeric	nationwiningrate[1]::text nationwiningrate1	cast(nationwiningrate[1] as double precision) nationwiningrate1
+nw2	nationwiningrate2	numeric	nationwiningrate[2]::text nationwiningrate2	cast(nationwiningrate[2] as double precision) nationwiningrate2
+nw3	nationwiningrate3	numeric	nationwiningrate[3]::text nationwiningrate3	cast(nationwiningrate[3] as double precision) nationwiningrate3
+nw4	nationwiningrate4	numeric	nationwiningrate[4]::text nationwiningrate4	cast(nationwiningrate[4] as double precision) nationwiningrate4
+nw5	nationwiningrate5	numeric	nationwiningrate[5]::text nationwiningrate5	cast(nationwiningrate[5] as double precision) nationwiningrate5
+nw6	nationwiningrate6	numeric	nationwiningrate[6]::text nationwiningrate6	cast(nationwiningrate[6] as double precision) nationwiningrate6
+n2w1	nation2winingrate1	numeric	nation2winingrate[1]::text nation2winingrate1	cast(nation2winingrate[1] as double precision) nation2winingrate1
+n2w2	nation2winingrate2	numeric	nation2winingrate[2]::text nation2winingrate2	cast(nation2winingrate[2] as double precision) nation2winingrate2
+n2w3	nation2winingrate3	numeric	nation2winingrate[3]::text nation2winingrate3	cast(nation2winingrate[3] as double precision) nation2winingrate3
+n2w4	nation2winingrate4	numeric	nation2winingrate[4]::text nation2winingrate4	cast(nation2winingrate[4] as double precision) nation2winingrate4
+n2w5	nation2winingrate5	numeric	nation2winingrate[5]::text nation2winingrate5	cast(nation2winingrate[5] as double precision) nation2winingrate5
+n2w6	nation2winingrate6	numeric	nation2winingrate[6]::text nation2winingrate6	cast(nation2winingrate[6] as double precision) nation2winingrate6
+n3w1	nation3winingrate1	numeric	nation3winingrate[1]::text nation3winingrate1	cast(nation3winingrate[1] as double precision) nation3winingrate1
+n3w2	nation3winingrate2	numeric	nation3winingrate[2]::text nation3winingrate2	cast(nation3winingrate[2] as double precision) nation3winingrate2
+n3w3	nation3winingrate3	numeric	nation3winingrate[3]::text nation3winingrate3	cast(nation3winingrate[3] as double precision) nation3winingrate3
+n3w4	nation3winingrate4	numeric	nation3winingrate[4]::text nation3winingrate4	cast(nation3winingrate[4] as double precision) nation3winingrate4
+n3w5	nation3winingrate5	numeric	nation3winingrate[5]::text nation3winingrate5	cast(nation3winingrate[5] as double precision) nation3winingrate5
+n3w6	nation3winingrate6	numeric	nation3winingrate[6]::text nation3winingrate6	cast(nation3winingrate[6] as double precision) nation3winingrate6
+lw1	localwiningrate1	numeric	localwiningrate[1]::text localwiningrate1	cast(localwiningrate[1] as double precision) localwiningrate1
+lw2	localwiningrate2	numeric	localwiningrate[2]::text localwiningrate2	cast(localwiningrate[2] as double precision) localwiningrate2
+lw3	localwiningrate3	numeric	localwiningrate[3]::text localwiningrate3	cast(localwiningrate[3] as double precision) localwiningrate3
+lw4	localwiningrate4	numeric	localwiningrate[4]::text localwiningrate4	cast(localwiningrate[4] as double precision) localwiningrate4
+lw5	localwiningrate5	numeric	localwiningrate[5]::text localwiningrate5	cast(localwiningrate[5] as double precision) localwiningrate5
+lw6	localwiningrate6	numeric	localwiningrate[6]::text localwiningrate6	cast(localwiningrate[6] as double precision) localwiningrate6
+l2w1	local2winingrate1	numeric	local2winingrate[1]::text local2winingrate1	cast(local2winingrate[1] as double precision) local2winingrate1
+l2w2	local2winingrate2	numeric	local2winingrate[2]::text local2winingrate2	cast(local2winingrate[2] as double precision) local2winingrate2
+l2w3	local2winingrate3	numeric	local2winingrate[3]::text local2winingrate3	cast(local2winingrate[3] as double precision) local2winingrate3
+l2w4	local2winingrate4	numeric	local2winingrate[4]::text local2winingrate4	cast(local2winingrate[4] as double precision) local2winingrate4
+l2w5	local2winingrate5	numeric	local2winingrate[5]::text local2winingrate5	cast(local2winingrate[5] as double precision) local2winingrate5
+l2w6	local2winingrate6	numeric	local2winingrate[6]::text local2winingrate6	cast(local2winingrate[6] as double precision) local2winingrate6
+l3w1	local3winingrate1	numeric	local3winingrate[1]::text local3winingrate1	cast(local3winingrate[1] as double precision) local3winingrate1
+l3w2	local3winingrate2	numeric	local3winingrate[2]::text local3winingrate2	cast(local3winingrate[2] as double precision) local3winingrate2
+l3w3	local3winingrate3	numeric	local3winingrate[3]::text local3winingrate3	cast(local3winingrate[3] as double precision) local3winingrate3
+l3w4	local3winingrate4	numeric	local3winingrate[4]::text local3winingrate4	cast(local3winingrate[4] as double precision) local3winingrate4
+l3w5	local3winingrate5	numeric	local3winingrate[5]::text local3winingrate5	cast(local3winingrate[5] as double precision) local3winingrate5
+l3w6	local3winingrate6	numeric	local3winingrate[6]::text local3winingrate6	cast(local3winingrate[6] as double precision) local3winingrate6
+m2w1	motor2winingrate1	numeric	motor2winingrate[1]::text motor2winingrate1	cast(motor2winingrate[1] as double precision) motor2winingrate1
+m2w2	motor2winingrate2	numeric	motor2winingrate[2]::text motor2winingrate2	cast(motor2winingrate[2] as double precision) motor2winingrate2
+m2w3	motor2winingrate3	numeric	motor2winingrate[3]::text motor2winingrate3	cast(motor2winingrate[3] as double precision) motor2winingrate3
+m2w4	motor2winingrate4	numeric	motor2winingrate[4]::text motor2winingrate4	cast(motor2winingrate[4] as double precision) motor2winingrate4
+m2w5	motor2winingrate5	numeric	motor2winingrate[5]::text motor2winingrate5	cast(motor2winingrate[5] as double precision) motor2winingrate5
+m2w6	motor2winingrate6	numeric	motor2winingrate[6]::text motor2winingrate6	cast(motor2winingrate[6] as double precision) motor2winingrate6
+m3w1	motor3winingrate1	numeric	motor3winingrate[1]::text motor3winingrate1	cast(motor3winingrate[1] as double precision) motor3winingrate1
+m3w2	motor3winingrate2	numeric	motor3winingrate[2]::text motor3winingrate2	cast(motor3winingrate[2] as double precision) motor3winingrate2
+m3w3	motor3winingrate3	numeric	motor3winingrate[3]::text motor3winingrate3	cast(motor3winingrate[3] as double precision) motor3winingrate3
+m3w4	motor3winingrate4	numeric	motor3winingrate[4]::text motor3winingrate4	cast(motor3winingrate[4] as double precision) motor3winingrate4
+m3w5	motor3winingrate5	numeric	motor3winingrate[5]::text motor3winingrate5	cast(motor3winingrate[5] as double precision) motor3winingrate5
+m3w6	motor3winingrate6	numeric	motor3winingrate[6]::text motor3winingrate6	cast(motor3winingrate[6] as double precision) motor3winingrate6
+en1n	entry1	numeric	entry[1]::text entry1	cast(entry[1] as double precision) entry1
+en2n	entry2	numeric	entry[2]::text entry2	cast(entry[2] as double precision) entry2
+en3n	entry3	numeric	entry[3]::text entry3	cast(entry[3] as double precision) entry3
+en4n	entry4	numeric	entry[4]::text entry4	cast(entry[4] as double precision) entry4
+en5n	entry5	numeric	entry[5]::text entry5	cast(entry[5] as double precision) entry5
+en6n	entry6	numeric	entry[6]::text entry6	cast(entry[6] as double precision) entry6
+sex1	sex1	numeric	(case when sex[1] = 'M' then 1 else 0 end)::text sex1	cast((case when sex[1] = 'M' then 1 else 0 end) as double precision) sex1
+sex2	sex2	numeric	(case when sex[2] = 'M' then 1 else 0 end)::text sex2	cast((case when sex[2] = 'M' then 1 else 0 end) as double precision) sex2
+sex3	sex3	numeric	(case when sex[3] = 'M' then 1 else 0 end)::text sex3	cast((case when sex[3] = 'M' then 1 else 0 end) as double precision) sex3
+sex4	sex4	numeric	(case when sex[4] = 'M' then 1 else 0 end)::text sex4	cast((case when sex[4] = 'M' then 1 else 0 end) as double precision) sex4
+sex5	sex5	numeric	(case when sex[5] = 'M' then 1 else 0 end)::text sex5	cast((case when sex[5] = 'M' then 1 else 0 end) as double precision) sex5
+sex6	sex6	numeric	(case when sex[6] = 'M' then 1 else 0 end)::text sex6	cast((case when sex[6] = 'M' then 1 else 0 end) as double precision) sex6
+lv1n	lvl1	numeric	(case when level[1]='A1' then 4 when level[1]='A2' then 3 when level[1]='B1' then 2 when level[1]='B2' then 1 end)::text lvl1	cast((case when level[1]='A1' then 4 when level[1]='A2' then 3 when level[1]='B1' then 2 when level[1]='B2' then 1 end) as double precision) lvl1
+lv2n	lvl2	numeric	(case when level[2]='A1' then 4 when level[2]='A2' then 3 when level[2]='B1' then 2 when level[2]='B2' then 1 end)::text lvl2	cast((case when level[2]='A1' then 4 when level[2]='A2' then 3 when level[2]='B1' then 2 when level[2]='B2' then 1 end) as double precision) lvl2
+lv3n	lvl3	numeric	(case when level[3]='A1' then 4 when level[3]='A2' then 3 when level[3]='B1' then 2 when level[3]='B2' then 1 end)::text lvl3	cast((case when level[3]='A1' then 4 when level[3]='A2' then 3 when level[3]='B1' then 2 when level[3]='B2' then 1 end) as double precision) lvl3
+lv4n	lvl4	numeric	(case when level[4]='A1' then 4 when level[4]='A2' then 3 when level[4]='B1' then 2 when level[4]='B2' then 1 end)::text lvl4	cast((case when level[4]='A1' then 4 when level[4]='A2' then 3 when level[4]='B1' then 2 when level[4]='B2' then 1 end) as double precision) lvl4
+lv5n	lvl5	numeric	(case when level[5]='A1' then 4 when level[5]='A2' then 3 when level[5]='B1' then 2 when level[5]='B2' then 1 end)::text lvl5	cast((case when level[5]='A1' then 4 when level[5]='A2' then 3 when level[5]='B1' then 2 when level[5]='B2' then 1 end) as double precision) lvl5
+lv6n	lvl6	numeric	(case when level[6]='A1' then 4 when level[6]='A2' then 3 when level[6]='B1' then 2 when level[6]='B2' then 1 end)::text lvl6	cast((case when level[6]='A1' then 4 when level[6]='A2' then 3 when level[6]='B1' then 2 when level[6]='B2' then 1 end) as double precision) lvl6
+age1	age1	numeric	age[1]::text age1	cast(age[1] as double precision) age1
+age2	age2	numeric	age[2]::text age2	cast(age[2] as double precision) age2
+age3	age3	numeric	age[3]::text age3	cast(age[3] as double precision) age3
+age4	age4	numeric	age[4]::text age4	cast(age[4] as double precision) age4
+age5	age5	numeric	age[5]::text age5	cast(age[5] as double precision) age5
+age6	age6	numeric	age[6]::text age6	cast(age[6] as double precision) age6
+weit1	weit1	numeric	weight[1]::text weit1	cast(weight[1] as double precision) weit1
+weit2	weit2	numeric	weight[2]::text weit2	cast(weight[2] as double precision) weit2
+weit3	weit3	numeric	weight[3]::text weit3	cast(weight[3] as double precision) weit3
+weit4	weit4	numeric	weight[4]::text weit4	cast(weight[4] as double precision) weit4
+weit5	weit5	numeric	weight[5]::text weit5	cast(weight[5] as double precision) weit5
+weit6	weit6	numeric	weight[6]::text weit6	cast(weight[6] as double precision) weit6
+exhi1	exhi1	numeric	exhibit[1]::text exhi1	cast(exhibit[1] as double precision) exhi1
+exhi2	exhi2	numeric	exhibit[2]::text exhi2	cast(exhibit[2] as double precision) exhi2
+exhi3	exhi3	numeric	exhibit[3]::text exhi3	cast(exhibit[3] as double precision) exhi3
+exhi4	exhi4	numeric	exhibit[4]::text exhi4	cast(exhibit[4] as double precision) exhi4
+exhi5	exhi5	numeric	exhibit[5]::text exhi5	cast(exhibit[5] as double precision) exhi5
+exhi6	exhi6	numeric	exhibit[6]::text exhi6	cast(exhibit[6] as double precision) exhi6
+stexhi1	stexhi1	numeric	startexhibit[1]::text stexhi1	cast(startexhibit[1] as double precision) stexhi1
+stexhi2	stexhi2	numeric	startexhibit[2]::text stexhi2	cast(startexhibit[2] as double precision) stexhi2
+stexhi3	stexhi3	numeric	startexhibit[3]::text stexhi3	cast(startexhibit[3] as double precision) stexhi3
+stexhi4	stexhi4	numeric	startexhibit[4]::text stexhi4	cast(startexhibit[4] as double precision) stexhi4
+stexhi5	stexhi5	numeric	startexhibit[5]::text stexhi5	cast(startexhibit[5] as double precision) stexhi5
+stexhi6	stexhi6	numeric	startexhibit[6]::text stexhi6	cast(startexhibit[6] as double precision) stexhi6
+fly1	fly1	numeric	flying[1]::text fly1	cast(flying[1] as double precision) fly1
+fly2	fly2	numeric	flying[2]::text fly2	cast(flying[2] as double precision) fly2
+fly3	fly3	numeric	flying[3]::text fly3	cast(flying[3] as double precision) fly3
+fly4	fly4	numeric	flying[4]::text fly4	cast(flying[4] as double precision) fly4
+fly5	fly5	numeric	flying[5]::text fly5	cast(flying[5] as double precision) fly5
+fly6	fly6	numeric	flying[6]::text fly6	cast(flying[6] as double precision) fly6
+late1	late1	numeric	late[1]::text late1	cast(late[1] as double precision) late1
+late2	late2	numeric	late[2]::text late2	cast(late[2] as double precision) late2
+late3	late3	numeric	late[3]::text late3	cast(late[3] as double precision) late3
+late4	late4	numeric	late[4]::text late4	cast(late[4] as double precision) late4
+late5	late5	numeric	late[5]::text late5	cast(late[5] as double precision) late5
+late6	late6	numeric	late[6]::text late6	cast(late[6] as double precision) late6
+avgst1	avgst1	numeric	averagestart[1]::text avgst1	cast(averagestart[1] as double precision) avgst1
+avgst2	avgst2	numeric	averagestart[2]::text avgst2	cast(averagestart[2] as double precision) avgst2
+avgst3	avgst3	numeric	averagestart[3]::text avgst3	cast(averagestart[3] as double precision) avgst3
+avgst4	avgst4	numeric	averagestart[4]::text avgst4	cast(averagestart[4] as double precision) avgst4
+avgst5	avgst5	numeric	averagestart[5]::text avgst5	cast(averagestart[5] as double precision) avgst5
+avgst6	avgst6	numeric	averagestart[6]::text avgst6	cast(averagestart[6] as double precision) avgst6
+avgtm1	avgtm1	numeric	avgtime[1]::text avgtm1	cast(avgtime[1] as double precision) avgtm1
+avgtm2	avgtm2	numeric	avgtime[2]::text avgtm2	cast(avgtime[2] as double precision) avgtm2
+avgtm3	avgtm3	numeric	avgtime[3]::text avgtm3	cast(avgtime[3] as double precision) avgtm3
+avgtm4	avgtm4	numeric	avgtime[4]::text avgtm4	cast(avgtime[4] as double precision) avgtm4
+avgtm5	avgtm5	numeric	avgtime[5]::text avgtm5	cast(avgtime[5] as double precision) avgtm5
+avgtm6	avgtm6	numeric	avgtime[6]::text avgtm6	cast(avgtime[6] as double precision) avgtm6
+om00	om00	numeric	oddslist[0]::text om00	oddslist[0] om00
+om01	om01	numeric	oddslist[1]::text om01	oddslist[1] om01
+om02	om02	numeric	oddslist[2]::text om02	oddslist[2] om02
+om03	om03	numeric	oddslist[3]::text om03	oddslist[3] om03
+om04	om04	numeric	oddslist[4]::text om04	oddslist[4] om04
+om05	om05	numeric	oddslist[5]::text om05	oddslist[5] om05
+om06	om06	numeric	oddslist[6]::text om06	oddslist[6] om06
+om07	om07	numeric	oddslist[7]::text om07	oddslist[7] om07
+om08	om08	numeric	oddslist[8]::text om08	oddslist[8] om08
+om09	om09	numeric	oddslist[9]::text om09	oddslist[9] om09
+om10	om10	numeric	oddslist[10]::text om10	oddslist[10] om10
+om11	om11	numeric	oddslist[11]::text om11	oddslist[11] om11
+om12	om12	numeric	oddslist[12]::text om12	oddslist[12] om12
+om13	om13	numeric	oddslist[13]::text om13	oddslist[13] om13
+om14	om14	numeric	oddslist[14]::text om14	oddslist[14] om14
+om15	om15	numeric	oddslist[15]::text om15	oddslist[15] om15
+om16	om16	numeric	oddslist[16]::text om16	oddslist[16] om16
+om17	om17	numeric	oddslist[17]::text om17	oddslist[17] om17
+om18	om18	numeric	oddslist[18]::text om18	oddslist[18] om18
+om19	om19	numeric	oddslist[19]::text om19	oddslist[19] om19
+om20	om20	numeric	oddslist[20]::text om20	oddslist[20] om20
+om21	om21	numeric	oddslist[21]::text om21	oddslist[21] om21
+om22	om22	numeric	oddslist[22]::text om22	oddslist[22] om22
+om23	om23	numeric	oddslist[23]::text om23	oddslist[23] om23
+om24	om24	numeric	oddslist[24]::text om24	oddslist[24] om24
+om25	om25	numeric	oddslist[25]::text om25	oddslist[25] om25
+om26	om26	numeric	oddslist[26]::text om26	oddslist[26] om26
+om27	om27	numeric	oddslist[27]::text om27	oddslist[27] om27
+om28	om28	numeric	oddslist[28]::text om28	oddslist[28] om28
+om29	om29	numeric	oddslist[29]::text om29	oddslist[29] om29
+om30	om30	numeric	oddslist[30]::text om30	oddslist[30] om30
+om31	om31	numeric	oddslist[31]::text om31	oddslist[31] om31
+om32	om32	numeric	oddslist[32]::text om32	oddslist[32] om32
+om33	om33	numeric	oddslist[33]::text om33	oddslist[33] om33
+om34	om34	numeric	oddslist[34]::text om34	oddslist[34] om34
+om35	om35	numeric	oddslist[35]::text om35	oddslist[35] om35
+om36	om36	numeric	oddslist[36]::text om36	oddslist[36] om36
+om37	om37	numeric	oddslist[37]::text om37	oddslist[37] om37
+om38	om38	numeric	oddslist[38]::text om38	oddslist[38] om38
+om39	om39	numeric	oddslist[39]::text om39	oddslist[39] om39
+pd1	pd1	nominal	prediction1 pd1	prediction1 pd1
+pd2	pd2	nominal	prediction2 pd2	prediction1 pd2
+pd3	pd3	nominal	prediction3 pd3	prediction1 pd3
+prob1	prob1	numeric	probability1::text prob1	probability1 prob1
+prob2	prob2	numeric	probability2::text prob2	probability2 prob2
+prob3	prob3	numeric	probability3::text prob3	probability3 prob3
+#以下bork, boddsは99201モデルで利用				
+#bork	bork	nominal	mr.bet_oddsrank::text bork	mr.bet_oddsrank bork
+#bodds	bodds	numeric	mr.bet_odds::text bodds	cast(mr.bet_odds as double precision) bodds
+bettype	bettype	nominal	mr.bettype bettype	mr.bettype bettype
+bkumiban	bkumiban	numeric	mr.bet_kumiban bkumiban	mr.bet_kumiban bkumiban
+#以下bork, boddsは99301モデルで利用				
+bork	bork	numeric	om.bork::text bork	om.bork bork
+bodds	bodds	numeric	om.bor::text bodds	om.bor bodds

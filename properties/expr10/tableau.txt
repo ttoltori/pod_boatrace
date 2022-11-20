@@ -1,0 +1,45 @@
+tzHMck
+
+hitrate 
+  SUM([hitcnt])/SUM([betcnt])
+
+incomerate
+  SUM([hitamt])/SUM([betamt])
+
+balance
+  RUNNING_SUM(SUM([incamt]))
+
+betcnt(누적)
+  RUNNING_SUM(SUM([betcnt]))
+  
+hitrate(누적)
+  RUNNING_SUM(SUM([hitcnt]))/RUNNING_SUM(SUM([betcnt]))
+
+incomerate(누적)
+  RUNNING_SUM(SUM([hitamt]))/RUNNING_SUM(SUM([betamt]))
+
+		jyoMapByName.put("桐生", "01");
+		jyoMapByName.put("戸田", "02");
+		jyoMapByName.put("江戸川", "03");
+		jyoMapByName.put("平和島", "04");
+		jyoMapByName.put("多摩川", "05");
+		jyoMapByName.put("浜名湖", "06");
+		jyoMapByName.put("蒲郡", "07");
+		jyoMapByName.put("常滑", "08");
+		jyoMapByName.put("津", "09");
+		jyoMapByName.put("三国", "10");
+		jyoMapByName.put("びわこ", "11");
+		jyoMapByName.put("住之江", "12");
+		jyoMapByName.put("尼崎", "13");
+		jyoMapByName.put("鳴門", "14");
+		jyoMapByName.put("丸亀", "15");
+		jyoMapByName.put("児島", "16");
+		jyoMapByName.put("宮島", "17");
+		jyoMapByName.put("徳山", "18");
+		jyoMapByName.put("下関", "19");
+		jyoMapByName.put("若松", "20");
+		jyoMapByName.put("芦屋", "21");
+		jyoMapByName.put("福岡", "22");
+		jyoMapByName.put("唐津", "23");
+		jyoMapByName.put("大村", "24");
+k4oW8D
