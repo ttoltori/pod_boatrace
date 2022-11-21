@@ -729,3 +729,18 @@ BEGIN FBI-2
 END
 
 
+BEGIN FPI
+  select
+    '~' sel, (case when me.result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+    me.bettype, me.kumiban, me.resultno, me.modelno, me.patternid, me.pattern, 
+    (me.hitamt-me.betamt) incamt, me.betcnt, me.incomerate::double precision incrate,
+    me.hitrate::double precision, me.bal_pluscnt,
+    'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor,
+    me.pr_bestmin, me.pr_bestmax, mre.lpr_bestmin, mre.lpr_bestmax, mre.rpr_bestmin, mre.rpr_bestmax
+  from ml_evaluation me, ml_range_evaluation mre
+  where me.resultno = mre.resultno and me.result_type = mre.result_type and me.bettype = mre.bettype and me.kumiban = mre.kumiban and me.modelno = mre.modelno and me.patternid  = mre.patternid and me.pattern = mre.pattern
+    and me.bettype = '{bettype}' and me.kumiban = '{kumiban}'
+    and me.result_type = '{result_type}'
+    and me.incomerate between {incrmin} and {incrmax}
+    and (me.modelno || '-' || me.patternid) in ({custom})
+END

@@ -113,17 +113,18 @@ public class ResultGraphBuilder {
 			String dirExResult;
 			if ( resultType.startsWith(ResultType._1.getValue()) || resultType.startsWith(ResultType._2.getValue())) { // result typeが1で始まる
 				//exnoPath = exnoPath + "_" + resultType  + "_" + prop.getString("used_model_no") + "_" + prop.getString("pattern_id");
-				exnoPath = exnoPath + "_" + resultType  + "_" + prop.getString("pattern_id");
+				//exnoPath = exnoPath + "_" + resultType  + "_" + prop.getString("pattern_id");
+				exnoPath = resultType  + "_" + prop.getString("pattern_id");
 				dirExResult = dirAllResult + exnoPath  + "/" + stat.statBettype + "/" + stat.kumiban + "/";
 
 				String filePathCommon = dirExResult + String.join("_", 
-						StringUtil.leftPad(exNo, BoatConst.LEFT_PAD6, "0"),
 						prop.getString("result_type"),
-						prop.getString("pattern_id"), 
-						stat.pattern, 
 						stat.statBettype, 
 						stat.kumiban,
-						prop.getString("used_model_no")
+						prop.getString("pattern_id"), 
+						stat.pattern, 
+						prop.getString("used_model_no"),
+						StringUtil.leftPad(exNo, BoatConst.LEFT_PAD6, "0")
 						);
 				filePath = filePathCommon + ".png";
 				filePathBork = filePathCommon + "_bork.png";

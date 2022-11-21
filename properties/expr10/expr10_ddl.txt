@@ -1,3 +1,4 @@
+-- patternid別にpr範囲集計する
 drop table if exists st_patternid;
 create table st_patternid (
 result_type varchar(10),           -- 実験のタイプ 
@@ -6,11 +7,28 @@ kumiban varchar(30),
 patternid varchar(20),
 modelno varchar(5),
 betcnt int,
-hitcnt int,
-betamt int,
-hitamt int,
-
-
+incamt int,
+hitrate double precision,
+incrate double precision,
+bal_slpoe double precision,
+pr_betcnt int,
+pr_incamt int,
+pr_betrate double precision,
+pr_hitrate double precision,
+pr_incrate double precision,
+lpr_betcnt int,
+lpr_incamt int,
+lpr_betrate double precision,
+lpr_hitrate double precision,
+lpr_incrate double precision,
+rpr_betcnt int,
+rpr_incamt int,
+rpr_betrate double precision,
+rpr_hitrate double precision,
+rpr_incrate double precision
+);
+drop index if exists indexes_st_patternid;
+create index indexes_st_patternid on st_patternid (result_type, bettype, kumiban, patternid, modelno);
 
 drop table if exists ml_pork_classification;
 create table ml_pork_classification (

@@ -9,8 +9,10 @@ public class EvaluationLoaderFactory {
 			return new EvaluationFileLoader();	
 		} else if (loaderType.equals("EvaluationSimul2Loader")) {
 			return new EvaluationSimul2Loader();
-		} else if (loaderType.equals("EvaluationSimul3Loader")) {
-			return new EvaluationSimul3Loader();
+		} else if (loaderType.equals("EvaluationSimulLoaderBork")) {
+			return new EvaluationSimulLoaderBork();
+		} else if (loaderType.equals("EvaluationSimulLoaderPr")) {
+			return new EvaluationSimulLoaderPr();
 		} else {
 			return new EvaluationSimulExcelLoader();
 		}

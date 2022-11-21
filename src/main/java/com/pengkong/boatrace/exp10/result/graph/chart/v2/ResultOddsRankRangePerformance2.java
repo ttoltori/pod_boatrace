@@ -27,7 +27,7 @@ public class ResultOddsRankRangePerformance2 extends AbstractRangePerformanceCha
 			return  "確定オッズRANKなし";
 		}
 		
-		label = "確定オッズRANK BEST(" + dto.getRorkBestmin() + "～" + dto.getRorkBestmax() + ", " + dto.getRorkBetcnt() + ", " + (dto.getRorkHitamt() - dto.getRorkBetamt()) + ")  ";
+		label = "確定オッズRANK BEST(" + dto.getRorkBestmin() + "～" + dto.getRorkBestmax() + ", " + dto.getRorkBetcnt() + ", " + (cnvNull(dto.getRorkHitamt()) - cnvNull(dto.getRorkBetamt())) + ")  ";
 		label += "率(" + dto.getRorkBetrate() + ", " + dto.getRorkHitrate() + ", " + dto.getRorkIncomerate() + ")  ";
 		label += "ALL(" + dto.getRoddsrkMin() + "～" + dto.getRoddsrkMax() +  ", " + (int)stat.sumOfBet + ")";
 		

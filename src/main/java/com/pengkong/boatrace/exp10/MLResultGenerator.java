@@ -149,6 +149,7 @@ public class MLResultGenerator {
 		String resultEndYmd = prop.getString("result_end_ymd");
 		double minBetrate = prop.getDouble("min_betrate");
 		int minBetcnt = prop.getInteger("min_betcnt");
+		double minIncomerate = prop.getDouble("min_incomerate");
 		
 		// 결과생성 대상데이터 취득
 		List<DBRecord> listData = loadDB(resultStartYmd, resultEndYmd);
@@ -308,6 +309,9 @@ public class MLResultGenerator {
 			// 結果出力対象の統計データマップを最低betcntでフィルタする
 			statMap = limitBetrate(statMap, minBetrate);
 			
+			// 結果出力対象の統計データマップを最低incomerateでフィルタする
+			statMap = limitIncomerate(statMap, minIncomerate);
+			
 			graphBuilder.save(statMap);
 		}
 
@@ -339,7 +343,29 @@ public class MLResultGenerator {
 		
 		return result;
 	}
-	
+
+	/**
+	 * 統計出力データからbetrateが設定値以下は除外する
+	 * @param srcMap
+	 * @return
+	 */
+	SortedMap<String, ResultStat> limitIncomerate(SortedMap<String, ResultStat> srcMap, double minIncomerate) {
+		if (minIncomerate <= 0) {
+			return srcMap;
+		}
+
+		SortedMap<String, ResultStat> result = new TreeMap<>();
+		for (Entry<String, ResultStat> entry : srcMap.entrySet()) {
+			if (entry.getValue().incomerate < minIncomerate) {
+				logger.info("limit incomerate pattern excluded : " + entry.getValue().pattern);
+				continue;
+			}
+			result.put(entry.getKey(), entry.getValue());
+		}
+		
+		return result;
+	}
+
 	/**
 	 * 統計出力データからbetrateが設定値以下は除外する
 	 * @param srcMap
