@@ -744,3 +744,85 @@ BEGIN FPI
     and me.incomerate between {incrmin} and {incrmax}
     and (me.modelno || '-' || me.patternid) in ({custom})
 END
+
+-- patternid별로 흑자통계를 얻은후 파라미터별로 랭킹을 매겨서 그중 n개를 취한 evaluation
+BEGIN FPI-2
+	select
+	    '~' sel, (case when me2.result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+	    me2.bettype, me2.kumiban, me2.resultno, me2.modelno, me2.patternid, me2.pattern, 
+	    (me2.hitamt-me2.betamt) incamt, me2.betcnt, me2.incomerate::double precision incrate,
+	    me2.hitrate::double precision, me2.bal_pluscnt,
+	    'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+	from ml_evaluation me2, 
+	(
+		select
+		  pl.result_type, pl.bettype, pl.kumiban, pl.patternid, pl.modelno,
+		  tot.betcnt t_betcnt, pl.betcnt p_betcnt, (pl.betcnt::float / tot.betcnt::float)::numeric(5,2) p_betrate,
+		  (tot.hitamt - tot.betamt) t_incamt,
+		  (pl.hitamt - pl.betamt) p_incamt,
+		  (tot.hitcnt::float / tot.betcnt::float)::numeric(5,2) t_hitrate,
+		  (pl.hitcnt::float / pl.betcnt::float)::numeric(5,2) p_hitrate,
+		  (tot.hitamt::float / tot.betamt::float)::numeric(5,2) t_incrate,
+		  (pl.hitamt::float / pl.betamt::float)::numeric(5,2) p_incrate
+		from
+		  (
+			select
+			  result_type, bettype, kumiban, patternid, modelno,
+			  sum(betcnt) betcnt, 
+			  sum(hitcnt) hitcnt,
+			  sum(betamt) betamt,
+			  sum(hitamt) hitamt
+			from ml_evaluation me
+			where result_type = '{result_type}'
+			  and bettype = '{bettype}' and kumiban = '{kumiban}'
+			  and incomerate between {incrmin} and {incrmax}
+			group by result_type, bettype, kumiban, patternid, modelno
+		  ) pl,
+		  (
+			select
+			  result_type, bettype, kumiban, patternid, modelno,
+			  sum(betcnt) betcnt, 
+			  sum(hitcnt) hitcnt,
+			  sum(betamt) betamt,
+			  sum(hitamt) hitamt
+			from ml_evaluation me
+			where result_type = '{result_type}'
+			  and bettype = '{bettype}' and kumiban = '{kumiban}'
+			group by result_type, bettype, kumiban, patternid, modelno
+			) tot
+		where pl.result_type = tot.result_type and pl.bettype = tot.bettype 
+		  and pl.kumiban = tot.kumiban and pl.patternid = tot.patternid 
+		  and pl.modelno = tot.modelno
+		  and {custom}
+		order by {factor} desc limit {limit}
+	) me3
+	where me2.result_type = me3.result_type and me2.bettype = me3.bettype and me2.kumiban = me3.kumiban
+	  and me2.patternid = me3.patternid and me2.modelno = me3.modelno 
+	  and me2.incomerate between {incrmin} and {incrmax}
+END
+
+#FPI-2를 전bettype,kumiban한번에 취득. 
+BEGIN FPI-3
+	select
+	    '~' sel, (case when me.result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+	    me.bettype, me.kumiban, me.resultno, me.modelno, me.patternid, me.pattern, 
+	    (me.hitamt-me.betamt) incamt, me.betcnt, me.incomerate::double precision incrate,
+	    me.hitrate::double precision, me.bal_pluscnt,
+	    'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+	from ml_evaluation me, 
+	(
+	   select 
+	     *
+	   from (
+		   select
+		     row_number() over (partition by result_type, bettype, kumiban order by {factor} desc) as ranking,
+		     *
+		   from st_patternid sp
+		   where {custom}
+	   ) tmp
+	   where ranking <= {limit}
+	) sp2
+	where me.result_type = sp2.result_type and me.bettype = sp2.bettype and me.kumiban = sp2.kumiban
+	  and me.patternid = sp2.patternid and me.modelno = sp2.modelno 
+	  and me.incomerate between {incrmin} and {incrmax}
+END

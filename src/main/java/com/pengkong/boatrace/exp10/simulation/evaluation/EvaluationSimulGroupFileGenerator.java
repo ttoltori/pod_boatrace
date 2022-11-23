@@ -63,6 +63,8 @@ public class EvaluationSimulGroupFileGenerator {
 		}
 		
 		String filepath = prop.getString("dir_groups_output_step1") + evaluationsId + ".tsv";
+		filepath = filepath.replaceAll("\\*", "@");
+		
 		FileUtil.writeFile(filepath, sb.toString());
 	}
 
@@ -112,6 +114,7 @@ public class EvaluationSimulGroupFileGenerator {
 		}
 		
 		String filepath = prop.getString("dir_groups_output_step1") + evaluationsId + ".tsv";
+		filepath = filepath.replaceAll("\\*", "@");
 		FileUtil.writeFile(filepath, sb.toString());
 	}
 

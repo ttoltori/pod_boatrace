@@ -111,7 +111,7 @@ public class ResultGraphBuilder {
 			// 実験番号 bettype パタンIDの結果ディレクトリ
 			String exnoPath = StringUtil.leftPad(exNo, BoatConst.LEFT_PAD6, "0");
 			String dirExResult;
-			if ( resultType.startsWith(ResultType._1.getValue()) || resultType.startsWith(ResultType._2.getValue())) { // result typeが1で始まる
+			if ( resultType.startsWith(ResultType._1.getValue()) || resultType.startsWith(ResultType._2.getValue())  || resultType.startsWith(ResultType._3.getValue()) ) { // result typeが1で始まる
 				//exnoPath = exnoPath + "_" + resultType  + "_" + prop.getString("used_model_no") + "_" + prop.getString("pattern_id");
 				//exnoPath = exnoPath + "_" + resultType  + "_" + prop.getString("pattern_id");
 				exnoPath = resultType  + "_" + prop.getString("pattern_id");
@@ -234,6 +234,8 @@ public class ResultGraphBuilder {
 			}
 			
 			FileUtil.createDirIfNotExist(dirExResult);
+			
+			filePath = filePath.replaceAll("\\*", "@");
 			
 			// BORK-BOR 詳細マップのXY範囲
 			Double borkMin = prop.getDouble("bork_min");

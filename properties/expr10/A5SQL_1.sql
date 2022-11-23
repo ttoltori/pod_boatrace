@@ -1,4 +1,335 @@
-﻿select bal_slope from ml_evaluation where resultno = '683';
+﻿select
+	'~' sel,
+	(case
+		when me2.result_type = '1' then 'ip,G3'
+		else 'SG,G1,G2'
+	end) grades,
+	me2.bettype,
+	me2.kumiban,
+	me2.resultno,
+	me2.modelno,
+	me2.patternid,
+	me2.pattern,
+	(me2.hitamt-me2.betamt) incamt,
+	me2.betcnt,
+	me2.incomerate::double precision incrate,
+	me2.hitrate::double precision,
+	me2.bal_pluscnt,
+	'x' bonus_pr,
+	'x' bonus_bor,
+	'x' bonus_bork,
+	'x' range_selector,
+	'x' bonus_borkbor
+from
+	ml_evaluation me2,
+	(
+	select
+		pl.result_type,
+		pl.bettype,
+		pl.kumiban,
+		pl.patternid,
+		pl.modelno,
+		tot.betcnt t_betcnt,
+		pl.betcnt p_betcnt,
+		(pl.betcnt::float / tot.betcnt::float)::numeric(5,
+		2) p_betrate,
+		(tot.hitamt - tot.betamt) t_incamt,
+		(pl.hitamt - pl.betamt) p_incamt,
+		(tot.hitcnt::float / tot.betcnt::float)::numeric(5,
+		2) t_hitrate,
+		(pl.hitcnt::float / pl.betcnt::float)::numeric(5,
+		2) p_hitrate,
+		(tot.hitamt::float / tot.betamt::float)::numeric(5,
+		2) t_incrate,
+		(pl.hitamt::float / pl.betamt::float)::numeric(5,
+		2) p_incrate
+	from
+		(
+		select
+			result_type,
+			bettype,
+			kumiban,
+			patternid,
+			modelno,
+			sum(betcnt) betcnt,
+			sum(hitcnt) hitcnt,
+			sum(betamt) betamt,
+			sum(hitamt) hitamt
+		from
+			ml_evaluation me
+		where
+			result_type = '1'
+			and bettype = '1T'
+			and kumiban = '1'
+			and incomerate between 1 and 99
+		group by
+			result_type,
+			bettype,
+			kumiban,
+			patternid,
+			modelno
+) pl,
+		(
+		select
+			result_type,
+			bettype,
+			kumiban,
+			patternid,
+			modelno,
+			sum(betcnt) betcnt,
+			sum(hitcnt) hitcnt,
+			sum(betamt) betamt,
+			sum(hitamt) hitamt
+		from
+			ml_evaluation me
+		where
+			result_type = '1'
+			and bettype = '1T'
+			and kumiban = '1'
+		group by
+			result_type,
+			bettype,
+			kumiban,
+			patternid,
+			modelno
+) tot
+	where
+		pl.result_type = tot.result_type
+		and pl.bettype = tot.bettype
+		and pl.kumiban = tot.kumiban
+		and pl.patternid = tot.patternid
+		and pl.modelno = tot.modelno
+	order by
+		x desc
+	limit 1
+) me3
+where
+	me2.result_type = me3.result_type
+	and me2.bettype = me3.bettype
+	and me2.kumiban = me3.kumiban
+	and me2.patternid = me3.patternid
+	and me2.modelno = me3.modelno
+	and me2.incomerate between 1 and 99
+;
+
+
+select
+    '~' sel, (case when me.result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+    me.bettype, me.kumiban, me.resultno, me.modelno, me.patternid, me.pattern, 
+    (me.hitamt-me.betamt) incamt, me.betcnt, me.incomerate::double precision incrate,
+    me.hitrate::double precision, me.bal_pluscnt,
+    'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from ml_evaluation me, 
+(
+   select 
+     *
+   from (
+	   select
+	     row_number() over (partition by result_type, bettype, kumiban order by p_betcnt desc) as ranking,
+	     *
+	   from st_patternid sp
+   ) tmp
+   where ranking <= 1
+) sp2
+where me.result_type = sp2.result_type and me.bettype = sp2.bettype and me.kumiban = sp2.kumiban
+  and me.patternid = sp2.patternid and me.modelno = sp2.modelno 
+  and me.incomerate between 1 and 99
+;
+
+
+	  
+	  
+	  insert into st_patternid 
+select
+  * 
+from
+(
+	select
+	  pl.result_type, pl.bettype, pl.kumiban, pl.patternid, pl.modelno,
+	  tot.betcnt t_betcnt, 
+	  pl.betcnt p_betcnt, 
+	  (pl.betcnt::float / tot.betcnt::float)::numeric(5,2) p_betrate,
+	  (tot.hitamt - tot.betamt) t_incamt,
+	  (pl.hitamt - pl.betamt) p_incamt,
+	  (tot.hitcnt::float / tot.betcnt::float)::numeric(5,2) t_hitrate,
+	  (pl.hitcnt::float / pl.betcnt::float)::numeric(5,2) p_hitrate,
+	  (tot.hitamt::float / tot.betamt::float)::numeric(5,2) t_incrate,
+	  (pl.hitamt::float / pl.betamt::float)::numeric(5,2) p_incrate
+	from
+	  (
+		select
+		  result_type, bettype, kumiban, patternid, modelno,
+		  sum(betcnt) betcnt, 
+		  sum(hitcnt) hitcnt,
+		  sum(betamt) betamt,
+		  sum(hitamt) hitamt
+		from ml_evaluation me
+		where result_type = '1'
+		  and incomerate between 1.01 and 99
+		group by result_type, bettype, kumiban, patternid, modelno
+	  ) pl,
+	  (
+		select
+		  result_type, bettype, kumiban, patternid, modelno,
+		  sum(betcnt) betcnt, 
+		  sum(hitcnt) hitcnt,
+		  sum(betamt) betamt,
+		  sum(hitamt) hitamt
+		from ml_evaluation me
+		where result_type = '1'
+		group by result_type, bettype, kumiban, patternid, modelno
+		) tot
+	where pl.result_type = tot.result_type and pl.bettype = tot.bettype 
+	  and pl.kumiban = tot.kumiban and pl.patternid = tot.patternid 
+	  and pl.modelno = tot.modelno
+) tmp
+;
+
+
+copy (
+select * from ml_evaluation me 
+) to 'D:\Dev\export\20221122\ml_evaluation.tsv' csv delimiter E'\t' header;
+
+
+select
+'~' sel, (case when me.result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades,
+me.bettype, me.kumiban, me.resultno, me.modelno, me.patternid, me.pattern,
+(me.hitamt-me.betamt) incamt, me.betcnt, me.incomerate::double precision incrate,
+me.hitrate::double precision, me.bal_pluscnt,
+'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor,
+me.pr_bestmin, me.pr_bestmax, mre.lpr_bestmin, mre.lpr_bestmax, mre.rpr_bestmin, mre.rpr_bestmax
+from ml_evaluation me, ml_range_evaluation mre
+where me.resultno = mre.resultno and me.result_type = mre.result_type and me.bettype = mre.bettype and me.kumiban = mre.kumiban and me.modelno = mre.modelno and me.patternid  = mre.patternid and me.pattern = mre.pattern
+and me.bettype = '1T' and me.kumiban = '1'
+and me.result_type = '1'
+and me.incomerate between 0 and 99
+and (me.modelno || '-' || me.patternid) in ('98080-turn+race')
+;
+
+
+select 
+  *
+from 
+(
+select 
+  me.result_type, 
+  me.bettype, 
+  me.kumiban,
+  me.modelno,
+  me.patternid, 
+  row_number() over (partition by me.result_type, me.bettype, me.kumiban, me.modelno order by (betcnt::float / t_betcnt::float)::numeric(5,2) desc ) as ranking,
+  ptnnum, t_ptnnum,
+ (betcnt::float / nullif(ptnnum::float,0) )::numeric(10,3) ptnbetcnt,
+ (t_betcnt::float / nullif(t_ptnnum::float,0) )::numeric(10,3) t_ptnbetcnt,
+  betcnt,  t_betcnt,  (betcnt::float / t_betcnt::float)::numeric(5,2) p_betrate,
+  incamt, t_incamt,
+  hitrate, t_hitrate,
+  incrate, t_incrate,
+  exprate, t_exprate,
+  prbetcnt, t_prbetcnt,
+  princamt, t_princamt,
+  prhitrate, t_prhitrate,
+  princrate, t_princrate,
+  borbetcnt, t_borbetcnt,
+  borincamt, t_borincamt,
+  borhitrate, t_borhitrate,
+  borincrate, t_borincrate
+from 
+(select 
+  result_type, bettype, kumiban, modelno, patternid, 
+  count(distinct pattern) ptnnum,  
+  (sum(betcnt) / nullif(count(distinct pattern),0)) ptnbetcnt,
+  sum(betcnt) betcnt,
+  (sum(hitamt) - sum(betamt)) incamt,
+  (sum(hitcnt)::float / sum(betcnt)::float)::numeric(10,2) hitrate,
+  (sum(hitamt)::float / sum(betamt)::float)::numeric(10,2) incrate,
+  avg(hodds_median * hitrate)::numeric(10,2) exprate,
+  avg(hodds_mean)::numeric(10,2) avg_hoddsmean,
+  avg(hodds_max)::numeric(10,2) avg_hoddsmax,
+  avg(hodds_stddev)::numeric(10,2) avg_hoddsstddev,
+  sum(hitcnt) hitcnt,
+  sum(betamt) betamt,
+  sum(hitamt) hitamt,
+  sum(pr_betcnt) prbetcnt,
+  sum(pr_betamt) prbetamt,
+  sum(pr_hitcnt) prhitcnt,
+  sum(pr_hitamt) prhitamt,
+  (sum(pr_hitamt) - sum(pr_betamt)) princamt,
+  (sum(pr_hitcnt)::float / sum(pr_betcnt)::float)::numeric(10,2) prhitrate,
+  (sum(pr_hitamt)::float / sum(pr_betamt)::float)::numeric(10,2) princrate,
+  sum(bor_betcnt) borbetcnt,
+  sum(bor_betamt) borbetamt,
+  sum(bor_hitcnt) borhitcnt,
+  sum(bor_hitamt) borhitamt,
+  (sum(bor_hitamt) - sum(bor_betamt)) borincamt,
+  (sum(bor_hitcnt)::float / sum(bor_betcnt)::float)::numeric(10,2) borhitrate,
+  (sum(bor_hitamt)::float / sum(bor_betamt)::float)::numeric(10,2) borincrate,
+  avg( (bal_slope[0]+bal_slope[1]+bal_slope[2]) / 3 )::numeric(7,2)  balslope_avg
+from ml_evaluation ev
+where cardinality(balance) = 3
+      and (hitamt - betamt) > 0
+group by result_type, bettype, kumiban, modelno, patternid
+) me,
+    (select 
+  result_type, bettype, kumiban, modelno, patternid, 
+  count(distinct pattern) t_ptnnum,  
+  (sum(betcnt) / nullif(count(distinct pattern),0)) t_ptnbetcnt,
+  sum(betcnt) t_betcnt,
+  (sum(hitamt) - sum(betamt)) t_incamt,
+  (sum(hitcnt)::float / sum(betcnt)::float)::numeric(10,2) t_hitrate,
+  (sum(hitamt)::float / sum(betamt)::float)::numeric(10,2) t_incrate,
+  avg(hodds_median * hitrate)::numeric(10,2) t_exprate,
+  avg(hodds_mean)::numeric(10,2) t_avg_hoddsmean,
+  avg(hodds_max)::numeric(10,2) t_avg_hoddsmax,
+  avg(hodds_stddev)::numeric(10,2) t_avg_hoddsstddev,
+  sum(hitcnt) t_hitcnt,
+  sum(betamt) t_betamt,
+  sum(hitamt) t_hitamt,
+  sum(pr_betcnt) t_prbetcnt,
+  sum(pr_betamt) t_prbetamt,
+  sum(pr_hitcnt) t_prhitcnt,
+  sum(pr_hitamt) t_prhitamt,
+  (sum(pr_hitamt) - sum(pr_betamt)) t_princamt,
+  (sum(pr_hitcnt)::float / sum(pr_betcnt)::float)::numeric(10,2) t_prhitrate,
+  (sum(pr_hitamt)::float / sum(pr_betamt)::float)::numeric(10,2) t_princrate,
+  sum(bor_betcnt) t_borbetcnt,
+  sum(bor_betamt) t_borbetamt,
+  sum(bor_hitcnt) t_borhitcnt,
+  sum(bor_hitamt) t_borhitamt,
+  (sum(bor_hitamt) - sum(bor_betamt)) t_borincamt,
+  (sum(bor_hitcnt)::float / sum(bor_betcnt)::float)::numeric(10,2) t_borhitrate,
+  (sum(bor_hitamt)::float / sum(bor_betamt)::float)::numeric(10,2) t_borincrate,
+  avg( (bal_slope[0]+bal_slope[1]+bal_slope[2]) / 3 )::numeric(7,2)  t_balslope_avg
+from ml_evaluation ev
+where cardinality(balance) = 3
+group by result_type, bettype, kumiban, modelno, patternid
+) tme
+where
+  me.result_type  = tme.result_type and me.patternid  = tme.patternid and me.bettype = tme.bettype and me.kumiban = tme.kumiban and me.modelno = tme.modelno 
+  and me.result_type = '1'  
+  and me.modelno::int = 99100
+--  and hodds_max < 100
+--  and me.bettype = '3T' and me.kumiban = '132'
+order by 
+  result_type, 
+  bettype, 
+  kumiban,
+  betcnt desc -- 흑자투표수
+--  betcnt desc
+--p_ptnnumrate desc
+-- p_ptnbetcnt desc
+--p_incamtrate desc
+--incamt_stb desc
+-- hitrate desc
+) ranked
+where 
+  ranked.ranking between 1 and 10 -- 상위 10개씩
+;
+
+
+
+
+select bal_slope from ml_evaluation where resultno = '683';
 
 -- 着順1,2,3の投票数・的中率調査
 select

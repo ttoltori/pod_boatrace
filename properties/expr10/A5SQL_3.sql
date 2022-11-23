@@ -1,4 +1,7 @@
-﻿-- evaluation 
+﻿
+
+
+-- evaluation 
 select
   -- 'none' grp,
   ev.bettype, ev.kumiban, 

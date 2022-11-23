@@ -13,6 +13,12 @@ public enum ResultType {
 	/** simulation step 1 SG (個別実験）*/
 	_21("21"),
 
+	/** simulation step 1 ip (個別実験） 実験毎にディレクトリ生成*/
+	_3("3"),
+	
+	/** simulation step 1 SG (個別実験）*/
+	_31("31"),
+
 	/** simulation step 1 ip,SG  (一括実験） */
 	_4("4"),
 

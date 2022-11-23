@@ -13,6 +13,8 @@ public class EvaluationLoaderFactory {
 			return new EvaluationSimulLoaderBork();
 		} else if (loaderType.equals("EvaluationSimulLoaderPr")) {
 			return new EvaluationSimulLoaderPr();
+		} else if (loaderType.equals("EvaluationSimulLoaderPtnId")) {
+			return new EvaluationSimulLoaderPtnId();
 		} else {
 			return new EvaluationSimulExcelLoader();
 		}
