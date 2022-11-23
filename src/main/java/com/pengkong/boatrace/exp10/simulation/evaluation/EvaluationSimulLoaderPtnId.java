@@ -80,7 +80,7 @@ public class EvaluationSimulLoaderPtnId extends AbstractEvaluationLoader {
 		}
 		sql = sql.replace("{factor}", prop.getString("factor"));
 		sql = sql.replace("{limit}", prop.getString("limit"));
-		sql = sql.replace("{custom}", prop.getString(""));
+		sql = sql.replace("{custom}", prop.getString("custom"));
 		
 		HashMap<String, String> mapParam = new HashMap<>();
 		mapParam.put("sql", sql);
