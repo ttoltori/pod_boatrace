@@ -1,4 +1,7 @@
-﻿select
+﻿delete from ml_evaluation where resultno = '272248';
+
+
+select
 	'~' sel,
 	(case
 		when me2.result_type = '1' then 'ip,G3'
@@ -138,8 +141,9 @@ where me.result_type = sp2.result_type and me.bettype = sp2.bettype and me.kumib
 
 
 	  
-	  
-	  insert into st_patternid 
+select distinct result_type from st_patternid sp;
+
+insert into st_patternid 
 select
   * 
 from
@@ -164,7 +168,7 @@ from
 		  sum(betamt) betamt,
 		  sum(hitamt) hitamt
 		from ml_evaluation me
-		where result_type = '1'
+		where result_type = '11'
 		  and incomerate between 1.01 and 99
 		group by result_type, bettype, kumiban, patternid, modelno
 	  ) pl,
@@ -176,7 +180,7 @@ from
 		  sum(betamt) betamt,
 		  sum(hitamt) hitamt
 		from ml_evaluation me
-		where result_type = '1'
+		where result_type = '11'
 		group by result_type, bettype, kumiban, patternid, modelno
 		) tot
 	where pl.result_type = tot.result_type and pl.bettype = tot.bettype 

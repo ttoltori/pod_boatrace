@@ -57,8 +57,8 @@ public class EvaluationSimulLoaderPtnId extends AbstractEvaluationLoader {
 		sql = sql.replace("{fromYmd}", tokenTerm[0]);
 		sql = sql.replace("{toYmd}", tokenTerm[1]);
 
-		sql = sql.replaceAll("\\{bettype\\}", prop.getString("bettype"));
-		sql = sql.replaceAll("\\{kumiban\\}", prop.getString("kumiban"));
+		sql = sql.replace("{bettype}", prop.getString("bettype"));
+		// sql = sql.replaceAll("\\{kumiban\\}", prop.getString("kumiban"));
 		String incr = prop.getString("incr");
 		if (!incr.contains(Delimeter.WAVE.getValue())) {
 			throw new IllegalStateException("incrは「~」で分けて表現してください。");
@@ -72,9 +72,9 @@ public class EvaluationSimulLoaderPtnId extends AbstractEvaluationLoader {
 		}
 
 		if (prop.getString("grade_type").equals("ip")) {
-			sql = sql.replaceAll("\\{result_type\\}", "1");
+			sql = sql.replace("{result_type}", "1");
 		} else if (prop.getString("grade_type").equals("SG")) {
-			sql = sql.replaceAll("\\{result_type\\}", "11");	
+			sql = sql.replace("{result_type}", "11");	
 		} else {
 			throw new IllegalStateException("undefined grade type.");
 		}

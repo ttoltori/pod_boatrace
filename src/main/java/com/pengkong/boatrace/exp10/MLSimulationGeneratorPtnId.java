@@ -21,39 +21,53 @@ public class MLSimulationGeneratorPtnId extends MLSimulationGenerator {
 		String[] factorToken = prop.getString("factor").split(Delimeter.COMMA.getValue());
 		String[] limitToken = prop.getString("limit").split(Delimeter.COMMA.getValue());
 		String[] gradeTypeToken = prop.getString("grade_type").split(Delimeter.COMMA.getValue());
+		String[] customToken = prop.getString("custom").split(Delimeter.COMMA.getValue());
 		for (String term : termToken) {
 			for (String betType : betTypeToken) {
 				for (String incr : incrToken) {
 					for (String factor : factorToken) {
 						for (String gradeType : gradeTypeToken) {
 							for (String limit : limitToken) {
-								prop.putProperty("term", term);
-								prop.putProperty("bettype", betType);
-								prop.putProperty("incr", incr);
-								prop.putProperty("factor", factor);
-								prop.putProperty("grade_type", gradeType);
-								prop.putProperty("limit", limit);
-								preProcess();
-								String evaluationsId = String.join(Delimeter.UNDERBAR.getValue(), exNo, betType,
-										prop.getString("kumiban"), factor, 
-										prop.getString("group_sql_id", "x"), term, prop.getString("result_type"),
-										gradeType, limit, incr);
-								prop.putProperty("evaluations_id", evaluationsId);
+								for (String custom : customToken) {
+									prop.putProperty("term", term);
+									prop.putProperty("bettype", betType);
+									prop.putProperty("incr", incr);
+									prop.putProperty("factor", factor);
+									prop.putProperty("grade_type", gradeType);
+									prop.putProperty("limit", limit);
+									if (custom.equals("all")) {
+										prop.putProperty("custom", "true");
+									} else if (custom.equals("wkall")) {
+										prop.putProperty("custom", "patternid like '%wk%'");
+									} else if (custom.equals("wk123")) {
+										prop.putProperty("custom", "patternid = 'wk123'");
+									}
+									
+									preProcess();
+									String evaluationsId = String.join(Delimeter.UNDERBAR.getValue(), exNo, 
+											betType,
+											//prop.getString("kumiban"),
+											"kumiban",
+											factor, 
+											prop.getString("group_sql_id", "x"), 
+											prop.getString("result_type"),
+											gradeType, limit, incr, custom, term);
+									prop.putProperty("evaluations_id", evaluationsId);
 
-								try {
-									executeSuper(exNo);
+									try {
+										executeSuper(exNo);
 
-									// evalustion内訳を出力
-									//simulationCreator.getEvLoader().printConsole();
+										// evalustion内訳を出力
+										//simulationCreator.getEvLoader().printConsole();
 
-								} catch (WarningException e) {
-									logger.warn(evaluationsId + " Warining " + e.getMessage());
-								} catch (Exception e) {
-									logger.error(evaluationsId + " Exception " + e.getMessage(), e);
-									throw e;
+									} catch (WarningException e) {
+										logger.warn(evaluationsId + " Warining " + e.getMessage());
+									} catch (Exception e) {
+										logger.error(evaluationsId + " Exception " + e.getMessage(), e);
+										throw e;
+									}
+									afterProcess();
 								}
-								afterProcess();
-
 							}
 						}
 					}

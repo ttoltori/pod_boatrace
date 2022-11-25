@@ -176,6 +176,8 @@ public class ResultGraphBuilder {
 				// 임시 20220815
 				dirExResult = dirAllResult + prop.getString("grade_type") // + "_" + prop.getString("models") 
 						 + "/" + stat.statBettype + "/" + stat.kumiban + "/";
+				
+				prop.putProperty("evaluations_id", prop.getString("evaluations_id").replace("kumiban", stat.kumiban));
 				String filePathCommon = dirExResult + prop.getString("evaluations_id");
 /*				
 				String.join("_",

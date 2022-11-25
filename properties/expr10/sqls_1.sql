@@ -818,7 +818,9 @@ BEGIN FPI-3
 		     row_number() over (partition by result_type, bettype, kumiban order by {factor} desc) as ranking,
 		     *
 		   from st_patternid sp
-		   where {custom}
+		   where result_type = '{result_type}' 
+		     and bettype = '{bettype}'
+		     and {custom}
 	   ) tmp
 	   where ranking <= {limit}
 	) sp2

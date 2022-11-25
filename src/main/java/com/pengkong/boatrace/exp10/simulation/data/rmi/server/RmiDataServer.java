@@ -21,9 +21,9 @@ public class RmiDataServer {
 	}
 	
 	public static void main(String[] args) {
-		String propertyFilepath = "C:/Dev/workspace/Oxygen/pod_boatrace/properties/expr10/expr10.properties";
+		//String propertyFilepath = "C:/Dev/workspace/Oxygen/pod_boatrace/properties/expr10/expr10.properties";
 		
-		//String propertyFilepath = args[0];
+		String propertyFilepath = args[0];
 		
 		try {
 			MLPropertyUtil prop = MLPropertyUtil.getInstance();
