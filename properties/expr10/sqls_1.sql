@@ -801,7 +801,7 @@ BEGIN FPI-2
 	  and me2.incomerate between {incrmin} and {incrmax}
 END
 
-#FPI-2를 전bettype,kumiban한번에 취득. 
+#FPI-2를 전kumiban한번에 취득. 
 BEGIN FPI-3
 	select
 	    '~' sel, (case when me.result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
@@ -820,6 +820,35 @@ BEGIN FPI-3
 		   from st_patternid sp
 		   where result_type = '{result_type}' 
 		     and bettype = '{bettype}'
+		     and {custom}
+	   ) tmp
+	   where ranking <= {limit}
+	) sp2
+	where me.result_type = sp2.result_type and me.bettype = sp2.bettype and me.kumiban = sp2.kumiban
+	  and me.patternid = sp2.patternid and me.modelno = sp2.modelno 
+	  and me.incomerate between {incrmin} and {incrmax}
+END
+
+#FPI-2를 bettype,kumiban별로 취득. 
+BEGIN FPI-4
+	select
+	    '~' sel, (case when me.result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+	    me.bettype, me.kumiban, me.resultno, me.modelno, me.patternid, me.pattern, 
+	    (me.hitamt-me.betamt) incamt, me.betcnt, me.incomerate::double precision incrate,
+	    me.hitrate::double precision, me.bal_pluscnt,
+	    'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+	from ml_evaluation me, 
+	(
+	   select 
+	     *
+	   from (
+		   select
+		     row_number() over (partition by result_type, bettype, kumiban order by {factor} desc) as ranking,
+		     *
+		   from st_patternid sp
+		   where result_type = '{result_type}' 
+		     and bettype = '{bettype}'
+		     and kumiban = '{kumiban}'
 		     and {custom}
 	   ) tmp
 	   where ranking <= {limit}

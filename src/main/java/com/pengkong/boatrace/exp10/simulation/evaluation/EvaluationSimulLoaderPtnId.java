@@ -58,6 +58,7 @@ public class EvaluationSimulLoaderPtnId extends AbstractEvaluationLoader {
 		sql = sql.replace("{toYmd}", tokenTerm[1]);
 
 		sql = sql.replace("{bettype}", prop.getString("bettype"));
+		sql = sql.replace("{kumiban}", prop.getString("kumiban"));
 		// sql = sql.replaceAll("\\{kumiban\\}", prop.getString("kumiban"));
 		String incr = prop.getString("incr");
 		if (!incr.contains(Delimeter.WAVE.getValue())) {
@@ -99,6 +100,9 @@ public class EvaluationSimulLoaderPtnId extends AbstractEvaluationLoader {
 			// Evaluationファイル１行生成
 			Evaluation eval = EvaluationHelper.createEvaluation(rec);
 			
+			eval =  EvaluationHelper.postFixRangeSelector(eval, prop.getString("range_selector"), prop.getString("bonus_pr"),
+					prop.getString("bonus_bor"), prop.getString("bonus_bork"), prop.getString("bonus_borkbor"));
+
 			String unkqueKey = eval.getUniqueKey();
 			// 重複あり
 			if (mapDuplicateCheck.containsKey(unkqueKey)) {

@@ -46,8 +46,8 @@ public class MLSimulationGeneratorPtnId extends MLSimulationGenerator {
 									preProcess();
 									String evaluationsId = String.join(Delimeter.UNDERBAR.getValue(), exNo, 
 											betType,
-											//prop.getString("kumiban"),
-											"kumiban",
+											prop.getString("kumiban"),
+											//"kumiban",
 											factor, 
 											prop.getString("group_sql_id", "x"), 
 											prop.getString("result_type"),
@@ -58,7 +58,7 @@ public class MLSimulationGeneratorPtnId extends MLSimulationGenerator {
 										executeSuper(exNo);
 
 										// evalustion内訳を出力
-										//simulationCreator.getEvLoader().printConsole();
+										simulationCreator.getEvLoader().printConsole();
 
 									} catch (WarningException e) {
 										logger.warn(evaluationsId + " Warining " + e.getMessage());

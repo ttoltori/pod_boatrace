@@ -99,11 +99,6 @@ public class ResultGraphBuilder {
 				continue;
 			}
 
-//			// 2022/09/18 一時制限。graph数を減らすために
-//			if (stat.evaluation.getBalPluscnt() < 3) {
-//				continue;
-//			}
-			
 			List<Chart> listChart = new ArrayList<>();
 			
 			// 実験番号・パタン別の結果ディレクトリ
@@ -177,7 +172,7 @@ public class ResultGraphBuilder {
 				dirExResult = dirAllResult + prop.getString("grade_type") // + "_" + prop.getString("models") 
 						 + "/" + stat.statBettype + "/" + stat.kumiban + "/";
 				
-				prop.putProperty("evaluations_id", prop.getString("evaluations_id").replace("kumiban", stat.kumiban));
+				//prop.putProperty("evaluations_id", prop.getString("evaluations_id").replace("kumiban", stat.kumiban));
 				String filePathCommon = dirExResult + prop.getString("evaluations_id");
 /*				
 				String.join("_",
