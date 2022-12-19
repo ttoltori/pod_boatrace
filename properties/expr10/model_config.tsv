@@ -162,15 +162,22 @@ model_no	model_start_ymd	model_end_ymd	class_rank1	class_rank2	class_rank3	algor
 99099	20211201	20211201	rgsim-1T-1	x	x	rg_lgbm-1_py	x	x	rg_sim_1	x	x	arff_rgsim_1	clf_rgsim_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	180	180
 # 직전정보를 제외한 featureset으로 99063을 대신할 모델																			
 # online
-99100	20220901	20221031	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99080	20220901	20221031	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en	en	en	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99083	20220901	20221031	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw	nw	nw	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99102	20220901	20221031	r12-all	x	x	cf_lgbm-1_py	x	x	en_nw_ext_25	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99103	20220901	20221031	r123-all	x	x	cf_lgbm-1_py	x	x	en_nw_ext_25	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99301	20220601	20221031	r1-12x	x	x	cf_lgbm-1_py	x	x	bork_25	x	x	arff_2	clf_2	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	363	30
-# class_weight=balanced
-98100	20180601	20221101	r1-123456	r2-123456	r3-123456	cf_lgbm-6_py	cf_lgbm-6_py	cf_lgbm-6_py	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-98080	20180601	20221101	r1-123456	r2-123456	r3-123456	cf_lgbm-6_py	cf_lgbm-6_py	cf_lgbm-6_py	en	en	en	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-98083	20180601	20221101	r1-123456	r2-123456	r3-123456	cf_lgbm-6_py	cf_lgbm-6_py	cf_lgbm-6_py	nw	nw	nw	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-98102	20180601	20221101	r12-all	x	x	cf_lgbm-6_py	x	x	en_nw_ext_25	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-98103	20180601	20221101	r123-all	x	x	cf_lgbm-6_py	x	x	en_nw_ext_25	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
+99100	20221106	20221130	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
+99080	20221106	20221130	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en	en	en	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
+99083	20221106	20221130	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw	nw	nw	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
+99102	20221106	20221130	r12-all	x	x	cf_lgbm-1_py	x	x	en_nw_ext_25	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
+99103	20221106	20221130	r123-all	x	x	cf_lgbm-1_py	x	x	en_nw_ext_25	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
+#99201	20220401	20220901	r1-pork	x	x	cf_lgbm-1_py	x	x	pork_25	x	x	arff_prok_99100	clf_prok_99100	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	363	363	30
+#99301	20220601	20221031	r1-12x	x	x	cf_lgbm-1_py	x	x	bork_25	x	x	arff_2	clf_2	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	363	30
+# class_weight=balanced																			
+98100	20221106	20221130	r1-123456	r2-123456	r3-123456	cf_lgbm-6_py	cf_lgbm-6_py	cf_lgbm-6_py	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
+98080	20221106	20221130	r1-123456	r2-123456	r3-123456	cf_lgbm-6_py	cf_lgbm-6_py	cf_lgbm-6_py	en	en	en	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
+98083	20221106	20221130	r1-123456	r2-123456	r3-123456	cf_lgbm-6_py	cf_lgbm-6_py	cf_lgbm-6_py	nw	nw	nw	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
+98102	20221106	20221130	r12-all	x	x	cf_lgbm-6_py	x	x	en_nw_ext_25	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
+98103	20221106	20221130	r123-all	x	x	cf_lgbm-6_py	x	x	en_nw_ext_25	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
+# 7년전부터 시작해서 데이터 누적. 3개월단위 갱신																			
+97100	20180601	20221130	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	no	no	sanrentanprize	2555	90
+97080	20180601	20221130	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en	en	en	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	no	no	sanrentanprize	2555	90
+97083	20180601	20221130	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw	nw	nw	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	no	no	sanrentanprize	2555	90
+97102	20180601	20221130	r12-all	x	x	cf_lgbm-1_py	x	x	en_nw_ext_25	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	no	no	sanrentanprize	2555	90
+97103	20180601	20221130	r123-all	x	x	cf_lgbm-1_py	x	x	en_nw_ext_25	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	no	no	sanrentanprize	2555	90

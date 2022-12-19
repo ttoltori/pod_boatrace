@@ -44,7 +44,7 @@ public class ResultOddsRangePerformance2 extends AbstractRangePerformanceChart {
 		label = "L(" + rangeDto.getLrorBestmin() + "～" + rangeDto.getLrorBestmax() + ", " + rangeDto.getLrorBetcnt() + ", " + (cnvNull(rangeDto.getLrorHitamt()) - cnvNull(rangeDto.getLrorBetamt())) + ") ";
 		label += "(" + rangeDto.getLrorBetrate() + ", " + rangeDto.getLrorHitrate() + ", " + rangeDto.getLrorIncomerate() + ")  ";
 
-		label += "R(" + rangeDto.getRrorBestmin() + "～" + rangeDto.getRrorBestmax() + ", " + rangeDto.getRrorBetcnt() + ", " + (rangeDto.getRrorHitamt() - cnvNull(rangeDto.getRrorBetamt())) + ") ";
+		label += "R(" + rangeDto.getRrorBestmin() + "～" + rangeDto.getRrorBestmax() + ", " + rangeDto.getRrorBetcnt() + ", " + (cnvNull(rangeDto.getRrorHitamt()) - cnvNull(rangeDto.getRrorBetamt())) + ") ";
 		label += "(" + rangeDto.getRrorBetrate() + ", " + rangeDto.getRrorHitrate() + ", " + rangeDto.getRrorIncomerate() + ")";		
 		
 		return label;

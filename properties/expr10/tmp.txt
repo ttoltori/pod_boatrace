@@ -1,3 +1,454 @@
+ml_result 4061
+ml_result 4062
+ml_result 4063
+ml_result 4064
+ml_result 4065
+ml_result 4066
+ml_result 4067
+ml_result 4068
+ml_result 4069
+ml_result 4070
+ml_result 4071
+ml_result 4072
+ml_result 4073
+ml_result 4074
+ml_result 4075
+ml_result 4076
+ml_result 4077
+ml_result 4078
+ml_result 4079
+ml_result 4080
+ml_result 4081
+ml_result 4082
+ml_result 4083
+ml_result 4084
+ml_result 4085
+ml_result 4086
+ml_result 4087
+ml_result 4088
+ml_result 4089
+ml_result 4090
+ml_result 4091
+ml_result 4092
+ml_result 4093
+ml_result 4094
+ml_result 4095
+ml_result 4096
+ml_result 4097
+ml_result 4098
+ml_result 4099
+ml_result 4100
+ml_result 4101
+ml_result 4102
+ml_result 4103
+ml_result 4104
+ml_result 4105
+ml_result 4106
+ml_result 4107
+ml_result 4108
+ml_result 4109
+ml_result 4110
+ml_result 4111
+ml_result 4112
+ml_result 4113
+ml_result 4114
+ml_result 4115
+ml_result 4116
+ml_result 4117
+ml_result 4118
+ml_result 4119
+ml_result 4120
+ml_result 4121
+ml_result 4122
+ml_result 4123
+ml_result 4124
+ml_result 4125
+ml_result 4126
+ml_result 4127
+ml_result 4128
+ml_result 4129
+ml_result 4130
+ml_result 4131
+ml_result 4132
+ml_result 4133
+ml_result 4134
+ml_result 4135
+ml_result 4136
+ml_result 4137
+ml_result 4138
+ml_result 4139
+ml_result 4140
+ml_result 4141
+ml_result 4142
+ml_result 4143
+ml_result 4144
+ml_result 4145
+ml_result 4146
+ml_result 4147
+ml_result 4148
+ml_result 4149
+ml_result 4150
+ml_result 4151
+ml_result 4152
+ml_result 4153
+ml_result 4154
+ml_result 4155
+ml_result 4156
+ml_result 4157
+ml_result 4158
+ml_result 4159
+ml_result 4160
+
+
+
+
+ml_result 3861
+ml_result 3862
+ml_result 3863
+ml_result 3864
+ml_result 3865
+ml_result 3866
+ml_result 3867
+ml_result 3868
+ml_result 3869
+ml_result 3870
+ml_result 3871
+ml_result 3872
+ml_result 3873
+ml_result 3874
+ml_result 3875
+ml_result 3876
+ml_result 3877
+ml_result 3878
+ml_result 3879
+ml_result 3880
+ml_result 3881
+ml_result 3882
+ml_result 3883
+ml_result 3884
+ml_result 3885
+ml_result 3886
+ml_result 3887
+ml_result 3888
+ml_result 3889
+ml_result 3890
+ml_result 3891
+ml_result 3892
+ml_result 3893
+ml_result 3894
+ml_result 3895
+ml_result 3896
+ml_result 3897
+ml_result 3898
+ml_result 3899
+ml_result 3900
+ml_result 3901
+ml_result 3902
+ml_result 3903
+ml_result 3904
+ml_result 3905
+ml_result 3906
+ml_result 3907
+ml_result 3908
+ml_result 3909
+ml_result 3910
+
+ml_result 3911
+ml_result 3912
+ml_result 3913
+ml_result 3914
+ml_result 3915
+ml_result 3916
+ml_result 3917
+ml_result 3918
+ml_result 3919
+ml_result 3920
+ml_result 3921
+ml_result 3922
+ml_result 3923
+ml_result 3924
+ml_result 3925
+ml_result 3926
+ml_result 3927
+ml_result 3928
+ml_result 3929
+ml_result 3930
+ml_result 3931
+ml_result 3932
+ml_result 3933
+ml_result 3934
+ml_result 3935
+ml_result 3936
+ml_result 3937
+ml_result 3938
+ml_result 3939
+ml_result 3940
+ml_result 3941
+ml_result 3942
+ml_result 3943
+ml_result 3944
+ml_result 3945
+ml_result 3946
+ml_result 3947
+ml_result 3948
+ml_result 3949
+ml_result 3950
+ml_result 3951
+ml_result 3952
+ml_result 3953
+ml_result 3954
+ml_result 3955
+ml_result 3956
+ml_result 3957
+ml_result 3958
+ml_result 3959
+ml_result 3960
+
+
+ml_result 3961
+ml_result 3962
+ml_result 3963
+ml_result 3964
+ml_result 3965
+ml_result 3966
+ml_result 3967
+ml_result 3968
+ml_result 3969
+ml_result 3970
+ml_result 3971
+ml_result 3972
+ml_result 3973
+ml_result 3974
+ml_result 3975
+ml_result 3976
+ml_result 3977
+ml_result 3978
+ml_result 3979
+ml_result 3980
+ml_result 3981
+ml_result 3982
+ml_result 3983
+ml_result 3984
+ml_result 3985
+ml_result 3986
+ml_result 3987
+ml_result 3988
+ml_result 3989
+ml_result 3990
+ml_result 3991
+ml_result 3992
+ml_result 3993
+ml_result 3994
+ml_result 3995
+ml_result 3996
+ml_result 3997
+ml_result 3998
+ml_result 3999
+ml_result 4000
+ml_result 4001
+ml_result 4002
+ml_result 4003
+ml_result 4004
+ml_result 4005
+ml_result 4006
+ml_result 4007
+ml_result 4008
+ml_result 4009
+ml_result 4010
+
+ml_result 4011
+ml_result 4012
+ml_result 4013
+ml_result 4014
+ml_result 4015
+ml_result 4016
+ml_result 4017
+ml_result 4018
+ml_result 4019
+ml_result 4020
+ml_result 4021
+ml_result 4022
+ml_result 4023
+ml_result 4024
+ml_result 4025
+ml_result 4026
+ml_result 4027
+ml_result 4028
+ml_result 4029
+ml_result 4030
+ml_result 4031
+ml_result 4032
+ml_result 4033
+ml_result 4034
+ml_result 4035
+ml_result 4036
+ml_result 4037
+ml_result 4038
+ml_result 4039
+ml_result 4040
+ml_result 4041
+ml_result 4042
+ml_result 4043
+ml_result 4044
+ml_result 4045
+ml_result 4046
+ml_result 4047
+ml_result 4048
+ml_result 4049
+ml_result 4050
+ml_result 4051
+ml_result 4052
+ml_result 4053
+ml_result 4054
+ml_result 4055
+ml_result 4056
+ml_result 4057
+ml_result 4058
+ml_result 4059
+ml_result 4060
+
+
+
+
+
+
+ml_classify 97100
+
+ml_classify 97080
+ml_classify 97103
+
+ml_classify 97083
+ml_classify 97102
+
+
+python C:/Dev/workspace/Oxygen/py_boatrace/boatrace/classification/lgbm/BoatLGBMClassifierTrainer.py boosting_type=gbdt,learning_rate=0.1 D:/Dev/experiment/expr10/arff/97080_rank1.csv D:/Dev/experiment/expr10/model_release/97080/1/nopattern/97080_nopattern_20180531_rank1.model en1,en2,en3,en4,en5,en6,class category,category,category,category,category,category,category
+
+https://teams.microsoft.com/l/meetup-join/19%3ameeting_ODdiNjU2MDQtODZmOC00YzI3LTgzMzktZjQyNzM4ZTZiNjI2%40thread.v2/0?context=%7b%22Tid%22%3a%2272cc4624-32b4-4dab-b80a-8563e559bd82%22%2c%22Oid%22%3a%22b62db607-d230-4eba-ae79-1f39f12bcb34%22%7d
+
+ml_simulation_ptnid 272268
+ml_simulation_ptnid 272269
+ml_simulation_ptnid 272270
+ml_simulation_ptnid 272271
+ml_simulation_ptnid 272272
+ml_simulation_ptnid 272273
+ml_simulation_ptnid 272274
+ml_simulation_ptnid 272275
+
+ml_simulation_ptnid 272276
+ml_simulation_ptnid 272277
+ml_simulation_ptnid 272278
+ml_simulation_ptnid 272279
+ml_simulation_ptnid 272280
+ml_simulation_ptnid 272281
+ml_simulation_ptnid 272282
+
+ml_simulation_ptnid 272283
+ml_simulation_ptnid 272284
+ml_simulation_ptnid 272285
+ml_simulation_ptnid 272286
+ml_simulation_ptnid 272287
+
+
+
+
+ml_simulation_ptnid 272268
+ml_simulation_ptnid 272271
+ml_simulation_ptnid 272274
+ml_simulation_ptnid 272277
+
+ml_simulation_ptnid 272269
+ml_simulation_ptnid 272272
+ml_simulation_ptnid 272275
+
+ml_simulation_ptnid 272273
+ml_simulation_ptnid 272270
+ml_simulation_ptnid 272276
+
+
+
+
+ml_simulation_ptnid 272258
+ml_simulation_ptnid 272261
+ml_simulation_ptnid 272264
+
+ml_simulation_ptnid 272259
+ml_simulation_ptnid 272262
+ml_simulation_ptnid 272265
+
+ml_simulation_ptnid 272260
+ml_simulation_ptnid 272263
+ml_simulation_ptnid 272267
+ml_simulation_ptnid 272266
+
+
+
+---------- 99080 rank1
+Training set score: 0.6773
+Test set score: 0.5386
+              precision    recall  f1-score   support
+
+           1       0.60      0.87      0.71     44398
+           2       0.33      0.20      0.25     11478
+           3       0.30      0.13      0.18     10108
+           4       0.25      0.10      0.14      8054
+           5       0.20      0.06      0.10      4426
+           6       0.22      0.05      0.08      2551
+
+    accuracy                           0.54     81015
+   macro avg       0.32      0.24      0.25     81015
+weighted avg       0.46      0.54      0.47     81015
+
+---------- 99080 rank2
+Training set score: 0.5256
+Test set score: 0.2527
+              precision    recall  f1-score   support
+
+           1       0.20      0.17      0.18     13859
+           2       0.30      0.41      0.34     20338
+           3       0.27      0.29      0.28     17148
+           4       0.23      0.21      0.22     13578
+           5       0.19      0.13      0.16      9554
+           6       0.18      0.12      0.14      6538
+
+    accuracy                           0.25     81015
+   macro avg       0.23      0.22      0.22     81015
+weighted avg       0.24      0.25      0.24     81015
+
+---------- 99100 rank1
+Training set score: 0.7788
+Test set score: 0.5513
+              precision    recall  f1-score   support
+
+           1       0.60      0.89      0.72     44398
+           2       0.36      0.22      0.27     11478
+           3       0.32      0.13      0.19     10108
+           4       0.29      0.10      0.15      8054
+           5       0.22      0.06      0.09      4426
+           6       0.21      0.05      0.08      2551
+
+    accuracy                           0.55     81015
+   macro avg       0.34      0.24      0.25     81015
+weighted avg       0.47      0.55      0.48     81015
+
+
+---------- 99100 rank2
+Training set score: 0.6912
+Test set score: 0.2644  
+              precision    recall  f1-score   support
+
+           1       0.20      0.16      0.18     13859
+           2       0.31      0.45      0.36     20338
+           3       0.28      0.30      0.29     17148
+           4       0.25      0.22      0.23     13578
+           5       0.21      0.13      0.16      9554
+           6       0.20      0.11      0.14      6538
+
+    accuracy                           0.26     81015
+   macro avg       0.24      0.23      0.23     81015
+weighted avg       0.25      0.26      0.25     81015
+
+
+
 ml_simulation_ptnid 272248
 ml_simulation_ptnid 272253
 ml_simulation_ptnid 272254

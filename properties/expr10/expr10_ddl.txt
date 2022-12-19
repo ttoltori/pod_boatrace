@@ -8,13 +8,19 @@ patternid varchar(20),
 modelno varchar(5),
 t_betcnt int,
 p_betcnt int,
-p_betrate double precision,
+t_hitcnt int,
+p_hitcnt int,
 t_incamt int,
 p_incamt int,
+p_betrate double precision,
 t_hitrate double precision,
 p_hitrate double precision,
 t_incrate double precision,
 p_incrate double precision,
+t_hmean double precision,
+p_hmean  double precision,
+t_hmeanrate double precision,
+p_hmeanrate  double precision
 );
 drop index if exists indexes_st_patternid;
 create index indexes_st_patternid on st_patternid (result_type, bettype, kumiban, patternid, modelno);

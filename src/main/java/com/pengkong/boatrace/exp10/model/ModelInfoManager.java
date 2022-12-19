@@ -269,7 +269,7 @@ public class ModelInfoManager {
 	
 	public static void main(String[] args) {
 		try {
-			MLPropertyUtil.getInstance().addFile("C:/Dev/workspace/Oxygen/pod_boatrace/properties/expr10/expr10.properties");
+			MLPropertyUtil.getInstance().addFile("C:/Dev/github/pod_boatrace/properties/expr10/expr10.properties");
 			
 			ModelInfoManager mfm = new ModelInfoManager();
 			mfm.saveModelProperties();

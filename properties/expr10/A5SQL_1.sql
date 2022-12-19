@@ -1,4 +1,111 @@
-﻿delete from ml_evaluation where resultno = '272248';
+﻿select count(1)
+from ml_classification mcb; 
+
+delete from ml_classification where ymd::int >= 20221106;
+
+
+delete from ml_evaluation where resultno::int between 272258 and 272267;
+
+select distinct result_type from ml_evaluation me;
+
+select distinct resultno::int from ml_evaluation_bk1 meb order by resultno::int;
+
+select min(resultno), max(resultno) from ml_evaluation me where result_type = '1'; 
+
+insert into ml_evaluation_bk1 select * from ml_evaluation where resultno::int between 3176 and 3695;
+delete from ml_evaluation where  resultno::int between 3176 and 3695;
+
+insert into ml_evaluation select * from ml_evaluation_bk1 where resultno::int between 1 and 648; 
+truncate st_patternid;
+
+select * from st_patternid sp 
+order by result_type, bettype, kumiban, p_hmean desc; 
+
+truncate st_patternid;
+
+insert into st_patternid
+select
+  *,  
+  (3 / (1/t_betcnt::float + 1/t_hitcnt::float + 1/t_incamt::float))::numeric(11,2) t_hmean,
+  (3 / (1/p_betcnt::float + 1/p_hitcnt::float + 1/p_incamt::float))::numeric(11,2) p_hmean,
+  (2 / (1/t_hitrate + 1/t_incrate))::numeric(5,2) t_hmeanrate, 
+  (3 / (1/p_betrate + 1/p_hitrate + 1/p_incrate))::numeric(5,2) p_hmeanrate
+from
+(
+	select
+	  pl.result_type, pl.bettype, pl.kumiban, pl.patternid, pl.modelno,
+	  tot.betcnt t_betcnt, 
+	  pl.betcnt p_betcnt, 
+	  tot.hitcnt t_hitcnt, 
+	  pl.hitcnt p_hitcnt, 
+	  (tot.hitamt - tot.betamt)/100 t_incamt, 
+	  (pl.hitamt - pl.betamt)/100 p_incamt, 
+	  (pl.betcnt::float / tot.betcnt::float)::numeric(5,2) p_betrate,
+	  (tot.hitcnt::float / tot.betcnt::float)::numeric(5,2) t_hitrate,
+	  (pl.hitcnt::float / pl.betcnt::float)::numeric(5,2) p_hitrate,
+	  (tot.hitamt::float / tot.betamt::float)::numeric(5,2) t_incrate,
+	  (pl.hitamt::float / pl.betamt::float)::numeric(5,2) p_incrate
+	from
+	  (
+		select
+		  result_type, bettype, kumiban, patternid, modelno,
+		  sum(betcnt) betcnt, 
+		  sum(hitcnt) hitcnt,
+		  sum(betamt) betamt,
+		  sum(hitamt) hitamt
+		from ml_evaluation me
+		where result_type = '11'
+		  and incomerate between 1.01 and 99
+		group by result_type, bettype, kumiban, patternid, modelno
+	  ) pl,
+	  (
+		select
+		  result_type, bettype, kumiban, patternid, modelno,
+		  sum(betcnt) betcnt, 
+		  sum(hitcnt) hitcnt,
+		  sum(betamt) betamt,
+		  sum(hitamt) hitamt
+		from ml_evaluation me
+		where result_type = '11'
+		group by result_type, bettype, kumiban, patternid, modelno
+		) tot
+	where pl.result_type = tot.result_type and pl.bettype = tot.bettype 
+	  and pl.kumiban = tot.kumiban and pl.patternid = tot.patternid 
+	  and pl.modelno = tot.modelno
+) tmp
+where p_hitrate <> 0 and p_betrate <> 0 and p_incrate <> 0  
+  and t_hitrate <> 0 and t_incrate <> 0
+  and p_betcnt <> 0 and p_hitcnt <> 0 and p_incamt <> 0
+  and t_betcnt <> 0 and t_hitcnt <> 0 and t_incamt <> 0
+  and ((1/t_betcnt::float + 1/t_hitcnt::float + 1/t_incamt::float)) <> 0
+  and ((1/p_betcnt::float + 1/p_hitcnt::float + 1/p_incamt::float)) <> 0
+  and ((1/t_hitrate + 1/t_incrate)) <> 0
+  and ((1/p_betrate + 1/p_hitrate + 1/p_incrate)) <> 0
+ ;
+
+select * from st_patternid sp 
+where patternid like 'wk%'
+order by result_type, bettype, kumiban, harmean desc;
+
+
+create table tmp_st_patternid as
+select * from st_patternid sp;
+
+
+
+insert into st_patternid 
+select *, (3 / (1/p_betrate + 1/p_hitrate + 1/p_incrate))::numeric(5,2) from tmp_st_patternid where p_betrate > 0 and p_hitrate > 0;
+
+select * from tmp_st_patternid tsp where p_incrate = 0;
+
+select 1/1;
+
+ALTER TABLE st_patternid 
+ADD COLUMN harmean double precision;
+
+
+
+delete from ml_evaluation where resultno = '272248';
 
 
 select
@@ -143,51 +250,13 @@ where me.result_type = sp2.result_type and me.bettype = sp2.bettype and me.kumib
 	  
 select distinct result_type from st_patternid sp;
 
-insert into st_patternid 
-select
-  * 
-from
-(
-	select
-	  pl.result_type, pl.bettype, pl.kumiban, pl.patternid, pl.modelno,
-	  tot.betcnt t_betcnt, 
-	  pl.betcnt p_betcnt, 
-	  (pl.betcnt::float / tot.betcnt::float)::numeric(5,2) p_betrate,
-	  (tot.hitamt - tot.betamt) t_incamt,
-	  (pl.hitamt - pl.betamt) p_incamt,
-	  (tot.hitcnt::float / tot.betcnt::float)::numeric(5,2) t_hitrate,
-	  (pl.hitcnt::float / pl.betcnt::float)::numeric(5,2) p_hitrate,
-	  (tot.hitamt::float / tot.betamt::float)::numeric(5,2) t_incrate,
-	  (pl.hitamt::float / pl.betamt::float)::numeric(5,2) p_incrate
-	from
-	  (
-		select
-		  result_type, bettype, kumiban, patternid, modelno,
-		  sum(betcnt) betcnt, 
-		  sum(hitcnt) hitcnt,
-		  sum(betamt) betamt,
-		  sum(hitamt) hitamt
-		from ml_evaluation me
-		where result_type = '11'
-		  and incomerate between 1.01 and 99
-		group by result_type, bettype, kumiban, patternid, modelno
-	  ) pl,
-	  (
-		select
-		  result_type, bettype, kumiban, patternid, modelno,
-		  sum(betcnt) betcnt, 
-		  sum(hitcnt) hitcnt,
-		  sum(betamt) betamt,
-		  sum(hitamt) hitamt
-		from ml_evaluation me
-		where result_type = '11'
-		group by result_type, bettype, kumiban, patternid, modelno
-		) tot
-	where pl.result_type = tot.result_type and pl.bettype = tot.bettype 
-	  and pl.kumiban = tot.kumiban and pl.patternid = tot.patternid 
-	  and pl.modelno = tot.modelno
-) tmp
-;
+
+
+
+select 
+from ml_evaluation
+where 
+
 
 
 copy (

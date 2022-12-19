@@ -41,7 +41,7 @@ public class MLSimulationGeneratorPtnId extends MLSimulationGenerator {
 										prop.putProperty("custom", "patternid like '%wk%'");
 									} else if (custom.equals("wk123")) {
 										prop.putProperty("custom", "patternid = 'wk123'");
-									}
+									} 
 									
 									preProcess();
 									String evaluationsId = String.join(Delimeter.UNDERBAR.getValue(), exNo, 

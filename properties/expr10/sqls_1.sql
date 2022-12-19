@@ -857,3 +857,4 @@ BEGIN FPI-4
 	  and me.patternid = sp2.patternid and me.modelno = sp2.modelno 
 	  and me.incomerate between {incrmin} and {incrmax}
 END
+#		     and modelno in ('99080', '99100')
