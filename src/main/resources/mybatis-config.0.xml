@@ -88,6 +88,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
     <mapper resource="com/pengkong/boatrace/mybatis/mapper/MlPrEvaluationMapper.xml"/>
     <!-- 20221024 追加 -->
     <mapper resource="com/pengkong/boatrace/mybatis/mapper/MlPorkClassificationMapper.xml"/>
+    <!-- 20221220 追加 -->
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/MlTermEvaluationMapper.xml"/>
     
     <!-- 
     <mapper resource="com/pengkong/boatrace/mybatis/mapper/PowerAvgtimeBettypeMapper.xml"/>

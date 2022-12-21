@@ -1,3 +1,44 @@
+drop table if exists ml_term_evaluation;
+create table ml_term_evaluation (
+resultno varchar(6),
+modelno varchar(5),
+patternid varchar(20),
+pattern varchar(200),
+bettype varchar(30),
+kumiban varchar(30),
+termcnt int,
+pluscnt int,
+plusrate double precision,
+betcnt_min double precision,
+betcnt_max double precision,
+betcnt_mean double precision,
+betcnt_stddev double precision,
+betcnt_median double precision,
+inc_min double precision,
+inc_max double precision,
+inc_mean double precision,
+inc_stddev double precision,
+inc_median double precision,
+hitr_min double precision,
+hitr_max double precision,
+hitr_mean double precision,
+hitr_stddev double precision,
+hitr_median double precision,
+incr_min double precision,
+incr_max double precision,
+incr_mean double precision,
+incr_stddev double precision,
+incr_median double precision,
+result_type varchar(10),           -- 実験のタイプ 
+evaluations_id varchar(255)         -- simulationの場合のみ、関連group no
+);
+
+drop index if exists indexes_ml_term_evaluation;
+create index indexes_ml_term_evaluation on ml_term_evaluation (resultno, modelno, patternid, pattern, bettype, kumiban);
+drop index if exists indexes_ml_term_evaluation_evaluationsid;
+create index indexes_ml_term_evaluation_evaluationsid on ml_temr_evaluation (evaluations_id);
+
+
 -- patternid別に集計する t_; 当該patternid全体  p_当該patternid内の黒字のpatternの集計
 drop table if exists st_patternid;
 create table st_patternid (

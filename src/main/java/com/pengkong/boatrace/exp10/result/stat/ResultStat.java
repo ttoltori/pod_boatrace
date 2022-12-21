@@ -182,7 +182,7 @@ public class ResultStat {
 	public MlRangeEvaluation rangeEvaluation;
 	
 	public MlPrEvaluation prEvaluation;
-
+	
 	public ResultStat(String statBettype, String kumiban, String patternId, String pattern, int startBalance) {
 		this.statBettype = statBettype;
 		this.kumiban = kumiban;

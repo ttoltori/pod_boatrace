@@ -1,4 +1,10 @@
-﻿select count(1)
+﻿drop index if exists indexes_ml_term_evaluation;
+create index indexes_ml_term_evaluation on ml_term_evaluation (resultno, modelno, patternid, pattern, bettype, kumiban);
+drop index if exists indexes_ml_term_evaluation_evaluationsid;
+create index indexes_ml_term_evaluation_evaluationsid on ml_term_evaluation (evaluations_id);
+
+
+select count(1)
 from ml_classification mcb; 
 
 delete from ml_classification where ymd::int >= 20221106;

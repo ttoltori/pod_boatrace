@@ -77,12 +77,12 @@ public class TermTimelineOdds extends AbstractChart {
 		double[] yData2;
 
 		for (int i = 0; i < listUnit.size(); i++) {
-			if (listUnit.get(i).hitOddsMax > 0) {
+			//if (listUnit.get(i).hitOddsMax > 0) {
 				yList1.add(listUnit.get(i).hitOddsMax); // 的中odds max
-			}
-			if (listUnit.get(i).hitOddsrankMax > 0) {
+			//}
+			//if (listUnit.get(i).hitOddsrankMax > 0) {
 				yList2.add(listUnit.get(i).hitOddsrankMax); // 的中oddsrank max
-			}
+			//}
 		}
 
 		// 的中odds

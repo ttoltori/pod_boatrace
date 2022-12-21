@@ -36,7 +36,7 @@ public class TermTimelineHitrateIncomerate extends AbstractChart {
 
 	@Override
 	protected String createTitleLabel() {
-		String label = stat.termDays + "日別 的中率,収益率 ";
+		String label = stat.termDays + "日別的中率,収益率 ";
 		label += "(平均,中央,偏差)= ";
 		label += "的中率(" + desc3[2] + ',' + desc3[4] + "," + desc3[3] + ") ";
 		

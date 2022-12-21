@@ -36,7 +36,7 @@ public class TermTimelineBetcntIncome extends AbstractChart {
 
 	@Override
 	protected String createTitleLabel() {
-		String label = stat.termDays + "日別 ベット,収益金額 ";
+		String label = stat.termDays + "日別ベット,収益金額 ";
 		label += "(平均,中央,偏差)= ";
 		label += "ベット数(" + desc1[2] + ',' + desc1[4] + "," + desc1[3] + ") ";
 		
