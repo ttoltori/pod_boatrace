@@ -1,8 +1,106 @@
-﻿drop index if exists indexes_ml_term_evaluation;
-create index indexes_ml_term_evaluation on ml_term_evaluation (resultno, modelno, patternid, pattern, bettype, kumiban);
-drop index if exists indexes_ml_term_evaluation_evaluationsid;
-create index indexes_ml_term_evaluation_evaluationsid on ml_term_evaluation (evaluations_id);
+﻿
 
+select 
+  *
+from (
+   select
+     row_number() over (partition by result_type, bettype, kumiban order by p_hmeanrate desc) as ranking,
+     *
+   from st_patternid sp
+   where result_type = '1' 
+) tmp
+where ranking <= 1
+order by bettype, kumiban
+;
+
+select min(resultno::int), max(resultno::int)
+from ml_evaluation me 
+where result_type = '1';
+
+insert into st_patternid
+select
+  *,  
+  (4 / (1/t_betcnt::float + 1/t_hitcnt::float + 1/t_incamt::float) + 1/termcnt::float)::numeric(11,2) t_hmean,
+  (4 / (1/p_betcnt::float + 1/p_hitcnt::float + 1/p_incamt::float) + 1/pluscnt::float)::numeric(11,2) p_hmean,
+  (2 / (1/t_hitrate + 1/t_incrate))::numeric(5,2) t_hmeanrate, 
+  (4 / (1/p_betrate + 1/p_hitrate + 1/p_incrate + 1/plusrate))::numeric(5,2) p_hmeanrate
+from
+(
+	select
+	  pl.result_type, pl.bettype, pl.kumiban, pl.patternid, pl.modelno,
+	  term.termcnt,
+	  term.pluscnt,
+	  (term.pluscnt::float / term.termcnt::float)::numeric(5,2) plusrate,
+	  tot.betcnt t_betcnt, 
+	  pl.betcnt p_betcnt, 
+	  tot.hitcnt t_hitcnt, 
+	  pl.hitcnt p_hitcnt, 
+	  (tot.hitamt - tot.betamt)/100 t_incamt, 
+	  (pl.hitamt - pl.betamt)/100 p_incamt, 
+	  (pl.betcnt::float / tot.betcnt::float)::numeric(5,2) p_betrate,
+	  (tot.hitcnt::float / tot.betcnt::float)::numeric(5,2) t_hitrate,
+	  (pl.hitcnt::float / pl.betcnt::float)::numeric(5,2) p_hitrate,
+	  (tot.hitamt::float / tot.betamt::float)::numeric(5,2) t_incrate,
+	  (pl.hitamt::float / pl.betamt::float)::numeric(5,2) p_incrate
+	from
+	  (
+		select
+		  result_type, bettype, kumiban, patternid, modelno,
+		  sum(betcnt) betcnt, 
+		  sum(hitcnt) hitcnt,
+		  sum(betamt) betamt,
+		  sum(hitamt) hitamt
+		from ml_evaluation me
+		where result_type = '1'
+		  and resultno::int between 3761 and 4160
+		  and incomerate between 1.01 and 99
+		  -- and bettype = '1T' and kumiban = '1'
+		group by result_type, bettype, kumiban, patternid, modelno
+	  ) pl,
+	  (
+		select
+		  result_type, bettype, kumiban, patternid, modelno,
+		  sum(betcnt) betcnt, 
+		  sum(hitcnt) hitcnt,
+		  sum(betamt) betamt,
+		  sum(hitamt) hitamt
+		from ml_evaluation me
+		where result_type = '1'
+		  and resultno::int between 3761 and 4160
+		group by result_type, bettype, kumiban, patternid, modelno
+		) tot,
+  	    (
+		  select
+		    result_type, bettype, kumiban, patternid, modelno,
+		    sum(termcnt) termcnt, 
+		    sum(pluscnt) pluscnt
+		  from ml_term_evaluation mte
+		  where result_type = '1'
+		    and resultno::int between 3761 and 4160
+		  group by result_type, bettype, kumiban, patternid, modelno
+		) term
+	where pl.result_type = tot.result_type and pl.bettype = tot.bettype and pl.kumiban = tot.kumiban and pl.patternid = tot.patternid and pl.modelno = tot.modelno
+	and pl.result_type = term.result_type and pl.bettype = term.bettype and pl.kumiban = term.kumiban and pl.patternid = term.patternid and pl.modelno = term.modelno
+) tmp
+where p_hitrate <> 0 and p_betrate <> 0 and p_incrate <> 0  
+  and t_hitrate <> 0 and t_incrate <> 0
+  and p_betcnt <> 0 and p_hitcnt <> 0 and p_incamt <> 0
+  and t_betcnt <> 0 and t_hitcnt <> 0 and t_incamt <> 0
+  and ((1/t_betcnt::float + 1/t_hitcnt::float + 1/t_incamt::float)) <> 0
+  and ((1/p_betcnt::float + 1/p_hitcnt::float + 1/p_incamt::float)) <> 0
+  and ((1/t_hitrate + 1/t_incrate)) <> 0
+  and ((1/p_betrate + 1/p_hitrate + 1/p_incrate)) <> 0
+ ;
+
+
+
+
+select count(1) from ml_evaluation;
+
+select min(resultno::int), max(resultno::int)
+from ml_evaluation me;
+
+select count(1) from ml_term_evaluation mte; 
 
 select count(1)
 from ml_classification mcb; 
