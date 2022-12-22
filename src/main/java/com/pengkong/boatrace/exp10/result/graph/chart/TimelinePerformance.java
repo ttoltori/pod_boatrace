@@ -56,11 +56,11 @@ public class TimelinePerformance extends AbstractChart {
 
 		// group 1 (変動幅)
 		// 確定オッズ
-		yData = ArrayUtils.toPrimitive(stat.listRor.toArray(new Double[stat.listRor.size()]));
-		series = chart.addSeries("確定オッズ:1", yData);
-		series.setMarker(SeriesMarkers.NONE);
-		//series.setXYSeriesRenderStyle(XYSeriesRenderStyle.Area);
-		series.setYAxisGroup(1);		
+//		yData = ArrayUtils.toPrimitive(stat.listRor.toArray(new Double[stat.listRor.size()]));
+//		series = chart.addSeries("確定オッズ:1", yData);
+//		series.setMarker(SeriesMarkers.NONE);
+//		//series.setXYSeriesRenderStyle(XYSeriesRenderStyle.Area);
+//		series.setYAxisGroup(1);		
 
 		// 的中オッズ(x軸は確定オッズの数に合わせてscaleする。数が確定オッズより足りないため）
 		double xScaleFactor = (double)stat.listRor.size() /  (double)stat.listHitOdds.size();

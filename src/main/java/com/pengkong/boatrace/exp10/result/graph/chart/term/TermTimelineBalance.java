@@ -1,5 +1,6 @@
 package com.pengkong.boatrace.exp10.result.graph.chart.term;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,6 +43,9 @@ public class TermTimelineBalance extends AbstractChart {
 		
 		label += " 率( " + MathUtil.scale2(stat.betrate) + "  " + MathUtil.scale2(stat.hitrate)
 		  + " " + MathUtil.scale2(stat.incomerate) + " )";
+
+		label += " TERM( " + stat.termEvaluation.getTermcnt() + "  " + stat.termEvaluation.getPluscnt()
+		  + " " + stat.termEvaluation.getPlusrate() + " )";
 		return label;
 	}
 
@@ -83,7 +87,8 @@ public class TermTimelineBalance extends AbstractChart {
 			yData[j] = yData[j] / 1000;
 		}
 		series = chart.addSeries("term", yData);
-		series.setMarker(SeriesMarkers.NONE);
+		series.setMarker(SeriesMarkers.CIRCLE);
+		series.setLineColor(Color.RED);
 		
 		return chart;
 	}

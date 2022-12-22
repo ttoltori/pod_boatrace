@@ -75,6 +75,7 @@ public class MlTermEvaluationCreator extends MlCreatorBase<MlTermEvaluation>
 		dto.setResultType(prop.getString("result_type"));
 		dto.setEvaluationsId(prop.getString("evaluations_id"));
 
+		stat.termEvaluation = dto;
 		return dto;
 	}
 }

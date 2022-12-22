@@ -110,9 +110,7 @@ public class ResultGraphBuilder {
 			if ( resultType.startsWith(ResultType._1.getValue()) || resultType.startsWith(ResultType._2.getValue())  || resultType.startsWith(ResultType._3.getValue()) ) { // result typeが1で始まる
 				//exnoPath = exnoPath + "_" + resultType  + "_" + prop.getString("used_model_no") + "_" + prop.getString("pattern_id");
 				//exnoPath = exnoPath + "_" + resultType  + "_" + prop.getString("pattern_id");
-				//exnoPath = resultType  + "_" + prop.getString("pattern_id");
-				// 임시
-				exnoPath = resultType  + "_" + prop.getString("pattern_id") + "_" + prop.getString("used_model_no").substring(0, 2);
+				exnoPath = resultType  + "_" + prop.getString("pattern_id");
 
 				//dirExResult = dirAllResult + exnoPath  + "/" + stat.statBettype + "/" + stat.kumiban + "/";
 				dirExResult = dirAllResult + exnoPath  + "/" + stat.statBettype + "/" + stat.kumiban + "/";
@@ -266,7 +264,8 @@ public class ResultGraphBuilder {
 			} else if (graphType.equals("7")) {  // 指定日間隔単位の時系列の性能推移をみる
 				listChart.add(new TermTimelineBalance(stat).create());
 				listChart.add(new ProbabilityRangePerformance2(stat).create());
-				listChart.add(new TermTimelineBetcntIncome(stat).create());
+				listChart.add(new TimelinePerformance(stat).create());
+				//listChart.add(new TermTimelineBetcntIncome(stat).create());
 				
 				listChart.add(new ResultOddsRankRangePerformance2(stat).create());
 				listChart.add(new ResultOddsRangePerformance2(stat).create());

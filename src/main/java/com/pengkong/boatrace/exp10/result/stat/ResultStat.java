@@ -14,6 +14,7 @@ import com.pengkong.boatrace.mybatis.entity.MlPrEvaluation;
 import com.pengkong.boatrace.mybatis.entity.MlRangeEvaluation;
 import com.pengkong.boatrace.mybatis.entity.MlResult;
 import com.pengkong.boatrace.mybatis.entity.MlRorkEvaluation;
+import com.pengkong.boatrace.mybatis.entity.MlTermEvaluation;
 import com.pengkong.boatrace.util.BoatUtil;
 import com.pengkong.common.MathUtil;
 
@@ -182,6 +183,8 @@ public class ResultStat {
 	public MlRangeEvaluation rangeEvaluation;
 	
 	public MlPrEvaluation prEvaluation;
+	
+	public MlTermEvaluation termEvaluation;
 	
 	public ResultStat(String statBettype, String kumiban, String patternId, String pattern, int startBalance) {
 		this.statBettype = statBettype;
