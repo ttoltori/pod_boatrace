@@ -96,13 +96,6 @@ public class SimulationPatternProvider {
 	List<MlResult> applyLiteral(List<MlResult> listSrc, List<String> literals) {
 		List<MlResult> listResult = new ArrayList<>();
 		MlResult copy;
-		// 交差パタン数=1に割り当てる = パタンが1個でもある全て(nopatternと同等の意味）
-		for (MlResult result :  listSrc) {
-			copy = ResultHelper.copyOf(result);
-			
-			copy.setPattern("!all");
-			listResult.add(copy);
-		}
 		
 		// 当たっているパタンそれぞれに全て集計する
 		for (String pattern : literals) {
@@ -114,6 +107,18 @@ public class SimulationPatternProvider {
 			}
 		}
 
+		// #2023/ simul_1확인시 시간절약을 위해 !all그래프 한개만 출력하게한다
+		if (MLPropertyUtil.getInstance().getString("graph_only_pattern").equals("yes")) {
+			return listResult;
+		}
+
+		// 交差パタン数=1に割り当てる = パタンが1個でもある全て(nopatternと同等の意味）
+		for (MlResult result :  listSrc) {
+			copy = ResultHelper.copyOf(result);
+			
+			copy.setPattern("!all");
+			listResult.add(copy);
+		}
 		return listResult;
 	}
 }

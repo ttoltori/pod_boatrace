@@ -61,7 +61,7 @@ public class TermTimelineBetcntHicnt extends AbstractChart {
 		chart.getStyler().setYAxisGroupPosition(1, YAxisPosition.Right);
 		XYSeries series;
 		
-		List<RangeStatUnit> listUnit = new ArrayList<RangeStatUnit>(stat.termStatUnit.values());
+		List<RangeStatUnit> listUnit = new ArrayList<RangeStatUnit>(stat.termStatPerformance.values());
 		
 		double[] yData1 = new double[listUnit.size()];
 		double[] yData2 = new double[listUnit.size()];

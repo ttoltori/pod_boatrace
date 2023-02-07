@@ -22,14 +22,17 @@ public class DBMultiClassificationDataLoader extends AbstractMultiClassification
 		List<MlClassification> results;
 		
 		SqlSession session = DatabaseUtil.open(targetDbResourceName, false);
-		MlClassificationMapper mapper = session.getMapper(MlClassificationMapper.class);
+		try {
+			MlClassificationMapper mapper = session.getMapper(MlClassificationMapper.class);
 
-		MlClassificationExample example = new MlClassificationExample();
-		example.createCriteria().andModelnoIn(modelNoList).andYmdBetween(fromYmd, toYmd);
+			MlClassificationExample example = new MlClassificationExample();
+			example.createCriteria().andModelnoIn(modelNoList).andYmdBetween(fromYmd, toYmd);
 
-		results = mapper.selectByExample(example);
-		
-		DatabaseUtil.close(session);
-		return results;
+			results = mapper.selectByExample(example);
+			
+			return results;
+		} finally {
+			DatabaseUtil.close(session);
+		}
 	}
 }

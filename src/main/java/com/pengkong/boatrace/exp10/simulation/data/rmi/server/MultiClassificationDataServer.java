@@ -66,16 +66,18 @@ public class MultiClassificationDataServer {
 		List<MlClassification> result = new ArrayList<>();
 		
 		SqlSession session = DatabaseUtil.open(prop.getString("target_db_resource"), false);
-		MlClassificationMapper mapper = session.getMapper(MlClassificationMapper.class);
+		try {
+			MlClassificationMapper mapper = session.getMapper(MlClassificationMapper.class);
 
-		MlClassificationExample example = new MlClassificationExample();
-		example.createCriteria().andModelnoIn(modelNoList).andYmdBetween(fromYmd, toYmd);
-		
-		result.addAll(mapper.selectByExample(example));
-		
-		DatabaseUtil.close(session);
-		
-		return result;
+			MlClassificationExample example = new MlClassificationExample();
+			example.createCriteria().andModelnoIn(modelNoList).andYmdBetween(fromYmd, toYmd);
+			
+			result.addAll(mapper.selectByExample(example));
+			
+			return result;
+		} finally {
+			DatabaseUtil.close(session);
+		}
 	}
 	
 	public static void main(String[] args) {

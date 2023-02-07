@@ -24,27 +24,29 @@ public class DBRaceDataLoader extends AbstractRaceDataLoader {
 	@Override
 	protected List<DBRecord> excute(String fromYmd, String toYmd) throws Exception {
 		SqlSession session = DatabaseUtil.open(prop.getString("target_db_resource"), false);
-		CustomMapper customMapper = session.getMapper(CustomMapper.class);
-		
-		String sql = sqlTpl.get(prop.getString("result_sql_id"));
-		sql = sql.replace("{fromYmd}", fromYmd);
-		sql = sql.replace("{toYmd}", toYmd);
-		sql = sql.replace("{grade_condition}", prop.getString("grade_condition"));
-		sql = sql.replace("{used_model_no}", prop.getString("used_model_no"));
-		String patternId = prop.getString("pattern_id");
-		sql = sql.replace("{pattern_id}", patternId);
-		sql = sql.replace("{pattern_sql}", ptnTpl.getPattern(patternId).sql);
-		
-		HashMap<String, String> mapParam = new HashMap<>();
-		mapParam.put("sql", sql);
-		
-		// 디비 데이터 일람 취득
-		List<DBRecord> results = customMapper.selectSql(mapParam);
-		if (results.size() <= 0) {
-			throw new Exception("db has no data. sql=" + sql);
+		try {
+			CustomMapper customMapper = session.getMapper(CustomMapper.class);
+			
+			String sql = sqlTpl.get(prop.getString("result_sql_id"));
+			sql = sql.replace("{fromYmd}", fromYmd);
+			sql = sql.replace("{toYmd}", toYmd);
+			sql = sql.replace("{grade_condition}", prop.getString("grade_condition"));
+			sql = sql.replace("{used_model_no}", prop.getString("used_model_no"));
+			String patternId = prop.getString("pattern_id");
+			sql = sql.replace("{pattern_id}", patternId);
+			sql = sql.replace("{pattern_sql}", ptnTpl.getPattern(patternId).sql);
+			
+			HashMap<String, String> mapParam = new HashMap<>();
+			mapParam.put("sql", sql);
+			
+			// 디비 데이터 일람 취득
+			List<DBRecord> results = customMapper.selectSql(mapParam);
+			if (results.size() <= 0) {
+				throw new Exception("db has no data. sql=" + sql);
+			}
+			return results; 
+		} finally {
+			DatabaseUtil.close(session);
 		}
-
-		DatabaseUtil.close(session);
-		return results; 
 	}
 }

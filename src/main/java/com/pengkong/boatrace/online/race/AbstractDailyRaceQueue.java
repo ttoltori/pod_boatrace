@@ -59,14 +59,17 @@ public abstract class AbstractDailyRaceQueue {
 	List<OlRace> loadRaces(String ymd) throws IOException, SQLException {
 		List<OlRace> results;
 		SqlSession session = DatabaseUtil.open(prop.getString("target_db_resource"), false);
-		OlRaceDAO dao = new OlRaceDAO(session);
-		OlRaceExample example = createExample();
-		
-		// レースを取得する
-		results = dao.select(example);
-		
-		DatabaseUtil.close(session);
-		return results;
+		try {
+			OlRaceDAO dao = new OlRaceDAO(session);
+			OlRaceExample example = createExample();
+			
+			// レースを取得する
+			results = dao.select(example);
+			
+			return results;
+		} finally {
+			DatabaseUtil.close(session);
+		}
 	}
 	
 	abstract OlRaceExample createExample();

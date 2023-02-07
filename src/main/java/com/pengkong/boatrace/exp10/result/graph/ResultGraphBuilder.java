@@ -2,9 +2,7 @@ package com.pengkong.boatrace.exp10.result.graph;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedMap;
-import java.util.TreeMap;
 
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
@@ -13,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.pengkong.boatrace.common.BoatConst;
-import com.pengkong.boatrace.common.enums.Delimeter;
 import com.pengkong.boatrace.exp10.enums.ResultType;
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
 import com.pengkong.boatrace.exp10.result.graph.chart.BeforeOddsRangePerformance;
@@ -23,7 +20,6 @@ import com.pengkong.boatrace.exp10.result.graph.chart.TimelineBalance;
 import com.pengkong.boatrace.exp10.result.graph.chart.TimelinePerformance;
 import com.pengkong.boatrace.exp10.result.graph.chart.bubble.BestBoddsRankBoddsBubble;
 import com.pengkong.boatrace.exp10.result.graph.chart.bubble.BestBoddsRankProbBubble;
-import com.pengkong.boatrace.exp10.result.graph.chart.bubble.BestBoddsRankRoddsRankBetcntBubble;
 import com.pengkong.boatrace.exp10.result.graph.chart.bubble.BestBoddsRankRoddsRankBubble;
 import com.pengkong.boatrace.exp10.result.graph.chart.bubble.BestRoddsRankProbBetcntBubble;
 import com.pengkong.boatrace.exp10.result.graph.chart.bubble.BestRoddsRankProbBubble;
@@ -32,14 +28,10 @@ import com.pengkong.boatrace.exp10.result.graph.chart.bubble.BoddsRankBoddsBubbl
 import com.pengkong.boatrace.exp10.result.graph.chart.bubble.BoddsRankProbabilityBubble;
 import com.pengkong.boatrace.exp10.result.graph.chart.bubble.BoddsRankRoddsRankBubble;
 import com.pengkong.boatrace.exp10.result.graph.chart.bubble.BoddsRoddsBubble;
-import com.pengkong.boatrace.exp10.result.graph.chart.bubble.RoddsProbabilityBubble;
 import com.pengkong.boatrace.exp10.result.graph.chart.bubble.RoddsRankProbabilityBetcntBubble;
 import com.pengkong.boatrace.exp10.result.graph.chart.bubble.RoddsRankProbabilityBubble;
-import com.pengkong.boatrace.exp10.result.graph.chart.bubble.SingleBestBoddsRankBoddsBubble;
 import com.pengkong.boatrace.exp10.result.graph.chart.term.TermTimelineBalance;
 import com.pengkong.boatrace.exp10.result.graph.chart.term.TermTimelineBetcntHicnt;
-import com.pengkong.boatrace.exp10.result.graph.chart.term.TermTimelineBetcntIncome;
-import com.pengkong.boatrace.exp10.result.graph.chart.term.TermTimelineOdds;
 import com.pengkong.boatrace.exp10.result.graph.chart.term.TermTimelineHitrateIncomerate;
 import com.pengkong.boatrace.exp10.result.graph.chart.v2.BeforeOddsRangePerformance2;
 import com.pengkong.boatrace.exp10.result.graph.chart.v2.BeforeOddsRankRangePerformance2;
@@ -48,7 +40,6 @@ import com.pengkong.boatrace.exp10.result.graph.chart.v2.ResultOddsRangePerforma
 import com.pengkong.boatrace.exp10.result.graph.chart.v2.ResultOddsRankRangePerformance2;
 import com.pengkong.boatrace.exp10.result.stat.ResultStat;
 import com.pengkong.boatrace.exp10.result.stat.XYRange;
-import com.pengkong.boatrace.exp10.simulation.range.RangeStatUnit;
 import com.pengkong.common.FileUtil;
 import com.pengkong.common.MathUtil;
 import com.pengkong.common.StringUtil;
@@ -68,14 +59,6 @@ public class ResultGraphBuilder {
 
 	public String dirProperty;
 	
-	private static class InstanceHolder {
-		private static final ResultGraphBuilder INSTANCE = new ResultGraphBuilder();
-	}
-	
-	public static ResultGraphBuilder getInstance() {
-		return InstanceHolder.INSTANCE;
-	}
-
 	public ResultGraphBuilder() {
 	}
 
@@ -113,7 +96,8 @@ public class ResultGraphBuilder {
 				exnoPath = resultType  + "_" + prop.getString("pattern_id");
 
 				//dirExResult = dirAllResult + exnoPath  + "/" + stat.statBettype + "/" + stat.kumiban + "/";
-				dirExResult = dirAllResult + exnoPath  + "/" + stat.statBettype + "/" + stat.kumiban + "/";
+				//dirExResult = dirAllResult + exnoPath  + "/" + stat.statBettype + "/" + stat.kumiban + "/";
+				dirExResult = dirAllResult + stat.statBettype + "/" + stat.kumiban + "/" + exnoPath  + "/";
 
 				String filePathCommon = dirExResult + String.join("_", 
 						prop.getString("result_type"),
@@ -250,15 +234,18 @@ public class ResultGraphBuilder {
 			} else if (graphType.equals("6")) {  // probabilityとboddsrankの分布を見る
 				listChart.add(new TermTimelineBalance(stat).create());
 				listChart.add(new ProbabilityRangePerformance2(stat).create());
-				listChart.add(new BestBoddsRankProbBubble(stat, xyRange).create());
+				//listChart.add(new BestBoddsRankProbBubble(stat, xyRange).create());
+				listChart.add(new TimelinePerformance(stat).create());
 				
 				listChart.add(new BeforeOddsRankRangePerformance2(stat).create());
 				listChart.add(new BeforeOddsRangePerformance2(stat).create());
-				listChart.add(new BestBoddsRankRoddsRankBubble(stat, xyRange).create());
+				//listChart.add(new BestBoddsRankRoddsRankBubble(stat, xyRange).create());
+				listChart.add(new TermTimelineHitrateIncomerate(stat).create());
 				
 				listChart.add(new ResultOddsRankRangePerformance2(stat).create());
 				listChart.add(new ResultOddsRangePerformance2(stat).create());
-				listChart.add(new BestBoddsRankRoddsRankBetcntBubble(stat, xyRange).create());
+				//listChart.add(new BestBoddsRankRoddsRankBetcntBubble(stat, xyRange).create());
+				listChart.add(new TermTimelineBetcntHicnt(stat).create());
 				
 				BitmapEncoder.saveBitmap(listChart, 3, 3, filePath, BitmapFormat.PNG);
 			} else if (graphType.equals("7")) {  // 指定日間隔単位の時系列の性能推移をみる
@@ -280,60 +267,8 @@ public class ResultGraphBuilder {
 				throw new IllegalStateException("Undefined graph type " + graphType);
 			}
 			logger.info("graph saved. " + filePath);
-
-			// BORK-BOR detail map 
-//			saveBorkStat(stat, xyRange, filePathBork);
-//			logger.info("graph bork saved. " + filePathBork);
-		}
-	}
-
-	@SuppressWarnings("rawtypes")
-	public void saveBorkStat(ResultStat stat, XYRange xyRange, String filePath) throws Exception {
-		Map<String, RangeStatUnit> mapStat = stat.mapBorkBorStatUnit; 
-		Map<Double, Map<String, RangeStatUnit>> mapBorkBorStatByBork = splitMapStatByBork(mapStat);
-		if (mapBorkBorStatByBork.size() <= 0) {
-			return;
-		}
-		
-		List<Chart> listChart = new ArrayList<>();
-		
-		// bork loop ex) 1~10
-		for (Double bork : mapBorkBorStatByBork.keySet()) {
-			xyRange.xMin = bork;
-			xyRange.xMax = bork;
-			listChart.add(new SingleBestBoddsRankBoddsBubble(stat, mapStat, xyRange).create());
-		}
-		BitmapEncoder.saveBitmap(listChart, 1, mapBorkBorStatByBork.size(), filePath, BitmapFormat.PNG);
-	}
-	
-	/**
-	 * 
-	 * @param mapStat stat.mapBorkBorStatUnit
-	 * @throws Exception
-	 */
-	Map<Double, Map<String, RangeStatUnit>> splitMapStatByBork(Map<String, RangeStatUnit> mapStat) throws Exception {
-		// BorkBor マップをBork別に分割する
-		SortedMap<Double, Map<String, RangeStatUnit>> mapBorkStat = new TreeMap<>();
-
-		Double borkMax = prop.getDouble("bork_max");
-		// factor = bork_bor ex) 1_1.6
-		for (String factor : mapStat.keySet()) {
-			Double bork = Double.valueOf(factor.split(Delimeter.UNDERBAR.getValue())[0]);
-			// borkが指定値より大きい場合はスキップ
-			if (bork > borkMax) {
-				continue;
-			}
 			
-			Map<String, RangeStatUnit> mapBorkStatItem = mapBorkStat.get(bork);
-			if (mapBorkStatItem == null) {
-				mapBorkStatItem = new TreeMap<>();
-				mapBorkStat.put(bork, mapBorkStatItem);
-			}
-			
-			mapBorkStatItem.put(factor, mapStat.get(factor));
 		}
-		
-		return mapBorkStat;
 	}
 
 	public static void main(String[] args) {

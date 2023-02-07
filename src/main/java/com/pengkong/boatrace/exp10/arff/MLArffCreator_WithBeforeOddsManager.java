@@ -23,6 +23,7 @@ import com.pengkong.common.FileUtil;
  * @rev 20211126 python用csv対応
  *
  */
+@Deprecated
 public class MLArffCreator_WithBeforeOddsManager {
 	Logger logger = LoggerFactory.getLogger(MLArffCreator_WithBeforeOddsManager.class);
 	MLPropertyUtil prop = MLPropertyUtil.getInstance();
@@ -61,7 +62,7 @@ public class MLArffCreator_WithBeforeOddsManager {
 	 * @return 
 	 * @throws Exception
 	 */
-	private StringBuilder createArffHeader(List<Feature> listFeature, Clazz clazz) throws Exception {
+	protected StringBuilder createArffHeader(List<Feature> listFeature, Clazz clazz) throws Exception {
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append("% " + prop.getString("model_no")); sb.append(System.lineSeparator());
@@ -86,7 +87,7 @@ public class MLArffCreator_WithBeforeOddsManager {
 		return sb;
 	}
 	
-	private StringBuilder createArffBody(List<Feature> listFeature, List<DBRecord> listDb) throws Exception {
+	protected StringBuilder createArffBody(List<Feature> listFeature, List<DBRecord> listDb) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		
 		boolean useBodds = false;
@@ -120,7 +121,7 @@ public class MLArffCreator_WithBeforeOddsManager {
 		return sb;
 	}
 	
-	private String convertFeature(Feature feature) {
+	protected String convertFeature(Feature feature) {
 		// nominal attribute
 		if (feature.arffType.equals(FeatureType.NOMINAL.getValue())) {
 			return "@ATTRIBUTE " + feature.arffName + " " + nominalManager.getNominalAttr(feature.arffName);

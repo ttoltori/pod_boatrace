@@ -91,17 +91,20 @@ public class ArffProvider extends UnicastRemoteObject implements ArffRmiInterfac
 		sql = sql.replace("{toYmd}", endYmd);
 		
 		SqlSession session = DatabaseUtil.open(prop.getString("target_db_resource"), false);
-		CustomMapper customMapper = session.getMapper(CustomMapper.class);
-		
-		HashMap<String, String> mapParam = new HashMap<>();
-		mapParam.put("sql", sql);
-		afi.listDbRecord = customMapper.selectSql(mapParam);
-		if (afi.listDbRecord.size() <= 0) {
-			throw new Exception("db has no data. sql=" + sql);
+		try {
+			CustomMapper customMapper = session.getMapper(CustomMapper.class);
+			
+			HashMap<String, String> mapParam = new HashMap<>();
+			mapParam.put("sql", sql);
+			afi.listDbRecord = customMapper.selectSql(mapParam);
+			if (afi.listDbRecord.size() <= 0) {
+				throw new Exception("db has no data. sql=" + sql);
+			}
+			
+			logger.info("db loaded. " + startYmd + "~" + endYmd + ": " + afi.listDbRecord.size() + " records.");
+		} finally {
+			DatabaseUtil.close(session);
 		}
-		
-		DatabaseUtil.close(session);
-		logger.info("db loaded. " + startYmd + "~" + endYmd + ": " + afi.listDbRecord.size() + " records.");
 	}
 
 	/**

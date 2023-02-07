@@ -38,9 +38,11 @@ public class MLSimulationGenerator extends MLResultGenerator {
 		if (prop.getString("simulation_step").equals("1")) {
 			configProperty = "file_simul_config_step1";
 			graphBuilder.dirProperty = "dir_simul_output_step1";
+			graphBuilderSplit.dirProperty = "dir_simul_output_step1";
 		} else {
 			configProperty = "file_simul_config_step2";	
 			graphBuilder.dirProperty = "dir_simul_output_step2";
+			graphBuilderSplit.dirProperty = "dir_simul_output_step2";
 		}
 	}
 	

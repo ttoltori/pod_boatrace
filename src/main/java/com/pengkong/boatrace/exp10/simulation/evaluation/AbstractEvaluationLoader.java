@@ -1,12 +1,17 @@
 package com.pengkong.boatrace.exp10.simulation.evaluation;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.pengkong.boatrace.common.enums.Delimeter;
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
+import com.pengkong.boatrace.util.DatabaseUtil;
 import com.pengkong.common.StringUtil;
 import com.pengkong.common.collection.HashMapList;
 
@@ -28,6 +33,8 @@ public abstract class AbstractEvaluationLoader{
 	
 	/** 最初に取得した順のデータを保持する */
 	protected List<Evaluation> listEval = new ArrayList<>();
+
+	protected SqlSession session = null;
 	
 	/** group定義ファイルロード */
 	abstract void  initialize() throws Exception;
@@ -35,7 +42,14 @@ public abstract class AbstractEvaluationLoader{
 	/** 初期化処理 */
 	void checkInitialized() throws Exception {
 		if (mapListEval == null) {
-			initialize();
+			try {
+				initialize();
+			} catch (Exception e) {
+				if (session != null) {
+					DatabaseUtil.close(session);
+				}
+				throw e;
+			}
 		}
 	}
 	
@@ -45,6 +59,22 @@ public abstract class AbstractEvaluationLoader{
 			System.out.println(StringUtil.leftPad(String.valueOf(cnt++), 3, " ") + " : " + eval);
 		}
 		System.out.println(listEval.size() + " evaluations are used.");
+	}
+	
+	public String getPatternIdModelString() throws Exception{
+		checkInitialized();
+		
+		Set<String> setPntidMod = new HashSet<>();
+		List<String> listPtnidMod = new ArrayList<>();
+		for (Evaluation eval : listEval) {
+			String ptnidMod = eval.get("patternid") + "@" + eval.get("modelno"); 
+			if (!setPntidMod.contains(ptnidMod)) {
+				listPtnidMod.add(ptnidMod);
+				setPntidMod.add(ptnidMod);
+			}
+		}
+		
+		return String.join(Delimeter.UNDERBAR.getValue(), listPtnidMod);
 	}
 	
 	/**

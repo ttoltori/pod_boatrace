@@ -69,6 +69,7 @@ public class Reporter {
 		List<DBRecord> results;
 		
 		SqlSession session = DatabaseUtil.open(prop.getString("target_db_resource"), false);
+		try {
 			CustomMapper customMapper = session.getMapper(CustomMapper.class);
 			
 			String sql = sqlTpl.get("s-report");
@@ -80,8 +81,10 @@ public class Reporter {
 			// 디비 데이터 일람 취득
 			results = customMapper.selectSql(mapParam);
 			
-			DatabaseUtil.close(session);
 			return results;
+		} finally {
+			DatabaseUtil.close(session);
+		}
 	}
 	
 	String createLine(DBRecord rec) {

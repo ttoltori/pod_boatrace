@@ -7,6 +7,8 @@ import java.util.TreeMap;
 
 import com.github.habernal.confusionmatrix.ConfusionMatrix;
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
+import com.pengkong.boatrace.exp10.result.histogram.HistogramConverter;
+import com.pengkong.boatrace.exp10.result.histogram.TermConverter;
 import com.pengkong.boatrace.exp10.simulation.range.RangeStatUnit;
 import com.pengkong.boatrace.mybatis.entity.MlBorkEvaluation;
 import com.pengkong.boatrace.mybatis.entity.MlEvaluation;
@@ -127,7 +129,7 @@ public class ResultStat {
 	public Map<String, RangeStatUnit> mapBoddsRankProbStatUnit = new TreeMap<>();
 
 	/** [確定オッズ/予想確率]毎にカウント、的中カウント、的中金額を集計する ex) key="0.78_1.24" */
-	@Deprecated
+	
 	public Map<String, RangeStatUnit> mapRoddsProbStatUnit = new TreeMap<>();
 
 	/** [確定オッズRANK/予想確率]毎にカウント、的中カウント、的中金額を集計する ex) key="0.78_1.24" */
@@ -167,8 +169,11 @@ public class ResultStat {
 	
 	public String lastTermYmd;
 	
-	/** 期間単位の範囲統計 */
-	public Map<Double, RangeStatUnit> termStatUnit = new TreeMap<>();  
+	/** 期間単位の範囲統計 残高*/
+	public Map<Double, RangeStatUnit> termStatBalance = new TreeMap<>();  
+
+	/** 期間単位の範囲統計 性能*/
+	public Map<Double, RangeStatUnit> termStatPerformance = new TreeMap<>();  
 	
 	/** 性能評価ConfusionMatrix */
 	public ConfusionMatrix matrix = new ConfusionMatrix();
@@ -185,6 +190,15 @@ public class ResultStat {
 	public MlPrEvaluation prEvaluation;
 	
 	public MlTermEvaluation termEvaluation;
+
+	/** probabilityとoddsのhistogram valueを取得する */
+	HistogramConverter histogram = new HistogramConverter();
+	
+	/** 期間単位統計 残高 */
+	TermConverter termBalance;
+	
+	/** 期間単位統計 的中率、収益率等 */
+	TermConverter termPerformance;
 	
 	public ResultStat(String statBettype, String kumiban, String patternId, String pattern, int startBalance) {
 		this.statBettype = statBettype;
@@ -193,23 +207,28 @@ public class ResultStat {
 		this.pattern = pattern;
 		this.startBalance = startBalance;
 		this.balance = startBalance;
-		this.termDays = prop.getInteger("term_days");
+		this.termBalance = new TermConverter(prop.getInteger("term_days_balance"));
+		this.termPerformance = new TermConverter(prop.getInteger("term_days_performance"));
 	}
 
 	public String getKey() {
 		return pattern + statBettype + kumiban;
 	}
 
-	public void add(MlResult result) {
+	public void add(MlResult result, Double totalBetCnt) throws Exception {
 		String factor;
 		
-		Double probability = MathUtil.scale2(result.getProbability());
-		Double beforeOdds = result.getBetOdds();
+		Double probability;
+		// patternidに確率が含まれた場合はhitogram化しない
+		if (result.getPatternid().contains("prob")) {
+			probability = MathUtil.scale2(result.getProbability());
+		} else {
+			probability = histogram.convert("PR", result.getProbability());
+		}
+		Double beforeOdds = histogram.convert(result.getBettype(), result.getBetOdds());
+		Double resultOdds = histogram.convert(result.getBettype(), result.getResultOdds());
 		Integer beforeOddsRank = result.getBetOddsrank();
-		Double resultOdds = MathUtil.scale2(result.getResultOdds());
 		Integer resultOddsRank = result.getResultOddsrank();
-		
-		
 		
 		// 直前オッズの統計単位取得
 		if (beforeOdds != null
@@ -262,7 +281,7 @@ public class ResultStat {
 			//	getRangeStatUnit(mapTopBeforeOddsStatUnit, beforeOdds).add(result);
 			//}
 		}
-		betrateBodds = MathUtil.scale2(sumOfBetBodds / ResultStatBuilder.getInstance().getMapTotalBetCnt().get(statBettype + kumiban));
+		betrateBodds = MathUtil.scale2(sumOfBetBodds / totalBetCnt);
 		hitrateBodds = MathUtil.scale2(sumOfHitBodds / sumOfBetBodds);
 		incomerateBodds = MathUtil.scale2(sumOfHitAmountBodds / sumOfBetAmountBodds);
 		
@@ -291,8 +310,8 @@ public class ResultStat {
 			getRangeStatUnit(mapResultOddsStatUnit, resultOdds).add(result);
 			
 			// 確定オッズ：予想確率別集計
-			//factor = String.join("_", resultOdds.toString(), probability.toString());
-			//getRangeStatUnit(mapRoddsProbStatUnit, factor).add(result);
+			factor = String.join("_", resultOdds.toString(), probability.toString());
+			getRangeStatUnit(mapRoddsProbStatUnit, factor).add(result);
 		}
 		
 		if (resultOddsRank != null) {
@@ -323,12 +342,13 @@ public class ResultStat {
 		}
 
 		// 期間単位stat
-		getRangeStatUnit(termStatUnit, getTermFactor(result.getYmd())).add(result);
+		getRangeStatUnit(termStatBalance, termBalance.getTermFactor(result.getYmd())).add(result);
+		getRangeStatUnit(termStatPerformance, termPerformance.getTermFactor(result.getYmd())).add(result);
 		
 		//listAllIncome.add((double) (result.getHitamt() - result.getBetamt()));
 
 		// set stat
-		betrate = sumOfBet / ResultStatBuilder.getInstance().getMapTotalBetCnt().get(statBettype + kumiban);
+		betrate = sumOfBet / totalBetCnt;
 		hitrate = sumOfHit / sumOfBet;
 		// incomerate = sumOfResultAmount / sumOfBetAmount;
 		incomerate = sumOfHitAmount / sumOfBetAmount;
@@ -373,24 +393,12 @@ public class ResultStat {
 		return rsu;
 	}
 
-	/** 
-	 * 指定期間単位のfactorを取得する。
-	 * @return 
-	 */
-	Double getTermFactor(String ymd) {
-		if (lastTermYmd == null) {
-			lastTermYmd = ymd;
-		}
+	public double getDailyBetcnt() {
+		int days = BoatUtil.daysBetween(prop.getString("result_start_ymd"), prop.getString("result_end_ymd"));
+		double dailyBet = this.sumOfBet / (double)days;
+		return MathUtil.scale1(dailyBet);
 		
-		int days = BoatUtil.daysBetween(lastTermYmd, ymd);
-		if (days >= termDays) {
-			termCount++;
-			lastTermYmd = ymd;
-		}
-		
-		return Double.valueOf(termCount);
 	}
-	
 	public String toString() {
 		return statBettype + "_" + kumiban + "_" + pattern;
 	}

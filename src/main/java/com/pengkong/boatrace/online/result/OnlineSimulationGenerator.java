@@ -46,23 +46,26 @@ public class OnlineSimulationGenerator {
 	/** レース１件の情報を取得する */
 	DBRecord loadDB(String ymd, String jyoCd, String raceNo) throws Exception {
 		SqlSession session = DatabaseUtil.open(prop.getString("target_db_resource"), false);
-		CustomMapper customMapper = session.getMapper(CustomMapper.class);
-		
-		String sql = sqlTpl.get("s-online");
-		sql = sql.replace("{ymd}", ymd);
-		sql = sql.replace("{jyocd}", jyoCd);
-		sql = sql.replace("{raceno}", raceNo);
-		HashMap<String, String> mapParam = new HashMap<>();
-		mapParam.put("sql", sql);
+		try {
+			CustomMapper customMapper = session.getMapper(CustomMapper.class);
+			
+			String sql = sqlTpl.get("s-online");
+			sql = sql.replace("{ymd}", ymd);
+			sql = sql.replace("{jyocd}", jyoCd);
+			sql = sql.replace("{raceno}", raceNo);
+			HashMap<String, String> mapParam = new HashMap<>();
+			mapParam.put("sql", sql);
 
-		// 디비 데이터 일람 취득
-		List<DBRecord> results = customMapper.selectSql(mapParam);
-		if (results.size() != 1) {
-			logger.error("online race has no data. results.size()=" + results.size() + ", sql=" + sql );
-			return null;
+			// 디비 데이터 일람 취득
+			List<DBRecord> results = customMapper.selectSql(mapParam);
+			if (results.size() != 1) {
+				logger.error("online race has no data. results.size()=" + results.size() + ", sql=" + sql );
+				return null;
+			}
+
+			return results.get(0);
+		} finally {
+			DatabaseUtil.close(session);
 		}
-
-		DatabaseUtil.close(session);
-		return results.get(0);
 	}
 }

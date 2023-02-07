@@ -64,13 +64,10 @@ public class RankSimulationUser {
 	}
 
 	public void start(String rankType, String fromYmd, String toYmd) {
+		condition = "test1"; //rankType + "_" + fromYmd + "_" + toYmd;
+		SqlSession session = null;
 		try {
-			condition = "test1"; //rankType + "_" + fromYmd + "_" + toYmd;
-			if (!DatabaseUtil.isOpened()) {
-				DatabaseUtil.open(prop.getString("target_db"), false);	
-			}
-			
-			SqlSession session = DatabaseUtil.getSession();
+			session = DatabaseUtil.open(prop.getString("target_db"), false);
 			// 既存DB結果データ削除
 			deleteResultDB(session, condition);
 			
@@ -111,10 +108,11 @@ public class RankSimulationUser {
 				currDate = calendar.getTime();
 			}
 			
-			DatabaseUtil.commit();
-			DatabaseUtil.close();
+			session.commit();
 		} catch (Exception e) {
 			logger.error("user failed!!! ", e);
+		} finally {
+			DatabaseUtil.close(session);
 		}
 	}
 

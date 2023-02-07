@@ -140,6 +140,23 @@ public class StringUtil {
 	public static boolean contains(String findStr, String[] src) {
 		return Arrays.stream(src).anyMatch(findStr::contains);
 	}
+
+	public static Double[] getDoubleArray(String[] arr) {
+        Double[] ret = new Double[arr.length];
+        for (int i = 0; i < arr.length; i++) {
+            ret[i] = Double.valueOf(arr[i].trim());
+        }
+
+        return ret;
+    }
+    public static List<Double> getDoubleList(String[] arr) {
+        List<Double> list = new ArrayList<>();
+        for (int i = 0; i < arr.length; i++) {
+            list.add(Double.valueOf(arr[i].trim()));
+        }
+
+        return list;
+    }
 	
 	static public void print(double b) {
 		System.out.println( b);

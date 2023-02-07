@@ -1,5 +1,48 @@
 ﻿
 
+select *
+from ml_evaluation_bk1 meb
+where result_type = '1' and bettype = '2T' and kumiban = '12'
+  and patternid = 'nopattern'
+order by hitrate desc
+;
+
+select
+  bettype, kumiban, modelno, (betcnt::float / (365*3)::float)::numeric(5,1) dailybet,
+  (hitamt - betamt) incamt, hitrate, incomerate
+from ml_evaluation me 
+where patternid = 'nopattern'
+  and result_type = '1' and bettype = '3T'
+order by bettype, kumiban, incomerate desc
+;  
+
+
+
+
+select 
+    '~' sel, (case when me.result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+    me.bettype, me.kumiban, me.resultno, me.modelno, me.patternid, me.pattern, 
+    (me.hitamt-me.betamt) incamt, me.betcnt, me.incomerate::double precision incrate,
+    me.hitrate::double precision, me.bal_pluscnt,
+    'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from (
+	select 
+	  row_number() over (partition by me.bettype, me.kumiban order by mte.pluscnt desc) as ranking, 
+ 	  mte.pluscnt, mte.plusrate,  me.*
+	from ml_evaluation me, ml_term_evaluation mte
+	where me.resultno = mte.resultno and me.result_type = mte.result_type and me.bettype = mte.bettype and me.kumiban = mte.kumiban and me.modelno = mte.modelno and me.patternid  = mte.patternid and me.pattern = mte.pattern
+	  and me.result_type = '1' 
+	  and me.bettype = '3T' 
+	  and me.kumiban = '126'
+	  and me.incomerate between 1 and 99
+	  and me.modelno like '%'
+	  and me.patternid like '%'
+) me
+where ranking <= 30
+order by bettype, kumiban, ranking
+;
+
+
 select 
   *
 from (
@@ -52,7 +95,7 @@ from
 		  sum(hitamt) hitamt
 		from ml_evaluation me
 		where result_type = '1'
-		  and resultno::int between 3761 and 4160
+		  and resultno::int between 4961 and 5744
 		  and incomerate between 1.01 and 99
 		  -- and bettype = '1T' and kumiban = '1'
 		group by result_type, bettype, kumiban, patternid, modelno
@@ -66,7 +109,7 @@ from
 		  sum(hitamt) hitamt
 		from ml_evaluation me
 		where result_type = '1'
-		  and resultno::int between 3761 and 4160
+		  and resultno::int between 4961 and 5744
 		group by result_type, bettype, kumiban, patternid, modelno
 		) tot,
   	    (
@@ -76,7 +119,7 @@ from
 		    sum(pluscnt) pluscnt
 		  from ml_term_evaluation mte
 		  where result_type = '1'
-		    and resultno::int between 3761 and 4160
+		    and resultno::int between 4961 and 5744
 		  group by result_type, bettype, kumiban, patternid, modelno
 		) term
 	where pl.result_type = tot.result_type and pl.bettype = tot.bettype and pl.kumiban = tot.kumiban and pl.patternid = tot.patternid and pl.modelno = tot.modelno
@@ -92,11 +135,11 @@ where p_hitrate <> 0 and p_betrate <> 0 and p_incrate <> 0
   and ((1/p_betrate + 1/p_hitrate + 1/p_incrate)) <> 0
  ;
 
+truncate st_patternid;
 
-
+select * from st_patternid sp where t_incamt > 0;
 
 select count(1) from ml_evaluation;
-
 select min(resultno::int), max(resultno::int)
 from ml_evaluation me;
 

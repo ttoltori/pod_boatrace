@@ -60,16 +60,6 @@ public abstract class AbstractRangePerformanceChart extends AbstractChart {
 		XYGraphData xyData;
 		CategorySeries series;
 		
-		// group 1
-		// 範囲の投票数
-		xyData = XYGraphData.convertXYGraphData(mapBetcnt);
-		series = chart.addSeries("帳票数:1", xyData.getXdataArray(), xyData.getYdataArray());
-		series.setChartCategorySeriesRenderStyle(CategorySeriesRenderStyle.Line);
-		series.setMarker(SeriesMarkers.NONE);
-		series.setLineColor(Color.ORANGE);
-		series.setFillColor(Color.ORANGE);
-		series.setYAxisGroup(0);
-
 		// group 0
 		// 範囲の黒字金額
 		xyData = XYGraphData.convertXYGraphData(mapIncome);
@@ -85,6 +75,17 @@ public abstract class AbstractRangePerformanceChart extends AbstractChart {
 		series.setFillColor(barColor);
 		series.setYAxisGroup(1);
 		
+		// group 1
+		// 範囲の投票数
+		xyData = XYGraphData.convertXYGraphData(mapBetcnt);
+		series = chart.addSeries("帳票数:1", xyData.getXdataArray(), xyData.getYdataArray());
+		series.setChartCategorySeriesRenderStyle(CategorySeriesRenderStyle.Line);
+		series.setMarker(SeriesMarkers.CIRCLE);
+		series.setMarkerColor(Color.RED);
+		series.setLineColor(Color.RED);
+		series.setLineWidth(calculateLineWidth());
+		series.setYAxisGroup(0);
+
 		return chart;
 	}
 }

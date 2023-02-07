@@ -34,9 +34,9 @@ public class ResultStatBuilder {
 		private static final ResultStatBuilder INSTANCE = new ResultStatBuilder();
 	}
 	
-	public static ResultStatBuilder getInstance() {
-		return InstanceHolder.INSTANCE;
-	}
+//	public static ResultStatBuilder getInstance() {
+//		return InstanceHolder.INSTANCE;
+//	}
 
 	/**
 	 * 初期化処理.
@@ -76,7 +76,7 @@ public class ResultStatBuilder {
 			stat = statHelper.createResultStat(result.getStatBettype(), prediction, result.getPatternid(), result.getPattern());
 			mapStat.put(key, stat);
 		}
-		stat.add(result);
+		stat.add(result, mapTotalBetCnt.get(stat.statBettype + stat.kumiban));
 		
 		return result;
 	}

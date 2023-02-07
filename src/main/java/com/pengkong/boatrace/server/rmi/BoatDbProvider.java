@@ -75,18 +75,21 @@ public class BoatDbProvider extends UnicastRemoteObject implements BoatDbRmiInte
 	
 	public void loadDBInner(String fromYmd, String toYmd) throws Exception {
 		SqlSession session = DatabaseUtil.open(prop.getString("target_db_resource"), false);
-		CustomMapper customMapper = session.getMapper(CustomMapper.class);
-		
-		HashMap<String, String> mapParam = new HashMap<>();
-		mapParam.put("fromYmd", fromYmd);
-		mapParam.put("toYmd", toYmd);
-		listDbRecord = customMapper.selectResultWithPatterns(mapParam);
-		
-		DatabaseUtil.close(session);
-		if (listDbRecord.size() <= 0) {
-			throw new Exception("stat_ml_result has no data.");
+		try {
+			CustomMapper customMapper = session.getMapper(CustomMapper.class);
+			
+			HashMap<String, String> mapParam = new HashMap<>();
+			mapParam.put("fromYmd", fromYmd);
+			mapParam.put("toYmd", toYmd);
+			listDbRecord = customMapper.selectResultWithPatterns(mapParam);
+			
+			if (listDbRecord.size() <= 0) {
+				throw new Exception("stat_ml_result has no data.");
+			}
+			
+			logger.info("db loaded. " + fromYmd + "~" + toYmd + ": " + listDbRecord.size() + " records.");
+		} finally {
+			DatabaseUtil.close(session);
 		}
-		
-		logger.info("db loaded. " + fromYmd + "~" + toYmd + ": " + listDbRecord.size() + " records.");
 	}
 }

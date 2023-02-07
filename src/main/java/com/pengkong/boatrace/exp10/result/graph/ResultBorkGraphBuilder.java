@@ -2,9 +2,7 @@ package com.pengkong.boatrace.exp10.result.graph;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.SortedMap;
-import java.util.TreeMap;
 
 import org.knowm.xchart.BitmapEncoder;
 import org.knowm.xchart.BitmapEncoder.BitmapFormat;
@@ -13,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.pengkong.boatrace.common.BoatConst;
-import com.pengkong.boatrace.common.enums.Delimeter;
 import com.pengkong.boatrace.exp10.enums.ResultType;
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
 import com.pengkong.boatrace.exp10.result.graph.chart.BeforeOddsRangePerformance;
@@ -27,7 +24,6 @@ import com.pengkong.boatrace.exp10.result.graph.chart.bubble.BoddsRankRoddsRankB
 import com.pengkong.boatrace.exp10.result.graph.chart.bubble.BoddsRoddsBubble;
 import com.pengkong.boatrace.exp10.result.stat.ResultStat;
 import com.pengkong.boatrace.exp10.result.stat.XYRange;
-import com.pengkong.boatrace.exp10.simulation.range.RangeStatUnit;
 import com.pengkong.common.FileUtil;
 import com.pengkong.common.MathUtil;
 import com.pengkong.common.StringUtil;
@@ -39,6 +35,7 @@ import com.pengkong.common.StringUtil;
  * @author ttolt
  *
  */
+@Deprecated
 public class ResultBorkGraphBuilder {
 	Logger logger = LoggerFactory.getLogger(ResultBorkGraphBuilder.class);
 	
@@ -157,55 +154,6 @@ public class ResultBorkGraphBuilder {
 			//logger.debug("graph end:" + stat);
 			logger.info("graph saved. " + filePath);
 		}
-	}
-
-	public void saveBorkStat(ResultStat stat) throws Exception {
-		
-		
-		
-		
-		Map<String, RangeStatUnit> mapStat = stat.mapBorkBorStatUnit; 
-		Map<Double, Map<String, RangeStatUnit>> mapBorkBorStatByBork = splitMapStatByBork(mapStat);
-		
-		List<Chart> listChart = new ArrayList<>();
-		// bork loop ex) 1~10
-		XYRange xyRange = new XYRange(null,null,null,null);
-		for (Double bork : mapBorkBorStatByBork.keySet()) {
-			xyRange.xMin = bork;
-			xyRange.xMax = bork;
-			listChart.add(new BestBoddsRankBoddsBubble(stat, mapStat, xyRange).create());
-		}
-		
-	}
-	
-	/**
-	 * 
-	 * @param mapStat stat.mapBorkBorStatUnit
-	 * @throws Exception
-	 */
-	Map<Double, Map<String, RangeStatUnit>> splitMapStatByBork(Map<String, RangeStatUnit> mapStat) throws Exception {
-		// BorkBor マップをBork別に分割する
-		SortedMap<Double, Map<String, RangeStatUnit>> mapBorkStat = new TreeMap<>();
-
-		Double borkMax = prop.getDouble("bork_max");
-		// factor = bork_bor ex) 1_1.6
-		for (String factor : mapStat.keySet()) {
-			Double bork = Double.valueOf(factor.split(Delimeter.UNDERBAR.getValue())[0]);
-			// borkが指定値より大きい場合はスキップ
-			if (bork > borkMax) {
-				continue;
-			}
-			
-			Map<String, RangeStatUnit> mapBorkStatItem = mapBorkStat.get(bork);
-			if (mapBorkStatItem == null) {
-				mapBorkStatItem = new TreeMap<>();
-				mapBorkStat.put(bork, mapBorkStatItem);
-			}
-			
-			mapBorkStatItem.put(factor, mapStat.get(factor));
-		}
-		
-		return mapBorkStat;
 	}
 
 	public static void main(String[] args) {

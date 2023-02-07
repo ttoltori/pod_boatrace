@@ -224,44 +224,47 @@ public abstract class MLModelGeneratorBase {
 	List<DBRecord> loadDB(int rankNo, String modelStartYmd, String modelEndYmd, int modelDataDays) throws Exception {
 		List<DBRecord> results;
 		
-		SqlSession session = DatabaseUtil.open(prop.getString("target_db_resource"), false);		
-		CustomMapper customMapper = session.getMapper(CustomMapper.class);
-		
-		String dataStartYmd = BoatUtil.daysBeforeYmd(modelStartYmd, modelDataDays);
-		// rank別sql取得
-		String sql = sqlTpl.get(prop.getString("arff_sql_id"));
-		
-		// sql埋め込み
-		sql = sql.replace("{fromYmd}", dataStartYmd);
-		sql = sql.replace("{toYmd}", modelEndYmd);
+		SqlSession session = DatabaseUtil.open(prop.getString("target_db_resource"), false);
+		try {
+			CustomMapper customMapper = session.getMapper(CustomMapper.class);
+			
+			String dataStartYmd = BoatUtil.daysBeforeYmd(modelStartYmd, modelDataDays);
+			// rank別sql取得
+			String sql = sqlTpl.get(prop.getString("arff_sql_id"));
+			
+			// sql埋め込み
+			sql = sql.replace("{fromYmd}", dataStartYmd);
+			sql = sql.replace("{toYmd}", modelEndYmd);
 
-		// feature条件
-		String featureSetId = prop.getString("features_rank" + rankNo);
-		String[] featureIds = featureSetTemplate.getFeatureIds(featureSetId);
-		String featureSql = featureTemplate.getFeaturesSqlForModel(featureIds);
-		sql = sql.replace("{features}", featureSql);
+			// feature条件
+			String featureSetId = prop.getString("features_rank" + rankNo);
+			String[] featureIds = featureSetTemplate.getFeatureIds(featureSetId);
+			String featureSql = featureTemplate.getFeaturesSqlForModel(featureIds);
+			sql = sql.replace("{features}", featureSql);
 
-		// class values条件
-		Clazz clazz = classTemplate.getClazz(prop.getString("class_rank" + rankNo));
-		sql = sql.replace("{class_features}", clazz.featuresSql);
-		
-		// 対象grade条件
-		sql = sql.replace("{grade_condition}", prop.getString("grade_condition"));
-		
-		// rank1,2,3別のclass values制限条件 ex) rank1=条件なし rank2=rank1が1のみ rank3=rank12が12のみ
-		sql = sql.replace("{class_condition}", clazz.conditionSql);
-		
-		HashMap<String, String> mapParam = new HashMap<>();
-		mapParam.put("sql", sql);
-		
-		// 디비 데이터 일람 취득
-		results = customMapper.selectSql(mapParam);
-		if (results.size() <= 0) {
-			throw new Exception("db has no data. sql=" + sql);
+			// class values条件
+			Clazz clazz = classTemplate.getClazz(prop.getString("class_rank" + rankNo));
+			sql = sql.replace("{class_features}", clazz.featuresSql);
+			
+			// 対象grade条件
+			sql = sql.replace("{grade_condition}", prop.getString("grade_condition"));
+			
+			// rank1,2,3別のclass values制限条件 ex) rank1=条件なし rank2=rank1が1のみ rank3=rank12が12のみ
+			sql = sql.replace("{class_condition}", clazz.conditionSql);
+			
+			HashMap<String, String> mapParam = new HashMap<>();
+			mapParam.put("sql", sql);
+			
+			// 디비 데이터 일람 취득
+			results = customMapper.selectSql(mapParam);
+			if (results.size() <= 0) {
+				throw new Exception("db has no data. sql=" + sql);
+			}
+
+			return results;			
+		} finally {
+			DatabaseUtil.close(session);
 		}
-
-		DatabaseUtil.close(session);
-		return results;
 	}
 	
 	/**

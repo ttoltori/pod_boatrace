@@ -61,7 +61,7 @@ public class TermTimelineBetcntIncome extends AbstractChart {
 		chart.getStyler().setYAxisGroupPosition(1, YAxisPosition.Right);
 		XYSeries series;
 		
-		List<RangeStatUnit> listUnit = new ArrayList<RangeStatUnit>(stat.termStatUnit.values());
+		List<RangeStatUnit> listUnit = new ArrayList<RangeStatUnit>(stat.termStatPerformance.values());
 		
 		double[] yData1 = new double[listUnit.size()];
 		double[] yData2 = new double[listUnit.size()];
@@ -79,6 +79,7 @@ public class TermTimelineBetcntIncome extends AbstractChart {
 		series.setMarker(SeriesMarkers.NONE);
 		series.setXYSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
 		series.setYAxisGroup(0);
+		series.setMarker(SeriesMarkers.CIRCLE);
 		
 		// 収益金額
 		series = chart.addSeries("収益金額", yData2);
@@ -86,6 +87,7 @@ public class TermTimelineBetcntIncome extends AbstractChart {
 		series.setXYSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Line);
 		series.setLineColor(Color.RED);
 		series.setYAxisGroup(1);
+		series.setMarker(SeriesMarkers.CIRCLE);
 		
 
 		return chart;

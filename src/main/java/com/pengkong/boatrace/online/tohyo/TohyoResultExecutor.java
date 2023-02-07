@@ -52,28 +52,31 @@ public class TohyoResultExecutor {
 		RaceResult rr = parser.parseAndSet(race.raceResult, race.wakuList, url);
 		
 		SqlSession session = DatabaseUtil.open(prop.getString("target_db_resource"), false);
-		MlResultDAO dao = new MlResultDAO(session);
-		
-		for (MlResult result : results) {
-			result.setResultRank123(rr.sanrentanNo);
-			result.setResultKumiban(getResultKumiban(rr, result.getBettype()));
+		try {
+			MlResultDAO dao = new MlResultDAO(session);
 			
-			int prize = getResultPrize(rr, result.getBettype());
-			result.setResultAmt(prize);
+			for (MlResult result : results) {
+				result.setResultRank123(rr.sanrentanNo);
+				result.setResultKumiban(getResultKumiban(rr, result.getBettype()));
+				
+				int prize = getResultPrize(rr, result.getBettype());
+				result.setResultAmt(prize);
 
-			// レースオッズ、
-			result.setRaceOdds(new BigDecimal((float)prize / 100f).setScale(2, RoundingMode.FLOOR).doubleValue());
-			result.setRaceOddsrank(getResultRank(rr, result.getBettype()));
-			
-			// レース結果
-			result = ResultHelper.calculateIncome(result);
+				// レースオッズ、
+				result.setRaceOdds(new BigDecimal((float)prize / 100f).setScale(2, RoundingMode.FLOOR).doubleValue());
+				result.setRaceOddsrank(getResultRank(rr, result.getBettype()));
+				
+				// レース結果
+				result = ResultHelper.calculateIncome(result);
 
-			dao.update(result);
+				dao.update(result);
+			}
+			session.commit();
+
+			return results.size();
+		} finally {
+			DatabaseUtil.close(session);
 		}
-
-		session.commit();
-		DatabaseUtil.close(session);
-		return results.size();
 	}
 	
 	private String getResultKumiban(RaceResult raceResult, String type) throws Exception {

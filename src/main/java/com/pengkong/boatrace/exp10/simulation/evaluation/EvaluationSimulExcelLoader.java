@@ -12,7 +12,7 @@ import com.pengkong.common.StringUtil;
 import com.pengkong.common.collection.HashMapList;
 
 /**
- * evaluationリストファイルをロードして保持する. ！！！simul_2に特化する
+ * excel파일로부터 evaluation을 생성한다.
  * 
  * @author ttolt
  *

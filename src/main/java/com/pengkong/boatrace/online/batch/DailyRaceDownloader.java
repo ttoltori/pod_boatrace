@@ -50,40 +50,42 @@ public class DailyRaceDownloader {
 		
 		// open session with auto-transaction mode = false
 		SqlSession session = DatabaseUtil.open(prop.getString("target_db_resource"), false);
-		
-		OlRaceDAO raceDao = new OlRaceDAO(session);
-		OlRacerDAO racerDao = new OlRacerDAO(session);
-		OlRace raceDto;
-		OlRacer racerDto;
-		
-		// 既存当日データ削除
-		raceDao.delete(yyyyMMdd);
-		racerDao.delete(yyyyMMdd);
-		session.commit();
-		
-		logger.debug("ol_race, ol_racer deleted. " + yyyyMMdd);
-		
-		for (Setu setu : setuList) {
-			List<Race> races = parseRaceListHtml(setu);
-			for (Race race : races) {
-				race.setu = setu;
-				race.raceInfo.ymd = yyyyMMdd;
-				race = parseRaceHtml(race);
-				
-				// insert ol_race
-				raceDto = Race2OlRace.convert(race);
-				raceDao.insert(raceDto);
-				
-				// insert ol_racer
-				racerDto = Race2OlRacer.convert(race);
-				racerDao.insert(racerDto);
-				logger.debug("ol_race, ol_racer inserted. " + String.join(",", raceDto.getYmd(), raceDto.getJyocd(), raceDto.getRaceno().toString()));
-				
-				session.commit();
+		try {
+			OlRaceDAO raceDao = new OlRaceDAO(session);
+			OlRacerDAO racerDao = new OlRacerDAO(session);
+			OlRace raceDto;
+			OlRacer racerDto;
+			
+			// 既存当日データ削除
+			raceDao.delete(yyyyMMdd);
+			racerDao.delete(yyyyMMdd);
+			session.commit();
+			
+			logger.debug("ol_race, ol_racer deleted. " + yyyyMMdd);
+			
+			for (Setu setu : setuList) {
+				List<Race> races = parseRaceListHtml(setu);
+				for (Race race : races) {
+					race.setu = setu;
+					race.raceInfo.ymd = yyyyMMdd;
+					race = parseRaceHtml(race);
+					
+					// insert ol_race
+					raceDto = Race2OlRace.convert(race);
+					raceDao.insert(raceDto);
+					
+					// insert ol_racer
+					racerDto = Race2OlRacer.convert(race);
+					racerDao.insert(racerDto);
+					logger.debug("ol_race, ol_racer inserted. " + String.join(",", raceDto.getYmd(), raceDto.getJyocd(), raceDto.getRaceno().toString()));
+					
+					session.commit();
+				}
 			}
+			
+		} finally {
+			DatabaseUtil.close(session);
 		}
-		
-		DatabaseUtil.close(session);
 	}
 
 	/** 出走表（コンピュータ予想ページ）取得 */

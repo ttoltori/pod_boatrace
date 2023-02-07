@@ -38,7 +38,6 @@ public abstract class AbstractSimulationCreator {
 	MLPropertyUtil prop = MLPropertyUtil.getInstance();
 
 	/** 対象evaluationリストからパタンmatchingを行う */
-	@Getter
 	protected AbstractEvaluationLoader evLoader;
 	
 	protected IEvaluationPatternMatcher evMatcher;
@@ -124,6 +123,14 @@ public abstract class AbstractSimulationCreator {
 
 	public void destroy() throws Exception {
 	}
+
+	public AbstractEvaluationLoader getEvLoader() throws Exception {
+		if (!isInitialized) {
+			initialize();
+		}
+		
+		return evLoader;
+	}
 	
 	/**
 	 * DBRecordのレースに対して、 
@@ -141,7 +148,9 @@ public abstract class AbstractSimulationCreator {
 	 * @throws Exception
 	 */
 	public List<MlResult> execute(DBRecord dbRec) throws Exception {
-		initialize();
+		if (!isInitialized) {
+			initialize();
+		}
 
 		List<MlResult> result = new ArrayList<>();
 

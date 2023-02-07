@@ -103,53 +103,54 @@ public class MLClassificationGenerator {
 	 */
 	private void executeExperiment(String exNo) throws Exception {
 		SqlSession session = DatabaseUtil.open(prop.getString("target_db_resource"), false);
-		
-		String[] modelPeriod = getModelPeriod();
-		String modelStartYmd = modelPeriod[0];
-		String modelEndYmd = modelPeriod[1];
-		
-		// DB取得(classification対象）
-		List<DBRecord> listData = loadDB(session, modelStartYmd, modelEndYmd);
-		
-		// 결과범위내 데이터를 날짜별로 분류
-		HashMapList<DBRecord> mapListYmd = new HashMapList<>();
-		for (DBRecord rec : listData) {
-			String ymd = rec.getString("ymd");
-			mapListYmd.addItem(ymd, rec);
-		}
+		try {
+			String[] modelPeriod = getModelPeriod();
+			String modelStartYmd = modelPeriod[0];
+			String modelEndYmd = modelPeriod[1];
+			
+			// DB取得(classification対象）
+			List<DBRecord> listData = loadDB(session, modelStartYmd, modelEndYmd);
+			
+			// 결과범위내 데이터를 날짜별로 분류
+			HashMapList<DBRecord> mapListYmd = new HashMapList<>();
+			for (DBRecord rec : listData) {
+				String ymd = rec.getString("ymd");
+				mapListYmd.addItem(ymd, rec);
+			}
 
-		DateTime currDate = BoatUtil.parseYmd(modelStartYmd);
-		DateTime toDate = BoatUtil.parseYmd(modelEndYmd);
-		// 결과 생성 날짜범위 루프
-		while (currDate.compareTo(toDate) <= 0) {
-			String ymd = BoatUtil.formatYmd(currDate);
-			
-			// 해당날짜의 데이터 취득
-			List<DBRecord> listRec = mapListYmd.get(ymd);
-			if (listRec == null) {
-				currDate = currDate.plusDays(1);
-				continue;
-			}
-			
-			// 해당날짜의 레이스 데이터 루프
-			for (DBRecord dbRec : listRec) {
-				MlClassificationMapper mapper = session.getMapper(MlClassificationMapper.class);
-				// classify
-				List<Classification> listClassification = rc.classify(mapper, dbRec);
+			DateTime currDate = BoatUtil.parseYmd(modelStartYmd);
+			DateTime toDate = BoatUtil.parseYmd(modelEndYmd);
+			// 결과 생성 날짜범위 루프
+			while (currDate.compareTo(toDate) <= 0) {
+				String ymd = BoatUtil.formatYmd(currDate);
 				
-				// db insert
-				insertDB(exNo, session, dbRec, listClassification);
+				// 해당날짜의 데이터 취득
+				List<DBRecord> listRec = mapListYmd.get(ymd);
+				if (listRec == null) {
+					currDate = currDate.plusDays(1);
+					continue;
+				}
+				
+				// 해당날짜의 레이스 데이터 루프
+				for (DBRecord dbRec : listRec) {
+					MlClassificationMapper mapper = session.getMapper(MlClassificationMapper.class);
+					// classify
+					List<Classification> listClassification = rc.classify(mapper, dbRec);
+					
+					// db insert
+					insertDB(exNo, session, dbRec, listClassification);
+				}
+				
+				logger.debug(exNo + " ml_(pork)_classification inserted. " + ymd + "/" + modelEndYmd);
+				
+				// 하루 증가
+				currDate = currDate.plusDays(1);
+				
+				session.commit();
 			}
-			
-			logger.debug(exNo + " ml_(pork)_classification inserted. " + ymd + "/" + modelEndYmd);
-			
-			// 하루 증가
-			currDate = currDate.plusDays(1);
-			
-			session.commit();
+		} finally {
+			DatabaseUtil.close(session);		
 		}
-		
-		DatabaseUtil.close(session);		
 	}
 
 	/** classification結果をDBにinsertする */

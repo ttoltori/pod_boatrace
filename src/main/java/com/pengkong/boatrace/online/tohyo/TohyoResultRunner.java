@@ -122,10 +122,13 @@ public class TohyoResultRunner implements Runnable {
 	List<MlResult> loadOlResults(OlRace race) throws IOException, SQLException {
 		List<MlResult> results;
 		SqlSession session = DatabaseUtil.open(prop.getString("target_db_resource"), false);
-		MlResultDAO dao = new MlResultDAO(session);
-		results = dao.select(race.getYmd(), race.getJyocd(), race.getRaceno().shortValue());
-		
-		DatabaseUtil.close(session);
-		return results;
+		try {
+			MlResultDAO dao = new MlResultDAO(session);
+			results = dao.select(race.getYmd(), race.getJyocd(), race.getRaceno().shortValue());
+			
+			return results;
+		} finally {
+			DatabaseUtil.close(session);
+		}
 	}
 }

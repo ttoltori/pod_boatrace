@@ -6,11 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.pengkong.boatrace.exp10.enums.FeatureType;
-import com.pengkong.boatrace.exp10.odds.provider.OddsProviderInterface;
 import com.pengkong.boatrace.exp10.property.Clazz;
 import com.pengkong.boatrace.exp10.property.Feature;
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
-import com.pengkong.boatrace.exp10.simulation.data.rmi.client.RmiBeforeOddsProvider;
 import com.pengkong.boatrace.server.db.dto.DBRecord;
 import com.pengkong.boatrace.weka.automation.NominalManager;
 import com.pengkong.common.FileUtil;
@@ -22,13 +20,11 @@ import com.pengkong.common.FileUtil;
  *
  */
 public class MLArffCreator {
-	Logger logger = LoggerFactory.getLogger(MLArffCreator.class);
-	MLPropertyUtil prop = MLPropertyUtil.getInstance();
+	protected Logger logger = LoggerFactory.getLogger(this.getClass());
+	protected MLPropertyUtil prop = MLPropertyUtil.getInstance();
 	
-	NominalManager nominalManager = NominalManager.getInstance();
+	protected NominalManager nominalManager = NominalManager.getInstance();
 	
-	/** 直前オッズprovider */
-	protected OddsProviderInterface beforeOddsProvider = new RmiBeforeOddsProvider();
 	public MLArffCreator() {
 	}
 
@@ -59,7 +55,7 @@ public class MLArffCreator {
 	 * @return 
 	 * @throws Exception
 	 */
-	private StringBuilder createArffHeader(List<Feature> listFeature, Clazz clazz) throws Exception {
+	protected StringBuilder createArffHeader(List<Feature> listFeature, Clazz clazz) throws Exception {
 		
 		StringBuilder sb = new StringBuilder();
 		sb.append("% " + prop.getString("model_no")); sb.append(System.lineSeparator());
@@ -84,7 +80,7 @@ public class MLArffCreator {
 		return sb;
 	}
 	
-	private StringBuilder createArffBody(List<Feature> listFeature, List<DBRecord> listDb) throws Exception {
+	protected StringBuilder createArffBody(List<Feature> listFeature, List<DBRecord> listDb) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		
 		for (DBRecord rec : listDb) {
@@ -99,7 +95,7 @@ public class MLArffCreator {
 		return sb;
 	}
 	
-	private String convertFeature(Feature feature) {
+	protected String convertFeature(Feature feature) {
 		// nominal attribute
 		if (feature.arffType.equals(FeatureType.NOMINAL.getValue())) {
 			return "@ATTRIBUTE " + feature.arffName + " " + nominalManager.getNominalAttr(feature.arffName);

@@ -62,14 +62,17 @@ public class TohyoExecutor {
 		
 		// DB insert
 		SqlSession session = DatabaseUtil.open(prop.getString("target_db_resource"), false);
-		MlResultDAO dao = new MlResultDAO(session);
-		for (MlResult result : results) {
-			dao.insert(result);
+		try {
+			MlResultDAO dao = new MlResultDAO(session);
+			for (MlResult result : results) {
+				dao.insert(result);
+			}
+			session.commit();
+			
+			return results.size();
+		} finally {
+			DatabaseUtil.close(session);
 		}
-		
-		session.commit();
-		DatabaseUtil.close(session);
-		return results.size();
 	}
 
 	/**

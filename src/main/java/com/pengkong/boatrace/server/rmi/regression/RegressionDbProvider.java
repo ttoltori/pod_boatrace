@@ -112,45 +112,48 @@ public class RegressionDbProvider extends UnicastRemoteObject implements Regress
 
 	public void loadDBInnter(String fromYmd, String toYmd) throws Exception {
 		SqlSession session = DatabaseUtil.open("mybatis-config.0.xml", false);
-		
-		CustomMapper customMapper = session.getMapper(CustomMapper.class);
-		HashMap<String, String> mapParam = new HashMap<>();
-		mapParam.put("fromYmd", fromYmd);
-		mapParam.put("toYmd", toYmd);
-		listDbRecord = customMapper.selectRegressionDbList(mapParam);
-		
-		DatabaseUtil.close(session);
-		if (listDbRecord.size() <= 0) {
-			throw new Exception("db has no data.");
+		try {
+			CustomMapper customMapper = session.getMapper(CustomMapper.class);
+			HashMap<String, String> mapParam = new HashMap<>();
+			mapParam.put("fromYmd", fromYmd);
+			mapParam.put("toYmd", toYmd);
+			listDbRecord = customMapper.selectRegressionDbList(mapParam);
+			
+			if (listDbRecord.size() <= 0) {
+				throw new Exception("db has no data.");
+			}
+			
+			for (DBRecord rec : listDbRecord) {
+				String kumiban;
+				kumiban = rec.getString("tansyono");
+				if (kumiban.equals("1") || kumiban.equals("2") || kumiban.equals("3")) {
+					mapBetType.addItem("1T", rec);
+				}
+				
+				kumiban = rec.getString("nirentanno");
+				if (kumiban.equals("12") || kumiban.equals("13") || kumiban.equals("21") || kumiban.equals("31")) {
+					mapBetType.addItem("2T", rec);
+				}
+				
+				kumiban = rec.getString("sanrentanno");
+				if (kumiban.equals("123") || kumiban.equals("132") || kumiban.equals("213") || kumiban.equals("231") || kumiban.equals("312") || kumiban.equals("321")) {
+					mapBetType.addItem("3T", rec);
+				}
+				
+				kumiban = rec.getString("nirenhukuno");
+				if (kumiban.equals("12") || kumiban.equals("13")) {
+					mapBetType.addItem("2F", rec);
+				}
+				
+				kumiban = rec.getString("sanrenhukuno");
+				if (kumiban.equals("123")) {
+					mapBetType.addItem("3F", rec);
+				}
+			}
+			logger.info("db loaded. " + fromYmd + "~" + toYmd + ": " + listDbRecord.size() + " records.");
+			
+		} finally {
+			DatabaseUtil.close(session);
 		}
-		
-		for (DBRecord rec : listDbRecord) {
-			String kumiban;
-			kumiban = rec.getString("tansyono");
-			if (kumiban.equals("1") || kumiban.equals("2") || kumiban.equals("3")) {
-				mapBetType.addItem("1T", rec);
-			}
-			
-			kumiban = rec.getString("nirentanno");
-			if (kumiban.equals("12") || kumiban.equals("13") || kumiban.equals("21") || kumiban.equals("31")) {
-				mapBetType.addItem("2T", rec);
-			}
-			
-			kumiban = rec.getString("sanrentanno");
-			if (kumiban.equals("123") || kumiban.equals("132") || kumiban.equals("213") || kumiban.equals("231") || kumiban.equals("312") || kumiban.equals("321")) {
-				mapBetType.addItem("3T", rec);
-			}
-			
-			kumiban = rec.getString("nirenhukuno");
-			if (kumiban.equals("12") || kumiban.equals("13")) {
-				mapBetType.addItem("2F", rec);
-			}
-			
-			kumiban = rec.getString("sanrenhukuno");
-			if (kumiban.equals("123")) {
-				mapBetType.addItem("3F", rec);
-			}
-		}
-		logger.info("db loaded. " + fromYmd + "~" + toYmd + ": " + listDbRecord.size() + " records.");
 	}
 }

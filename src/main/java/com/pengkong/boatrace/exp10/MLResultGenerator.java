@@ -12,12 +12,14 @@ import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.pengkong.boatrace.common.enums.Delimeter;
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
 import com.pengkong.boatrace.exp10.property.PatternTemplate;
 import com.pengkong.boatrace.exp10.property.SqlTemplate;
 import com.pengkong.boatrace.exp10.property.StrategyTemplate;
 import com.pengkong.boatrace.exp10.result.AbstractResultCreator;
 import com.pengkong.boatrace.exp10.result.graph.ResultGraphBuilder;
+import com.pengkong.boatrace.exp10.result.graph.split.ResultGraphBuilderSplit;
 import com.pengkong.boatrace.exp10.result.stat.MlBorkEvaluationCreator;
 import com.pengkong.boatrace.exp10.result.stat.MlEvaluationCreator;
 import com.pengkong.boatrace.exp10.result.stat.MlPrEvaluationCreator;
@@ -25,6 +27,7 @@ import com.pengkong.boatrace.exp10.result.stat.MlRangeEvaluationCreator;
 import com.pengkong.boatrace.exp10.result.stat.MlTermEvaluationCreator;
 import com.pengkong.boatrace.exp10.result.stat.ResultStat;
 import com.pengkong.boatrace.exp10.result.stat.ResultStatBuilder;
+import com.pengkong.boatrace.exp10.result.stat.split.ResultStatBuilderSplit;
 import com.pengkong.boatrace.exp10.simulation.data.AbstractRaceDataLoader;
 import com.pengkong.boatrace.exp10.simulation.data.DBRaceDataLoader;
 import com.pengkong.boatrace.mybatis.client.MlBorkEvaluationMapper;
@@ -43,6 +46,7 @@ import com.pengkong.boatrace.mybatis.entity.MlPrEvaluationExample;
 import com.pengkong.boatrace.mybatis.entity.MlRangeEvaluation;
 import com.pengkong.boatrace.mybatis.entity.MlRangeEvaluationExample;
 import com.pengkong.boatrace.mybatis.entity.MlResult;
+import com.pengkong.boatrace.mybatis.entity.MlResultExample;
 import com.pengkong.boatrace.mybatis.entity.MlTermEvaluation;
 import com.pengkong.boatrace.mybatis.entity.MlTermEvaluationExample;
 import com.pengkong.boatrace.server.db.dto.DBRecord;
@@ -75,10 +79,16 @@ public class MLResultGenerator {
 	StrategyTemplate staTpl = StrategyTemplate.getInstance(); 
 	
 	/** result統計データ生成しｔげ出力 */
-	ResultStatBuilder statBuilder = ResultStatBuilder.getInstance();
+	ResultStatBuilder statBuilder = new ResultStatBuilder();
+
+	/** result統計データ生成しｔげ出力 指定分割*/
+	ResultStatBuilderSplit statBuilderSplit = new ResultStatBuilderSplit();
 
 	/** resultのgraphを生成して出力 */
-	ResultGraphBuilder graphBuilder = ResultGraphBuilder.getInstance();
+	ResultGraphBuilder graphBuilder = new ResultGraphBuilder();
+	
+	/** resultのgraphを生成して出力 指定分割*/
+	ResultGraphBuilderSplit graphBuilderSplit = new ResultGraphBuilderSplit();
 	
 	/** result生成クラス */
 	AbstractResultCreator resultCreator;
@@ -91,6 +101,7 @@ public class MLResultGenerator {
 	protected void setupConfigProperty() {
 		configProperty = "file_result_config";
 		graphBuilder.dirProperty = "dir_result";
+		graphBuilderSplit.dirProperty = "dir_result";
 	}
 	
 	/**
@@ -146,12 +157,17 @@ public class MLResultGenerator {
 		String usedModelNo = prop.getString("used_model_no");
 		// 統計ビルダ初期化
 		statBuilder.clear();
+		statBuilderSplit.clear();
 		
 		String resultStartYmd = prop.getString("result_start_ymd");
 		String resultEndYmd = prop.getString("result_end_ymd");
 		double minBetrate = prop.getDouble("min_betrate");
 		int minBetcnt = prop.getInteger("min_betcnt");
-		double minIncomerate = prop.getDouble("min_incomerate");
+		
+		String[] token = prop.getString("incomerate_range").split(Delimeter.WAVE.getValue());
+		
+		double minIncomerate = Double.valueOf(token[0]);
+		double maxIncomerate = Double.valueOf(token[1]);
 		
 		// 결과생성 대상데이터 취득
 		List<DBRecord> listData = loadDB(resultStartYmd, resultEndYmd);
@@ -170,163 +186,163 @@ public class MLResultGenerator {
 		// 統計とグラフをDBに保存する・しない
 		boolean isSaveStat = prop.getString("save_stat").equals("yes");
 		boolean isSaveGraph = prop.getString("save_graph").equals("yes");
-		// 出力対象統計データ
-		SortedMap<String, ResultStat> statMap;
+		int termSplit = prop.getInteger("term_split");
 		
 		SqlSession session = DatabaseUtil.open(prop.getString("target_db_resource"), false);
-		MlResultMapper mapper = session.getMapper(MlResultMapper.class);
-		MlEvaluationMapper mapperEval = session.getMapper(MlEvaluationMapper.class);
-		MlBorkEvaluationMapper mapperBorkEval = session.getMapper(MlBorkEvaluationMapper.class);
-		MlRorkEvaluationMapper mapperRorkEval = session.getMapper(MlRorkEvaluationMapper.class);
-		MlRangeEvaluationMapper mapperRangeEval = session.getMapper(MlRangeEvaluationMapper.class);
-		MlPrEvaluationMapper mapperPrEval = session.getMapper(MlPrEvaluationMapper.class);
-		MlTermEvaluationMapper mapperTermEval = session.getMapper(MlTermEvaluationMapper.class);
-		
-//		if (isSaveResult) {
-//			// 既存ml_result削除
-//			MlResultExample exam = new MlResultExample();
-//			exam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type"));
-//			mapper.deleteByExample(exam);
-//		}
-		
-		// 결과 생성 날짜범위 루프
-		DateTime currDate = BoatUtil.parseYmd(resultStartYmd);
-		DateTime toDate = BoatUtil.parseYmd(resultEndYmd);
-		while (currDate.compareTo(toDate) <= 0) {
-			String ymd = BoatUtil.formatYmd(currDate);
-			if (!isValidDay(ymd)) {
-				currDate = currDate.plusDays(1);
-				continue;
+		try {
+			MlResultMapper mapper = session.getMapper(MlResultMapper.class);
+			MlEvaluationMapper mapperEval = session.getMapper(MlEvaluationMapper.class);
+			MlBorkEvaluationMapper mapperBorkEval = session.getMapper(MlBorkEvaluationMapper.class);
+			MlRorkEvaluationMapper mapperRorkEval = session.getMapper(MlRorkEvaluationMapper.class);
+			MlRangeEvaluationMapper mapperRangeEval = session.getMapper(MlRangeEvaluationMapper.class);
+			MlPrEvaluationMapper mapperPrEval = session.getMapper(MlPrEvaluationMapper.class);
+			MlTermEvaluationMapper mapperTermEval = session.getMapper(MlTermEvaluationMapper.class);
+			
+			if (isSaveResult) {
+				// 既存ml_result削除
+				MlResultExample exam = new MlResultExample();
+				exam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type"));
+				mapper.deleteByExample(exam);
 			}
 			
-			// 해당날짜의 데이터 취득
-			List<DBRecord> listRec = mapListYmd.get(ymd);
-			if (listRec == null) {
-				currDate = currDate.plusDays(1);
-				continue;
-			}
-
-			// 確定オッズ 로딩
-			//ResultOddsManager.getInstance().load(ymd);
-
-			// 해당날짜의 레이스 데이터 루프
-			for (DBRecord dbRec : listRec) {
-				List<MlResult> listResult = createResult(dbRec, resultCreator);
-				if (listResult == null || listResult.size() <= 0)
-					continue;
-				// 累積統計データ追加
-				statBuilder.addAll(listResult);
-				
-//				String strResult = String.join(",", listResult.get(0).getYmd(), listResult.get(0).getJyocd(), listResult.get(0).getRaceno().toString()) + " bet:" + listResult.size();
-//				for (MlResult result : listResult) {
-//					 strResult += "," + String.join("_", result.getBettype(), result.getBetKumiban()); 
-//				}
-//				logger.debug(strResult);
-				
-				if (!isSaveResult)
-					continue;
-				
-				// DB insert
-				for (MlResult result : listResult) {
-//					// 直前オッズが存在する場合のみDBに保存する
-//					if (result.getBetOdds() == null) {
-//						continue;
-//					}
-					mapper.insert(result);
-				}
-			}
-			
-			logger.debug(exNo + " processed... " + ymd + "/" + resultEndYmd);
-			//session.commit();
-			
-			// 하루 증가
-			currDate = currDate.plusDays(1);
-		}
-
-		// 既存実験番号削除
-		if (isSaveStat) {
-			MlEvaluationExample exam;
-			exam = new MlEvaluationExample();
-			exam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
-			mapperEval.deleteByExample(exam);
-			
-			MlBorkEvaluationExample borkExam = new MlBorkEvaluationExample();
-			borkExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
-			mapperBorkEval.deleteByExample(borkExam);
-
-//			MlRorkEvaluationExample rorkExam = new MlRorkEvaluationExample();
-//			rorkExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
-//			mapperRorkEval.deleteByExample(rorkExam);
-			
-			MlRangeEvaluationExample rangeExam = new MlRangeEvaluationExample();
-			rangeExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
-			mapperRangeEval.deleteByExample(rangeExam);
-			
-			MlPrEvaluationExample prExam = new MlPrEvaluationExample();
-			prExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
-			mapperPrEval.deleteByExample(prExam);
-			
-			MlTermEvaluationExample termExam = new MlTermEvaluationExample();
-			termExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
-			mapperTermEval.deleteByExample(termExam);
-		}
-		
-		if (isSaveGraph || isSaveStat) {
-			// 実験結果の統計データをDBに保存する
-			int splitNum = prop.getInteger("split");
-			for (ResultStat stat : statBuilder.getMapStat().values()) {
-				
-				// ！注意：graph出力用データがstatに更新されるためDB保存に関係なくcreateMlEvaluationを呼び出しておく必要がある
-				MlEvaluationCreator evaluationCreator = new MlEvaluationCreator(stat);
-				MlBorkEvaluationCreator borkEvaluationCreator = new MlBorkEvaluationCreator(stat);
-//				MlRorkEvaluationCreator rorkEvaluationCreator = new MlRorkEvaluationCreator(stat);
-				MlRangeEvaluationCreator rangeEvalCreator = new MlRangeEvaluationCreator(stat);
-				MlPrEvaluationCreator prEvaluationCreator = new MlPrEvaluationCreator(stat);
-				MlTermEvaluationCreator termEvaluationCreator = new MlTermEvaluationCreator(stat);
-				
-				// グラフ出力時必須
-				MlEvaluation rec = evaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum);
-				MlRangeEvaluation rangeRec = rangeEvalCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum);
-				
-				// オプション
-				MlBorkEvaluation borkRec = borkEvaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum);
-//				MlRorkEvaluation rorkRec = rorkEvaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum);
-				MlPrEvaluation prRec = prEvaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum); 
-				MlTermEvaluation termRec = termEvaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum); 
-				if (rec == null) { // 的中が一つも存在しない場合
+			// 결과 생성 날짜범위 루프
+			DateTime currDate = BoatUtil.parseYmd(resultStartYmd);
+			DateTime toDate = BoatUtil.parseYmd(resultEndYmd);
+			while (currDate.compareTo(toDate) <= 0) {
+				String ymd = BoatUtil.formatYmd(currDate);
+				if (!isValidDay(ymd)) {
+					currDate = currDate.plusDays(1);
 					continue;
 				}
 				
-				if (isSaveStat) {
-					// insert
-					mapperEval.insert(rec);
-					mapperRangeEval.insert(rangeRec);
+				// 해당날짜의 데이터 취득
+				List<DBRecord> listRec = mapListYmd.get(ymd);
+				if (listRec == null) {
+					currDate = currDate.plusDays(1);
+					continue;
+				}
+
+				// 해당날짜의 레이스 데이터 루프
+				for (DBRecord dbRec : listRec) {
+					List<MlResult> listResult = createResult(dbRec, resultCreator);
+					if (listResult == null || listResult.size() <= 0)
+						continue;
+
+					// 累積統計データ追加
+					statBuilder.addAll(listResult);
+					if (termSplit > 1) {
+						statBuilderSplit.addAll(listResult);
+					}
 					
-					mapperBorkEval.insert(borkRec);
-//					mapperRorkEval.insert(rorkRec);
-					mapperPrEval.insert(prRec);
-					mapperTermEval.insert(termRec);
+					if (!isSaveResult)
+						continue;
+					
+					// DB insert
+					for (MlResult result : listResult) {
+						mapper.insert(result);
+					}
+				}
+				
+				logger.debug(exNo + " processed... " + ymd + "/" + resultEndYmd);
+				//session.commit();
+				
+				// 하루 증가
+				currDate = currDate.plusDays(1);
+			}
+
+			// 既存実験番号削除
+			if (isSaveStat) {
+				MlEvaluationExample exam;
+				exam = new MlEvaluationExample();
+				exam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
+				mapperEval.deleteByExample(exam);
+				
+				MlBorkEvaluationExample borkExam = new MlBorkEvaluationExample();
+				borkExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
+				mapperBorkEval.deleteByExample(borkExam);
+
+//				MlRorkEvaluationExample rorkExam = new MlRorkEvaluationExample();
+//				rorkExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
+//				mapperRorkEval.deleteByExample(rorkExam);
+				
+				MlRangeEvaluationExample rangeExam = new MlRangeEvaluationExample();
+				rangeExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
+				mapperRangeEval.deleteByExample(rangeExam);
+				
+				MlPrEvaluationExample prExam = new MlPrEvaluationExample();
+				prExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
+				mapperPrEval.deleteByExample(prExam);
+				
+				MlTermEvaluationExample termExam = new MlTermEvaluationExample();
+				termExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
+				mapperTermEval.deleteByExample(termExam);
+			}
+			
+			if (isSaveGraph || isSaveStat) {
+				// 実験結果の統計データをDBに保存する
+				int splitNum = prop.getInteger("split");
+				for (ResultStat stat : statBuilder.getMapStat().values()) {
+					// ！注意：graph出力用データがstatに更新されるためDB保存に関係なくcreateMlEvaluationを呼び出しておく必要がある
+					MlEvaluationCreator evaluationCreator = new MlEvaluationCreator(stat);
+					MlBorkEvaluationCreator borkEvaluationCreator = new MlBorkEvaluationCreator(stat);
+//					MlRorkEvaluationCreator rorkEvaluationCreator = new MlRorkEvaluationCreator(stat);
+					MlRangeEvaluationCreator rangeEvalCreator = new MlRangeEvaluationCreator(stat);
+					MlPrEvaluationCreator prEvaluationCreator = new MlPrEvaluationCreator(stat);
+					MlTermEvaluationCreator termEvaluationCreator = new MlTermEvaluationCreator(stat);
+					
+					// グラフ出力時必須
+					MlEvaluation rec = evaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum);
+					MlRangeEvaluation rangeRec = rangeEvalCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum);
+					
+					// オプション
+					MlBorkEvaluation borkRec = borkEvaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum);
+//					MlRorkEvaluation rorkRec = rorkEvaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum);
+					MlPrEvaluation prRec = prEvaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum); 
+					MlTermEvaluation termRec = termEvaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum); 
+					if (rec == null) { // 的中が一つも存在しない場合
+						continue;
+					}
+					
+					if (isSaveStat) {
+						// insert
+						mapperEval.insert(rec);
+						mapperRangeEval.insert(rangeRec);
+						
+						mapperBorkEval.insert(borkRec);
+//						mapperRorkEval.insert(rorkRec);
+						mapperPrEval.insert(prRec);
+						mapperTermEval.insert(termRec);
+					}
 				}
 			}
-		}
 
-		session.commit();
-		
-		// 実験結果の統計データを基にgraphをファイルに出力する
-		if (isSaveGraph) {
-			// 結果出力対象の統計データマップを最低betcntでフィルタする
-			statMap = limitBetcnt(statBuilder.getMapStat(), minBetcnt);
+			session.commit();
 			
-			// 結果出力対象の統計データマップを最低betcntでフィルタする
-			statMap = limitBetrate(statMap, minBetrate);
+			// 実験結果の統計データを基にgraphをファイルに出力する
+			if (isSaveGraph) {
+				// 出力対象統計データ
+				SortedMap<String, ResultStat> statMap = statBuilder.getMapStat();
+				
+				// 結果出力対象の統計データマップを最低betcntでフィルタする
+				statMap = limitBetcnt(statMap, minBetcnt);
+				
+				// 結果出力対象の統計データマップを最低betcntでフィルタする
+				statMap = limitBetrate(statMap, minBetrate);
+				
+				// 結果出力対象の統計データマップを最低incomerateでフィルタする
+				statMap = limitIncomerate(statMap, minIncomerate, maxIncomerate);
+				
+				if (termSplit < 2) {
+					graphBuilder.save(statMap);
+				} else {
+					graphBuilderSplit.save(statMap, statBuilderSplit.getMapListStat());
+				}
+				
+			}
 			
-			// 結果出力対象の統計データマップを最低incomerateでフィルタする
-			statMap = limitIncomerate(statMap, minIncomerate);
-			
-			graphBuilder.save(statMap);
+		} finally {
+			DatabaseUtil.close(session);
 		}
-
-		DatabaseUtil.close(session);
 	}
 	
 	List<MlResult> createResult(DBRecord rec, AbstractResultCreator resultCreator) throws Exception {
@@ -360,14 +376,15 @@ public class MLResultGenerator {
 	 * @param srcMap
 	 * @return
 	 */
-	SortedMap<String, ResultStat> limitIncomerate(SortedMap<String, ResultStat> srcMap, double minIncomerate) {
+	SortedMap<String, ResultStat> limitIncomerate(SortedMap<String, ResultStat> srcMap, double minIncomerate, double maxIncomerate) {
 		if (minIncomerate <= 0) {
 			return srcMap;
 		}
 
 		SortedMap<String, ResultStat> result = new TreeMap<>();
 		for (Entry<String, ResultStat> entry : srcMap.entrySet()) {
-			if (entry.getValue().incomerate < minIncomerate) {
+			double incomerate = entry.getValue().incomerate;
+			if (incomerate < minIncomerate || incomerate >= maxIncomerate) {
 				logger.info("limit incomerate pattern excluded : " + entry.getValue().pattern);
 				continue;
 			}

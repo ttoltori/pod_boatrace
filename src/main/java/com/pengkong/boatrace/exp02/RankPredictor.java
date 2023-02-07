@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,21 +85,22 @@ public class RankPredictor {
 	 * @throws Exception
 	 */
 	private List<RankDbRecord> loadRankFilterFromDB(String rankType) throws Exception {
-		if (!DatabaseUtil.isOpened()) {
-			DatabaseUtil.open(PropertyUtil.getInstance().getString("target_db"), false);
+		SqlSession session = DatabaseUtil.open(PropertyUtil.getInstance().getString("target_db"), false);
+		try {
+			List<RankDbRecord> results;
+			CustomMapper customMapper = session.getMapper(CustomMapper.class);
+			if (rankType.equals(RankType.ALL)) {
+				results = customMapper.selectRankFilterAll();	
+			} else {
+				HashMap<String, String> param = new HashMap<>();
+				param.put("rankType", rankType);
+				results = customMapper.selectRankFilterByRankType(param);
+			}
+			
+			return results;
+		} finally {
+			DatabaseUtil.close(session);
 		}
-		
-		List<RankDbRecord> results;
-		CustomMapper customMapper = DatabaseUtil.getSession().getMapper(CustomMapper.class);
-		if (rankType.equals(RankType.ALL)) {
-			results = customMapper.selectRankFilterAll();	
-		} else {
-			HashMap<String, String> param = new HashMap<>();
-			param.put("rankType", rankType);
-			results = customMapper.selectRankFilterByRankType(param);
-		}
-		
-		return results;
 	}
 	
 	public static void main(String[] args) {

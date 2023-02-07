@@ -18,7 +18,7 @@ import com.pengkong.common.StringUtil;
 import com.pengkong.common.collection.HashMapList;
 
 /**
- * evaluationリストファイルをロードして保持する. ！！！simul_2に特化する
+ * bork에대해 range로 trim한 evaluation을 생성한다.
  * 
  * @author ttolt
  *
@@ -47,95 +47,97 @@ public class EvaluationSimulLoaderBork extends AbstractEvaluationLoader {
 	 * @throws Exception
 	 */
 	void loadDB() throws Exception {
-		SqlSession session = DatabaseUtil.open(prop.getString("target_db_resource"), false);
-		CustomMapper customMapper = session.getMapper(CustomMapper.class);
+		session = DatabaseUtil.open(prop.getString("target_db_resource"), false);
+		try {
+			CustomMapper customMapper = session.getMapper(CustomMapper.class);
 
-		String sql = sqlTpl.get(prop.getString("group_sql_id"));
+			String sql = sqlTpl.get(prop.getString("group_sql_id"));
 
-		// ex) term_833_1=20180601~20220131
-		String[] tokenTerm = prop.getString("term_" + prop.getString("term")).split(Delimeter.WAVE.getValue());
-		sql = sql.replace("{fromYmd}", tokenTerm[0]);
-		sql = sql.replace("{toYmd}", tokenTerm[1]);
+			// ex) term_833_1=20180601~20220131
+			String[] tokenTerm = prop.getString("term_" + prop.getString("term")).split(Delimeter.WAVE.getValue());
+			sql = sql.replace("{fromYmd}", tokenTerm[0]);
+			sql = sql.replace("{toYmd}", tokenTerm[1]);
 
-		sql = sql.replace("{bettype}", prop.getString("bettype"));
-		sql = sql.replace("{kumiban}", prop.getString("kumiban"));
-		String incr = prop.getString("incr");
-		if (!incr.contains(Delimeter.WAVE.getValue())) {
-			throw new IllegalStateException("incrは「~」で分けて表現してください。");
-		}
-		String[] incrToken = incr.split(Delimeter.WAVE.getValue());
-		sql = sql.replace("{incrmin}", incrToken[0]);
-		if (incrToken[1].equals("x")) {
-			sql = sql.replace("{incrmax}", "999");
-		} else {
-			sql = sql.replace("{incrmax}", incrToken[1]);
-		}
-
-		if (prop.getString("grade_type").equals("ip")) {
-			sql = sql.replace("{result_type}", "1");
-		} else if (prop.getString("grade_type").equals("SG")) {
-			sql = sql.replace("{result_type}", "11");	
-		} else {
-			throw new IllegalStateException("undefined grade type.");
-		}
-
-		String model = prop.getString("model");
-		// "90" -> "99090"
-		model = "99" + StringUtil.leftPad(model, 3, "0");
-		sql = sql.replace("{model}", model);
-
-//		String patternid = prop.getString("patternid");
-//		sql = sql.replace("{patternid}", patternid);
-		String custom = prop.getString("custom");
-		sql = sql.replace("{custom}", custom);
-		
-		HashMap<String, String> mapParam = new HashMap<>();
-		mapParam.put("sql", sql);
-
-		// 디비 데이터 일람 취득
-		List<DBRecord> results = customMapper.selectSql(mapParam);
-		if (results.size() <= 0) {
-			throw new WarningException("db has no evaluation data.");
-		}
-
-		DatabaseUtil.close(session);
-		
-		// Evaluation生成
-		HashMap<String, String> mapDuplicateCheck = new HashMap<>();
-		for (DBRecord rec : results) {
-			// Evaluationファイル１行生成
-			Evaluation eval = EvaluationHelper.createEvaluation(rec);
-			
-			// borkをborに変換するか
-			String borConvert = prop.getString("bork_bor_convert");
-			if (borConvert.equals("yes")) {
-				String borString = borkRangeTrim.createBorString(rec);
-				if (borString == null) {
-					continue;
-				}
-				eval.put("bonus_bor", borString);	
+			sql = sql.replace("{bettype}", prop.getString("bettype"));
+			sql = sql.replace("{kumiban}", prop.getString("kumiban"));
+			String incr = prop.getString("incr");
+			if (!incr.contains(Delimeter.WAVE.getValue())) {
+				throw new IllegalStateException("incrは「~」で分けて表現してください。");
+			}
+			String[] incrToken = incr.split(Delimeter.WAVE.getValue());
+			sql = sql.replace("{incrmin}", incrToken[0]);
+			if (incrToken[1].equals("x")) {
+				sql = sql.replace("{incrmax}", "999");
 			} else {
-				String borkString = borkRangeTrim.createBorkString(rec);
-				if (borkString == null) {
+				sql = sql.replace("{incrmax}", incrToken[1]);
+			}
+
+			if (prop.getString("grade_type").equals("ip")) {
+				sql = sql.replace("{result_type}", "1");
+			} else if (prop.getString("grade_type").equals("SG")) {
+				sql = sql.replace("{result_type}", "11");	
+			} else {
+				throw new IllegalStateException("undefined grade type.");
+			}
+
+			String model = prop.getString("model");
+			// "90" -> "99090"
+			model = "99" + StringUtil.leftPad(model, 3, "0");
+			sql = sql.replace("{model}", model);
+
+//			String patternid = prop.getString("patternid");
+//			sql = sql.replace("{patternid}", patternid);
+			String custom = prop.getString("custom");
+			sql = sql.replace("{custom}", custom);
+			
+			HashMap<String, String> mapParam = new HashMap<>();
+			mapParam.put("sql", sql);
+
+			// 디비 데이터 일람 취득
+			List<DBRecord> results = customMapper.selectSql(mapParam);
+			if (results.size() <= 0) {
+				throw new WarningException("db has no evaluation data.");
+			}
+
+			// Evaluation生成
+			HashMap<String, String> mapDuplicateCheck = new HashMap<>();
+			for (DBRecord rec : results) {
+				// Evaluationファイル１行生成
+				Evaluation eval = EvaluationHelper.createEvaluation(rec);
+				
+				// borkをborに変換するか
+				String borConvert = prop.getString("bork_bor_convert");
+				if (borConvert.equals("yes")) {
+					String borString = borkRangeTrim.createBorString(rec);
+					if (borString == null) {
+						continue;
+					}
+					eval.put("bonus_bor", borString);	
+				} else {
+					String borkString = borkRangeTrim.createBorkString(rec);
+					if (borkString == null) {
+						continue;
+					}
+					eval.put("bonus_bork", borkString);
+				}
+				
+				String unkqueKey = eval.getUniqueKey();
+				// 重複あり
+				if (mapDuplicateCheck.containsKey(unkqueKey)) {
+					logger.warn("Duplicate evaluation exists. " + eval);
 					continue;
 				}
-				eval.put("bonus_bork", borkString);
+				mapDuplicateCheck.put(unkqueKey, unkqueKey);
+				
+				mapListEval.addItem(eval.getBettypeKumibanModelNo(), eval);
+				listEval.add(eval);
 			}
 			
-			String unkqueKey = eval.getUniqueKey();
-			// 重複あり
-			if (mapDuplicateCheck.containsKey(unkqueKey)) {
-				logger.warn("Duplicate evaluation exists. " + eval);
-				continue;
-			}
-			mapDuplicateCheck.put(unkqueKey, unkqueKey);
-			
-			mapListEval.addItem(eval.getBettypeKumibanModelNo(), eval);
-			listEval.add(eval);
+			// group file 保存
+			groupFileGenerator.generateWithEvaluations(sql, listEval);			
+		} finally {
+			DatabaseUtil.close(session);
 		}
-		
-		// group file 保存
-		groupFileGenerator.generateWithEvaluations(sql, listEval);
 	}
 
 	/** ex) ["83,94"] -> "99083,99094" */
@@ -152,7 +154,7 @@ public class EvaluationSimulLoaderBork extends AbstractEvaluationLoader {
 	}
 
 	public static void main(String[] args) {
-		String propertyFilepath = "C:/Dev/workspace/Oxygen/pod_boatrace/properties/expr10/expr10.properties";
+		String propertyFilepath = "C:/Dev/git/pod_boatrace/properties/expr10/expr10.properties";
 		
 		try {
 			MLPropertyUtil.getInstance().addFile(propertyFilepath);

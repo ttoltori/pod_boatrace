@@ -3,10 +3,14 @@ package com.pengkong.boatrace.exp10.simulation.data.rmi.server;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
 
 public class RmiDataServer {
 	MLPropertyUtil prop = MLPropertyUtil.getInstance(); 
+	static Logger logger = LoggerFactory.getLogger(RmiDataServer.class);
 	
 	public void start() throws Exception {
 		RmiDataServerInterface server = new DataServer();
@@ -31,6 +35,7 @@ public class RmiDataServer {
 			
 			new RmiDataServer().start();
 		} catch (Exception e) {
+			logger.error("RmiDataServer failed", e);
 			e.printStackTrace();
 		}
 	}

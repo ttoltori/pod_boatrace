@@ -85,7 +85,51 @@ copy ml_classification from 'D:\Dev\export\ml_classification.20220427_2.tsv' csv
 insert into ml_classification select * from ml_classification_bk1 where modelno::int in (99069,99072);
 
 !!!노트북에서 ml_classify할때 referential은 model_release, ml_classification도 동기화해두어야 한다.
+========================================================================
+20230130
+1T
+ 2 : ~103モデルが有効
+ 3 : wk123で99100はダメ97100は成功
 
+2T
+ 15 : ~102モデルのprobability 0~0.25
+ 16 : ~103モデルのprobability 0~0.25 or ~100モデルのbork 1~3
+ 21 : 99100만 간신히 재현성이 높다.
+ 23 : 99100만 간신히 재현성이 높다.
+
+========================================================================
+insert into ml_evaluation_bk1 select * from ml_evaluation where resultno::int between 3761 and 4960;
+insert into ml_bork_evaluation_bk1 select * from ml_bork_evaluation where resultno::int between 3761 and 4960;
+insert into ml_pr_evaluation_bk1 select * from ml_pr_evaluation where resultno::int between 3761 and 4960;
+insert into ml_range_evaluation_bk1 select * from ml_range_evaluation where resultno::int between 3761 and 4960;
+
+delete from ml_evaluation where resultno::int between 272477 and 273260;
+delete from ml_bork_evaluation where resultno::int between 272477 and 273260;
+delete from ml_pr_evaluation where resultno::int between 272477 and 273260;
+delete from ml_range_evaluation where resultno::int between 272477 and 273260;
+
+
+20230101
+delete from ml_evaluation where resultno::int between 4161 and 4560;
+delete from ml_bork_evaluation where resultno::int between 4161 and 4560;
+delete from ml_pr_evaluation where resultno::int between 4161 and 4560;
+delete from ml_range_evaluation where resultno::int between 4161 and 4560;
+
+아래 sql로 bettype별 모델을 성능순으로 2개를 선별
+select 
+  modelno, bettype, sum(betcnt) betcnt, sum(hitamt) - sum(betamt) income, (sum(hitamt) - sum(betamt)) / sum(betcnt) performance
+from ml_evaluation me 
+where result_type = '1' 
+group by modelno, bettype
+order by bettype, performance desc
+;
+
+1T 99100,97100,97080
+2F 99102,97080,99080
+2T 97080,99080,99100
+3F 97100,99100,97103
+3T 97103,99080,97080
+  
 ========================================================================
 20221211
 98계열 모델은 버린다. 최초 ml_evaluation을 복원해서 FTP-3 시뮬레이션 돌린다.
@@ -1757,7 +1801,7 @@ group by sanrentanodds order by sanrentanodds;
 데이터 없데이트 수순
 
 java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
-  com.pengkong.boatrace.scraping.BoatWebDownloader 20221106 20221210
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20221211 20230130
 
 java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*;. ^
   com.pengkong.boatrace.util.RaceFileUploader 20221106 20221210 C:/Dev/workspace/Oxygen/pod_boatrace_test/properties/race_result_rebuild.properties

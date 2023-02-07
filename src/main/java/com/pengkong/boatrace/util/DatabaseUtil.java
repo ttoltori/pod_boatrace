@@ -44,8 +44,12 @@ public class DatabaseUtil {
 	}
 
 	/** SqlSessionを返却する */
-	public static void close(SqlSession session) throws SQLException {
-	    session.close();
+	public static void close(SqlSession session) {
+		if (session == null) {
+			return;
+		}
+
+		session.close();
 	    session = null;
 	    
 //		if (session.getConnection().getAutoCommit()) {

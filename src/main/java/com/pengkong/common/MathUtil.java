@@ -272,8 +272,25 @@ public class MathUtil {
 		return result;
 	}
 
+	public static Double getHistogramValue(Double value, List<Double> splitValues) {
+        if (value < splitValues.get(0)) {
+            return 0.0; // 最小値未満の場合0
+        } else if (value >= splitValues.get(splitValues.size()-1)) {
+            return splitValues.get(splitValues.size()-1); // 最大値以上の場合最大値 
+        }
+
+        for (int i = 0; i < splitValues.size() - 1; i++) {
+            if (value >= splitValues.get(i) && value < splitValues.get(i+1)) {
+                return splitValues.get(i);
+            }
+        }
+        
+        throw new IllegalStateException();
+	}
+	
 	public static void main(String[] args) {
 		try {
+		    
 			System.out.println((double)21 / 100.0);
 			System.out.println((double)33 / 100.0);
 			

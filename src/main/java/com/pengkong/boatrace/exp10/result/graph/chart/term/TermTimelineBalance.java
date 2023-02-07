@@ -13,9 +13,11 @@ import org.knowm.xchart.internal.chartpart.Chart;
 import org.knowm.xchart.style.Styler.LegendPosition;
 import org.knowm.xchart.style.markers.SeriesMarkers;
 
+import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
 import com.pengkong.boatrace.exp10.result.graph.chart.AbstractChart;
 import com.pengkong.boatrace.exp10.result.stat.ResultStat;
 import com.pengkong.boatrace.exp10.simulation.range.RangeStatUnit;
+import com.pengkong.boatrace.util.BoatUtil;
 import com.pengkong.common.MathUtil;
 
 /**
@@ -53,8 +55,8 @@ public class TermTimelineBalance extends AbstractChart {
 	protected String createBottomLabel() {
 		String label = "残高(" + stat.balance  + ") ";
 		label += "BET(cnt=" + stat.sumOfBet + " rate=" + MathUtil.scale2(stat.betrate) + ") ";
-		label += "率坂(bet=" + MathUtil.scale2(dto.getBetrSlope()) + " hit=" + MathUtil.scale2(dto.getHitrSlope())
-		  + " income=" + MathUtil.scale2(dto.getIncrSlope()) + ")" ;
+		label += "率坂(bet=" + MathUtil.scale3(dto.getBetrSlope()) + " hit=" + MathUtil.scale3(dto.getHitrSlope())
+		  + " income=" + MathUtil.scale3(dto.getIncrSlope()) + ")" ;
 		
 		return label;
 	}
@@ -63,7 +65,7 @@ public class TermTimelineBalance extends AbstractChart {
 	@Override
 	protected Chart createChart() {
 		// balance list
-		for (RangeStatUnit unit : stat.termStatUnit.values()) {
+		for (RangeStatUnit unit : stat.termStatBalance.values()) {
 			 balance += unit.getIncome();
 			 listBalance.add(balance);
 		}
@@ -82,14 +84,37 @@ public class TermTimelineBalance extends AbstractChart {
 		double[] yData;
 		XYSeries series;
 		yData = ArrayUtils.toPrimitive(listBalance.toArray(new Double[listBalance.size()]));
+		double[] hLineData = new double[yData.length];
 		// 1000円単位に変換
 		for (int j = 0; j < yData.length; j++) {
-			yData[j] = yData[j] / 1000;
+			hLineData[j] = 0.0;
 		}
+		series = chart.addSeries("hline", hLineData);
+		series.setMarker(SeriesMarkers.NONE);
+		series.setLineColor(Color.BLACK);
+		series.setLineWidth(5);
+		
 		series = chart.addSeries("term", yData);
 		series.setMarker(SeriesMarkers.CIRCLE);
-		series.setLineColor(Color.RED);
+		series.setMarkerColor(Color.RED);
+		series.setLineColor(Color.BLUE);
+		series.setLineWidth(calculateLineWidth());
 		
 		return chart;
 	}
+	
+	@Override
+	protected int calculateLineWidth() {
+		MLPropertyUtil prop = MLPropertyUtil.getInstance();
+		int days = BoatUtil.daysBetween(prop.getString("result_start_ymd"), prop.getString("result_end_ymd"));
+		double dailyBet = stat.sumOfBet / (double)days;
+		if (dailyBet < 0.35) {
+			return 3;
+		} else if (dailyBet > 1) {
+			return 6;
+		}
+		
+		return 4;
+	}
+	
 }

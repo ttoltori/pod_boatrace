@@ -11,6 +11,7 @@ import com.pengkong.boatrace.mybatis.entity.MlBorkEvaluation;
 import com.pengkong.boatrace.mybatis.entity.MlEvaluation;
 import com.pengkong.boatrace.mybatis.entity.MlRangeEvaluation;
 import com.pengkong.boatrace.mybatis.entity.MlRorkEvaluation;
+import com.pengkong.boatrace.util.BoatUtil;
 
 @SuppressWarnings("rawtypes")
 public abstract class AbstractChart {
@@ -76,5 +77,9 @@ public abstract class AbstractChart {
 			return -1;
 		}
 		return (value1);
+	}
+	
+	protected int calculateLineWidth() {
+		return 3;
 	}
 }

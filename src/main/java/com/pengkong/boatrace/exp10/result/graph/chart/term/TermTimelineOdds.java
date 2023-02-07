@@ -69,7 +69,7 @@ public class TermTimelineOdds extends AbstractChart {
 		chart.getStyler().setYAxisGroupPosition(1, YAxisPosition.Right);
 		XYSeries series;
 
-		List<RangeStatUnit> listUnit = new ArrayList<RangeStatUnit>(stat.termStatUnit.values());
+		List<RangeStatUnit> listUnit = new ArrayList<RangeStatUnit>(stat.termStatPerformance.values());
 
 		List<Double> yList1 = new ArrayList<>();
 		List<Double> yList2 = new ArrayList<>();

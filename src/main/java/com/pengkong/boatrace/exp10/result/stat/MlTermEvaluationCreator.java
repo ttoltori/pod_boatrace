@@ -52,7 +52,7 @@ public class MlTermEvaluationCreator extends MlCreatorBase<MlTermEvaluation>
 		List<Double> listIncomerate = new ArrayList<>(); 
 		int termcnt = 0;
 		int pluscnt = 0;
-		for (RangeStatUnit unit : stat.termStatUnit.values()) {
+		for (RangeStatUnit unit : stat.termStatBalance.values()) {
 			if (unit.getIncome() > 0) {
 				pluscnt++;
 			}

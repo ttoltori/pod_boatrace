@@ -49,6 +49,23 @@ BEGIN arff_2
   order by pattern, race.ymd, race.sime
 END
 
+# wk1이 B1인것만 학습해본다. ip,G3,G2대상
+BEGIN arff_3
+  select 'nopattern' pattern, 
+  race.ymd, sanrentanprize::double precision, 
+  {features}, 
+  {class_features} 
+  from rec_race race, rec_racer_arr arr, odds_monitor om
+  where race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno 
+    and race.ymd = om.ymd and race.jyocd = om.jyocd and race.raceno = om.raceno 
+    and sanrentanno <> '不成立' 
+    and grade in ({grade_condition}) 
+    and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
+    and ({class_condition}) 
+    and substring(wakulevellist from 1 for 2) = 'B1'
+  order by pattern, race.ymd, race.sime
+END
+
 -- 指定組番のオッズを予測するため
 BEGIN arff_rg_1
   select 'nopattern' pattern, 
@@ -94,6 +111,7 @@ BEGIN clf_1
     and sanrentanno <> '不成立' 
     and grade in ({grade_condition}) 
     and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
+    and substring(wakulevellist from 1 for 2) = 'B1'
   order by pattern, race.ymd, race.sime
 END
 
@@ -111,6 +129,19 @@ BEGIN clf_2
   order by pattern, race.ymd, race.sime
 END
 
+# wk1이 B1인것만 학습해본다. ip,G3,G2대상
+BEGIN clf_3
+  select 'nopattern' pattern, 
+  race.ymd, race.jyocd, race.raceno, race.sime,  
+  {features} 
+  from rec_race race, rec_racer_arr arr, odds_monitor om
+  where race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno 
+    and race.ymd = om.ymd and race.jyocd = om.jyocd and race.raceno = om.raceno 
+    and sanrentanno <> '不成立' 
+    and grade in ({grade_condition}) 
+    and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
+  order by pattern, race.ymd, race.sime
+END
 
 -- classification data sql
 -- {class_condition}を使う。odds_monitorのJOINのため
@@ -858,3 +889,34 @@ BEGIN FPI-4
 	  and me.incomerate between {incrmin} and {incrmax}
 END
 #		     and modelno in ('99080', '99100')
+#bettype별로 전패턴id에 대해 학습기간 수익률이 1이상인 evaluation을 추출해서 simulation한 후 그래프출력
+BEGIN FPI-5
+	select
+	    '~' sel, (case when me.result_type = '1' or me.result_type = '1C' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+	    me.bettype, me.kumiban, me.resultno, me.modelno, me.patternid, me.pattern, 
+	    (me.hitamt-me.betamt) incamt, me.betcnt, me.incomerate::double precision incrate,
+	    me.hitrate::double precision, me.bal_pluscnt,
+	    'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+	from ml_evaluation me
+    where resultno::int between 4961 and 5744
+     and modelno = '{modelno}'
+     and patternid = '{patternid}'
+     and bettype = '{bettype}'
+     and incomerate between {incrmin} and {incrmax}
+END
+#FPI-5로 생성한 simul결과로부터 선정된 evaluation들을 한개씩 로드한다.
+BEGIN FPI-6
+	select
+	    '~' sel, (case when me.result_type = '1' or me.result_type = '1C' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+	    me.bettype, me.kumiban, me.resultno, me.modelno, me.patternid, me.pattern, 
+	    (me.hitamt-me.betamt) incamt, me.betcnt, me.incomerate::double precision incrate,
+	    me.hitrate::double precision, me.bal_pluscnt,
+	    'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+	from ml_evaluation me
+    where resultno::int between 4961 and 5744
+     and modelno = '{modelno}'
+     and patternid = '{patternid}'
+     and bettype = '{bettype}'
+     and kumiban = '{kumiban}'
+     and incomerate between {incrmin} and {incrmax}
+END

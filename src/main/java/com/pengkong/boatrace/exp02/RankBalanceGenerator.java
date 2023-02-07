@@ -34,50 +34,48 @@ public class RankBalanceGenerator {
 	}
 
 	public void execute() throws Exception {
-		if (!DatabaseUtil.isOpened()) {
-			DatabaseUtil.open(prop.getString("target_db"), false);	
-		}
-		
-		session = DatabaseUtil.getSession();
-		mapper = session.getMapper(CustomMapper.class);
-		balMapper = session.getMapper(RankExtBalanceMapper.class);
-		
-		List<String> listDescription = RankModelManager.getInstance().getDescriptionList();
-		int commitCnt = 0; // 커밋단위수
-		
-		for (String description : listDescription) {
-			logger.info("description processing :" + description);
-			HashMapList<RankDbRecord> mapRecord = loadRankExtMonthly(description);
-			Iterator<String> it = mapRecord.keySet().iterator();
-			while(it.hasNext()) {
-				String extkey = it.next();
-				List<RankDbRecord> listData = mapRecord.get(extkey);
-				int balance = 0;
-				for (int i = 0; i < listData.size(); i++) {
-					RankDbRecord mon = listData.get(i);
-					// monthly로부터 balance레코드를 복사
-					RankExtBalance bal = convert(mon);
-					balance += bal.getIncomeamt();
-					// debug
-					if (balance != bal.getBalance()) {
-						logger.debug("balace different: extkey=" + extkey + ", ym=" + bal.getYm());
-					}
-					bal.setBalance(balance);
-					
-					balMapper.insert(bal);
-					commitCnt++;
-					
-					// 지정건수단위로 커밋
-					if (commitCnt > 10000) {
-						logger.debug("commit");
-						DatabaseUtil.commit();
-						commitCnt = 0;
+		session =DatabaseUtil.open(prop.getString("target_db"), false);	
+
+		try {
+			mapper = session.getMapper(CustomMapper.class);
+			balMapper = session.getMapper(RankExtBalanceMapper.class);
+			
+			List<String> listDescription = RankModelManager.getInstance().getDescriptionList();
+			int commitCnt = 0; // 커밋단위수
+			
+			for (String description : listDescription) {
+				logger.info("description processing :" + description);
+				HashMapList<RankDbRecord> mapRecord = loadRankExtMonthly(description);
+				Iterator<String> it = mapRecord.keySet().iterator();
+				while(it.hasNext()) {
+					String extkey = it.next();
+					List<RankDbRecord> listData = mapRecord.get(extkey);
+					int balance = 0;
+					for (int i = 0; i < listData.size(); i++) {
+						RankDbRecord mon = listData.get(i);
+						// monthly로부터 balance레코드를 복사
+						RankExtBalance bal = convert(mon);
+						balance += bal.getIncomeamt();
+						// debug
+						if (balance != bal.getBalance()) {
+							logger.debug("balace different: extkey=" + extkey + ", ym=" + bal.getYm());
+						}
+						bal.setBalance(balance);
+						
+						balMapper.insert(bal);
+						commitCnt++;
+						
+						// 지정건수단위로 커밋
+						if (commitCnt > 10000) {
+							commitCnt = 0;
+						}
 					}
 				}
 			}
+			
+		} finally {
+			DatabaseUtil.close(session);
 		}
-		DatabaseUtil.commit();
-		DatabaseUtil.close();
 	}
 
 	/**

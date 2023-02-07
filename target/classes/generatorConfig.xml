@@ -85,7 +85,7 @@
           MapperでPKを指定したクエリ(selectByPrimaryKey等)のパラメータがデフォルトでPrimary Keyエンティティになります。
     <table schema="public" tableName="odds_trend"
      -->
-    <table schema="public" tableName="odds_monitor"
+    <table schema="public" tableName="ml_term_evaluation"
             enableInsert="true"
             enableSelectByExample="false"
             enableDeleteByExample="true"

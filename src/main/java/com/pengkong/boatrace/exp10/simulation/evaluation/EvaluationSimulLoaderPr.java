@@ -18,7 +18,7 @@ import com.pengkong.common.StringUtil;
 import com.pengkong.common.collection.HashMapList;
 
 /**
- * evaluationリストファイルをロードして保持する. ！！！simul_2に特化する
+ * probability에 대해 range로 트림한 evaluation을 생성한다.
  * 
  * @author ttolt
  *
@@ -47,79 +47,81 @@ public class EvaluationSimulLoaderPr extends AbstractEvaluationLoader {
 	 * @throws Exception
 	 */
 	void loadDB() throws Exception {
-		SqlSession session = DatabaseUtil.open(prop.getString("target_db_resource"), false);
-		CustomMapper customMapper = session.getMapper(CustomMapper.class);
+		session = DatabaseUtil.open(prop.getString("target_db_resource"), false);
+		try {
+			CustomMapper customMapper = session.getMapper(CustomMapper.class);
 
-		String sql = sqlTpl.get(prop.getString("group_sql_id"));
+			String sql = sqlTpl.get(prop.getString("group_sql_id"));
 
-		// ex) term_833_1=20180601~20220131
-		String[] tokenTerm = prop.getString("term_" + prop.getString("term")).split(Delimeter.WAVE.getValue());
-		sql = sql.replace("{fromYmd}", tokenTerm[0]);
-		sql = sql.replace("{toYmd}", tokenTerm[1]);
+			// ex) term_833_1=20180601~20220131
+			String[] tokenTerm = prop.getString("term_" + prop.getString("term")).split(Delimeter.WAVE.getValue());
+			sql = sql.replace("{fromYmd}", tokenTerm[0]);
+			sql = sql.replace("{toYmd}", tokenTerm[1]);
 
-		sql = sql.replace("{bettype}", prop.getString("bettype"));
-		sql = sql.replace("{kumiban}", prop.getString("kumiban"));
-		String incr = prop.getString("incr");
-		if (!incr.contains(Delimeter.WAVE.getValue())) {
-			throw new IllegalStateException("incrは「~」で分けて表現してください。");
-		}
-		String[] incrToken = incr.split(Delimeter.WAVE.getValue());
-		sql = sql.replace("{incrmin}", incrToken[0]);
-		if (incrToken[1].equals("x")) {
-			sql = sql.replace("{incrmax}", "999");
-		} else {
-			sql = sql.replace("{incrmax}", incrToken[1]);
-		}
-
-		if (prop.getString("grade_type").equals("ip")) {
-			sql = sql.replace("{result_type}", "1");
-		} else if (prop.getString("grade_type").equals("SG")) {
-			sql = sql.replace("{result_type}", "11");	
-		} else {
-			throw new IllegalStateException("undefined grade type.");
-		}
-
-		String[] customPairs = prop.getString("custom").split(Delimeter.COMMA.getValue());
-		String custom = StringUtil.quote(customPairs);
-		sql = sql.replace("{custom}", custom);
-		
-		HashMap<String, String> mapParam = new HashMap<>();
-		mapParam.put("sql", sql);
-
-		// 디비 데이터 일람 취득
-		List<DBRecord> results = customMapper.selectSql(mapParam);
-		if (results.size() <= 0) {
-			throw new WarningException("db has no evaluation data.");
-		}
-
-		DatabaseUtil.close(session);
-		
-		// Evaluation生成
-		HashMap<String, String> mapDuplicateCheck = new HashMap<>();
-		for (DBRecord rec : results) {
-			// Evaluationファイル１行生成
-			Evaluation eval = EvaluationHelper.createEvaluation(rec);
-			
-			String prString = prRangeTrim.createPrString(rec);
-			if (prString == null) {
-				continue;
+			sql = sql.replace("{bettype}", prop.getString("bettype"));
+			sql = sql.replace("{kumiban}", prop.getString("kumiban"));
+			String incr = prop.getString("incr");
+			if (!incr.contains(Delimeter.WAVE.getValue())) {
+				throw new IllegalStateException("incrは「~」で分けて表現してください。");
 			}
-			eval.put("bonus_pr", prString);
-			
-			String unkqueKey = eval.getUniqueKey();
-			// 重複あり
-			if (mapDuplicateCheck.containsKey(unkqueKey)) {
-				logger.warn("Duplicate evaluation exists. " + eval);
-				continue;
+			String[] incrToken = incr.split(Delimeter.WAVE.getValue());
+			sql = sql.replace("{incrmin}", incrToken[0]);
+			if (incrToken[1].equals("x")) {
+				sql = sql.replace("{incrmax}", "999");
+			} else {
+				sql = sql.replace("{incrmax}", incrToken[1]);
 			}
-			mapDuplicateCheck.put(unkqueKey, unkqueKey);
+
+			if (prop.getString("grade_type").equals("ip")) {
+				sql = sql.replace("{result_type}", "1");
+			} else if (prop.getString("grade_type").equals("SG")) {
+				sql = sql.replace("{result_type}", "11");	
+			} else {
+				throw new IllegalStateException("undefined grade type.");
+			}
+
+			String[] customPairs = prop.getString("custom").split(Delimeter.COMMA.getValue());
+			String custom = StringUtil.quote(customPairs);
+			sql = sql.replace("{custom}", custom);
 			
-			mapListEval.addItem(eval.getBettypeKumibanModelNo(), eval);
-			listEval.add(eval);
+			HashMap<String, String> mapParam = new HashMap<>();
+			mapParam.put("sql", sql);
+
+			// 디비 데이터 일람 취득
+			List<DBRecord> results = customMapper.selectSql(mapParam);
+			if (results.size() <= 0) {
+				throw new WarningException("db has no evaluation data.");
+			}
+
+			// Evaluation生成
+			HashMap<String, String> mapDuplicateCheck = new HashMap<>();
+			for (DBRecord rec : results) {
+				// Evaluationファイル１行生成
+				Evaluation eval = EvaluationHelper.createEvaluation(rec);
+				
+				String prString = prRangeTrim.createPrString(rec);
+				if (prString == null) {
+					continue;
+				}
+				eval.put("bonus_pr", prString);
+				
+				String unkqueKey = eval.getUniqueKey();
+				// 重複あり
+				if (mapDuplicateCheck.containsKey(unkqueKey)) {
+					logger.warn("Duplicate evaluation exists. " + eval);
+					continue;
+				}
+				mapDuplicateCheck.put(unkqueKey, unkqueKey);
+				
+				mapListEval.addItem(eval.getBettypeKumibanModelNo(), eval);
+				listEval.add(eval);
+			}
+			
+			// group file 保存
+			groupFileGenerator.generateWithEvaluations(sql, listEval);			
+		} finally {
+			DatabaseUtil.close(session);
 		}
-		
-		// group file 保存
-		groupFileGenerator.generateWithEvaluations(sql, listEval);
 	}
 
 	public static void main(String[] args) {
