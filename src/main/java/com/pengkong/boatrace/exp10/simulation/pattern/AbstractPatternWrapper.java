@@ -324,7 +324,11 @@ public abstract class AbstractPatternWrapper {
 			return String.join("-", wk1(), wk5());
 		case "wk125":
 			return String.join("-", wk1(), wk2(), wk5());
-		
+		// 20230212 追加
+		case "wk12345":
+			return String.join("-", wk1(), wk2(), wk3(), wk4(), wk5());
+		case "wk123456":
+			return String.join("-", wk1(), wk2(), wk3(), wk4(), wk5(), wk6());
 			
 		// 패턴 없음
 		case "nopattern":
@@ -391,6 +395,11 @@ public abstract class AbstractPatternWrapper {
 
 	String wk5() {
 		return getWakulevellist().substring(12, 14); 
+	}
+	
+	// B2-A1-B1-B1-A2-A2
+	String wk6() {
+		return getWakulevellist().substring(15, 17); 
 	}
 
 	String wk12() {

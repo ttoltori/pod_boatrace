@@ -165,3 +165,9 @@ wk13	substring(wakulevellist from 1 for 2) || '-' || substring(wakulevellist fro
 wk14	substring(wakulevellist from 1 for 2) || '-' || substring(wakulevellist from 10 for 2)
 wk15	substring(wakulevellist from 1 for 2) || '-' || substring(wakulevellist from 13 for 2)
 wk125	substring(wakulevellist from 1 for 5) || '-' || substring(wakulevellist from 13 for 2)
+# 2023/2/12 追加
+wk12345	substring(wakulevellist from 1 for 14)
+wk123456	wakulevellist
+# 2023/2/16 追加  borkをパタン化する。javaで値を設定する。AbstractResultCreater.createDefault()
+bork1	'bork1'
+wk1+bork1	substring(wakulevellist from 1 for 2) || '-' || 'bork1'

@@ -127,7 +127,7 @@ public class MLResultGenerator {
 				continue;
 			// 実験実行
 			try {
-				prop.putProperty("evaluations_id", "x");
+				prop.putProperty("evaluations_id", prop.getString("evaluations_id"));
 				executeExperiment(prop.getString("result_no"));
 			} catch (Exception e) {
 				logger.error("experiment " + prop.getString("result_no") + " is failed.", e);

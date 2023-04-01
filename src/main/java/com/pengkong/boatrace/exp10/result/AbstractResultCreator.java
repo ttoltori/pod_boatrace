@@ -11,6 +11,7 @@ import com.pengkong.boatrace.common.enums.Delimeter;
 import com.pengkong.boatrace.exp10.odds.Odds;
 import com.pengkong.boatrace.exp10.odds.provider.OddsProviderInterface;
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
+import com.pengkong.boatrace.exp10.result.stat.BorkPatternProvider;
 import com.pengkong.boatrace.exp10.simulation.probability.calculator.AbstractProbabilityCalculator;
 import com.pengkong.boatrace.mybatis.entity.MlResult;
 import com.pengkong.boatrace.server.db.dto.DBRecord;
@@ -37,6 +38,8 @@ public abstract class AbstractResultCreator {
 	
 	/** 予想的中確率をbettype毎の戦略に沿って組み合わせるためのクラス */
 	protected AbstractProbabilityCalculator probabilityCalculator;
+	
+	protected BorkPatternProvider borkPatternProvider = new BorkPatternProvider();
 	
 	public AbstractResultCreator() {
 	}
@@ -215,7 +218,19 @@ public abstract class AbstractResultCreator {
 		result.setProbability(MathUtil.scale2(probabilityCalculator.calculate(betType.getValue(), rec)));
 		
 		// 直前オッズ
-		result = setBeforeOdds(result);
+		result = setbeforeOdds(result);
+		
+		// 直前オッズがパタンの場合, パタンをborkで書き換える 2023/2/16
+		// borkパタン化をやめる。bonus_borkでテストするほうが効率的に考えられる。 2023/2/19
+		/*
+		if (result.getPatternid().startsWith("wk1+bork1")) {
+			if (beforeOdds != null) {
+				result.setPattern(result.getPattern().replace("bork1", borkPatternProvider.getPattern(result.getPatternid(), beforeOdds)));
+			} else {
+				result.setPattern(result.getPattern().replace(result.getPatternid(), "nobork"));
+			}
+		}
+		*/
 		
 		// 確定オッズ
 		result = setResultOdds(result);
@@ -225,9 +240,8 @@ public abstract class AbstractResultCreator {
 		
 		return result;
 	}
-
-	/** 直前オッズ設定 */
-	protected MlResult setBeforeOdds(MlResult result) throws Exception {
+	
+	protected MlResult setbeforeOdds(MlResult result) throws Exception {
 		// 直前オッズ
 		Odds beforeOdds = beforeOddsProvider.get(result.getYmd(), result.getJyocd(),
 				String.valueOf(result.getRaceno()), result.getBettype(), result.getBetKumiban());
@@ -239,18 +253,18 @@ public abstract class AbstractResultCreator {
 		return result;
 	}
 	
-	/** 確定オッズ設定 */
 	protected MlResult setResultOdds(MlResult result) throws Exception {
+		// 確定オッズ
 		Odds resultOdds = resultOddsProvider.get(result.getYmd(), result.getJyocd(),
 				String.valueOf(result.getRaceno()), result.getBettype(), result.getBetKumiban());
 		if (resultOdds != null) {
 			result.setResultOdds(resultOdds.value);
 			result.setResultOddsrank(resultOdds.rank);
-		} 
+		}
 		
 		return result;
 	}
-
+	
 	/** レース結果設定 */
 	protected MlResult setRaceResult(BetType betType, DBRecord rec, MlResult result) throws Exception {
 		String betTypePrefix = mapBetType.get(betType);
@@ -271,7 +285,7 @@ public abstract class AbstractResultCreator {
 		if (raceOdds != null) {
 			result.setRaceOddsrank(raceOdds.rank);
 		} 
-		
+
 		// 最小ベッティング金額を設定して結果を計算する
 		result = ResultHelper.calculateIncome(result);
 		

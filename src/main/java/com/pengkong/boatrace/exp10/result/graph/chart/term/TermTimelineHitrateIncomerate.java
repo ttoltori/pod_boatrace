@@ -62,11 +62,13 @@ public class TermTimelineHitrateIncomerate extends AbstractChart {
 		XYSeries series;
 		
 		List<RangeStatUnit> listUnit = new ArrayList<RangeStatUnit>(stat.termStatPerformance.values());
+		int size = listUnit.size();
 		
-		double[] yData3 = new double[listUnit.size()];
-		double[] yData4 = new double[listUnit.size()];
 		
-		for (int i = 0; i < listUnit.size(); i++) {
+		double[] yData3 = new double[size];
+		double[] yData4 = new double[size];
+		
+		for (int i = 0; i < size; i++) {
 			yData3[i] = listUnit.get(i).getHitrate(); // 的中率
 			yData4[i] = listUnit.get(i).getIncomerate(); // 収益率
 		}

@@ -66,6 +66,23 @@ BEGIN arff_3
   order by pattern, race.ymd, race.sime
 END
 
+#2차적으,로 ml_classification을 학습시키는 모델을 만들어보자
+BEGIN arff_4
+  select 'nopattern' pattern, 
+  race.ymd, sanrentanprize::double precision, 
+  {features}, 
+  {class_features} 
+  from rec_race race, rec_racer_arr arr, ml_classification clf
+  where race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno 
+    and race.ymd = clf.ymd and race.jyocd = clf.jyocd and race.raceno = clf.raceno 
+    and clf.modelno = '99100'
+    and sanrentanno <> '不成立' 
+    and grade in ({grade_condition}) 
+    and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
+    and ({class_condition}) 
+  order by pattern, race.ymd, race.sime
+END
+
 -- 指定組番のオッズを予測するため
 BEGIN arff_rg_1
   select 'nopattern' pattern, 
@@ -111,7 +128,6 @@ BEGIN clf_1
     and sanrentanno <> '不成立' 
     and grade in ({grade_condition}) 
     and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
-    and substring(wakulevellist from 1 for 2) = 'B1'
   order by pattern, race.ymd, race.sime
 END
 
@@ -137,6 +153,21 @@ BEGIN clf_3
   from rec_race race, rec_racer_arr arr, odds_monitor om
   where race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno 
     and race.ymd = om.ymd and race.jyocd = om.jyocd and race.raceno = om.raceno 
+    and sanrentanno <> '不成立' 
+    and grade in ({grade_condition}) 
+    and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
+  order by pattern, race.ymd, race.sime
+END
+
+# 2차적으,로 ml_classification을 학습시키는 모델을 만들어보자
+BEGIN clf_4
+  select 'nopattern' pattern, 
+  race.ymd, race.jyocd, race.raceno, race.sime,  
+  {features} 
+  from rec_race race, rec_racer_arr arr, ml_classification clf
+  where race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno 
+    and race.ymd = clf.ymd and race.jyocd = clf.jyocd and race.raceno = clf.raceno 
+    and clf.modelno = '99100'
     and sanrentanno <> '不成立' 
     and grade in ({grade_condition}) 
     and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
@@ -920,3 +951,624 @@ BEGIN FPI-6
      and kumiban = '{kumiban}'
      and incomerate between {incrmin} and {incrmax}
 END
+#FPI-2를 bettype,model별로 취득. 
+BEGIN FPI-7
+	select
+	    '~' sel, (case when me.result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+	    me.bettype, me.kumiban, me.resultno, me.modelno, me.patternid, me.pattern, 
+	    (me.hitamt-me.betamt) incamt, me.betcnt, me.incomerate::double precision incrate,
+	    me.hitrate::double precision, me.bal_pluscnt,
+	    'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+	from ml_evaluation me, 
+	(
+	   select 
+	     *
+	   from (
+		   select
+		     row_number() over (partition by result_type, bettype, kumiban order by {factor} desc) as ranking,
+		     *
+		   from st_patternid sp
+		   where result_type = '{result_type}' 
+		     and bettype = '{bettype}'
+		     and modelno in ({models})
+		     and {custom}
+	   ) tmp
+	   where ranking <= {limit}
+	) sp2
+	where me.result_type = sp2.result_type and me.bettype = sp2.bettype and me.kumiban = sp2.kumiban
+	  and me.patternid = sp2.patternid and me.modelno = sp2.modelno 
+	  and me.incomerate between {incrmin} and {incrmax}
+END
+#FPI-7을 99100모델 고정. ranking삭제
+BEGIN FPI-8
+	select
+	    '~' sel, (case when me.result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+	    me.bettype, me.kumiban, me.resultno, me.modelno, me.patternid, me.pattern, 
+	    (me.hitamt-me.betamt) incamt, me.betcnt, me.incomerate::double precision incrate,
+	    me.hitrate::double precision, me.bal_pluscnt,
+	    'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+	from ml_evaluation me, 
+	(
+	   select 
+	     *
+	   from st_patternid sp
+	   where result_type = '{result_type}' 
+	     and bettype = '{bettype}'
+	     and modelno in ({models})
+	     and patternid in ({patternids})
+	) sp2
+	where me.result_type = sp2.result_type and me.bettype = sp2.bettype and me.kumiban = sp2.kumiban
+	  and me.patternid = sp2.patternid and me.modelno = sp2.modelno 
+	  and me.incomerate between {incrmin} and {incrmax}
+END
+#FPI-8을 model, pattern, kumiban별로 테스트
+BEGIN FPI-8-1
+	select
+	    '~' sel, (case when me.result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+	    me.bettype, me.kumiban, me.resultno, me.modelno, me.patternid, me.pattern, 
+	    (me.hitamt-me.betamt) incamt, me.betcnt, me.incomerate::double precision incrate,
+	    me.hitrate::double precision, me.bal_pluscnt,
+	    'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+	from ml_evaluation me, 
+	(
+	   select 
+	     *
+	   from st_patternid sp
+	   where result_type = '{result_type}' 
+	     and bettype = '{bettype}'
+	     and kumiban = '{kumiban}'
+	     and modelno = '{modelno}'
+	     and patternid = '{patternid}'
+	) sp2
+	where me.result_type = sp2.result_type and me.bettype = sp2.bettype and me.kumiban = sp2.kumiban
+	  and me.patternid = sp2.patternid and me.modelno = sp2.modelno 
+	  and me.incomerate between {incrmin} and {incrmax}
+END
+# wk~패턴에 대해 모델별로 3가지 term의 result를 작성하였다. 6662_0,1,2 (result 5787~5882)
+# 위 결과의 term3가지를 눈으로 비교하면서 패턴별로 bork를 조정해가며 6662_3을 확인한다.
+BEGIN FPI-9
+	select
+	    '~' sel, (case when me.result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+	    me.bettype, me.kumiban, me.resultno, me.modelno, me.patternid, me.pattern, 
+	    (me.hitamt-me.betamt) incamt, me.betcnt, me.incomerate::double precision incrate,
+	    me.hitrate::double precision, me.bal_pluscnt,
+	    'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+	from ml_evaluation me
+   where resultno::int between 5787 and 5882
+     and result_type = '{result_type}' 
+     and bettype = '{bettype}'
+     and kumiban = '{kumiban}'
+     and modelno = '{modelno}'
+     and patternid = '{patternid}'
+     and pattern = '{pattern}'
+	
+END
+
+#BEGIN FPH-4
+#select *
+#from (
+#	select
+#	  '~' sel, grades, bettype, kumiban, resultno, modelno, patternid, pattern, ({factor})::double precision factor, 
+#	  incamt, betcnt, incrate, hitrate::double precision, bal_pluscnt, 
+#	  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+#	from stat_bork5
+#	where 
+#	  bettype = '{bettype}' 
+#	  and result_type = '{result_type}' 
+#	  and modelno = '{modelno}'
+#	  and incrate between {incrmin} and {incrmax}
+#	  and ({factor}) is not null
+#	  and evaluations_id = '{result_eval_id}'
+#	  and ( {custom} )
+#	order by ({factor}) desc, hitrate desc limit {limit}
+#) tblForReorder
+#END
+
+-- 위의 FPH-4 sql이 오류였으므로 다시작성하고 관련 simul도 재생성한다.
+-- 임의의 모델에 대해 term구분방식을 바꿔봐면서 stat_bork5를 simul해본다.
+BEGIN FPH-4
+select 
+  '~' sel, grades, bettype, kumiban, ranking, resultno, modelno, patternid, pattern, ({factor})::double precision factor,
+  incamt, betcnt, incrate, hitrate::double precision, bal_pluscnt,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from  
+(
+  select 
+    row_number() over (partition by kumiban order by {factor} desc, hitrate desc) as ranking,
+    *
+  from stat_bork5
+  where
+    bettype = '{bettype}' 
+    and result_type = '{result_type}' 
+    and modelno = '{modelno}'
+    and incrate between {incrmin} and {incrmax}
+    and ({factor}) is not null
+    and ({factor}) > 0
+    and evaluations_id = '{result_eval_id}'
+    and ( {custom} )
+) tmp
+where ranking <= {limit}
+order by bettype, kumiban, ranking
+END
+
+-- FPH4를 구미방별로 테스트해본다.
+BEGIN FPH-4_test
+select 
+  '~' sel, grades, bettype, kumiban, ranking, resultno, modelno, patternid, pattern, ({factor})::double precision factor,
+  incamt, betcnt, incrate, hitrate::double precision, bal_pluscnt,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from  
+(
+  select 
+    row_number() over (partition by kumiban order by {factor} desc, hitrate desc) as ranking,
+    *
+  from stat_bork5
+  where
+    bettype = '{bettype}' 
+    and kumiban = '{kumiban}' 
+    and result_type = '{result_type}' 
+    and modelno = '{modelno}'
+    and incrate between {incrmin} and {incrmax}
+    and ({factor}) is not null
+    and ({factor}) > 0
+    and evaluations_id = '{result_eval_id}'
+    and ( {custom} )
+) tmp
+where ranking <= {limit}
+order by bettype, kumiban, ranking
+END
+
+-- ml_evaluation + stat_bork5 99100
+BEGIN FSB-1
+select
+  '~' sel, grades, bettype, kumiban, ranking, resultno, modelno, patternid, pattern, ({factor})::double precision factor,
+  incamt, betcnt, incrate, hitrate::double precision, bal_pluscnt,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from (
+  select
+    row_number() over (partition by sb.kumiban order by {factor} desc, sb.hitrate desc) as ranking,
+    sb.*
+  from ml_evaluation me, stat_bork5 sb
+  where me.result_type = sb.result_type and me.bettype = sb.bettype and me.kumiban = sb.kumiban
+    and me.modelno = sb.modelno and me.patternid = sb.patternid and me.pattern = sb.pattern
+    and me.evaluations_id = '666_0'
+    and me.incomerate between {incrmin} and {incrmax}
+    and sb.bettype = '{bettype}' 
+    <optional> and sb.kumiban = '{kumiban}' </optional>
+    and sb.result_type = '{result_type}' 
+    and sb.modelno = '{modelno}'
+    and ({factor}) is not null
+    and ({factor}) > 0
+    and sb.evaluations_id = '{result_eval_id}'
+    and ( {custom} )
+  ) tblReorder
+where ranking <= {limit}
+order by bettype, kumiban, ranking
+END
+
+-- stat_bork5 99100, 79100
+BEGIN FSB-2
+select 
+  '~' sel, grades, bettype, kumiban, ranking, resultno, modelno, patternid, pattern, ({factor})::double precision factor,
+  incamt, betcnt, incrate, hitrate::double precision, bal_pluscnt,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from  
+(
+  select 
+    row_number() over (partition by kumiban order by {factor} desc, hitrate desc) as ranking,
+    *
+  from stat_bork5 sb
+  where
+    bettype = '{bettype}' 
+    <optional> and kumiban = '{kumiban}' </optional>
+    and result_type = '{result_type}' 
+    and modelno = '{modelno}'
+    and incrate between {incrmin} and {incrmax}
+    and ({factor}) is not null
+    and ({factor}) > 0
+    and evaluations_id = '{result_eval_id}'
+    and ( {custom} )
+) tmp
+where ranking <= {limit}
+order by bettype, kumiban, ranking
+END
+
+
+-- ml_evaluation + stat_bork5 99100 + stat_bork5를 수익률 1이상으로 설정
+BEGIN FSB-3
+select
+  '~' sel, grades, bettype, kumiban, ranking, resultno, modelno, patternid, pattern, ({factor})::double precision factor,
+  incamt, betcnt, incrate, hitrate::double precision, bal_pluscnt,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from (
+  select
+    row_number() over (partition by sb.kumiban order by {factor} desc, sb.hitrate desc) as ranking,
+    sb.*
+  from ml_evaluation me, stat_bork5 sb
+  where me.result_type = sb.result_type and me.bettype = sb.bettype and me.kumiban = sb.kumiban
+    and me.modelno = sb.modelno and me.patternid = sb.patternid and me.pattern = sb.pattern
+    and me.evaluations_id = '666_0'
+    and me.incomerate between {incrmin} and {incrmax}
+    and sb.bettype = '{bettype}' 
+    <optional> and sb.kumiban = '{kumiban}' </optional>
+    and sb.result_type = '{result_type}' 
+    and sb.modelno = '{modelno}'
+    and ({factor}) is not null
+    and sb.evaluations_id = '{result_eval_id}'
+    and ( {custom} )
+    and sb.incrate > 1
+  ) tblReorder
+where ranking <= {limit}
+order by bettype, kumiban, ranking
+END
+
+-- ml_evaluation + stat_bork5 99100 + ml_evaluation을 수익률 1이상으로 설정
+BEGIN FSB-4
+select
+  '~' sel, grades, bettype, kumiban, ranking, resultno, modelno, patternid, pattern, ({factor})::double precision factor,
+  incamt, betcnt, incrate, hitrate::double precision, bal_pluscnt,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from (
+  select
+    row_number() over (partition by sb.kumiban order by {factor} desc, sb.hitrate desc) as ranking,
+    sb.*
+  from ml_evaluation me, stat_bork5 sb
+  where me.result_type = sb.result_type and me.bettype = sb.bettype and me.kumiban = sb.kumiban
+    and me.modelno = sb.modelno and me.patternid = sb.patternid and me.pattern = sb.pattern
+    and me.evaluations_id = '666_0'
+    and me.incomerate > 1
+    and sb.bettype = '{bettype}' 
+    <optional> and sb.kumiban = '{kumiban}' </optional>
+    and sb.result_type = '{result_type}' 
+    and sb.modelno = '{modelno}'
+    and ({factor}) is not null
+    and sb.evaluations_id = '{result_eval_id}'
+    and ( {custom} )
+    and sb.incrate between {incrmin} and {incrmax}
+  ) tblReorder
+where ranking <= {limit}
+order by bettype, kumiban, ranking
+END
+
+-- FSB-1에 대해 factor > 0을 뺴고, stat_bork5 수익율 1이상으로 제한
+BEGIN FSB-5
+select
+  '~' sel, grades, bettype, kumiban, ranking, resultno, modelno, patternid, pattern, ({factor})::double precision factor,
+  incamt, betcnt, incrate, hitrate::double precision, bal_pluscnt,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from (
+  select
+    row_number() over (partition by sb.kumiban order by {factor} desc, sb.hitrate desc) as ranking,
+    sb.*
+  from ml_evaluation me, stat_bork5 sb
+  where me.result_type = sb.result_type and me.bettype = sb.bettype and me.kumiban = sb.kumiban
+    and me.modelno = sb.modelno and me.patternid = sb.patternid and me.pattern = sb.pattern
+    and me.evaluations_id = '666_0'
+    and me.incomerate between {incrmin} and {incrmax}
+    and sb.bettype = '{bettype}' 
+    <optional> and sb.kumiban = '{kumiban}' </optional>
+    and sb.result_type = '{result_type}' 
+    and sb.modelno = '{modelno}'
+    and ({factor}) is not null
+    and sb.evaluations_id = '{result_eval_id}'
+    and ( {custom} )
+    and sb.incrate > 1
+  ) tblReorder
+where ranking <= {limit}
+order by bettype, kumiban, ranking
+END
+
+-- FSB-2에 대해 factor > 0을 뺴고, stat_bork5 수익율 1이상으로 제한
+BEGIN FSB-6
+select 
+  '~' sel, grades, bettype, kumiban, ranking, resultno, modelno, patternid, pattern, ({factor})::double precision factor,
+  incamt, betcnt, incrate, hitrate::double precision, bal_pluscnt,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from  
+(
+  select 
+    row_number() over (partition by kumiban order by {factor} desc, hitrate desc) as ranking,
+    *
+  from stat_bork5 sb
+  where
+    bettype = '{bettype}' 
+    <optional> and kumiban = '{kumiban}' </optional>
+    and result_type = '{result_type}' 
+    and modelno = '{modelno}'
+    and incrate between {incrmin} and {incrmax}
+    and ({factor}) is not null
+    and evaluations_id = '{result_eval_id}'
+    and ( {custom} )
+    and sb.incrate > 1
+) tmp
+where ranking <= {limit}
+order by bettype, kumiban, ranking
+END
+
+-- FSB-1에 대해 stat_bork5 수익율 1이상으로 제한
+BEGIN FSB-7
+select
+  '~' sel, grades, bettype, kumiban, ranking, resultno, modelno, patternid, pattern, ({factor})::double precision factor,
+  incamt, betcnt, incrate, hitrate::double precision, bal_pluscnt,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from (
+  select
+    row_number() over (partition by sb.kumiban order by {factor} desc, sb.hitrate desc) as ranking,
+    sb.*
+  from ml_evaluation me, stat_bork5 sb
+  where me.result_type = sb.result_type and me.bettype = sb.bettype and me.kumiban = sb.kumiban
+    and me.modelno = sb.modelno and me.patternid = sb.patternid and me.pattern = sb.pattern
+    and me.evaluations_id = '666_0'
+    and me.incomerate between {incrmin} and {incrmax}
+    and sb.bettype = '{bettype}' 
+    <optional> and sb.kumiban = '{kumiban}' </optional>
+    and sb.result_type = '{result_type}' 
+    and sb.modelno = '{modelno}'
+    and ({factor}) is not null
+    and ({factor}) > 0
+    and sb.evaluations_id = '{result_eval_id}'
+    and ( {custom} )
+    and sb.incrate > 1
+  ) tblReorder
+where ranking <= {limit}
+order by bettype, kumiban, ranking
+END
+
+-- FSB-2에 대해 stat_bork5 수익율 1이상으로 제한
+BEGIN FSB-8
+select 
+  '~' sel, grades, bettype, kumiban, ranking, resultno, modelno, patternid, pattern, ({factor})::double precision factor,
+  incamt, betcnt, incrate, hitrate::double precision, bal_pluscnt,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from  
+(
+  select 
+    row_number() over (partition by kumiban order by {factor} desc, hitrate desc) as ranking,
+    *
+  from stat_bork5 sb
+  where
+    bettype = '{bettype}' 
+    <optional> and kumiban = '{kumiban}' </optional>
+    and result_type = '{result_type}' 
+    and modelno = '{modelno}'
+    and incrate between {incrmin} and {incrmax}
+    and ({factor}) is not null
+    and ({factor}) > 0
+    and evaluations_id = '{result_eval_id}'
+    and ( {custom} )
+    and sb.incrate > 1
+) tmp
+where ranking <= {limit}
+order by bettype, kumiban, ranking
+END
+
+
+
+BEGIN GPT-1
+select 
+  '~' sel, grades, bettype, kumiban, ranking, resultno, modelno, patternid, pattern, ({factor}) factor,
+  incamt, betcnt, incrate, hitrate::double precision, bal_pluscnt,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from  
+(
+  select 
+    row_number() over (partition by kumiban order by {factor} desc, hitrate desc) as ranking,
+    *
+  from stat_gpt sb
+  where
+    bettype = '{bettype}' 
+    <optional> and kumiban = '{kumiban}' </optional>
+    and result_type = '{result_type}' 
+    and modelno = '{modelno}'
+    and incrate between {incrmin} and {incrmax}
+    and ({factor}) is not null
+    and evaluations_id = '{result_eval_id}'
+    and ( {custom} )
+) tmp
+where ranking <= {limit}
+order by bettype, kumiban, ranking
+END
+
+
+
+-- ml_evaluation incrate range + stat_bork5 99100
+BEGIN GPT-2
+select
+  '~' sel, grades, bettype, kumiban, ranking, resultno, modelno, patternid, pattern, ({factor})::double precision factor,
+  incamt, betcnt, incrate, hitrate::double precision, bal_pluscnt,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from (
+  select
+    row_number() over (partition by sb.kumiban order by {factor} desc, sb.hitrate desc) as ranking,
+    sb.*
+  from ml_evaluation me, stat_bork5 sb
+  where me.result_type = sb.result_type and me.bettype = sb.bettype and me.kumiban = sb.kumiban
+    and me.modelno = sb.modelno and me.patternid = sb.patternid and me.pattern = sb.pattern
+    and me.evaluations_id = '666_0'
+    and me.incomerate between {incrmin} and {incrmax}
+    and sb.bettype = '{bettype}' 
+    <optional> and sb.kumiban = '{kumiban}' </optional>
+    and sb.result_type = '{result_type}' 
+    and sb.modelno = '{modelno}'
+    and ({factor}) is not null
+    and sb.evaluations_id = '{result_eval_id}'
+    and ( {custom} )
+  ) tblReorder
+where ranking <= {limit}
+order by bettype, kumiban, ranking
+END
+
+
+-- ml_evaluation incrate range + stat_bork5 incrate > 1 99100
+BEGIN GPT-3
+select
+  '~' sel, grades, bettype, kumiban, ranking, resultno, modelno, patternid, pattern, ({factor})::double precision factor,
+  incamt, betcnt, incrate, hitrate::double precision, bal_pluscnt,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from (
+  select
+    row_number() over (partition by sb.kumiban order by {factor} desc, sb.hitrate desc) as ranking,
+    sb.*
+  from ml_evaluation me, stat_bork5 sb
+  where me.result_type = sb.result_type and me.bettype = sb.bettype and me.kumiban = sb.kumiban
+    and me.modelno = sb.modelno and me.patternid = sb.patternid and me.pattern = sb.pattern
+    and me.evaluations_id = '666_0'
+    and me.incomerate between {incrmin} and {incrmax}
+    and sb.bettype = '{bettype}' 
+    <optional> and sb.kumiban = '{kumiban}' </optional>
+    and sb.result_type = '{result_type}' 
+    and sb.modelno = '{modelno}'
+    and ({factor}) is not null
+    and sb.evaluations_id = '{result_eval_id}'
+    and ( {custom} )
+    and sb.incrate > 1
+  ) tblReorder
+where ranking <= {limit}
+order by bettype, kumiban, ranking
+END
+
+-- ml_evaluation incrate > 1 + stat_bork5 incrate range 
+BEGIN GPT-4
+select
+  '~' sel, grades, bettype, kumiban, ranking, resultno, modelno, patternid, pattern, ({factor})::double precision factor,
+  incamt, betcnt, incrate, hitrate::double precision, bal_pluscnt,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from (
+  select
+    row_number() over (partition by sb.kumiban order by {factor} desc, sb.hitrate desc) as ranking,
+    sb.*
+  from ml_evaluation me, stat_bork5 sb
+  where me.result_type = sb.result_type and me.bettype = sb.bettype and me.kumiban = sb.kumiban
+    and me.modelno = sb.modelno and me.patternid = sb.patternid and me.pattern = sb.pattern
+    and me.evaluations_id = '666_0'
+    and me.incomerate > 1
+    and sb.bettype = '{bettype}' 
+    <optional> and sb.kumiban = '{kumiban}' </optional>
+    and sb.result_type = '{result_type}' 
+    and sb.modelno = '{modelno}'
+    and ({factor}) is not null
+    and sb.evaluations_id = '{result_eval_id}'
+    and ( {custom} )
+    and sb.incrate between {incrmin} and {incrmax}
+  ) tblReorder
+where ranking <= {limit}
+order by bettype, kumiban, ranking
+END
+
+-- stat_bork5 incrate range 99100
+BEGIN GPT-5
+select 
+  '~' sel, grades, bettype, kumiban, ranking, resultno, modelno, patternid, pattern, ({factor})::double precision factor,
+  incamt, betcnt, incrate, hitrate::double precision, bal_pluscnt,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from  
+(
+  select 
+    row_number() over (partition by kumiban order by {factor} desc, hitrate desc) as ranking,
+    *
+  from stat_bork5 sb
+  where
+    bettype = '{bettype}' 
+    <optional> and kumiban = '{kumiban}' </optional>
+    and result_type = '{result_type}' 
+    and modelno = '{modelno}'
+    and incrate between {incrmin} and {incrmax}
+    and ({factor}) is not null
+    and evaluations_id = '{result_eval_id}'
+    and ( {custom} )
+) tmp
+where ranking <= {limit}
+order by bettype, kumiban, ranking
+END
+
+-- stat_bork5 incrate range 79100
+BEGIN GPT-6
+select 
+  '~' sel, grades, bettype, kumiban, ranking, resultno, modelno, patternid, pattern, ({factor})::double precision factor,
+  incamt, betcnt, incrate, hitrate::double precision, bal_pluscnt,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from  
+(
+  select 
+    row_number() over (partition by kumiban order by {factor} desc, hitrate desc) as ranking,
+    *
+  from stat_bork5 sb
+  where
+    bettype = '{bettype}' 
+    <optional> and kumiban = '{kumiban}' </optional>
+    and result_type = '{result_type}' 
+    and modelno = '{modelno}'
+    and incrate between {incrmin} and {incrmax}
+    and ({factor}) is not null
+    and evaluations_id = '{result_eval_id}'
+    and ( {custom} )
+) tmp
+where ranking <= {limit}
+order by bettype, kumiban, ranking
+END
+
+-- FSB,GPT에 대한 simul1_test.xlsx#test_FSB(4)를 실행하기 위한 SQL
+BEGIN FSB-SIM2-1
+select 
+  mes.* 
+from ml_evaluation_sim mes,
+(
+	select 
+	  id_grade, id_bettype, id_kumiban, id_factor, id_custom, id_limit, id_modelno, id_sql
+	from
+	(
+	select row_number() over (partition by id_bettype, id_kumiban order by incamt desc) as ranking, * from
+	(
+	select 
+	  id_grade,
+	  id_bettype, 
+	  id_kumiban,
+	  id_factor,
+	  id_custom,
+	  id_limit,
+	  id_modelno,
+	  id_sql,
+	  count(1) incrnum,
+	  (sum(betcnt)::float / (31*6)::float)::numeric(7,2) dailybet,
+	  (sum(hitamt) - sum(betamt)) incamt,
+	  (sum(hitcnt)::float / sum(betcnt)::float)::numeric(5,2) hitrate,
+	  (sum(hitamt)::float / sum(betamt)::float)::numeric(5,2) incrate
+	from
+	(
+	    select
+	      me2.*
+	    from
+		(
+	      select * from ml_evaluation_sim mes where id_term = '6661' and incomerate > 1 and bal_slope[0] > 0
+	    ) me1,
+		(
+	      select * from ml_evaluation_sim mes where id_term = '6662' and incomerate > 1 and bal_slope[0] > 0
+	    ) me2
+	    where 
+	      me1.id_grade = me2.id_grade and me1.id_bettype = me2.id_bettype and me1.id_kumiban = me2.id_kumiban and me1.id_factor = me2.id_factor and me1.id_custom = me2.id_custom 
+	      and me1.id_incr = me2.id_incr and me1.id_limit = me2.id_limit and me1.id_modelno = me2.id_modelno and me1.id_sql = me2.id_sql 
+	) ev
+	where id_grade = '{grade_type}' and id_limit = '{simul2_limit}' 
+	    and id_bettype = '{bettype}' and id_kumiban = '{kumiban}'
+	    and ( {simul2_custom} )
+	group by
+	  id_grade,
+	  id_bettype, 
+	  id_kumiban,
+	  id_factor,
+	  id_custom,
+	  id_limit,
+	  id_modelno,
+	  id_sql
+	order by id_bettype, id_kumiban, incamt desc
+	) tmp
+	) tmp2
+	where ranking = {ranking}
+	order by id_bettype, id_kumiban, ranking
+) tmp3
+where mes.id_grade = tmp3.id_grade and mes.id_bettype = tmp3.id_bettype and mes.id_kumiban = tmp3.id_kumiban and mes.id_sql = tmp3.id_sql 
+  and mes.id_factor = tmp3.id_factor and mes.id_custom = tmp3.id_custom and mes.id_modelno = tmp3.id_modelno and mes.id_limit = tmp3.id_limit
+order by 
+  id_grade, id_bettype, id_kumiban, id_factor, id_custom, id_limit, id_modelno, id_sql, id_incr, id_term
+END
+;

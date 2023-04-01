@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -82,6 +83,11 @@ public class OddsMonitorFileLoader extends AbstractOddsFileLoader{
 			
 			// ex) 2=1.7
 			String[] oddsToken = token[i].split(Delimeter.EQUAL.getValue());
+			// 20230330 たまに発覚されているbeforeoddsファイルのデータ誤りによるプログラム停止を回避
+			if (oddsToken.length != 2 || !NumberUtils.isCreatable(oddsToken[1])) {
+				continue;
+			}
+			
 			item.kumiban = oddsToken[0];
 			item.odds =  Double.parseDouble(oddsToken[1]);
 			

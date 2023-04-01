@@ -219,22 +219,28 @@ public class ResultStat {
 		String factor;
 		
 		Double probability;
+		// histogram化の使用可否はhistogramクラス内で判定する
 		// patternidに確率が含まれた場合はhitogram化しない
 		if (result.getPatternid().contains("prob")) {
 			probability = MathUtil.scale2(result.getProbability());
 		} else {
-			probability = histogram.convert("PR", result.getProbability());
+			probability = histogram.convertByKey("PR", result.getProbability());
 		}
-		Double beforeOdds = histogram.convert(result.getBettype(), result.getBetOdds());
-		Double resultOdds = histogram.convert(result.getBettype(), result.getResultOdds());
+		Double beforeOdds = histogram.convertByBettypeKumiban(result.getBettype(), result.getBetKumiban(), result.getBetOdds());
+		Double resultOdds = histogram.convertByBettypeKumiban(result.getBettype(), result.getBetKumiban(), result.getResultOdds());
+		
 		Integer beforeOddsRank = result.getBetOddsrank();
 		Integer resultOddsRank = result.getResultOddsrank();
-		
+
 		// 直前オッズの統計単位取得
 		if (beforeOdds != null
-				// 20221026 bork가 1-10 사이만 evaluation 대상으로 제한해본다.
-				&& (beforeOddsRank != null && beforeOddsRank <= prop.getInteger("bork_max"))
-				) { // 直前オッズが存在すれば
+				// 20221026 bork로 evaluation 대상으로 제한해본다.
+				&& (beforeOddsRank != null && beforeOddsRank > prop.getInteger("bork_max")) ) {
+			return;
+		}
+		
+		// 直前オッズの統計単位取得
+		if (beforeOdds != null ) { // 直前オッズが存在すれば
 			sumOfBetBodds++;
 			sumOfBetAmountBodds += result.getBetamt();
 			if (result.getHity() == 1) {
@@ -255,10 +261,7 @@ public class ResultStat {
 			getRangeStatUnit(mapBorRorStatUnit, factor).add(result);
 		}
 
-		if (beforeOddsRank != null
-				// 20221026 bork가 1-10 사이만 evaluation 대상으로 제한해본다.
-				&& (beforeOddsRank <= prop.getInteger("bork_max"))
-				) {
+		if (beforeOddsRank != null) {
 			// 直前オッズRANK別集計
 			listBork.add(beforeOddsRank.doubleValue());
 			getRangeStatUnit(mapBorkStatUnit, beforeOddsRank.doubleValue()).add(result);
@@ -398,6 +401,10 @@ public class ResultStat {
 		double dailyBet = this.sumOfBet / (double)days;
 		return MathUtil.scale1(dailyBet);
 		
+	}
+	
+	public int getIncome() {
+		return (int)(sumOfHitAmount - sumOfBetAmount);
 	}
 	public String toString() {
 		return statBettype + "_" + kumiban + "_" + pattern;

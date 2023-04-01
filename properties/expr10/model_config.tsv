@@ -182,3 +182,7 @@ model_no	model_start_ymd	model_end_ymd	class_rank1	class_rank2	class_rank3	algor
 97102	20180601	20221130	r12-all	x	x	cf_lgbm-1_py	x	x	en_nw_ext_25	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	no	no	sanrentanprize	2555	90
 97103	20180601	20221130	r123-all	x	x	cf_lgbm-1_py	x	x	en_nw_ext_25	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	no	no	sanrentanprize	2555	90
 96100	20180601	20221130	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	arff_3	clf_3	'ip', 'G3', 'G2'	yes	no	sanrentanprize	1825	30
+#2차적으,로 ml_classification을 학습시키는 모델을 만들어보자																					
+89100	20210602	20221130	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	classifyr1	classifyr2	classifyr3	arff_4	clf_4	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1095	30
+79100	20210602	20221130	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	classifyr1	classifyr2	classifyr3	arff_4	clf_4	'ip', 'G3', 'G2', 'G1', 'SG'	no	no	sanrentanprize	1095	30
+69100	20210602	20210602	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	classifyr1	classifyr2	classifyr3	arff_4	clf_4	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1095	30

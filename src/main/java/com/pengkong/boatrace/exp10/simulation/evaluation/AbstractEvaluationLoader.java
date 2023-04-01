@@ -22,9 +22,9 @@ import com.pengkong.common.collection.HashMapList;
  */
 public abstract class AbstractEvaluationLoader{
 	/** 実験プロパティ */
-	MLPropertyUtil prop = MLPropertyUtil.getInstance();
+	protected MLPropertyUtil prop = MLPropertyUtil.getInstance();
 
-	Logger logger = LoggerFactory.getLogger(AbstractEvaluationLoader.class);
+	protected Logger logger = LoggerFactory.getLogger(AbstractEvaluationLoader.class);
 	
 	/**
 	 * key = bettype_kumiban_modelno,
@@ -40,7 +40,7 @@ public abstract class AbstractEvaluationLoader{
 	abstract void  initialize() throws Exception;
 	
 	/** 初期化処理 */
-	void checkInitialized() throws Exception {
+	protected void checkInitialized() throws Exception {
 		if (mapListEval == null) {
 			try {
 				initialize();

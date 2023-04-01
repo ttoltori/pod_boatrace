@@ -62,11 +62,12 @@ public class TermTimelineBetcntHicnt extends AbstractChart {
 		XYSeries series;
 		
 		List<RangeStatUnit> listUnit = new ArrayList<RangeStatUnit>(stat.termStatPerformance.values());
+		int size = listUnit.size();
 		
-		double[] yData1 = new double[listUnit.size()];
-		double[] yData2 = new double[listUnit.size()];
+		double[] yData1 = new double[size];
+		double[] yData2 = new double[size];
 		
-		for (int i = 0; i < listUnit.size(); i++) {
+		for (int i = 0; i < size; i++) {
 			yData1[i] = listUnit.get(i).betCnt; // ベット数
 			yData2[i] = listUnit.get(i).hitCnt; // 的中数
 		}

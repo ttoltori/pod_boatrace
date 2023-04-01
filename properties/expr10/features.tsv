@@ -188,11 +188,36 @@ pd3	pd3	nominal	prediction3 pd3	prediction1 pd3
 prob1	prob1	numeric	probability1::text prob1	probability1 prob1
 prob2	prob2	numeric	probability2::text prob2	probability2 prob2
 prob3	prob3	numeric	probability3::text prob3	probability3 prob3
-#ˆÈ‰ºbork, bodds‚Í99201ƒ‚ƒfƒ‹‚Å—˜—p				
+#ä»¥ä¸‹bork, boddsã¯99201ãƒ¢ãƒ‡ãƒ«ã§åˆ©ç”¨				
 #bork	bork	nominal	mr.bet_oddsrank::text bork	mr.bet_oddsrank bork
 #bodds	bodds	numeric	mr.bet_odds::text bodds	cast(mr.bet_odds as double precision) bodds
 bettype	bettype	nominal	mr.bettype bettype	mr.bettype bettype
 bkumiban	bkumiban	numeric	mr.bet_kumiban bkumiban	mr.bet_kumiban bkumiban
-#ˆÈ‰ºbork, bodds‚Í99301ƒ‚ƒfƒ‹‚Å—˜—p				
+#ä»¥ä¸‹bork, boddsã¯99301ãƒ¢ãƒ‡ãƒ«ã§åˆ©ç”¨				
 bork	bork	numeric	om.bork::text bork	om.bork bork
 bodds	bodds	numeric	om.bor::text bodds	om.bor bodds
+#2ì°¨ì ìœ¼,ë¡œ ml_classificationì„ í•™ìŠµì‹œí‚¤ëŠ” ëª¨ë¸ì„ ë§Œë“¤ì–´ë³´ì				
+r1prob1	r1prob1	numeric	probabilities1[0]::text r1prob1	probabilities1[0] r1prob1
+r1prob2	r1prob2	numeric	probabilities1[1]::text r1prob2	probabilities1[1] r1prob2
+r1prob3	r1prob3	numeric	probabilities1[2]::text r1prob3	probabilities1[2] r1prob3
+r1prob4	r1prob4	numeric	probabilities1[3]::text r1prob4	probabilities1[3] r1prob4
+r1prob5	r1prob5	numeric	probabilities1[4]::text r1prob5	probabilities1[4] r1prob5
+r1prob6	r1prob6	numeric	probabilities1[5]::text r1prob6	probabilities1[5] r1prob6
+r1skew	r1skew	numeric	skewness1::text r1skew	skewness1 r1skew
+r1kurto	r1kurto	numeric	kurtosis1::text r1kurto	kurtosis1 r1kurto
+r2prob1	r2prob1	numeric	probabilities2[0]::text r2prob1	probabilities2[0] r2prob1
+r2prob2	r2prob2	numeric	probabilities2[1]::text r2prob2	probabilities2[1] r2prob2
+r2prob3	r2prob3	numeric	probabilities2[2]::text r2prob3	probabilities2[2] r2prob3
+r2prob4	r2prob4	numeric	probabilities2[3]::text r2prob4	probabilities2[3] r2prob4
+r2prob5	r2prob5	numeric	probabilities2[4]::text r2prob5	probabilities2[4] r2prob5
+r2prob6	r2prob6	numeric	probabilities2[5]::text r2prob6	probabilities2[5] r2prob6
+r2skew	r2skew	numeric	skewness2::text r2skew	skewness2 r2skew
+r2kurto	r2kurto	numeric	kurtosis2::text r2kurto	kurtosis2 r2kurto
+r3prob1	r3prob1	numeric	probabilities3[0]::text r3prob1	probabilities3[0] r3prob1
+r3prob2	r3prob2	numeric	probabilities3[1]::text r3prob2	probabilities3[1] r3prob2
+r3prob3	r3prob3	numeric	probabilities3[2]::text r3prob3	probabilities3[2] r3prob3
+r3prob4	r3prob4	numeric	probabilities3[3]::text r3prob4	probabilities3[3] r3prob4
+r3prob5	r3prob5	numeric	probabilities3[4]::text r3prob5	probabilities3[4] r3prob5
+r3prob6	r3prob6	numeric	probabilities3[5]::text r3prob6	probabilities3[5] r3prob6
+r3skew	r3skew	numeric	skewness3::text r3skew	skewness3 r3skew
+r3kurto	r3kurto	numeric	kurtosis3::text r3kurto	kurtosis3 r3kurto

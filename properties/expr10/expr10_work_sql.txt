@@ -1,9 +1,27 @@
 java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
-  com.pengkong.boatrace.scraping.BoatWebDownloader 20221106 20221116
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20230312 20230312
 java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
-  com.pengkong.boatrace.scraping.BoatWebDownloader 20221117 20221127
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20230313 20230313
 java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
-  com.pengkong.boatrace.scraping.BoatWebDownloader 20221128 20221210
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20230314 20230314
+
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20230318 20230319
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20230320 20230321
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20230322 20230323
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20230324 20230325
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20230326 20230327
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20230328 20230329
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20230330 20230331
+  
+
+
   
   
   
@@ -85,6 +103,189 @@ copy ml_classification from 'D:\Dev\export\ml_classification.20220427_2.tsv' csv
 insert into ml_classification select * from ml_classification_bk1 where modelno::int in (99069,99072);
 
 !!!노트북에서 ml_classify할때 referential은 model_release, ml_classification도 동기화해두어야 한다.
+
+========================================================================
+20230321
+chatGPT가 알려준 가중치합계 공식을 반영하여 ml_evaluation에 컬럼 추가
+
+-- gp333 betrate,hitrate,incomerate를 균등하게 0.33씩 가중치반영한 가중치합계
+alter table ml_evaluation add column gpt333 double precision;
+
+정규화위한  mix,max
+select 
+  min(betcnt) bcmin, max(betcnt) bcmax, 
+  min(hitcnt) hcmin, max(hitcnt) hcmax, 
+  min(hitamt-betamt) icmin, max(hitamt-betamt) icmax, 
+  min(betrate) brmin, max(betrate) brmax, 
+  min(hitrate) hrmin, max(hitrate) hrmax, 
+  min(incomerate) irmin, max(incomerate) irmax, 
+  min(bal_slope[0]) slp0min, max(bal_slope[0]) slp0max, 
+  min(bal_slope[1]) slp1min, max(bal_slope[1]) slp1max, 
+  min(bal_slope[2]) slp2min, max(bal_slope[2]) slp2max
+from ml_evaluation
+where evaluations_id = '666_0'
+;
+
+brmin	brmax	hrmin	hrmax	irmin	irmax	slp0min	slp0max	slp1min	slp1max	slp2min	slp2max
+0.0	1.0	0.0	1.0	0.02	223.5	-100.0	15194.5	-100.0	15831.428	-100.0	13727.142
+
+select
+  ((betcnt::float - 1.0) / (655200 - 1.0) * 0.8) + 
+  ((hitcnt::float - 1.0) / (31835 - 1.0) * 0.1) +
+  ((hitamt::float - betamt::float - -18304875.0) / (134193.0 - -18304875.0) * 0.1) gp333, 
+  ((betrate - 0.0) / (1.0 - 0.0) * 0.33) + 
+  ((hitrate - 0.0) / (1.0 - 0.0) * 0.33) +
+  ((incomerate - 0.02) / (223.5 - 0.02) * 0.33) gpr333, 
+  bal_slope[0] - 
+  
+  *
+from ml_evaluation
+where evaluations_id = '666_0'
+and bettype = '2T' and kumiban = '12'
+and incomerate > 1
+order by gp333 desc
+;
+
+
+
+from ml_evaluation
+
+
+
+========================================================================
+20230306
+
+drop table ml_evaluation_bk2;
+drop table ml_evaluation_bk3;
+drop table ml_evaluation_bk4;
+drop table ml_evaluation_bk5;
+drop table ml_evaluation_bk6;
+
+create table ml_evaluation_bk2 as select * from ml_evaluation;
+create table ml_bork_evaluation_bk2 as select * from ml_bork_evaluation;
+create table ml_pr_evaluation_bk2 as select * from ml_pr_evaluation;
+create table ml_range_evaluation_bk2 as select * from ml_range_evaluation;
+create table ml_term_evaluation_bk2 as select * from ml_term_evaluation;
+create table ml_classification_bk2 as select * from ml_classification;
+
+truncate ml_evaluation;
+truncate ml_bork_evaluation;
+truncate ml_pr_evaluation;
+truncate ml_range_evaluation;
+truncate ml_term_evaluation;
+delete from ml_classification where modelno not in ('79100', '99100');
+
+
+
+
+========================================================================
+20230303
+
+
+
+insert into stat_bork5
+  select 
+    me.result_type, (case when me.result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+    me.bettype, me.kumiban, me.resultno, me.modelno, me.patternid, me.pattern, 
+    bk.incamt[0] i0, bk.incamt[1] i1, bk.incamt[2] i2, bk.incamt[3] i3, bk.incamt[4] i4, 
+    bk.incamt[5] i5, bk.incamt[6] i6, bk.incamt[7] i7, bk.incamt[8] i8, bk.incamt[9] i9, 
+    (bk.incamt[0] + bk.incamt[1] + bk.incamt[2] + bk.incamt[3] + bk.incamt[4]) i04, 
+    (bk.incamt[2] + bk.incamt[3] + bk.incamt[4] + bk.incamt[5] + bk.incamt[6] + bk.incamt[7]) i27,
+    (bk.incamt[5] + bk.incamt[6] + bk.incamt[7] + bk.incamt[8] + bk.incamt[9]) i59,
+    (bk.incamt[0] + bk.incamt[1] + bk.incamt[2] + bk.incamt[3] + bk.incamt[4] + bk.incamt[5] + bk.incamt[6] + bk.incamt[7] + bk.incamt[8] + bk.incamt[9]) i09,
+    (me.hitamt - me.betamt) incamt, me.betcnt, me.incomerate, me.hitrate, me.bal_pluscnt, 
+    -- me.evaluations_id
+    '79100_7m'
+  from ml_evaluation me, ml_bork_evaluation bk
+  where me.resultno = bk.resultno and me.result_type = bk.result_type and me.bettype = bk.bettype and me.kumiban = bk.kumiban and me.modelno = bk.modelno and me.patternid  = bk.patternid and me.pattern = bk.pattern
+    -- and me.resultno::int between 5883 and 6179
+    -- and me.resultno::int between 6212 and 6310
+    and me.resultno::int between 6709 and 6906   -- 79100の全パタンresultip,SG
+;
+
+
+
+========================================================================
+20230227
+
+boosting_type=gbdt,learning_rate=0.1 D:/Dev/experiment/expr10/arff/79100_rank2.csv D:/Dev/tmp/tmp.model r2prob1,r2prob2,r2prob3,r2prob4,r2prob5,r2prob6,r2skew,r2kurto,pd2,mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,en1,en2,en3,en4,en5,en6,nw1,nw2,nw3,nw4,nw5,nw6,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6,n3w1,n3w2,n3w3,n3w4,n3w5,n3w6,lw1,lw2,lw3,lw4,lw5,lw6,l2w1,l2w2,l2w3,l2w4,l2w5,l2w6,l3w1,l3w2,l3w3,l3w4,l3w5,l3w6,m2w1,m2w2,m2w3,m2w4,m2w5,m2w6,sex1,sex2,sex3,sex4,sex5,sex6,lv1,lv2,lv3,lv4,lv5,lv6,age1,age2,age3,age4,age5,age6,weit1,weit2,weit3,weit4,weit5,weit6,fly1,fly2,fly3,fly4,fly5,fly6,late1,late2,late3,late4,late5,late6,avgst1,avgst2,avgst3,avgst4,avgst5,avgst6,class float,float,float,float,float,float,float,float,category,category,category,category,category,category,category,float,float,category,category,category,category,category,category,category,category,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,category,category,category,category,category,category,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,category
+
+boosting_type=gbdt,learning_rate=0.1 D:/Dev/experiment/expr10/arff/89100_rank1.csv D:/Dev/tmp/tmp.model r1prob1,r1prob2,r1prob3,r1prob4,r1prob5,r1prob6,r1skew,r1kurto,pd1,class float,float,float,float,float,float,float,float,category,category
+
+boosting_type=gbdt,learning_rate=0.1 D:/Dev/experiment/expr10/arff/99100_rank3.csv D:/Dev/tmp/tmp.model mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,en1,en2,en3,en4,en5,en6,nw1,nw2,nw3,nw4,nw5,nw6,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6,n3w1,n3w2,n3w3,n3w4,n3w5,n3w6,lw1,lw2,lw3,lw4,lw5,lw6,l2w1,l2w2,l2w3,l2w4,l2w5,l2w6,l3w1,l3w2,l3w3,l3w4,l3w5,l3w6,m2w1,m2w2,m2w3,m2w4,m2w5,m2w6,sex1,sex2,sex3,sex4,sex5,sex6,lv1,lv2,lv3,lv4,lv5,lv6,age1,age2,age3,age4,age5,age6,weit1,weit2,weit3,weit4,weit5,weit6,fly1,fly2,fly3,fly4,fly5,fly6,late1,late2,late3,late4,late5,late6,avgst1,avgst2,avgst3,avgst4,avgst5,avgst6,class category,category,category,category,category,category,float,float,category,category,category,category,category,category,category,category,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,category,category,category,category,category,category,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,category
+
+
+========================================================================
+20230224
+insert into stat_bork5
+  select 
+    me.result_type, 'ip,G3' grades, me.bettype, me.kumiban, me.resultno, me.modelno, me.patternid, me.pattern, 
+    bk.incamt[0] i0, bk.incamt[1] i1, bk.incamt[2] i2, bk.incamt[3] i3, bk.incamt[4] i4, 
+    bk.incamt[5] i5, bk.incamt[6] i6, bk.incamt[7] i7, bk.incamt[8] i8, bk.incamt[9] i9, 
+    (bk.incamt[0] + bk.incamt[1] + bk.incamt[2] + bk.incamt[3] + bk.incamt[4]) i04, 
+    (bk.incamt[2] + bk.incamt[3] + bk.incamt[4] + bk.incamt[5] + bk.incamt[6] + bk.incamt[7]) i27,
+    (bk.incamt[5] + bk.incamt[6] + bk.incamt[7] + bk.incamt[8] + bk.incamt[9]) i59,
+    (bk.incamt[0] + bk.incamt[1] + bk.incamt[2] + bk.incamt[3] + bk.incamt[4] + bk.incamt[5] + bk.incamt[6] + bk.incamt[7] + bk.incamt[8] + bk.incamt[9]) i09,
+    (me.hitamt - me.betamt) incamt, me.betcnt, me.incomerate, me.hitrate, me.bal_pluscnt, me.evaluations_id
+  from ml_evaluation me, ml_bork_evaluation bk
+  where me.resultno = bk.resultno and me.result_type = bk.result_type and me.bettype = bk.bettype and me.kumiban = bk.kumiban and me.modelno = bk.modelno and me.patternid  = bk.patternid and me.pattern = bk.pattern
+    -- and me.resultno::int between 5883 and 6179
+    and me.resultno::int between 6212 and 6310
+    and me.result_type = '1'
+
+create index indexes_evaluationsid on ml_evaluation (evaluations_id);
+
+
+delete from ml_evaluation where resultno::int <= 5752;
+delete from ml_bork_evaluation where resultno::int <= 5752;
+delete from ml_pr_evaluation where resultno::int <= 5752;
+delete from ml_range_evaluation where resultno::int <= 5752;
+delete from ml_term_evaluation where resultno::int <= 5752;
+
+
+
+========================================================================
+20230213
+truncate ml_evaluation;
+truncate ml_bork_evaluation;
+truncate ml_pr_evaluation;
+truncate ml_range_evaluation;
+truncate ml_term_evaluation;
+insert into ml_evaluation select * from ml_evaluation_bk1 where resultno::int between 4961 and 5752;
+insert into ml_bork_evaluation select * from ml_bork_evaluation_bk1 where resultno::int between 4961 and 5752;
+insert into ml_pr_evaluation select * from ml_pr_evaluation_bk1 where resultno::int between 4961 and 5752;
+insert into ml_range_evaluation select * from ml_range_evaluation_bk1 where resultno::int between 4961 and 5752;
+insert into ml_term_evaluation select * from ml_term_evaluation_bk1 where resultno::int between 4961 and 5752;
+
+
+delete from st_patternid where modelno = '97103' and patternid like '%prob12%';
+
+========================================================================
+20230212
+-- result_configのバックアップ
+insert into ml_evaluation_bk1 select * from ml_evaluation where resultno::int between 4961 and 5752;
+insert into ml_bork_evaluation_bk1 select * from ml_bork_evaluation where resultno::int between 4961 and 5752;
+insert into ml_pr_evaluation_bk1 select * from ml_pr_evaluation where resultno::int between 4961 and 5752;
+insert into ml_range_evaluation_bk1 select * from ml_range_evaluation where resultno::int between 4961 and 5752;
+create table ml_term_evaluation_bk1 as select * from ml_term_evaluation mte;
+
+-- result_config結果から99100以外は削除
+delete from ml_evaluation where resultno::int between 4961 and 5752 and modelno <> '99100';
+delete from ml_bork_evaluation where resultno::int between 4961 and 5752 and modelno <> '99100';
+delete from ml_pr_evaluation where resultno::int between 4961 and 5752 and modelno <> '99100';
+delete from ml_range_evaluation where resultno::int between 4961 and 5752 and modelno <> '99100';
+delete from ml_term_evaluation where resultno::int between 4961 and 5752 and modelno <> '99100';
+
+-- 容量整理
+vacuum full ml_bork_evaluation;
+vacuum full ml_evaluation;
+vacuum full ml_pr_evaluation;
+vacuum full ml_range_evaluation;
+vacuum full ml_term_evaluation;
+
+
+
+
 ========================================================================
 20230130
 1T
@@ -1801,7 +2002,7 @@ group by sanrentanodds order by sanrentanodds;
 데이터 없데이트 수순
 
 java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
-  com.pengkong.boatrace.scraping.BoatWebDownloader 20221211 20230130
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20230130 20230308
 
 java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*;. ^
   com.pengkong.boatrace.util.RaceFileUploader 20221106 20221210 C:/Dev/workspace/Oxygen/pod_boatrace_test/properties/race_result_rebuild.properties

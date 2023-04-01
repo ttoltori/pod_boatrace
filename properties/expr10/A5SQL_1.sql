@@ -1,4 +1,344 @@
-﻿
+﻿truncate stat_gpt;
+
+insert into stat_gpt
+select
+  result_type, (case when me.result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades,
+  bettype, kumiban, resultno, modelno, patternid, pattern,
+  (me.hitamt - me.betamt) incamt, me.betcnt, me.incomerate, me.hitrate, me.bal_pluscnt,
+  ((betcnt::float - 1.0) / (655200 - 1.0) * 0.33) +  ((hitcnt::float - 1.0) / (31835 - 1.0) * 0.33) +  ((hitamt::float - betamt::float - -18304875.0) / (134193.0 - -18304875.0) * 0.33) gp333, 
+  ((betcnt::float - 1.0) / (655200 - 1.0) * 0.1) +  ((hitcnt::float - 1.0) / (31835 - 1.0) * 0.1) +  ((hitamt::float - betamt::float - -18304875.0) / (134193.0 - -18304875.0) * 0.8) gp118,
+  ((betcnt::float - 1.0) / (655200 - 1.0) * 0.1) +  ((hitcnt::float - 1.0) / (31835 - 1.0) * 0.8) +  ((hitamt::float - betamt::float - -18304875.0) / (134193.0 - -18304875.0) * 0.1) gp181, 
+  ((betcnt::float - 1.0) / (655200 - 1.0) * 0.8) +  ((hitcnt::float - 1.0) / (31835 - 1.0) * 0.1) +  ((hitamt::float - betamt::float - -18304875.0) / (134193.0 - -18304875.0) * 0.1) gp811, 
+  ((bal_slope[0] - -100) / (151945 - -100) * 0.33) + ((bal_slope[1] - -100) / (151945 - -100) * 0.33) + ((bal_slope[2] - -100) / (151945 - -100) * 0.33) slp333,
+  '99100_6m' 
+from ml_evaluation me
+where evaluations_id = '666_0'
+--  and bettype = '3T' and kumiban = '123'
+--  and incomerate > 1
+--  order by gp333 desc
+;
+
+
+-- FSB결과 분석
+select * from
+(
+select row_number() over (partition by id_bettype, id_kumiban order by incamt desc) as ranking, * from
+(
+select 
+  id_bettype, 
+  id_kumiban,
+  id_sql,
+  id_factor,
+  id_custom,
+  id_modelno,
+  count(1) incrnum,
+  (sum(betcnt)::float / (31*6)::float)::numeric(7,2) dailybet,
+  (sum(hitamt) - sum(betamt)) incamt,
+  (sum(hitcnt)::float / sum(betcnt)::float)::numeric(5,2) hitrate,
+  (sum(hitamt)::float / sum(betamt)::float)::numeric(5,2) incrate
+from
+(
+    select
+      me2.*
+    from
+	(
+      select *
+      from ml_evaluation_sim mes where id_term = '6661' and incomerate > 1 and (bal_slope[0]) > 0
+    ) me1,
+	(
+      select *
+      from ml_evaluation_sim mes where id_term = '6662' and incomerate > 1 and (bal_slope[0]) > 0
+    ) me2
+    where 
+      me1.id_grade = me2.id_grade and me1.id_bettype = me2.id_bettype and me1.id_kumiban = me2.id_kumiban and me1.id_factor = me2.id_factor and me1.id_custom = me2.id_custom 
+      and me1.id_incr = me2.id_incr and me1.id_limit = me2.id_limit and me1.id_modelno = me2.id_modelno and me1.id_sql = me2.id_sql 
+) ev
+where id_limit = '30' 
+   and id_bettype = '3T' and id_kumiban = '123' 
+   and id_custom = 'wk'
+group by 
+  id_bettype, 
+  id_kumiban,
+  id_factor,
+  id_custom,
+  id_modelno,
+  id_sql
+order by id_bettype, id_kumiban, incamt desc
+) tmp
+) tmp2
+where ranking <= 100
+order by id_bettype, id_kumiban, ranking
+;
+
+
+
+drop table ml_evaluation_sim;
+
+insert into ml_evaluation_sim
+(
+	select 
+	  ids[1] id_grade, ids[2] id_bettype, kumiban id_kumiban, ids[4] id_factor, ids[5] id_custom, ids[6] id_incr, ids[7] id_limit, ids[8] id_modelno, ids[10] id_sql, (ids[11] || ids[12]) id_term, 
+	  resultno, modelno, patternid, pattern, bettype, kumiban, betcnt, hitcnt, betamt, hitamt, betrate, hitrate, incomerate, hmeanrate, balance, bal_slope, betr_slope, 
+      hitr_slope, incr_slope, pt_precision, pt_recall, pt_fmeasure, hodds_min, hodds_max, hodds_mean, hodds_stddev, hodds_median, hoddsrk_min, hoddsrk_max, hoddsrk_mean, 
+      hoddsrk_stddev, hoddsrk_median, rodds_min, rodds_max, rodds_mean, rodds_stddev, rodds_median, roddsrk_min, roddsrk_max, roddsrk_mean, roddsrk_stddev, roddsrk_median, 
+      bodds_min, bodds_max, bodds_mean, bodds_stddev, bodds_median, boddsrk_min, boddsrk_max, boddsrk_mean, boddsrk_stddev, boddsrk_median, prob_min, prob_max, prob_mean, prob_stddev, 
+      prob_median, ror_bestmin, ror_bestmax, ror_betcnt, ror_betamt, ror_hitcnt, ror_hitamt, ror_betrate, ror_hitrate, ror_incomerate, rork_bestmin, rork_bestmax, rork_betcnt, rork_betamt, 
+      rork_hitcnt, rork_hitamt, rork_betrate, rork_hitrate, rork_incomerate, bor_bestmin, bor_bestmax, bor_betcnt, bor_betamt, bor_hitcnt, bor_hitamt, bor_betrate, bor_hitrate, bor_incomerate, 
+      bork_bestmin, bork_bestmax, bork_betcnt, bork_betamt, bork_hitcnt, bork_hitamt, bork_betrate, bork_hitrate, bork_incomerate, pr_bestmin, pr_bestmax, pr_betcnt, pr_betamt, pr_hitcnt, pr_hitamt, 
+      pr_betrate, pr_hitrate, pr_incomerate, bal_pluscnt, result_type, evaluations_id, bonus_pr, bonus_bor, bonus_bork, topbork_bestmin, topbork_bestmax, topbork_betcnt, topbork_betamt, topbork_hitcnt, 
+      topbork_hitamt, topbork_betrate, topbork_hitrate, topbork_incomerate 
+	from 
+	(
+		select 
+		  *,
+		  string_to_array(evaluations_id, '_') ids
+		from ml_evaluation me 
+		where resultno::int between 273545 and 274154
+	) tmp
+);
+
+-- gp333 gp118 gp181 gp811除去
+delete from ml_evaluation_sim where resultno::int between 273965 and 274004;
+
+truncate stat_bork5;
+
+insert into stat_bork5
+  select 
+    me.result_type, (case when me.result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+    me.bettype, me.kumiban, me.resultno, me.modelno, me.patternid, me.pattern, 
+    bk.incamt[0] i0, bk.incamt[1] i1, bk.incamt[2] i2, bk.incamt[3] i3, bk.incamt[4] i4, 
+    bk.incamt[5] i5, bk.incamt[6] i6, bk.incamt[7] i7, bk.incamt[8] i8, bk.incamt[9] i9, 
+    (bk.incamt[0] + bk.incamt[1] + bk.incamt[2] + bk.incamt[3] + bk.incamt[4]) i04, 
+    (bk.incamt[2] + bk.incamt[3] + bk.incamt[4] + bk.incamt[5] + bk.incamt[6] + bk.incamt[7]) i27,
+    (bk.incamt[5] + bk.incamt[6] + bk.incamt[7] + bk.incamt[8] + bk.incamt[9]) i59,
+    (bk.incamt[0] + bk.incamt[1] + bk.incamt[2] + bk.incamt[3] + bk.incamt[4] + bk.incamt[5] + bk.incamt[6] + bk.incamt[7] + bk.incamt[8] + bk.incamt[9]) i09,
+    (me.hitamt - me.betamt) incamt, me.betcnt, me.incomerate, me.hitrate, me.bal_pluscnt, 
+    '79100_6m',
+--    '99100_6m',
+    (3 / (1/me.betcnt::float + 1/me.hitcnt::float + 1/((me.hitamt/100)-(me.betamt/100))::float) )::double precision hm,
+    (3 / (1/me.bork_betcnt::float + 1/me.bork_hitcnt::float + 1/((me.bork_hitamt/100)-(me.bork_betamt/100))::float) )::double precision borkhm,
+    (3 / (1/me.bor_betcnt::float + 1/me.bor_hitcnt::float + 1/((me.bor_hitamt/100)-(me.bor_betamt/100))::float) )::double precision borhm,
+    ((me.betcnt::float - 1.0) / (104255 - 1.0) * 0.33) +  ((me.hitcnt::float - 1.0) / (5145 - 1.0) * 0.33) +  ((me.hitamt::float - me.betamt::float - -2633271.0) / (32399.0 - -2633271.0) * 0.33) gp, 
+    ((me.bork_betcnt::float - 1.0) / (4168 - 1.0) * 0.33) +  ((me.bork_hitcnt::float - 1.0) / (708 - 1.0) * 0.33) +  ((me.bork_hitamt::float - me.bork_betamt::float - 1.0) / (112799.0 - 1.0) * 0.33) borkgp, 
+    ((me.bor_betcnt::float - 1.0) / (3217 - 1.0) * 0.33) +  ((me.bor_hitcnt::float - 1.0) / (656 - 1.0) * 0.33) +  ((me.bor_hitamt::float - me.bor_betamt::float - 1.0) / (59364.0 - 1.0) * 0.33) borgp
+    --  hmr은 일단 제외한다. hm에 속성이 포함되어있고 ranking을 왜곡시킬 우려가 있으므로. 나중에 잘 안되면 한번 해보자.
+--    (3 / (1/me.betrate + 1/me.hitrate + 1/me.incomerate) )::double precision hmr,
+--    (3 / (1/me.bork_betrate + 1/me.bork_hitrate + 1/me.bork_incomerate) )::double precision borkhmr,
+--    (3 / (1/me.bor_betrate + 1/me.bor_hitrate + 1/me.bor_incomerate) )::double precision borkhmr
+  from ml_evaluation me, ml_bork_evaluation bk
+  where me.resultno = bk.resultno and me.result_type = bk.result_type and me.bettype = bk.bettype and me.kumiban = bk.kumiban and me.modelno = bk.modelno and me.patternid  = bk.patternid and me.pattern = bk.pattern
+     and me.evaluations_id = '666_1' and me.modelno = '79100'
+     -- and me.evaluations_id = '666_1' and me.modelno = '99100'
+     and ( 
+        me.betcnt <> 0 and me.hitcnt <> 0 and ((me.hitamt/100)-(me.betamt/100)) <> 0
+        and me.bork_betcnt <> 0 and me.bork_hitcnt <> 0 and ((me.bork_hitamt/100)-(me.bork_betamt/100)) <> 0
+        and me.bor_betcnt <> 0 and me.bor_hitcnt <> 0 and ( (me.bor_hitamt/100)-(me.bor_betamt/100)) <> 0
+       and (1/me.betcnt::float + 1/me.hitcnt::float + 1/((me.hitamt/100)-(me.betamt/100))::float) <> 0
+       and (1/me.bork_betcnt::float + 1/me.bork_hitcnt::float + 1/((me.bork_hitamt/100)-(me.bork_betamt/100))::float) <> 0
+       and (1/me.bor_betcnt::float + 1/me.bor_hitcnt::float + 1/((me.bor_hitamt/100)-(me.bor_betamt/100))::float) <> 0
+    )
+ ;
+
+
+
+insert into stat_bork5
+  select 
+    me.result_type, (case when me.result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+    me.bettype, me.kumiban, me.resultno, me.modelno, me.patternid, me.pattern, 
+    bk.incamt[0] i0, bk.incamt[1] i1, bk.incamt[2] i2, bk.incamt[3] i3, bk.incamt[4] i4, 
+    bk.incamt[5] i5, bk.incamt[6] i6, bk.incamt[7] i7, bk.incamt[8] i8, bk.incamt[9] i9, 
+    (bk.incamt[0] + bk.incamt[1] + bk.incamt[2] + bk.incamt[3] + bk.incamt[4]) i04, 
+    (bk.incamt[2] + bk.incamt[3] + bk.incamt[4] + bk.incamt[5] + bk.incamt[6] + bk.incamt[7]) i27,
+    (bk.incamt[5] + bk.incamt[6] + bk.incamt[7] + bk.incamt[8] + bk.incamt[9]) i59,
+    (bk.incamt[0] + bk.incamt[1] + bk.incamt[2] + bk.incamt[3] + bk.incamt[4] + bk.incamt[5] + bk.incamt[6] + bk.incamt[7] + bk.incamt[8] + bk.incamt[9]) i09,
+    (me.hitamt - me.betamt) incamt, me.betcnt, me.incomerate, me.hitrate, me.bal_pluscnt, 
+    '79100_6m',
+    (3 / (1/me.betcnt::float + 1/me.hitcnt::float + 1/((me.hitamt-me.betamt)/100)::float) )::double precision hm,
+    (3 / (1/me.bork_betcnt::float + 1/me.bork_hitcnt::float + 1/((me.bork_hitamt-me.bork_betamt)/100)::float) )::double precision borkhm,
+    (3 / (1/me.bor_betcnt::float + 1/me.bor_hitcnt::float + 1/((me.bor_hitamt-me.bor_betamt)/100)::float) )::double precision borhm
+--  hmr은 일단 제외한다. hm에 속성이 포함되어있고 ranking을 왜곡시킬 우려가 있으므로. 나중에 잘 안되면 한번 해보자.
+--    (3 / (1/me.betrate + 1/me.hitrate + 1/me.incomerate) )::double precision hmr,
+--    (3 / (1/me.bork_betrate + 1/me.bork_hitrate + 1/me.bork_incomerate) )::double precision borkhmr,
+--    (3 / (1/me.bor_betrate + 1/me.bor_hitrate + 1/me.bor_incomerate) )::double precision borkhmr
+  from (
+      select * from ml_evaluation 
+      where betcnt <> 0 and hitcnt <> 0 and (hitamt-betamt) <> 0
+        and bork_betcnt <> 0 and bork_hitcnt <> 0 and (bork_hitamt-bork_betamt) <> 0
+        and bor_betcnt <> 0 and bor_hitcnt <> 0 and (bor_hitamt-bor_betamt) <> 0
+    ) me, 
+    ml_bork_evaluation bk
+  where me.resultno = bk.resultno and me.result_type = bk.result_type and me.bettype = bk.bettype and me.kumiban = bk.kumiban and me.modelno = bk.modelno and me.patternid  = bk.patternid and me.pattern = bk.pattern
+     and me.evaluations_id = '666_1' and me.modelno = '79100'
+     -- and me.evaluations_id = '666_1' and me.modelno = '99100'
+     and ( 
+       (1/me.betcnt::float + 1/me.hitcnt::float + 1/((me.hitamt-me.betamt)/100)::float) <> 0
+       and (1/me.bork_betcnt::float + 1/me.bork_hitcnt::float + 1/((me.bork_hitamt-me.bork_betamt)/100)::float) <> 0
+       and (1/me.bor_betcnt::float + 1/me.bor_hitcnt::float + 1/((me.bor_hitamt-me.bor_betamt)/100)::float) <> 0
+    )
+ ;
+
+
+      select * from ml_evaluation 
+      where betcnt <> 0 and hitcnt <> 0 and (hitamt-betamt) <> 0
+        and bork_betcnt <> 0 and bork_hitcnt <> 0 and (bork_hitamt-bork_betamt) <> 0
+        and bor_betcnt <> 0 and bor_hitcnt <> 0 and (bor_hitamt-bor_betamt) <> 0
+     ;
+
+select count(1) from stat_bork5 where resultno::int > 7555;
+
+select
+    *, string_to_array(evaluations_id, '_') evalids
+  from ml_evaluation me 
+  where evaluations_id like '%7m_775_2%'
+
+
+
+-- FPH4에 대해 775_1. 775_2 모두 흑자인 패턴id들
+select * from (
+select 
+  row_number() over (partition by btype, kban order by dailybet desc) as ranking, *
+from
+(
+select
+  t2.bettype btype, 
+  t2.kumiban kban,
+  concat_ws('_', t2.evalids[4],t2.evalids[5],t2.evalids[6],t2.evalids[7]) ptnid,
+  (t2.betcnt) bet_cnt,
+  ((t2.betcnt)::float / 210)::numeric(5,2) dailybet,
+  ((t2.hitamt-t2.betamt)) incamt, 
+  ((t2.hitcnt)::float / (t2.betcnt)::float)::numeric(5,2) hitrate,
+  ((t2.hitamt)::float / (t2.betamt)::float)::numeric(5,2) incomerate,
+  (t2.bal_pluscnt) balsum
+from   
+(
+  select
+    *, string_to_array(evaluations_id, '_') evalids
+  from ml_evaluation me 
+  where evaluations_id like '%7m_775_2%'
+    and incomerate >= 1.01
+) t2
+where t2.evalids[1] = 'ip'
+  -- and t2.evalids[5] <> 'all'
+  and t2.bettype = '3T'
+  --and t2.evalids[4] = 'i04'
+order by btype, kban, dailybet desc
+) tall
+) tall2
+where ranking = 1
+;  
+
+-- ip_3F_*-*-*_i27_wk_1.3~x_30_79100_7m_775_1_273471
+
+-- {ip,1T,*-*-*,i09,wkall,1.05~x,10,79100,7m,775,2,273469}
+;
+-- result에 대해 775_1. 775_2 모두 흑자인 패턴id들
+select * from (
+select 
+  row_number() over (partition by btype, kban order by dailybet desc) as ranking, *
+from 
+(
+select
+  t1.bettype btype, 
+  t1.kumiban kban,
+  t1.patternid ptnid,
+  count(1) ptncnt,
+  sum(t2.betcnt) bet_cnt,
+  sum(t2.betrate) bet_rate,
+  (sum(t2.betcnt)::float / 210)::numeric(5,2) dailybet,
+  sum((t2.hitamt-t2.betamt)) incamt, 
+  (sum(t2.hitcnt)::float / sum(t2.betcnt)::float)::numeric(5,2) hitrate,
+  (sum(t2.hitamt)::float / sum(t2.betamt)::float)::numeric(5,2) incomerate,
+  sum(t2.bal_pluscnt) balsum
+from   
+(
+  select
+    *
+  from ml_evaluation me 
+  where evaluations_id = '775_1'
+    and incomerate >= 1.01
+    and betcnt > (30*7 / 2)
+) t1,
+(
+  select
+    *
+  from ml_evaluation me 
+  where evaluations_id = '775_2'
+    and incomerate >= 1.01
+    and betcnt > (30*7 / 2)
+) t2
+where t1.result_type = '1'
+  and t1.modelno = t2.modelno and t1.patternid = t2.patternid and t1.pattern = t2.pattern 
+  and t1.bettype = t2.bettype and t1.kumiban = t2.kumiban and t1.result_type = t2.result_type
+group by btype, kban, ptnid 
+order by btype, kban, dailybet desc
+) tall
+) tall2 where ranking = 1
+;  
+
+
+select max(resultno::int) from ml_evaluation me;
+
+truncate stat_bork5;
+
+delete from stat_bork5 where evaluations_id = '79100_14m';
+
+select distinct evaluations_id from stat_bork5 sb;
+
+
+select distinct evaluations_id from stat_bork5 sb; 
+
+insert into stat_bork5
+  select 
+    me.result_type, (case when me.result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+    me.bettype, me.kumiban, me.resultno, me.modelno, me.patternid, me.pattern, 
+    bk.incamt[0] i0, bk.incamt[1] i1, bk.incamt[2] i2, bk.incamt[3] i3, bk.incamt[4] i4, 
+    bk.incamt[5] i5, bk.incamt[6] i6, bk.incamt[7] i7, bk.incamt[8] i8, bk.incamt[9] i9, 
+    (bk.incamt[0] + bk.incamt[1] + bk.incamt[2] + bk.incamt[3] + bk.incamt[4]) i04, 
+    (bk.incamt[2] + bk.incamt[3] + bk.incamt[4] + bk.incamt[5] + bk.incamt[6] + bk.incamt[7]) i27,
+    (bk.incamt[5] + bk.incamt[6] + bk.incamt[7] + bk.incamt[8] + bk.incamt[9]) i59,
+    (bk.incamt[0] + bk.incamt[1] + bk.incamt[2] + bk.incamt[3] + bk.incamt[4] + bk.incamt[5] + bk.incamt[6] + bk.incamt[7] + bk.incamt[8] + bk.incamt[9]) i09,
+    (me.hitamt - me.betamt) incamt, me.betcnt, me.incomerate, me.hitrate, me.bal_pluscnt, 
+    -- me.evaluations_id
+    '79100_6m'
+  from ml_evaluation me, ml_bork_evaluation bk
+  where me.resultno = bk.resultno and me.result_type = bk.result_type and me.bettype = bk.bettype and me.kumiban = bk.kumiban and me.modelno = bk.modelno and me.patternid  = bk.patternid and me.pattern = bk.pattern
+    -- and me.resultno::int between 5883 and 6179
+    -- and me.resultno::int between 6212 and 6310
+    and me.resultno::int between 7517 and 7524   -- 79100の全パタンresultip,SG
+;
+
+    
+delete from ml_evaluation where resultno::int >= 273469;
+delete from ml_bork_evaluation where resultno::int >= 273469;
+delete from ml_pr_evaluation where resultno::int >= 273469;
+delete from ml_range_evaluation where resultno::int >= 273469;
+delete from ml_term_evaluation where resultno::int >= 273469;
+    
+select
+  *   
+from st_patternid sp 
+where result_type = '1'
+  and modelno = '99100'
+order by bettype, kumiban, patternid, p_hmean 
+;
+
+
+select
+  bettype,kumiban, modelno, betcnt, (hitamt - betamt) incamt, incomerate, hitrate, bal_pluscnt 
+from ml_evaluation me 
+where result_type = '1' and patternid = 'nopattern'
+order by bettype,kumiban, incomerate desc
+;
+
+
+
+select
+  *
+from st_patternid sp 
+where patternid in ('wk1', 'wk12', 'wk123', 'wk1234')
+  and modelno = '99100'
+;
+
 
 select *
 from ml_evaluation_bk1 meb
@@ -94,8 +434,9 @@ from
 		  sum(betamt) betamt,
 		  sum(hitamt) hitamt
 		from ml_evaluation me
-		where result_type = '1'
-		  and resultno::int between 4961 and 5744
+		where 
+		  -- result_type = '11'
+		  resultno::int between 4961 and 5752
 		  and incomerate between 1.01 and 99
 		  -- and bettype = '1T' and kumiban = '1'
 		group by result_type, bettype, kumiban, patternid, modelno
@@ -108,8 +449,9 @@ from
 		  sum(betamt) betamt,
 		  sum(hitamt) hitamt
 		from ml_evaluation me
-		where result_type = '1'
-		  and resultno::int between 4961 and 5744
+		where 
+		  -- result_type = '11'
+		  resultno::int between 4961 and 5752
 		group by result_type, bettype, kumiban, patternid, modelno
 		) tot,
   	    (
@@ -118,8 +460,9 @@ from
 		    sum(termcnt) termcnt, 
 		    sum(pluscnt) pluscnt
 		  from ml_term_evaluation mte
-		  where result_type = '1'
-		    and resultno::int between 4961 and 5744
+		  where 
+		    -- result_type = '11'
+		  resultno::int between 4961 and 5752
 		  group by result_type, bettype, kumiban, patternid, modelno
 		) term
 	where pl.result_type = tot.result_type and pl.bettype = tot.bettype and pl.kumiban = tot.kumiban and pl.patternid = tot.patternid and pl.modelno = tot.modelno
@@ -134,6 +477,8 @@ where p_hitrate <> 0 and p_betrate <> 0 and p_incrate <> 0
   and ((1/t_hitrate + 1/t_incrate)) <> 0
   and ((1/p_betrate + 1/p_hitrate + 1/p_incrate)) <> 0
  ;
+
+select count(1) from st_patternid sp ;
 
 truncate st_patternid;
 

@@ -32,6 +32,7 @@ import com.pengkong.boatrace.exp10.result.graph.chart.bubble.RoddsRankProbabilit
 import com.pengkong.boatrace.exp10.result.graph.chart.bubble.RoddsRankProbabilityBubble;
 import com.pengkong.boatrace.exp10.result.graph.chart.term.TermTimelineBalance;
 import com.pengkong.boatrace.exp10.result.graph.chart.term.TermTimelineBetcntHicnt;
+import com.pengkong.boatrace.exp10.result.graph.chart.term.TermTimelineBetcntIncome;
 import com.pengkong.boatrace.exp10.result.graph.chart.term.TermTimelineHitrateIncomerate;
 import com.pengkong.boatrace.exp10.result.graph.chart.v2.BeforeOddsRangePerformance2;
 import com.pengkong.boatrace.exp10.result.graph.chart.v2.BeforeOddsRankRangePerformance2;
@@ -77,7 +78,6 @@ public class ResultGraphBuilder {
 
 		// 全ResultStatのgraphをファイルに出力する
 		String filePath;
-		String filePathBork;
 		for (ResultStat stat : mapStat.values()) {
 			if (stat.evaluation == null) { // Evaluationが作成されていない場合(的中が一つもない）
 				continue;
@@ -93,12 +93,14 @@ public class ResultGraphBuilder {
 			if ( resultType.startsWith(ResultType._1.getValue()) || resultType.startsWith(ResultType._2.getValue())  || resultType.startsWith(ResultType._3.getValue()) ) { // result typeが1で始まる
 				//exnoPath = exnoPath + "_" + resultType  + "_" + prop.getString("used_model_no") + "_" + prop.getString("pattern_id");
 				//exnoPath = exnoPath + "_" + resultType  + "_" + prop.getString("pattern_id");
-				exnoPath = resultType  + "_" + prop.getString("pattern_id");
 
 				//dirExResult = dirAllResult + exnoPath  + "/" + stat.statBettype + "/" + stat.kumiban + "/";
 				//dirExResult = dirAllResult + exnoPath  + "/" + stat.statBettype + "/" + stat.kumiban + "/";
-				dirExResult = dirAllResult + stat.statBettype + "/" + stat.kumiban + "/" + exnoPath  + "/";
-
+				//dirExResult = dirAllResult + stat.statBettype + "/" + stat.kumiban + "/" + exnoPath  + "/";
+				//dirExResult = dirAllResult + resultType + "/" + stat.statBettype + "/" + stat.kumiban  + "/" + stat.patternId  + "/";
+				//dirExResult = dirAllResult + prop.getString("evaluations_id")  + "_" + resultType + "/" + stat.statBettype + "/" + stat.kumiban  + "/";
+				dirExResult = dirAllResult + resultType + "/" + stat.statBettype + "/" + stat.kumiban  + "/";
+				
 				String filePathCommon = dirExResult + String.join("_", 
 						prop.getString("result_type"),
 						stat.statBettype, 
@@ -106,39 +108,39 @@ public class ResultGraphBuilder {
 						prop.getString("pattern_id"), 
 						stat.pattern, 
 						prop.getString("used_model_no"),
-						StringUtil.leftPad(exNo, BoatConst.LEFT_PAD6, "0")
+						prop.getString("result_start_ymd"),
+						StringUtil.leftPad(exNo, BoatConst.LEFT_PAD6, "0"),
+						String.valueOf(stat.getDailyBetcnt())
 						);
 				filePath = filePathCommon + ".png";
-				filePathBork = filePathCommon + "_bork.png";
 			} else if (resultType.startsWith(ResultType._4.getValue()) || 
-					resultType.startsWith(ResultType._5.getValue()))  { // // result type 4 = simulation1_*
+					resultType.startsWith(ResultType._5.getValue())  || resultType.startsWith(ResultType._6.getValue())
+					)  { 
+				// 4=step1 result_config6,  5=step2 수동, 6=step2 자동
 				//dirExResult = dirAllResult + stat.statBettype + "/" + stat.kumiban + "/";
 				// 임시 20220815
-				dirExResult = dirAllResult + prop.getString("grade_type") // + "_" + prop.getString("models") 
-						 + "/" + stat.statBettype + "/" + stat.kumiban + "/";
+				//dirExResult = dirAllResult + prop.getString("group_sql_id") + "/" + prop.getString("grade_type") + "/" + stat.statBettype + "/" + stat.kumiban + "/";
+				//dirExResult = dirAllResult + prop.getString("group_sql_id") + "_" + prop.getString("factor_type") + "_" + prop.getString("modelno") +   
+				//		"/" + prop.getString("grade_type") + "/" + stat.statBettype + "/" + stat.kumiban + "/";
+				// step 2 자동
+				dirExResult = dirAllResult  + prop.getString("grade_type") + "/" + stat.statBettype + "/" + stat.kumiban + "/"
+				  + String.join("_", prop.getString("ranking"), prop.getString("group_sql_id"), prop.getString("factor"), prop.getString("simul_custom"))  + "/";
 				
-				//prop.putProperty("evaluations_id", prop.getString("evaluations_id").replace("kumiban", stat.kumiban));
-				String filePathCommon = dirExResult + prop.getString("evaluations_id");
-/*				
-				String.join("_",
-						prop.getString("result_no"),
-						stat.statBettype,
-						stat.kumiban, 
-						prop.getString("factor"), 
-						prop.getString("limit"), 
-						prop.getString("incr"), 
-						prop.getString("group_sql_id", "x"),
-						prop.getString("term"),
-						prop.getString("result_type"),  
-						prop.getString("models"), 
-						prop.getString("grade_type"), 
-						prop.getString("probability_type"),
-						
-						prop.getString("bonus_pr"), prop.getString("bonus_bor"), prop.getString("bonus_bork")
-						);
-*/						
+				String evaluationsId = prop.getString("evaluations_id");
+				
+				// 統計単位がkumibanでかつ全組番のsimulationの場合組番文字列を書き換える 2023/1/24 
+				if (!stat.kumiban.equals("")  && evaluationsId.contains("*-*-*")) {
+					evaluationsId = evaluationsId.replace("*-*-*", stat.kumiban);
+				}
+				
+				String filePathCommon = null;
+				if (resultType.startsWith(ResultType._5.getValue())) { // step 2 수동
+					filePathCommon = dirAllResult + evaluationsId + "_" + String.valueOf(stat.getIncome()) + "_" + String.valueOf(stat.getDailyBetcnt());
+				} else {
+					filePathCommon = dirExResult + evaluationsId + "_" + String.valueOf(stat.getIncome()) + "_" + String.valueOf(stat.getDailyBetcnt());
+				}
+				
 				filePath = filePathCommon + ".png";
-				filePathBork = filePathCommon + "_bork.png";
 			} else   { // simul_last 最終確認
 				dirExResult = dirAllResult + prop.getString("result_no") + "/";
 				String filePathCommon = dirExResult + String.join("_",
@@ -148,11 +150,14 @@ public class ResultGraphBuilder {
 						stat.kumiban 
 						);
 				filePath = filePathCommon + ".png";
-				filePathBork = filePathCommon + "_bork.png";
 				
 			}
 			
-			FileUtil.createDirIfNotExist(dirExResult);
+			if (resultType.startsWith(ResultType._5.getValue())) {
+				FileUtil.createDirIfNotExist(dirAllResult);
+			} else {
+				FileUtil.createDirIfNotExist(dirExResult);
+			}
 			
 			filePath = filePath.replaceAll("\\*", "@");
 			
@@ -201,7 +206,7 @@ public class ResultGraphBuilder {
 				
 				BitmapEncoder.saveBitmap(listChart, 3, 3, filePath, BitmapFormat.PNG);
 			} else if (graphType.equals("4")) {
-				listChart.add(new TimelineBalance(stat).create());
+				listChart.add(new TermTimelineBalance(stat).create());
 				listChart.add(new ProbabilityRangePerformance2(stat).create());
 				listChart.add(new BoddsRankProbabilityBubble(stat).create());
 				
@@ -213,11 +218,12 @@ public class ResultGraphBuilder {
 				listChart.add(new ResultOddsRankRangePerformance2(stat).create());
 				listChart.add(new ResultOddsRangePerformance2(stat).create());
 				// listChart.add(new BestBoddsRankProbBubble(stat, xyRange).create());
+				//listChart.add(new BestRoddsRankProbBubble(stat, xyRange).create());
 				listChart.add(new BestBoddsRankRoddsRankBubble(stat, xyRange).create());
 				
 				BitmapEncoder.saveBitmap(listChart, 3, 3, filePath, BitmapFormat.PNG);
-			} else if (graphType.equals("5")) {  // probabilityとroddsrankの分布を見る
-				listChart.add(new TimelineBalance(stat).create());
+			} else if (graphType.equals("5")) {  // probabilityとroddsrankの分布を見る 
+				listChart.add(new TermTimelineBalance(stat).create());
 				listChart.add(new ProbabilityRangePerformance2(stat).create());
 				//listChart.add(new RoddsProbabilityBubble(stat).create());
 				listChart.add(new BestBoddsRankProbBubble(stat, xyRange).create());
@@ -260,7 +266,7 @@ public class ResultGraphBuilder {
 
 				listChart.add(new RoddsRankProbabilityBubble(stat).create());
 				listChart.add(new RoddsRankProbabilityBetcntBubble(stat).create());
-				listChart.add(new TermTimelineBetcntHicnt(stat).create());
+				listChart.add(new TermTimelineBetcntIncome(stat).create());
 				
 				BitmapEncoder.saveBitmap(listChart, 3, 3, filePath, BitmapFormat.PNG);
 			} else {

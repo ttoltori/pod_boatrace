@@ -18,6 +18,8 @@
     <result column="hitamt_arr" jdbcType="ARRAY" property="hitamt_arr" typeHandler="com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler"/>
     <result column="bor_min_arr" jdbcType="ARRAY" property="bor_min_arr" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler"/>
     <result column="bor_max_arr" jdbcType="ARRAY" property="bor_max_arr" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler"/>
+    <result column="balance" jdbcType="ARRAY" property="balance" typeHandler="com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler" />
+    <result column="bal_slope" jdbcType="ARRAY" property="balSlope" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler" />
   </resultMap>
   <select id="selectSql" parameterType="hashmap" resultType="com.pengkong.boatrace.server.db.dto.DBRecord" resultMap="ResultArrayMap">
     <![CDATA[

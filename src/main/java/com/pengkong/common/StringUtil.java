@@ -39,6 +39,25 @@ public class StringUtil {
 		return sb.toString();
 	}
 
+	public static String replaceBetween(String str, String start, String end, boolean startInclusive,
+			boolean endInclusive, String replaceWith) {
+		int i = str.indexOf(start);
+		while (i != -1) {
+			int j = str.indexOf(end, i + 1);
+			if (j != -1) {
+				String data = (startInclusive ? str.substring(0, i) : str.substring(0, i + start.length()))
+						+ replaceWith;
+				String temp = (endInclusive ? str.substring(j + end.length()) : str.substring(j));
+				data += temp;
+				str = data;
+				i = str.indexOf(start, i + replaceWith.length() + end.length() + 1);
+			} else {
+				break;
+			}
+		}
+		return str;
+	}
+
 	public static String getStringBetween(String szStr, String szStart, String szEnd) {
 		String sRet = null;
 		int iStartIndex = szStr.indexOf(szStart) + szStart.length();
@@ -74,7 +93,7 @@ public class StringUtil {
 	public static List<String> parseNumericOptionsString(String strNumbers) {
 		List<String> listNumber = new ArrayList<>();
 		String[] numbers = strNumbers.split(Delimeter.COMMA.getValue());
-		
+
 		for (String number : numbers) {
 			if (StringUtil.isEmpty(number)) {
 				continue;
@@ -112,23 +131,22 @@ public class StringUtil {
 	public static String quote(String src) {
 		return "'" + src + "'";
 	}
-	
-	public static String quote(String...strs) {
+
+	public static String quote(String... strs) {
 		StringBuilder sb = new StringBuilder();
-		
+
 		for (int i = 0; i < strs.length; i++) {
 			sb.append("'" + strs[i] + "'");
 			sb.append(",");
 		}
-		
-		return sb.substring(0, sb.length()-1);
+
+		return sb.substring(0, sb.length() - 1);
 	}
-	
+
 	public static String addDelimeter(String str, String delimeter) {
-		return String.join(delimeter, str.split("")); 
+		return String.join(delimeter, str.split(""));
 	}
-	
-	
+
 	public static String sortString(String str) {
 		char tempString[] = str.toCharArray();
 		// perform sort using Arrays.sort() method
@@ -142,30 +160,33 @@ public class StringUtil {
 	}
 
 	public static Double[] getDoubleArray(String[] arr) {
-        Double[] ret = new Double[arr.length];
-        for (int i = 0; i < arr.length; i++) {
-            ret[i] = Double.valueOf(arr[i].trim());
-        }
+		Double[] ret = new Double[arr.length];
+		for (int i = 0; i < arr.length; i++) {
+			ret[i] = Double.valueOf(arr[i].trim());
+		}
 
-        return ret;
-    }
-    public static List<Double> getDoubleList(String[] arr) {
-        List<Double> list = new ArrayList<>();
-        for (int i = 0; i < arr.length; i++) {
-            list.add(Double.valueOf(arr[i].trim()));
-        }
-
-        return list;
-    }
-	
-	static public void print(double b) {
-		System.out.println( b);
+		return ret;
 	}
+
+	public static List<Double> getDoubleList(String[] arr) {
+		List<Double> list = new ArrayList<>();
+		for (int i = 0; i < arr.length; i++) {
+			list.add(Double.valueOf(arr[i].trim()));
+		}
+
+		return list;
+	}
+
+	static public void print(double b) {
+		System.out.println(b);
+	}
+
 	public static void main(String[] args) {
 		
 		MlEvaluation dto = new MlEvaluation();
-		System.out.println(StringUtil.quote("1") );
-		System.out.println(StringUtil.quote("1", "2", "3") );
+		System.out.println(StringUtil.quote("1"));
+		System.out.println(StringUtil.quote("1", "2", "3"));
+		System.out.println(StringUtil.replaceBetween("12345 <optional> 123 </optional> 45678", "<optional>", "</optional>", true, true, ""));
 //		String[] arr = { "a", "b" };
 //		List<String> list = Arrays.asList("a", "b");
 //		System.out.println(list.subList(0, 0));
