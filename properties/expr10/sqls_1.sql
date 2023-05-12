@@ -33,8 +33,9 @@ BEGIN arff_1
   order by pattern, race.ymd, race.sime
 END
 
-# arff_1 with odds_monitor
-BEGIN arff_2
+-- arff_1 with odds_monitor
+--BEGIN arff_2
+BEGIN arff_9_1
   select 'nopattern' pattern, 
   race.ymd, sanrentanprize::double precision, 
   {features}, 
@@ -49,8 +50,9 @@ BEGIN arff_2
   order by pattern, race.ymd, race.sime
 END
 
-# wk1이 B1인것만 학습해본다. ip,G3,G2대상
-BEGIN arff_3
+-- wk1이 B1인것만 학습해본다. ip,G3,G2대상
+-- BEGIN arff_3
+BEGIN arff_9_2
   select 'nopattern' pattern, 
   race.ymd, sanrentanprize::double precision, 
   {features}, 
@@ -66,8 +68,8 @@ BEGIN arff_3
   order by pattern, race.ymd, race.sime
 END
 
-#2차적으,로 ml_classification을 학습시키는 모델을 만들어보자
-BEGIN arff_4
+-- 2차적으로 99100의 ml_classification을 학습시키는 모델을 만들어보자
+BEGIN arff_2
   select 'nopattern' pattern, 
   race.ymd, sanrentanprize::double precision, 
   {features}, 
@@ -76,6 +78,92 @@ BEGIN arff_4
   where race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno 
     and race.ymd = clf.ymd and race.jyocd = clf.jyocd and race.raceno = clf.raceno 
     and clf.modelno = '99100'
+    and sanrentanno <> '不成立' 
+    and grade in ({grade_condition}) 
+    and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
+    and ({class_condition}) 
+  order by pattern, race.ymd, race.sime
+END
+
+--2차적으로 90100의ml_classification을 학습시키는 모델을 만들어보자
+BEGIN arff_2_2
+  select 'nopattern' pattern, 
+  race.ymd, sanrentanprize::double precision, 
+  {features}, 
+  {class_features} 
+  from rec_race race, rec_racer_arr arr, ml_classification clf
+  where race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno 
+    and race.ymd = clf.ymd and race.jyocd = clf.jyocd and race.raceno = clf.raceno 
+    and clf.modelno = '90100'
+    and sanrentanno <> '不成立' 
+    and grade in ({grade_condition}) 
+    and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
+    and ({class_condition}) 
+  order by pattern, race.ymd, race.sime
+END
+
+--2차적으로 90103의 ml_classification을 학습시키는 모델을 만들어보자
+BEGIN arff_2_3
+  select 'nopattern' pattern, 
+  race.ymd, sanrentanprize::double precision, 
+  {features}, 
+  {class_features} 
+  from rec_race race, rec_racer_arr arr, ml_classification clf
+  where race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno 
+    and race.ymd = clf.ymd and race.jyocd = clf.jyocd and race.raceno = clf.raceno 
+    and clf.modelno = '90103'
+    and sanrentanno <> '不成立' 
+    and grade in ({grade_condition}) 
+    and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
+    and ({class_condition}) 
+  order by pattern, race.ymd, race.sime
+END
+
+--3차적으,로 79101의 ml_classification에 더해 직전옺즈를 학습시키는 모델을 만들어보자
+BEGIN arff_3
+  select 'nopattern' pattern, 
+  race.ymd, sanrentanprize::double precision, 
+  {features}, 
+  {class_features} 
+  from rec_race race, rec_racer_arr arr, ml_classification clf, rec_bodds rb
+  where race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno 
+    and race.ymd = clf.ymd and race.jyocd = clf.jyocd and race.raceno = clf.raceno 
+    and race.ymd = rb.ymd and race.jyocd = rb.jyocd and race.raceno = rb.raceno 
+    and clf.modelno = '79101'
+    and sanrentanno <> '不成立' 
+    and grade in ({grade_condition}) 
+    and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
+    and ({class_condition}) 
+  order by pattern, race.ymd, race.sime
+END
+#3차적으,로 70103의 ml_classification에 더해 직전옺즈를 학습시키는 모델을 만들어보자
+BEGIN arff_3_2
+  select 'nopattern' pattern, 
+  race.ymd, sanrentanprize::double precision, 
+  {features}, 
+  {class_features} 
+  from rec_race race, rec_racer_arr arr, ml_classification clf, rec_bodds rb
+  where race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno 
+    and race.ymd = clf.ymd and race.jyocd = clf.jyocd and race.raceno = clf.raceno 
+    and race.ymd = rb.ymd and race.jyocd = rb.jyocd and race.raceno = rb.raceno 
+    and clf.modelno = '70103'
+    and sanrentanno <> '不成立' 
+    and grade in ({grade_condition}) 
+    and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
+    and ({class_condition}) 
+  order by pattern, race.ymd, race.sime
+END
+#3차적으,로 70101의 ml_classification에 더해 직전옺즈를 학습시키는 모델을 만들어보자
+BEGIN arff_3_3
+  select 'nopattern' pattern, 
+  race.ymd, sanrentanprize::double precision, 
+  {features}, 
+  {class_features} 
+  from rec_race race, rec_racer_arr arr, ml_classification clf, rec_bodds rb
+  where race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno 
+    and race.ymd = clf.ymd and race.jyocd = clf.jyocd and race.raceno = clf.raceno 
+    and race.ymd = rb.ymd and race.jyocd = rb.jyocd and race.raceno = rb.raceno 
+    and clf.modelno = '70101'
     and sanrentanno <> '不成立' 
     and grade in ({grade_condition}) 
     and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
@@ -131,36 +219,38 @@ BEGIN clf_1
   order by pattern, race.ymd, race.sime
 END
 
-#clf_1 with before odds
+-- clf_1 with before odds
+-- BEGIN clf_2
+BEGIN clf_9_1
+  select 'nopattern' pattern, 
+  race.ymd, race.jyocd, race.raceno, race.sime,  
+  {features} 
+  from rec_race race, rec_racer_arr arr, odds_monitor om
+  where race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno 
+    and race.ymd = om.ymd and race.jyocd = om.jyocd and race.raceno = om.raceno 
+    and sanrentanno <> '不成立' 
+    and grade in ({grade_condition}) 
+    and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
+  order by pattern, race.ymd, race.sime
+END
+
+-- wk1이 B1인것만 학습해본다. ip,G3,G2대상
+-- BEGIN clf_3
+BEGIN clf_9_2
+  select 'nopattern' pattern, 
+  race.ymd, race.jyocd, race.raceno, race.sime,  
+  {features} 
+  from rec_race race, rec_racer_arr arr, odds_monitor om
+  where race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno 
+    and race.ymd = om.ymd and race.jyocd = om.jyocd and race.raceno = om.raceno 
+    and sanrentanno <> '不成立' 
+    and grade in ({grade_condition}) 
+    and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
+  order by pattern, race.ymd, race.sime
+END
+
+-- 2차적으,로 ml_classification을 학습시키는 모델을 만들어보자
 BEGIN clf_2
-  select 'nopattern' pattern, 
-  race.ymd, race.jyocd, race.raceno, race.sime,  
-  {features} 
-  from rec_race race, rec_racer_arr arr, odds_monitor om
-  where race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno 
-    and race.ymd = om.ymd and race.jyocd = om.jyocd and race.raceno = om.raceno 
-    and sanrentanno <> '不成立' 
-    and grade in ({grade_condition}) 
-    and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
-  order by pattern, race.ymd, race.sime
-END
-
-# wk1이 B1인것만 학습해본다. ip,G3,G2대상
-BEGIN clf_3
-  select 'nopattern' pattern, 
-  race.ymd, race.jyocd, race.raceno, race.sime,  
-  {features} 
-  from rec_race race, rec_racer_arr arr, odds_monitor om
-  where race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno 
-    and race.ymd = om.ymd and race.jyocd = om.jyocd and race.raceno = om.raceno 
-    and sanrentanno <> '不成立' 
-    and grade in ({grade_condition}) 
-    and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
-  order by pattern, race.ymd, race.sime
-END
-
-# 2차적으,로 ml_classification을 학습시키는 모델을 만들어보자
-BEGIN clf_4
   select 'nopattern' pattern, 
   race.ymd, race.jyocd, race.raceno, race.sime,  
   {features} 
@@ -168,6 +258,66 @@ BEGIN clf_4
   where race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno 
     and race.ymd = clf.ymd and race.jyocd = clf.jyocd and race.raceno = clf.raceno 
     and clf.modelno = '99100'
+    and sanrentanno <> '不成立' 
+    and grade in ({grade_condition}) 
+    and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
+  order by pattern, race.ymd, race.sime
+END
+-- 2차적으,로 ml_classification을 학습시키는 모델을 만들어보자
+BEGIN clf_2_2
+  select 'nopattern' pattern, 
+  race.ymd, race.jyocd, race.raceno, race.sime,  
+  {features} 
+  from rec_race race, rec_racer_arr arr, ml_classification clf
+  where race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno 
+    and race.ymd = clf.ymd and race.jyocd = clf.jyocd and race.raceno = clf.raceno 
+    and clf.modelno = '90100'
+    and sanrentanno <> '不成立' 
+    and grade in ({grade_condition}) 
+    and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
+  order by pattern, race.ymd, race.sime
+END
+-- 2차적으,로 ml_classification을 학습시키는 모델을 만들어보자
+BEGIN clf_2_3
+  select 'nopattern' pattern, 
+  race.ymd, race.jyocd, race.raceno, race.sime,  
+  {features} 
+  from rec_race race, rec_racer_arr arr, ml_classification clf
+  where race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno 
+    and race.ymd = clf.ymd and race.jyocd = clf.jyocd and race.raceno = clf.raceno 
+    and clf.modelno = '90103'
+    and sanrentanno <> '不成立' 
+    and grade in ({grade_condition}) 
+    and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
+  order by pattern, race.ymd, race.sime
+END
+
+-- 3차적으,로 79101의 ml_classification에 더해 직전옺즈를 학습시키는 모델을 만들어보자
+BEGIN clf_3
+  select 'nopattern' pattern, 
+  race.ymd, race.jyocd, race.raceno, race.sime,  
+  {features} 
+  from rec_race race, rec_racer_arr arr, ml_classification clf, rec_bodds rb
+  where race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno 
+    and race.ymd = clf.ymd and race.jyocd = clf.jyocd and race.raceno = clf.raceno 
+    and race.ymd = rb.ymd and race.jyocd = rb.jyocd and race.raceno = rb.raceno 
+    and clf.modelno = '79101'
+    and sanrentanno <> '不成立' 
+    and grade in ({grade_condition}) 
+    and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
+  order by pattern, race.ymd, race.sime
+END
+
+-- 3차적으,로 70103의 ml_classification에 더해 직전옺즈를 학습시키는 모델을 만들어보자
+BEGIN clf_3_2
+  select 'nopattern' pattern, 
+  race.ymd, race.jyocd, race.raceno, race.sime,  
+  {features} 
+  from rec_race race, rec_racer_arr arr, ml_classification clf, rec_bodds rb
+  where race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno 
+    and race.ymd = clf.ymd and race.jyocd = clf.jyocd and race.raceno = clf.raceno 
+    and race.ymd = rb.ymd and race.jyocd = rb.jyocd and race.raceno = rb.raceno 
+    and clf.modelno = '70103'
     and sanrentanno <> '不成立' 
     and grade in ({grade_condition}) 
     and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
@@ -207,7 +357,8 @@ BEGIN result_partial_select
     tansyono, nirentanno, nirenhukuno, sanrentanno, sanrenhukuno, 
     tansyoprize, nirentanprize, nirenhukuprize, sanrentanprize, sanrenhukuprize,
     tansyopopular, nirentanpopular, nirenhukupopular, sanrentanpopular, sanrenhukupopular,
-    prediction1, prediction2, prediction3, probability1, probability2, probability3
+    prediction1, prediction2, prediction3, probability1, probability2, probability3,
+    fixedentrance, timezone, com_predict
   from rec_race race, ml_classification cls, rec_racer_arr arr
   where race.ymd = cls.ymd and race.jyocd = cls.jyocd and race.raceno = cls.raceno 
     and race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno 
@@ -239,7 +390,8 @@ BEGIN simulation_partial_select
     tansyono, nirentanno, nirenhukuno, sanrentanno, sanrenhukuno, 
     tansyoprize, nirentanprize, nirenhukuprize, sanrentanprize, sanrenhukuprize,
     tansyopopular, nirentanpopular, nirenhukupopular, sanrentanpopular, sanrenhukupopular,
-    alevelcount, com_confidence, com_predict, grade, turn, racetype, wakulevellist, arr.nationwiningrate::double precision[]
+    alevelcount, com_confidence, com_predict, grade, turn, racetype, wakulevellist, arr.nationwiningrate::double precision[],
+    fixedentrance, timezone
   from rec_race race, rec_racer_arr arr
   where race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno 
     and sanrentanno <> '不成立' 
@@ -1572,3 +1724,151 @@ order by
   id_grade, id_bettype, id_kumiban, id_factor, id_custom, id_limit, id_modelno, id_sql, id_incr, id_term
 END
 ;
+
+BEGIN JSJ-T2
+	select 
+	  '~' sel, 
+	  (case when t2.result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+	  t2.bettype, t2.kumiban, t2.modelno, t2.patternid, t2.pattern, 
+	  t2.betcnt, (t2.hitamt - t2.betamt) incamt, t2.hitrate, t2.incomerate,
+	  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+	from 
+	  ( select * from ml_evaluation where evaluations_id = '{term_1}' ) t1
+	  , ( select * from ml_evaluation where evaluations_id = '{term_2}' ) t2
+	where 
+	    t1.result_type = t2.result_type and t1.bettype = t2.bettype and t1.kumiban = t2.kumiban 
+	    and t1.modelno = t2.modelno and t1.patternid = t2.patternid and t1.pattern = t2.pattern 
+	  and t2.result_type = '{result_type}' and t2.bettype = '{bettype}' 
+	  and t2.modelno = '{modelno}' and t2.patternid = '{simul_patternid}'
+	  and t1.{factor} between {factor_min} and 999
+	  and t2.{factor} between {factor_min} and 999
+	order by grades, bettype, kumiban, modelno, patternid, pattern
+END
+BEGIN JSJ-T3
+	select 
+	  '~' sel, 
+	  (case when t3.result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+	  t3.bettype, t3.kumiban, t3.modelno, t3.patternid, t3.pattern, 
+	  t3.betcnt, (t3.hitamt - t3.betamt) incamt, t3.hitrate, t3.incomerate,
+	  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+	from 
+	  ( select * from ml_evaluation where evaluations_id = '{term_1}' ) t1
+	  , ( select * from ml_evaluation where evaluations_id = '{term_2}' ) t2
+	  , ( select * from ml_evaluation where evaluations_id = '{term_3}' ) t3
+	where 
+	    t1.result_type = t2.result_type and t1.bettype = t2.bettype and t1.kumiban = t2.kumiban 
+	    and t1.modelno = t2.modelno and t1.patternid = t2.patternid and t1.pattern = t2.pattern 
+	    and t1.result_type = t3.result_type and t1.bettype = t3.bettype and t1.kumiban = t3.kumiban 
+	    and t1.modelno = t3.modelno and t1.patternid = t3.patternid and t1.pattern = t3.pattern 
+	  and t3.result_type = '{result_type}' and t3.bettype = '{bettype}' 
+	  and t3.modelno = '{modelno}' and t3.patternid = '{simul_patternid}'
+	  and t1.{factor} between {factor_min} and 999
+	  and t2.{factor} between {factor_min} and 999
+	  and t3.{factor} between {factor_min} and 999
+	order by grades, bettype, kumiban, modelno, patternid, pattern
+END
+BEGIN JSJ-S2
+	select 
+	  '~' sel, 
+	  (case when t2.result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+	  t2.bettype, t2.kumiban, t2.modelno, t2.patternid, t2.pattern, 
+	  t2.betcnt, t2.incamt, t2.hitrate, t2.incrate,
+	  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+	from 
+	  ( select * from stat_bork where evaluations_id = '{term_1}' ) t1
+	  , ( select * from stat_bork where evaluations_id = '{term_2}' ) t2
+	where 
+	    t1.result_type = t2.result_type and t1.bettype = t2.bettype and t1.kumiban = t2.kumiban 
+	    and t1.modelno = t2.modelno and t1.patternid = t2.patternid and t1.pattern = t2.pattern 
+	  and t2.result_type = '{result_type}' and t2.bettype = '{bettype}' 
+	  and t2.modelno = '{modelno}' and t2.patternid = '{simul_patternid}'
+	  and (t1.{factor}) between {factor_min} and 99999
+	  and (t2.{factor}) between {factor_min} and 99999
+	order by grades, bettype, kumiban, modelno, patternid, pattern
+END
+BEGIN JSJ-S3
+	select 
+	  '~' sel, 
+	  (case when t3.result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+	  t3.bettype, t3.kumiban, t3.modelno, t3.patternid, t3.pattern, 
+	  t3.betcnt, t3.incamt, t3.hitrate, t3.incrate,
+	  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+	from 
+	  ( select * from stat_bork where evaluations_id = '{term_1}' ) t1
+	  , ( select * from stat_bork where evaluations_id = '{term_2}' ) t2
+	  , ( select * from stat_bork where evaluations_id = '{term_3}' ) t3
+	where 
+	    t1.result_type = t2.result_type and t1.bettype = t2.bettype and t1.kumiban = t2.kumiban 
+	    and t1.modelno = t2.modelno and t1.patternid = t2.patternid and t1.pattern = t2.pattern 
+	    and t1.result_type = t3.result_type and t1.bettype = t3.bettype and t1.kumiban = t3.kumiban 
+	    and t1.modelno = t3.modelno and t1.patternid = t3.patternid and t1.pattern = t3.pattern 
+	  and t3.result_type = '{result_type}' and t3.bettype = '{bettype}' 
+	  and t3.modelno = '{modelno}' and t3.patternid = '{simul_patternid}'
+	  and (t1.{factor}) between {factor_min} and 99999
+	  and (t2.{factor}) between {factor_min} and 99999
+	  and (t3.{factor}) between {factor_min} and 99999
+	order by grades, bettype, kumiban, modelno, patternid, pattern
+END
+BEGIN JSJ-S2-test
+	select 
+	  '~' sel, 
+	  (case when t2.result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+	  t2.bettype, t2.kumiban, t2.modelno, t2.patternid, t2.pattern, 
+	  t2.betcnt, t2.incamt, t2.hitrate, t2.incrate,
+	  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+	from 
+	  ( select * from stat_bork where evaluations_id = '{term_1}' ) t1
+	  , ( select * from stat_bork where evaluations_id = '{term_2}' ) t2
+	where 
+	    t1.result_type = t2.result_type and t1.bettype = t2.bettype and t1.kumiban = t2.kumiban 
+	    and t1.modelno = t2.modelno and t1.patternid = t2.patternid and t1.pattern = t2.pattern 
+	  and t2.result_type = '{result_type}' and t2.bettype = '{bettype}' and t2.kumiban = '{kumiban}' 
+	  and t2.modelno = '{modelno}' and t2.patternid = '{simul_patternid}'
+	  and (t1.{factor}) between {factor_min} and 99999
+	  and (t2.{factor}) between {factor_min} and 99999
+	order by grades, bettype, kumiban, modelno, patternid, pattern
+END
+BEGIN JSJ-S3-test
+	select 
+	  '~' sel, 
+	  (case when t3.result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+	  t3.bettype, t3.kumiban, t3.modelno, t3.patternid, t3.pattern, 
+	  t3.betcnt, t3.incamt, t3.hitrate, t3.incrate,
+	  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+	from 
+	  ( select * from stat_bork where evaluations_id = '{term_1}' ) t1
+	  , ( select * from stat_bork where evaluations_id = '{term_2}' ) t2
+	  , ( select * from stat_bork where evaluations_id = '{term_3}' ) t3
+	where 
+	    t1.result_type = t2.result_type and t1.bettype = t2.bettype and t1.kumiban = t2.kumiban 
+	    and t1.modelno = t2.modelno and t1.patternid = t2.patternid and t1.pattern = t2.pattern 
+	    and t1.result_type = t3.result_type and t1.bettype = t3.bettype and t1.kumiban = t3.kumiban 
+	    and t1.modelno = t3.modelno and t1.patternid = t3.patternid and t1.pattern = t3.pattern 
+	  and t3.result_type = '{result_type}' and t3.bettype = '{bettype}' and t3.kumiban = '{kumiban}' 
+	  and t3.modelno = '{modelno}' and t3.patternid = '{simul_patternid}'
+	  and (t1.{factor}) between {factor_min} and 99999
+	  and (t2.{factor}) between {factor_min} and 99999
+	  and (t3.{factor}) between {factor_min} and 99999
+	order by grades, bettype, kumiban, modelno, patternid, pattern
+END
+BEGIN ZEN-S2
+	select 
+	  '~' sel, 
+	  (case when t2.result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+	  t2.bettype, t2.kumiban, t2.modelno, t2.patternid, t2.pattern, 
+	  t2.betcnt, t2.incamt, t2.hitrate, t2.incomerate,
+	  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+	from 
+	    ( select * from v_rank where evaluations_id = '{term_1}' ) t1
+	  , ( select * from v_rank where evaluations_id = '{term_2}' ) t2
+	where 
+	    t1.result_type = t2.result_type and t1.bettype = t2.bettype and t1.kumiban = t2.kumiban 
+	    and t1.modelno = t2.modelno and t1.patternid = t2.patternid and t1.pattern = t2.pattern 
+	  and t2.result_type = '{result_type}' and t2.bettype = '{bettype}' 
+	  <optional_1> and t2.kumiban = '{kumiban}' </optional_1>
+	  and t2.modelno = '{modelno}' 
+	  <optional_2> and t2.patternid = '{simul_patternid}' </optional_2> 
+	  and (t1.{factor}) between {factor_min} and {factor_max}
+	  and (t2.{factor}) between {factor_min} and {factor_max}
+	order by grades, bettype, kumiban, modelno, patternid, pattern
+END
