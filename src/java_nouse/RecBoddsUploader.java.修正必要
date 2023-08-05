@@ -1,0 +1,139 @@
+package com.pengkong.boatrace.util;
+
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.pengkong.boatrace.common.enums.Delimeter;
+import com.pengkong.boatrace.exp10.odds.Odds;
+import com.pengkong.boatrace.exp10.odds.provider.AbstractOddsProvider;
+import com.pengkong.boatrace.exp10.odds.provider.BeforeOddsProvider;
+import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
+import com.pengkong.boatrace.exp10.simulation.data.DBRaceDataLoader;
+import com.pengkong.boatrace.mybatis.client.RecBoddsMapper;
+import com.pengkong.boatrace.mybatis.entity.RecBodds;
+import com.pengkong.boatrace.server.db.dto.DBRecord;
+import com.pengkong.common.FileUtil;
+import com.pengkong.common.collection.HashMapList;
+
+public class RecBoddsUploader {
+
+	AbstractOddsProvider boProvider = new BeforeOddsProvider();
+	DBRaceDataLoader raceLoader = new DBRaceDataLoader();
+
+	MLPropertyUtil prop = MLPropertyUtil.getInstance();
+
+	Logger logger = LoggerFactory.getLogger(RecBoddsUploader.class);
+	
+	public void execute(String fromYmd, String toYmd, String tsvFilepath) throws Exception {
+		// race 取得
+		String sql = "select ymd, jyocd, raceno from rec_race where ymd::int between {fromYmd} and {toYmd} order by ymd::int";
+		List<DBRecord> races = raceLoader.executeCustom(fromYmd, toYmd, sql);
+
+		// ファイルからupload対象のkumiban取得
+		HashMapList<String> boMap = loadTsvFile(tsvFilepath);
+		List<String> listKumiban3T = boMap.get("3T");
+
+		SqlSession session = DatabaseUtil.open(prop.getString("target_db_resource"), false);
+		try {
+			RecBoddsMapper mapper = session.getMapper(RecBoddsMapper.class);
+			
+			// raceループ
+			for (DBRecord race : races) {
+				String ymd = race.getString("ymd");
+				String jyoCd = race.getString("jyocd");
+				String raceNo = race.getStringForced("raceno");
+
+				RecBodds rec = new RecBodds();
+				rec.setYmd(ymd);
+				rec.setJyocd(jyoCd);
+				rec.setRaceno(Short.valueOf(raceNo));
+				
+				rec = setPopular(rec, ymd, jyoCd, raceNo);
+				rec = setMost(rec, ymd, jyoCd, raceNo, listKumiban3T);
+			
+				if (rec.getPbo3t() == null || rec.getMbo3t() == null) {
+					logger.info("failed to get odds." + String.join(",", ymd,jyoCd,raceNo));
+					continue;
+				}
+				
+				mapper.insert(rec);
+				logger.info("inserted. " + String.join(",", ymd,jyoCd,raceNo));
+			}
+			session.commit();
+		} finally {
+			DatabaseUtil.close(session);
+		}
+	}
+	
+	/** odds ranking順(3連単)に10個の組番、オッズ値をDTOに設定する */
+	RecBodds setPopular(RecBodds rec, String ymd, String jyoCd, String raceNo) throws Exception {
+		List<Odds> listOdds = boProvider.getPopularList(ymd, jyoCd, raceNo, "3T", 20);
+		if (listOdds == null) {
+			return rec;
+		}
+		
+		String[] arrPk3T = new String[listOdds.size()];
+		double[] arrPbo3T = new double[listOdds.size()];
+		
+		for (int i = 0; i < listOdds.size(); i++) {
+			arrPk3T[i] = listOdds.get(i).kumiban;
+			arrPbo3T[i] = listOdds.get(i).value;
+		}
+		rec.setPk3t(arrPk3T);
+		rec.setPbo3t(arrPbo3T);
+		
+		return rec;
+	}
+
+	/** 指定kumibanリストのオッズ(３連単)値、ランキングを設定する */
+	RecBodds setMost(RecBodds rec, String ymd, String jyoCd, String raceNo, List<String> listKUmiban) throws Exception {
+		List<Odds> listOdds = boProvider.getList(ymd, jyoCd, raceNo, "3T", listKUmiban);
+		if (listOdds == null) {
+			return rec;
+		}
+
+		double[] arrMbo3T = new double[listOdds.size()];
+		int[] arrMbork3T = new int[listOdds.size()];
+		
+		for (int i = 0; i < listOdds.size(); i++) {
+			arrMbo3T[i] = listOdds.get(i).value;
+			arrMbork3T[i] = listOdds.get(i).rank;
+		}
+		rec.setMbo3t(arrMbo3T);
+		rec.setMbork3t(arrMbork3T);
+		
+		return rec;
+	}
+	
+	/** 外部ファイルからオッズ取得対象のbettype,kumibanを取得する */
+	HashMapList<String> loadTsvFile(String filepath) throws Exception {
+		HashMapList<String> boMap = new HashMapList<>();
+
+		List<String> lines = FileUtil.readFileByLineArr(filepath);
+		for (String line : lines) {
+			// 3T_123 -> 3T,123
+			String[] token = line.split(Delimeter.UNDERBAR.getValue());
+			boMap.addItem(token[0], token[1]);
+		}
+		
+		return boMap;
+	}
+	
+	public static void main(String[] args) {
+		String propertyFilepath = "C:/Dev/github/pod_boatrace/properties/expr10/expr10.properties";
+		String tsvFilepath = "C:/Dev/github/pod_boatrace/properties/expr10/rec_bodds.tsv";
+		
+		try {
+			MLPropertyUtil.getInstance().addFile(propertyFilepath);
+			
+			new RecBoddsUploader().execute("20210602", "20230420", tsvFilepath);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+}

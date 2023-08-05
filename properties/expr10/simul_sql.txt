@@ -1,0 +1,119 @@
+copy (
+select
+  '5', id_grade, id_bettype, id_kumiban, id_patternid, id_factor, id_factormin, id_modelno, 'JSJ-S2-test', 
+  '77_1,77_2,77_R', 'incamt04', '3T3R3P', rank_sum
+from
+  (
+    select 
+      row_number() over (partition by sb.id_grade, sb.id_kumiban order by ( (incamt04_sb1 + incamt04_sb2 + incamt04_sbr)/3 ) desc) as rank_sum,
+      *
+	from
+	  ( select 
+		  sb1.incamt04 incamt04_sb1, sb2.incamt04 incamt04_sb2, sbr.incamt04 incamt04_sbr, sbr.*
+		from  
+	 	  (select * from sim_bork where id_factor = 'i04-100' and id_term = '1' and (incamt02 > 0)) sb1,
+	 	  (select * from sim_bork where id_factor = 'i04-100' and id_term = '2' and (incamt02 > 0)) sb2,
+		  (select * from sim_bork where id_factor = 'i04-100' and id_term = 'R'  and (incamt02 > 0)) sbr
+		where sb1.id_grade = sb2.id_grade and sb1.id_bettype = sb2.id_bettype and sb1.id_kumiban = sb2.id_kumiban and sb1.id_patternid = sb2.id_patternid 
+		  and sb1.id_factor = sb2.id_factor and sb1.id_factormin = sb2.id_factormin and sb1.id_modelno = sb2.id_modelno and sb1.id_sqlid = sb2.id_sqlid 
+		  and sb1.id_termtype = sb2.id_termtype and sb1.id_resultno = sb2.id_resultno 
+		  and sb1.id_grade = sbr.id_grade and sb1.id_bettype = sbr.id_bettype and sb1.id_kumiban = sbr.id_kumiban and sb1.id_patternid = sbr.id_patternid 
+		  and sb1.id_factor = sbr.id_factor and sb1.id_factormin = sbr.id_factormin and sb1.id_modelno = sbr.id_modelno and sb1.id_sqlid = sbr.id_sqlid 
+		  and sb1.id_termtype = sbr.id_termtype and sb1.id_resultno = sbr.id_resultno
+	  ) sb
+	where 
+	  sb.id_bettype in ('3T', '3R', '3P')
+  ) tmp
+where rank_sum <= 20
+order by id_grade desc, id_kumiban, rank_sum
+) to 'D:\Dev\experiment\expr10\simulation_step1\simul_JSN_ranked\i04-100\top20_i04_3T3R3P.tsv' csv delimiter E'\t';
+;
+
+
+-- incamt02‚Ìƒ‰ƒ“ƒLƒ“ƒO20
+copy (
+select
+  '5', id_grade, id_bettype, id_kumiban, id_patternid, id_factor, id_factormin, id_modelno, 'JSJ-S2-test', 
+  '77_1,77_2,77_R', 'incamt02', rank_sum
+from
+  (
+    select 
+      row_number() over (partition by sb.id_grade, sb.id_kumiban order by ( (incamt02_sb1 + incamt02_sb2 + incamt02_sbr)/3 ) desc) as rank_sum,
+      *
+	from
+	  ( select 
+		  sb1.incamt02 incamt02_sb1, sb2.incamt02 incamt02_sb2, sbr.incamt02 incamt02_sbr, sbr.*
+		from  
+	 	  (select * from sim_bork where id_term = '1' and (incamt02 > 0)) sb1,
+	 	  (select * from sim_bork where id_term = '2' and (incamt02 > 0)) sb2,
+		  (select * from sim_bork where id_term = 'R'  and (incamt02 > 0)) sbr
+		where sb1.id_grade = sb2.id_grade and sb1.id_bettype = sb2.id_bettype and sb1.id_kumiban = sb2.id_kumiban and sb1.id_patternid = sb2.id_patternid 
+		  and sb1.id_factor = sb2.id_factor and sb1.id_factormin = sb2.id_factormin and sb1.id_modelno = sb2.id_modelno and sb1.id_sqlid = sb2.id_sqlid 
+		  and sb1.id_termtype = sb2.id_termtype and sb1.id_resultno = sb2.id_resultno 
+		  and sb1.id_grade = sbr.id_grade and sb1.id_bettype = sbr.id_bettype and sb1.id_kumiban = sbr.id_kumiban and sb1.id_patternid = sbr.id_patternid 
+		  and sb1.id_factor = sbr.id_factor and sb1.id_factormin = sbr.id_factormin and sb1.id_modelno = sbr.id_modelno and sb1.id_sqlid = sbr.id_sqlid 
+		  and sb1.id_termtype = sbr.id_termtype and sb1.id_resultno = sbr.id_resultno
+	  ) sb
+	where 
+	  and sb.id_bettype in ('3T', '3R', '3P')
+  ) tmp
+where rank_sum <= 20
+order by id_grade, id_kumiban, rank_sum
+) to 'D:\Dev\experiment\expr10\simulation_step1\simul_JSN_ranked\i02\top20_i02_3T3R3P.tsv' csv delimiter E'\t';
+;
+
+
+copy (
+select 
+ rank_sum, eval_id
+from
+  (	select 
+	  -- row_number() over (partition by sb.id_grade, sb.id_bettype, sb.id_kumiban order by (sb.incamt[0] + sb.incamt[1] + sb.incamt[2]) desc) as ranking,
+	  sb.id_bettype, sb.id_kumiban, sb.id_factor, sb.id_factormin, sb.id_grade, sb.id_patternid, sb.id_modelno, 
+      --row_number() over (partition by sb.id_grade, sb.id_bettype, sb.id_kumiban order by ( sb.incamt02+sb.incamt04 ) desc) as rank_sum,
+      -- row_number() over (partition by sb.id_grade, sb.id_kumiban order by ( sb.incamt04 ) desc) as rank_sum,
+	  row_number() over (partition by sb.id_grade, sb.id_kumiban order by ( incamt0204_sb1 + incamt0204 ) desc) as rank_sum,
+	  row_number() over (partition by sb.id_grade, sb.id_bettype, sb.id_kumiban order by (sb.incamt02) desc) as rank_incamt02,
+	  row_number() over (partition by sb.id_grade, sb.id_bettype, sb.id_kumiban order by (sb.incamt04) desc) as rank_incamt04,
+      ( sb.incamt02+sb.incamt04 ) incamt0204,
+      (sb.incamt02) incamt02,
+      (sb.incamt04) incamt04,
+      (se.hitamt-se.betamt) incamtse,
+      (sb.hitcnt02::float / sb.betcnt02::float)::numeric(5,2) hitrate02,
+      (sb.hitcnt04::float / sb.betcnt04::float)::numeric(5,2) hitrate04,
+      (se.hitrate) hitratese,
+      (sb.hitamt02::float / (sb.betcnt02*100)::float)::numeric(5,2) incrate02,
+      (sb.hitamt04::float / (sb.betcnt04*100)::float)::numeric(5,2) incrate04,
+      (se.incomerate) incratese,
+      ((sb.betcnt02)::float/210)::numeric(5,2) daily_betcnt02,
+      ((sb.betcnt04)::float/210)::numeric(5,2) daily_betcnt04,
+	  ( se.id_grade || '_' || se.id_bettype || '_' || se.id_kumiban || '_' || se.id_patternid || '_' || se.id_factor || '_' || se.id_factormin || '_' || 
+      se.id_modelno || '_' || se.id_sqlid || '_' || se.id_termtype || '_' || se.id_term || '_' || se.id_resultno  || '_' || se.daily_incamt  || '_' || se.daily_hitrate || '_' || se.daily_betcnt) eval_id
+	from sim_eval se, 
+	  ( select 
+		  sb1.incamt02 incamt02_sb1, sb2.incamt02 incamt02_sb2, sbr.*
+		from  
+	 	  (select * from sim_bork where id_term = '1' and (incamt02 > 0)) sb1,
+	 	  (select * from sim_bork where id_term = '2' and (incamt02 > 0)) sb2,
+		  (select * from sim_bork where id_term = 'R'  and (incamt02 > 0)) sbr
+		where sb1.id_grade = sb2.id_grade and sb1.id_bettype = sb2.id_bettype and sb1.id_kumiban = sb2.id_kumiban and sb1.id_patternid = sb2.id_patternid 
+		  and sb1.id_factor = sb2.id_factor and sb1.id_factormin = sb2.id_factormin and sb1.id_modelno = sb2.id_modelno and sb1.id_sqlid = sb2.id_sqlid 
+		  and sb1.id_termtype = sb2.id_termtype and sb1.id_resultno = sb2.id_resultno 
+		  and sb1.id_grade = sbr.id_grade and sb1.id_bettype = sbr.id_bettype and sb1.id_kumiban = sbr.id_kumiban and sb1.id_patternid = sbr.id_patternid 
+		  and sb1.id_factor = sbr.id_factor and sb1.id_factormin = sbr.id_factormin and sb1.id_modelno = sbr.id_modelno and sb1.id_sqlid = sbr.id_sqlid 
+		  and sb1.id_termtype = sbr.id_termtype and sb1.id_resultno = sbr.id_resultno
+	  ) sb
+	where se.id_grade = sb.id_grade and se.id_bettype = sb.id_bettype and se.id_kumiban = sb.id_kumiban and se.id_patternid = sb.id_patternid 
+	  and se.id_factor = sb.id_factor and se.id_factormin = sb.id_factormin and se.id_modelno = sb.id_modelno and se.id_sqlid = sb.id_sqlid 
+	  and se.id_termtype = sb.id_termtype and se.id_term = sb.id_term and se.id_resultno = sb.id_resultno 
+	  and se.id_bettype in ('3T', '3R', '3P')
+	  and sb.betc > 0
+  ) tmo
+where rank_sum <= 20
+  -- and id_grade = 'ip' and id_kumiban = '123'
+-- order by id_grade, id_bettype, id_kumiban, rank_incamt02, rank_incamt04
+order by id_grade, id_kumiban, rank_sum 
+) to 'D:\Dev\experiment\expr10\simulation_step1\simul_JSN_ranked\i0204\top20_i0204_1T.tsv' csv delimiter E'\t';
+; 
+
+

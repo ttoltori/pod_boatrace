@@ -1,0 +1,294 @@
+#直前オッズディレクトリ 2019/01/10～2020/06/03
+#Deprecated DIRECTORY_ODDSBEFORE = C:/Dev/workspace/Oxygen/pod_boatrace_test/oddsbefore/
+#groupファイル格納先
+# simulation step 1
+# Deprecated 2022/8/28 Simul2GroupsFileGenerator.java dir_groups_step1=D:/Dev/experiment/expr10/work/groups_store/
+#groupsファイルの自動生成定義ファイル(Excel) filepath#sheet
+# Deprecated 2022/8/28 GroupFileGenerator.java file_groups_config=C:/Dev/workspace/Oxygen/pod_boatrace/document/expr10/groups_config.xlsx#groups
+#simulation log ファイル格納先 (race単位のsimulation統計)
+# Deprecated 2022/8/28 dir_simulation_log=D:/Dev/experiment/expr10/work/simulation_result/
+############# SimulationSelectTool 設定
+# Deprecated simulation selectの自動生成定義ファイル(Excel) filepath#sheet
+# Deprecated 2022/8/28 SimulationSelectTool.java file_selected_config=C:/Dev/workspace/Oxygen/pod_boatrace/document/expr10/simul1_test.xlsx#test2
+# Deprecated 2022/8/28 SimulationSelectTool.java dir_simulation_store=D:/Dev/experiment/expr10/simulation_test/
+# Deprecated 2022/8/28 SimulationSelectTool.java dir_simulation_selected=D:/Dev/experiment/expr10/simulation_selected/
+# Deprecated 2022/8/28 SimulationSelectTool.java dir_groups_store=D:/Dev/experiment/expr10/work/groups_store/
+# 直前オッズ提供対象期間
+# Deprecated BeforeOddsDataServer.java dataserver_odds_period=20180601~20220827
+# WebSocketサーバURL（WEKA）20220417 使用しない
+# Deprecated websocket_url_weka=ws://localhost:8090
+
+
+# schedule.tsv (online処理)
+DIRECTORY_CSV = C:/Dev/workspace/Oxygen/pod_boatrace_test/csv/
+
+#確定オッズ 2010/1/1～
+#DIRECTORY_ODDS = C:/Dev/workspace/Oxygen/pod_boatrace_test/odds/
+DIRECTORY_ODDS = R:/odds/
+
+#monitorオッズ 2021/6/2～
+#DIRECTORY_ODDSMONITOR = C:/Dev/workspace/Oxygen/pod_boatrace_test/oddsmonitor/http/
+DIRECTORY_ODDSMONITOR = R:/oddsmonitor/
+
+#MLのalgorithm定義ファイル
+file_algorithm=C:/Dev/github/pod_boatrace/properties/expr10/algorithm.tsv
+
+#MLのclass定義ファイル
+file_class=C:/Dev/github/pod_boatrace/properties/expr10/class.tsv
+
+#MLの実験定義ファイル
+file_model_config=C:/Dev/github/pod_boatrace/properties/expr10/model_config.tsv
+
+#MLのfeature定義ファイル
+file_features=C:/Dev/github/pod_boatrace/properties/expr10/features.tsv
+
+#MLの実験定義ファイル
+#file_result_config=C:/Dev/github/pod_boatrace/properties/expr10/result_config.tsv
+
+#MLの実験定義ファイル(Excel) filepath#sheet
+# 이 설정값은 변경하지 말것 result_config.xlsx에만 정의할 것 (번호혼선 방지를 위해)
+file_result_config=C:/Dev/github/pod_boatrace/document/expr10/st2/result_config.xlsx#result
+
+#MLのpattern定義ファイル
+file_pattern=C:/Dev/github/pod_boatrace/properties/expr10/pattern.tsv
+
+#result生成時のベッティング方式を定義
+file_strategy=C:/Dev/github/pod_boatrace/properties/expr10/strategy.tsv
+
+#feature set定義ファイル
+file_featureset=C:/Dev/github/pod_boatrace/properties/expr10/featureset.tsv
+
+#java実行時のクラスパス
+classpath=C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/weka.jar;C:/Dev/github/pod_boatrace/target/classes;
+
+target_db_resource=mybatis-config.0.xml
+
+#arffファイル格納先
+dir_model_arff=D:/Dev/experiment/expr10/arff/
+#dir_model_arff=D:/Dev/experiment/expr10/tmp/lightgbm/
+
+#model evaluation file
+dir_model_evaluation=D:/Dev/experiment/expr10/evaluation/
+
+#modelファイル格納先
+dir_model_release=D:/Dev/experiment/expr10/model_release/
+
+#実験結果ファイル格納先
+# expr10_result.tsv : 実験結果を累積する
+# 1_1_nopattern_3T_123.png : 実験番号1,model番号1,3T,123のgraph
+dir_result=D:/Dev/experiment/expr10/result/
+
+# sqlファイルをscanする対象ディレクトリ
+dir_sql=C:/Dev/github/pod_boatrace/properties/expr10/
+
+# sqlファイルリスト（コンマ区分）
+files_sql=sqls_1.sql
+
+# ResultStat(pattern,bettype,kumiban)毎の開始残高。
+# 卍式ベッティング金額計算時に利用する(ベッティング金額 = 残高 * 0.08 * オッズ）
+stat_start_balance=100000
+
+# pythonプロジェクトのHOMEディレクトリ python実行時classpathに相当
+python_path=C:/Dev/workspace/Oxygen/py_boatrace
+
+# メモリに保持するClassifierの数
+classifier_queue_max=60
+
+# WebSocketサーバURL（PYTHON）
+websocket_url_python=ws://localhost:8091
+
+# pythonサーバー用のモデル情報ファイル
+# classId::algorighmid::features
+# ex) 00005_rank1=r1_123456::cf_lgbm-1_py::en1,en2,en3,nw4,nw5,nw6::category,category,category,float,float,float
+file_model_info=C:/Dev/github/pod_boatrace/properties/expr10/model.properties
+
+# pythonサーバーlogging定義ファイル
+file_python_log_config=C:/Dev/workspace/Oxygen/py_boatrace/log_config.json
+
+file_python_log=C:/Dev/workspace/Oxygen/pod_boatrace_test/logs/python/{}.log
+
+# オッズを直前まで取得して直前オッズやオッズ予測が可能な開始日付(OddsMonitorManagerで使用)
+odds_monitoring_start_ymd=20210602
+
+############# rmi data server定義
+# simulationデータ提供対象期間
+dataserver_simulation_period=20180601~20230331
+dataserver_simulation_grade='ip','G3','G2','G1','SG'
+
+# オッズ提供対象bettype
+bettype=1T,2T,3T,2F,3F
+
+# classification data 取得対象のmodelnoリスト
+#dataserver_classification_models=99080,99100,97080,97100
+#dataserver_classification_models=99080,99100,99102,99103,97080,97100,97102,97103
+dataserver_classification_models=99100,79100
+
+# rmi接続情報
+dataserver.rmi.url=rmi://localhost:51761/boatml
+dataserver.rmi.port=51761
+######################### bet金額 #####################################
+BET_1T=100
+BET_2T=100
+BET_2F=100
+BET_3T=100
+BET_3F=100
+
+######################### simulation start #####################################
+
+##1 or 2 or online
+## 1=test 2=最終 3=実践
+simulation_step=1
+
+# ResultStatを生成する単位  bettype, prediction, pattern, unified
+stat_unit=bettype
+#stat_unit=bettype,prediction,patternid,pattern
+
+##------------- simulation step 1 
+#ヒストグラム分割  x=使用しない
+file_histogram_values=C:/Dev/github/pod_boatrace/properties/expr10/histogram_values.properties
+#file_histogram_values=x
+
+#FSB,GPTのsqlで<optional></optional>を含めるかの可否 yes,no (test_FSB(4)でyes利用)
+optional_sql=no
+
+#MLのシミュレーションtest定義ファイル(Excel) filepath#sheet
+file_simul_config_step1=C:/Dev/github/pod_boatrace/document/expr10/st2/result_config.xlsx#simulation
+dir_simul_output_step1=D:/Dev/experiment/expr10/simulation_step1/simul_JSJ/
+dir_groups_output_step1=D:/Dev/experiment/expr10/work/groups_store/
+
+#file_simul_config_step1=C:/Dev/github/pod_boatrace/document/expr10/result_config6.xlsx#simul_FSB_GPT(2)
+#dir_simul_output_step1=D:/Dev/experiment/expr10/simulation_step1/simul_FSB_GPT/
+#dir_groups_output_step1=D:/Dev/experiment/expr10/work/groups_store/
+
+# 選択したresultグラフファイルの格納先 EvaluationSimulLoaderResultGraphFilename
+dir_result_selected=D:/Dev/experiment/expr10/result_selected
+dir_simul_selected=D:/Dev/experiment/expr10/simulation_step1/simul4_4_FPI-5_selected/
+
+# 20220914 EvaluationFileLoader or EvaluationSimul2Loader or 
+# EvaluationSimulExcelLoader or EvaluationSimulLoaderBork or EvaluationSimulLoaderPr 
+# or EvaluationSimulLoaderPtnId or EvaluationSimulLoaderResultGraphFilename
+# or EvaluationSimulLoaderFPI5GraphFilename or EvaluationSimulLoaderFPI7 or EvaluationSimulLoaderFPI8
+evaluation_loader=EvaluationSimulLoaderJSJ
+
+# 20220914 x=EvaluationPatternMatcher  else=EvaluationPatternMatcher2(全patternid一致チェック)
+pattern_matcher=x
+
+#groupシミュレーションをexcelで定義
+file_group_config_step1=C:/Dev/github/pod_boatrace/document/expr10/simul1_group.xlsx#groups
+
+##------------- simulation step 2
+#MLのシミュレーション最終定義ファイル(Excel) filepath#sheet
+file_simul_config_step2=C:/Dev/github/pod_boatrace/document/expr10/simul1_test.xlsx#last
+dir_simul_output_step2=D:/Dev/experiment/expr10/simulation_step2/
+dir_groups_step2=D:/Dev/experiment/expr10/groups_step2/
+
+######################### simulation end #####################################
+
+############# シミュレーション項目preset
+# term_split=1の場合 5= probabilityとroddsrankの分布 6=probabilityとboddsrankの分布
+# term_split=2の場合 1=분할result 2=분할simulation(bork포함) 3=단일simulation
+#graph_type=6
+graph_type=4
+
+bork_min=1
+bork_max=30
+rork_min=1
+rork_max=30
+pr_min=0.01
+pr_max=1
+
+# 2023/4/2 group file 보존여부
+save_group=yes
+save_graph=yes
+save_stat=yes
+save_result=no
+chart_size_x=700
+chart_size_y=700
+
+# 2022/7/30 simul_1확인시 시간절약을 위해 !all그래프 한개만 출력하게한다. count/ptn
+graph_only_count_all=yes
+# 2023/1/11 simul_1이면서 pattern단위 출력일 때, all출력은 생략하려고.
+graph_only_pattern=yes
+
+
+# bork등을 두개로 쪼갤것인가 여부 1=ResultGraphBuilder 2=ResultGraphBuilderSplit
+term_split=1
+
+term_days_balance=31
+term_days_performance=183
+#term_days_balance=15
+#term_days_performance=15
+
+# graph出力対象の収益率範囲 min_incomerateを範囲に変えた（result_config#4161から）
+incomerate_range=0~99
+
+############# simulation定義を簡略化する。 2022/8/5
+evaluations_id=x
+probability_type=digit1
+used_model_no=x
+split=1
+result_sql_id=s-all
+groups=0
+pattern_id=x
+# count or literal
+pattern_type=count
+# mod, ptid, ptn
+pattern_fields=ptn
+range_selector=x
+bonus_pr=x
+bonus_bor=x
+bonus_bork=x
+bonus_borkbor=x
+model_selector=betcnt
+result_class_id=Default
+simul_class_id=SCDefault
+# 20220913 削除 ptncnt_bonus=x
+pattern_selector=x
+prediction_selector=x
+min_betrate=0
+min_betcnt=0
+min_incomerate=0
+
+# 20221112追加
+factor=x
+incr=x
+limit=x
+bork_trim=x
+bork_range=x
+bork_bor_convert=x
+model=x
+custom=x
+
+#期間定義 833_1=result_type 21, 833_2=result_type 22, 833_3=result_type 23, 
+# 最終結果確認
+term_last=20210602~20221031
+
+### !! 注意 79100を使うときは20210602から可能
+term_5_1=20220401~20220831
+term_5_2=20220901~20230131
+term_5_3=20230201~20230228
+term_5_4=20230301~20230331
+
+term_10_1=20210602~20220331
+term_10_2=20220401~20230131
+term_10_3=20230201~20230228
+term_10_4=20230301~20230331
+term_10_12=20210602~20230131
+term_10_34=20230201~20230331
+
+term_15_1=20200801~20211031
+term_15_2=20211101~20230131
+term_15_3=20230201~20230228
+term_15_4=20230301~20230331
+
+term_20_1=20191001~20210531
+term_20_2=20210601~20230131
+term_20_3=20230201~20230228
+term_20_4=20230301~20230331
+term_20_12=20191001~20230131
+term_20_34=20230201~20230331
+
+term_12_1=20210201~20220131
+term_12_2=20220201~20230131
+term_12_3=20230201~20230228
+term_12_4=20230301~20230331
