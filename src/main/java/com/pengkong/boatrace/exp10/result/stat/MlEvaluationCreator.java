@@ -31,10 +31,10 @@ public class MlEvaluationCreator extends MlCreatorBase<MlEvaluation>
 		logger.debug("creating MlEvaluation. " + String.join(",", exNo, modelNo, stat.statBettype, stat.kumiban, patternId, stat.pattern));
 		double[] regression;
 		// 的中が一つもなければEvaluationを作成しない
-		if (stat.listHitOdds.size() <= 0) {
-			logger.warn("Sorry zero Hit.  Evaluation skipped. " + stat.kumiban + "," +  patternId + "," + stat.pattern + ", betcnt=" + stat.sumOfBet);
-			return null;
-		}
+//		if (stat.listHitOdds.size() <= 0) {
+//			logger.warn("Sorry zero Hit.  Evaluation skipped. " + stat.kumiban + "," +  patternId + "," + stat.pattern + ", betcnt=" + stat.sumOfBet);
+//			//return null;
+//		}
 		
 		MlEvaluation dto = new MlEvaluation();
 		dto.setResultno(exNo);
@@ -55,6 +55,10 @@ public class MlEvaluationCreator extends MlCreatorBase<MlEvaluation>
 		
 		// 残高一覧を区間毎に分割
 		stat.arrBalancelist = MathUtil.splitList(stat.listBalance, balanceSplitNum);
+		if (stat.arrBalancelist.length < balanceSplitNum) {
+			return null;
+		}
+		
 		// 区間内の全金額に対して、以前区間の最終残高を減額する
 		ResultHelper.applyBalancing(stat.arrBalancelist, stat.startBalance);
 		

@@ -2,13 +2,16 @@
 mm	mm	nominal	substring(race.ymd from 5 for 2) mm	substring(race.ymd from 5 for 2) mm
 jyo	jyocd	nominal	race.jyocd	race.jyocd
 race	raceno	nominal	race.raceno::text	race.raceno::text
+sime	sime	numeric	substring(race.sime from 1 for 2) sime	substring(race.sime from 1 for 2) sime
 turn	turn	nominal	turn::text	turn::text
 grade	grade	nominal	grade	race.grade
 fixent	fixedentrance	nominal	fixedentrance	fixedentrance
+isvenus	isvenus	nominal	isvenus	isvenus
 raty	racetype	nominal	racetype::text	racetype::text
 time	timezone	nominal	timezone::text	timezone::text
 femcnt	femalecount	numeric	femalecount::text	cast(femalecount as double precision)
 alvt	alevelcount	numeric	alevelcount::text	cast(alevelcount as double precision)
+weekday	weekday	nominal	weekday	weekday
 en1	entry1	nominal	entry[1]::text entry1	entry[1]::text entry1
 en2	entry2	nominal	entry[2]::text entry2	entry[2]::text entry2
 en3	entry3	nominal	entry[3]::text entry3	entry[3]::text entry3
@@ -76,12 +79,6 @@ m3w3	motor3winingrate3	numeric	motor3winingrate[3]::text motor3winingrate3	cast(
 m3w4	motor3winingrate4	numeric	motor3winingrate[4]::text motor3winingrate4	cast(motor3winingrate[4] as double precision) motor3winingrate4
 m3w5	motor3winingrate5	numeric	motor3winingrate[5]::text motor3winingrate5	cast(motor3winingrate[5] as double precision) motor3winingrate5
 m3w6	motor3winingrate6	numeric	motor3winingrate[6]::text motor3winingrate6	cast(motor3winingrate[6] as double precision) motor3winingrate6
-en1n	entry1	numeric	entry[1]::text entry1	cast(entry[1] as double precision) entry1
-en2n	entry2	numeric	entry[2]::text entry2	cast(entry[2] as double precision) entry2
-en3n	entry3	numeric	entry[3]::text entry3	cast(entry[3] as double precision) entry3
-en4n	entry4	numeric	entry[4]::text entry4	cast(entry[4] as double precision) entry4
-en5n	entry5	numeric	entry[5]::text entry5	cast(entry[5] as double precision) entry5
-en6n	entry6	numeric	entry[6]::text entry6	cast(entry[6] as double precision) entry6
 sex1	sex1	numeric	(case when sex[1] = 'M' then 1 else 0 end)::text sex1	cast((case when sex[1] = 'M' then 1 else 0 end) as double precision) sex1
 sex2	sex2	numeric	(case when sex[2] = 'M' then 1 else 0 end)::text sex2	cast((case when sex[2] = 'M' then 1 else 0 end) as double precision) sex2
 sex3	sex3	numeric	(case when sex[3] = 'M' then 1 else 0 end)::text sex3	cast((case when sex[3] = 'M' then 1 else 0 end) as double precision) sex3
@@ -142,61 +139,21 @@ avgtm3	avgtm3	numeric	avgtime[3]::text avgtm3	cast(avgtime[3] as double precisio
 avgtm4	avgtm4	numeric	avgtime[4]::text avgtm4	cast(avgtime[4] as double precision) avgtm4
 avgtm5	avgtm5	numeric	avgtime[5]::text avgtm5	cast(avgtime[5] as double precision) avgtm5
 avgtm6	avgtm6	numeric	avgtime[6]::text avgtm6	cast(avgtime[6] as double precision) avgtm6
-om00	om00	numeric	oddslist[0]::text om00	oddslist[0] om00
-om01	om01	numeric	oddslist[1]::text om01	oddslist[1] om01
-om02	om02	numeric	oddslist[2]::text om02	oddslist[2] om02
-om03	om03	numeric	oddslist[3]::text om03	oddslist[3] om03
-om04	om04	numeric	oddslist[4]::text om04	oddslist[4] om04
-om05	om05	numeric	oddslist[5]::text om05	oddslist[5] om05
-om06	om06	numeric	oddslist[6]::text om06	oddslist[6] om06
-om07	om07	numeric	oddslist[7]::text om07	oddslist[7] om07
-om08	om08	numeric	oddslist[8]::text om08	oddslist[8] om08
-om09	om09	numeric	oddslist[9]::text om09	oddslist[9] om09
-om10	om10	numeric	oddslist[10]::text om10	oddslist[10] om10
-om11	om11	numeric	oddslist[11]::text om11	oddslist[11] om11
-om12	om12	numeric	oddslist[12]::text om12	oddslist[12] om12
-om13	om13	numeric	oddslist[13]::text om13	oddslist[13] om13
-om14	om14	numeric	oddslist[14]::text om14	oddslist[14] om14
-om15	om15	numeric	oddslist[15]::text om15	oddslist[15] om15
-om16	om16	numeric	oddslist[16]::text om16	oddslist[16] om16
-om17	om17	numeric	oddslist[17]::text om17	oddslist[17] om17
-om18	om18	numeric	oddslist[18]::text om18	oddslist[18] om18
-om19	om19	numeric	oddslist[19]::text om19	oddslist[19] om19
-om20	om20	numeric	oddslist[20]::text om20	oddslist[20] om20
-om21	om21	numeric	oddslist[21]::text om21	oddslist[21] om21
-om22	om22	numeric	oddslist[22]::text om22	oddslist[22] om22
-om23	om23	numeric	oddslist[23]::text om23	oddslist[23] om23
-om24	om24	numeric	oddslist[24]::text om24	oddslist[24] om24
-om25	om25	numeric	oddslist[25]::text om25	oddslist[25] om25
-om26	om26	numeric	oddslist[26]::text om26	oddslist[26] om26
-om27	om27	numeric	oddslist[27]::text om27	oddslist[27] om27
-om28	om28	numeric	oddslist[28]::text om28	oddslist[28] om28
-om29	om29	numeric	oddslist[29]::text om29	oddslist[29] om29
-om30	om30	numeric	oddslist[30]::text om30	oddslist[30] om30
-om31	om31	numeric	oddslist[31]::text om31	oddslist[31] om31
-om32	om32	numeric	oddslist[32]::text om32	oddslist[32] om32
-om33	om33	numeric	oddslist[33]::text om33	oddslist[33] om33
-om34	om34	numeric	oddslist[34]::text om34	oddslist[34] om34
-om35	om35	numeric	oddslist[35]::text om35	oddslist[35] om35
-om36	om36	numeric	oddslist[36]::text om36	oddslist[36] om36
-om37	om37	numeric	oddslist[37]::text om37	oddslist[37] om37
-om38	om38	numeric	oddslist[38]::text om38	oddslist[38] om38
-om39	om39	numeric	oddslist[39]::text om39	oddslist[39] om39
 pd1	pd1	nominal	prediction1 pd1	prediction1 pd1
 pd2	pd2	nominal	prediction2 pd2	prediction1 pd2
 pd3	pd3	nominal	prediction3 pd3	prediction1 pd3
 prob1	prob1	numeric	probability1::text prob1	probability1 prob1
 prob2	prob2	numeric	probability2::text prob2	probability2 prob2
 prob3	prob3	numeric	probability3::text prob3	probability3 prob3
-#‰ª•‰∏ãbork, bodds„ÅØ99201„É¢„Éá„É´„ÅßÂà©Áî®				
+#à»â∫bork, boddsÇÕ99201ÉÇÉfÉãÇ≈óòóp				
 #bork	bork	nominal	mr.bet_oddsrank::text bork	mr.bet_oddsrank bork
 #bodds	bodds	numeric	mr.bet_odds::text bodds	cast(mr.bet_odds as double precision) bodds
 bettype	bettype	nominal	mr.bettype bettype	mr.bettype bettype
 bkumiban	bkumiban	numeric	mr.bet_kumiban bkumiban	mr.bet_kumiban bkumiban
-#‰ª•‰∏ãbork, bodds„ÅØ99301„É¢„Éá„É´„ÅßÂà©Áî®				
+#à»â∫bork, boddsÇÕ99301ÉÇÉfÉãÇ≈óòóp				
 bork	bork	numeric	om.bork::text bork	om.bork bork
 bodds	bodds	numeric	om.bor::text bodds	om.bor bodds
-#2Ï∞®Ï†ÅÏúº,Î°ú ml_classificationÏùÑ ÌïôÏäµÏãúÌÇ§Îäî Î™®Îç∏ÏùÑ ÎßåÎì§Ïñ¥Î≥¥Ïûê				
+#2???,? ml_classification? ????? ??? ?????				
 r1prob1	r1prob1	numeric	probabilities1[0]::text r1prob1	probabilities1[0] r1prob1
 r1prob2	r1prob2	numeric	probabilities1[1]::text r1prob2	probabilities1[1] r1prob2
 r1prob3	r1prob3	numeric	probabilities1[2]::text r1prob3	probabilities1[2] r1prob3
@@ -221,3 +178,277 @@ r3prob5	r3prob5	numeric	probabilities3[4]::text r3prob5	probabilities3[4] r3prob
 r3prob6	r3prob6	numeric	probabilities3[5]::text r3prob6	probabilities3[5] r3prob6
 r3skew	r3skew	numeric	skewness3::text r3skew	skewness3 r3skew
 r3kurto	r3kurto	numeric	kurtosis3::text r3kurto	kurtosis3 r3kurto
+#popular kumiban 20				
+pk3t1	pk3t1	nominal	pk_3t[1]::text pk3t1	pk_3t[1] pk3t1
+pk3t2	pk3t2	nominal	pk_3t[2]::text pk3t2	pk_3t[2] pk3t2
+pk3t3	pk3t3	nominal	pk_3t[3]::text pk3t3	pk_3t[3] pk3t3
+pk3t4	pk3t4	nominal	pk_3t[4]::text pk3t4	pk_3t[4] pk3t4
+pk3t5	pk3t5	nominal	pk_3t[5]::text pk3t5	pk_3t[5] pk3t5
+pk3t6	pk3t6	nominal	pk_3t[6]::text pk3t6	pk_3t[6] pk3t6
+pk3t7	pk3t7	nominal	pk_3t[7]::text pk3t7	pk_3t[7] pk3t7
+pk3t8	pk3t8	nominal	pk_3t[8]::text pk3t8	pk_3t[8] pk3t8
+pk3t9	pk3t9	nominal	pk_3t[9]::text pk3t9	pk_3t[9] pk3t9
+pk3t10	pk3t10	nominal	pk_3t[10]::text pk3t10	pk_3t[10] pk3t10
+pk3t11	pk3t11	nominal	pk_3t[11]::text pk3t11	pk_3t[11] pk3t11
+pk3t12	pk3t12	nominal	pk_3t[12]::text pk3t12	pk_3t[12] pk3t12
+pk3t13	pk3t13	nominal	pk_3t[13]::text pk3t13	pk_3t[13] pk3t13
+pk3t14	pk3t14	nominal	pk_3t[14]::text pk3t14	pk_3t[14] pk3t14
+pk3t15	pk3t15	nominal	pk_3t[15]::text pk3t15	pk_3t[15] pk3t15
+pk3t16	pk3t16	nominal	pk_3t[16]::text pk3t16	pk_3t[16] pk3t16
+pk3t17	pk3t17	nominal	pk_3t[17]::text pk3t17	pk_3t[17] pk3t17
+pk3t18	pk3t18	nominal	pk_3t[18]::text pk3t18	pk_3t[18] pk3t18
+pk3t19	pk3t19	nominal	pk_3t[19]::text pk3t19	pk_3t[19] pk3t19
+pk3t20	pk3t20	nominal	pk_3t[20]::text pk3t20	pk_3t[20] pk3t20
+# popular bodds 20				
+#pbo3t1	pbo3t1	numeric	pbo_3t[0]::text pbo3t1	pbo_3t[0] pbo3t1
+pbo3t1	pbo3t1	numeric	pbo_3t[0]::text pbo3t1	pbo_3t[0] pbo3t1
+pbo3t2	pbo3t2	numeric	pbo_3t[1]::text pbo3t2	pbo_3t[1] pbo3t2
+pbo3t3	pbo3t3	numeric	pbo_3t[2]::text pbo3t3	pbo_3t[2] pbo3t3
+pbo3t4	pbo3t4	numeric	pbo_3t[3]::text pbo3t4	pbo_3t[3] pbo3t4
+pbo3t5	pbo3t5	numeric	pbo_3t[4]::text pbo3t5	pbo_3t[4] pbo3t5
+pbo3t6	pbo3t6	numeric	pbo_3t[5]::text pbo3t6	pbo_3t[5] pbo3t6
+pbo3t7	pbo3t7	numeric	pbo_3t[6]::text pbo3t7	pbo_3t[6] pbo3t7
+pbo3t8	pbo3t8	numeric	pbo_3t[7]::text pbo3t8	pbo_3t[7] pbo3t8
+pbo3t9	pbo3t9	numeric	pbo_3t[8]::text pbo3t9	pbo_3t[8] pbo3t9
+pbo3t10	pbo3t10	numeric	pbo_3t[9]::text pbo3t10	pbo_3t[9] pbo3t10
+pbo3t11	pbo3t11	numeric	pbo_3t[10]::text pbo3t11	pbo_3t[10] pbo3t11
+pbo3t12	pbo3t12	numeric	pbo_3t[11]::text pbo3t12	pbo_3t[11] pbo3t12
+pbo3t13	pbo3t13	numeric	pbo_3t[12]::text pbo3t13	pbo_3t[12] pbo3t13
+pbo3t14	pbo3t14	numeric	pbo_3t[13]::text pbo3t14	pbo_3t[13] pbo3t14
+pbo3t15	pbo3t15	numeric	pbo_3t[14]::text pbo3t15	pbo_3t[14] pbo3t15
+pbo3t16	pbo3t16	numeric	pbo_3t[15]::text pbo3t16	pbo_3t[15] pbo3t16
+pbo3t17	pbo3t17	numeric	pbo_3t[16]::text pbo3t17	pbo_3t[16] pbo3t17
+pbo3t18	pbo3t18	numeric	pbo_3t[17]::text pbo3t18	pbo_3t[17] pbo3t18
+pbo3t19	pbo3t19	numeric	pbo_3t[18]::text pbo3t19	pbo_3t[18] pbo3t19
+pbo3t20	pbo3t20	numeric	pbo_3t[19]::text pbo3t20	pbo_3t[19] pbo3t20
+# most large kumiban's bodds 20				
+mbo3t1	mbo3t1	numeric	mbo_3t[0]::text mbo3t1	mbo_3t[0] mbo3t1
+mbo3t2	mbo3t2	numeric	mbo_3t[1]::text mbo3t2	mbo_3t[1] mbo3t2
+mbo3t3	mbo3t3	numeric	mbo_3t[2]::text mbo3t3	mbo_3t[2] mbo3t3
+mbo3t4	mbo3t4	numeric	mbo_3t[3]::text mbo3t4	mbo_3t[3] mbo3t4
+mbo3t5	mbo3t5	numeric	mbo_3t[4]::text mbo3t5	mbo_3t[4] mbo3t5
+mbo3t6	mbo3t6	numeric	mbo_3t[5]::text mbo3t6	mbo_3t[5] mbo3t6
+mbo3t7	mbo3t7	numeric	mbo_3t[6]::text mbo3t7	mbo_3t[6] mbo3t7
+mbo3t8	mbo3t8	numeric	mbo_3t[7]::text mbo3t8	mbo_3t[7] mbo3t8
+mbo3t9	mbo3t9	numeric	mbo_3t[8]::text mbo3t9	mbo_3t[8] mbo3t9
+mbo3t10	mbo3t10	numeric	mbo_3t[9]::text mbo3t10	mbo_3t[9] mbo3t10
+mbo3t11	mbo3t11	numeric	mbo_3t[10]::text mbo3t11	mbo_3t[10] mbo3t11
+mbo3t12	mbo3t12	numeric	mbo_3t[11]::text mbo3t12	mbo_3t[11] mbo3t12
+mbo3t13	mbo3t13	numeric	mbo_3t[12]::text mbo3t13	mbo_3t[12] mbo3t13
+mbo3t14	mbo3t14	numeric	mbo_3t[13]::text mbo3t14	mbo_3t[13] mbo3t14
+mbo3t15	mbo3t15	numeric	mbo_3t[14]::text mbo3t15	mbo_3t[14] mbo3t15
+mbo3t16	mbo3t16	numeric	mbo_3t[15]::text mbo3t16	mbo_3t[15] mbo3t16
+mbo3t17	mbo3t17	numeric	mbo_3t[16]::text mbo3t17	mbo_3t[16] mbo3t17
+mbo3t18	mbo3t18	numeric	mbo_3t[17]::text mbo3t18	mbo_3t[17] mbo3t18
+mbo3t19	mbo3t19	numeric	mbo_3t[18]::text mbo3t19	mbo_3t[18] mbo3t19
+mbo3t20	mbo3t20	numeric	mbo_3t[19]::text mbo3t20	mbo_3t[19] mbo3t20
+# most large kumiban's bodds rank 20				
+mbork3t1	mbork3t1	numeric	mbork_3t[0]::text mbork3t1	mbork_3t[0] mbork3t1
+mbork3t2	mbork3t2	numeric	mbork_3t[1]::text mbork3t2	mbork_3t[1] mbork3t2
+mbork3t3	mbork3t3	numeric	mbork_3t[2]::text mbork3t3	mbork_3t[2] mbork3t3
+mbork3t4	mbork3t4	numeric	mbork_3t[3]::text mbork3t4	mbork_3t[3] mbork3t4
+mbork3t5	mbork3t5	numeric	mbork_3t[4]::text mbork3t5	mbork_3t[4] mbork3t5
+mbork3t6	mbork3t6	numeric	mbork_3t[5]::text mbork3t6	mbork_3t[5] mbork3t6
+mbork3t7	mbork3t7	numeric	mbork_3t[6]::text mbork3t7	mbork_3t[6] mbork3t7
+mbork3t8	mbork3t8	numeric	mbork_3t[7]::text mbork3t8	mbork_3t[7] mbork3t8
+mbork3t9	mbork3t9	numeric	mbork_3t[8]::text mbork3t9	mbork_3t[8] mbork3t9
+mbork3t10	mbork3t10	numeric	mbork_3t[9]::text mbork3t10	mbork_3t[9] mbork3t10
+mbork3t11	mbork3t11	numeric	mbork_3t[10]::text mbork3t11	mbork_3t[10] mbork3t11
+mbork3t12	mbork3t12	numeric	mbork_3t[11]::text mbork3t12	mbork_3t[11] mbork3t12
+mbork3t13	mbork3t13	numeric	mbork_3t[12]::text mbork3t13	mbork_3t[12] mbork3t13
+mbork3t14	mbork3t14	numeric	mbork_3t[13]::text mbork3t14	mbork_3t[13] mbork3t14
+mbork3t15	mbork3t15	numeric	mbork_3t[14]::text mbork3t15	mbork_3t[14] mbork3t15
+mbork3t16	mbork3t16	numeric	mbork_3t[15]::text mbork3t16	mbork_3t[15] mbork3t16
+mbork3t17	mbork3t17	numeric	mbork_3t[16]::text mbork3t17	mbork_3t[16] mbork3t17
+mbork3t18	mbork3t18	numeric	mbork_3t[17]::text mbork3t18	mbork_3t[17] mbork3t18
+mbork3t19	mbork3t19	numeric	mbork_3t[18]::text mbork3t19	mbork_3t[18] mbork3t19
+mbork3t20	mbork3t20	numeric	mbork_3t[19]::text mbork3t20	mbork_3t[19] mbork3t20
+pd123	pd123	nominal	prediction1 || prediction2 || prediction3 pd123	prediction1 || prediction2 || prediction3 pd123
+rpb1	rpb1	numeric	probabilities1[0]::text rpb1	probabilities1[0] rpb1
+rpb2	rpb2	numeric	probabilities1[1]::text rpb2	probabilities1[1] rpb2
+rpb3	rpb3	numeric	probabilities1[2]::text rpb3	probabilities1[2] rpb3
+rpb4	rpb4	numeric	probabilities1[3]::text rpb4	probabilities1[3] rpb4
+rpb5	rpb5	numeric	probabilities1[4]::text rpb5	probabilities1[4] rpb5
+rpb6	rpb6	numeric	probabilities1[5]::text rpb6	probabilities1[5] rpb6
+rpb7	rpb7	numeric	probabilities1[6]::text rpb7	probabilities1[6] rpb7
+rpb8	rpb8	numeric	probabilities1[7]::text rpb8	probabilities1[7] rpb8
+rpb9	rpb9	numeric	probabilities1[8]::text rpb9	probabilities1[8] rpb9
+rpb10	rpb10	numeric	probabilities1[9]::text rpb10	probabilities1[9] rpb10
+rpb11	rpb11	numeric	probabilities1[10]::text rpb11	probabilities1[10] rpb11
+rpb12	rpb12	numeric	probabilities1[11]::text rpb12	probabilities1[11] rpb12
+rpb13	rpb13	numeric	probabilities1[12]::text rpb13	probabilities1[12] rpb13
+rpb14	rpb14	numeric	probabilities1[13]::text rpb14	probabilities1[13] rpb14
+rpb15	rpb15	numeric	probabilities1[14]::text rpb15	probabilities1[14] rpb15
+rpb16	rpb16	numeric	probabilities1[15]::text rpb16	probabilities1[15] rpb16
+rpb17	rpb17	numeric	probabilities1[16]::text rpb17	probabilities1[16] rpb17
+rpb18	rpb18	numeric	probabilities1[17]::text rpb18	probabilities1[17] rpb18
+rpb19	rpb19	numeric	probabilities1[18]::text rpb19	probabilities1[18] rpb19
+rpb20	rpb20	numeric	probabilities1[19]::text rpb20	probabilities1[19] rpb20
+rpb21	rpb21	numeric	probabilities1[20]::text rpb21	probabilities1[20] rpb21
+rpb22	rpb22	numeric	probabilities1[21]::text rpb22	probabilities1[21] rpb22
+rpb23	rpb23	numeric	probabilities1[22]::text rpb23	probabilities1[22] rpb23
+rpb24	rpb24	numeric	probabilities1[23]::text rpb24	probabilities1[23] rpb24
+rpb25	rpb25	numeric	probabilities1[24]::text rpb25	probabilities1[24] rpb25
+rpb26	rpb26	numeric	probabilities1[25]::text rpb26	probabilities1[25] rpb26
+rpb27	rpb27	numeric	probabilities1[26]::text rpb27	probabilities1[26] rpb27
+rpb28	rpb28	numeric	probabilities1[27]::text rpb28	probabilities1[27] rpb28
+rpb29	rpb29	numeric	probabilities1[28]::text rpb29	probabilities1[28] rpb29
+rpb30	rpb30	numeric	probabilities1[29]::text rpb30	probabilities1[29] rpb30
+rpb31	rpb31	numeric	probabilities1[30]::text rpb31	probabilities1[30] rpb31
+rpb32	rpb32	numeric	probabilities1[31]::text rpb32	probabilities1[31] rpb32
+rpb33	rpb33	numeric	probabilities1[32]::text rpb33	probabilities1[32] rpb33
+rpb34	rpb34	numeric	probabilities1[33]::text rpb34	probabilities1[33] rpb34
+rpb35	rpb35	numeric	probabilities1[34]::text rpb35	probabilities1[34] rpb35
+rpb36	rpb36	numeric	probabilities1[35]::text rpb36	probabilities1[35] rpb36
+rpb37	rpb37	numeric	probabilities1[36]::text rpb37	probabilities1[36] rpb37
+rpb38	rpb38	numeric	probabilities1[37]::text rpb38	probabilities1[37] rpb38
+rpb39	rpb39	numeric	probabilities1[38]::text rpb39	probabilities1[38] rpb39
+rpb40	rpb40	numeric	probabilities1[39]::text rpb40	probabilities1[39] rpb40
+rpb41	rpb41	numeric	probabilities1[40]::text rpb41	probabilities1[40] rpb41
+rpb42	rpb42	numeric	probabilities1[41]::text rpb42	probabilities1[41] rpb42
+rpb43	rpb43	numeric	probabilities1[42]::text rpb43	probabilities1[42] rpb43
+rpb44	rpb44	numeric	probabilities1[43]::text rpb44	probabilities1[43] rpb44
+rpb45	rpb45	numeric	probabilities1[44]::text rpb45	probabilities1[44] rpb45
+rpb46	rpb46	numeric	probabilities1[45]::text rpb46	probabilities1[45] rpb46
+rpb47	rpb47	numeric	probabilities1[46]::text rpb47	probabilities1[46] rpb47
+rpb48	rpb48	numeric	probabilities1[47]::text rpb48	probabilities1[47] rpb48
+rpb49	rpb49	numeric	probabilities1[48]::text rpb49	probabilities1[48] rpb49
+rpb50	rpb50	numeric	probabilities1[49]::text rpb50	probabilities1[49] rpb50
+rpb51	rpb51	numeric	probabilities1[50]::text rpb51	probabilities1[50] rpb51
+rpb52	rpb52	numeric	probabilities1[51]::text rpb52	probabilities1[51] rpb52
+rpb53	rpb53	numeric	probabilities1[52]::text rpb53	probabilities1[52] rpb53
+rpb54	rpb54	numeric	probabilities1[53]::text rpb54	probabilities1[53] rpb54
+rpb55	rpb55	numeric	probabilities1[54]::text rpb55	probabilities1[54] rpb55
+rpb56	rpb56	numeric	probabilities1[55]::text rpb56	probabilities1[55] rpb56
+rpb57	rpb57	numeric	probabilities1[56]::text rpb57	probabilities1[56] rpb57
+rpb58	rpb58	numeric	probabilities1[57]::text rpb58	probabilities1[57] rpb58
+rpb59	rpb59	numeric	probabilities1[58]::text rpb59	probabilities1[58] rpb59
+rpb60	rpb60	numeric	probabilities1[59]::text rpb60	probabilities1[59] rpb60
+rpb61	rpb61	numeric	probabilities1[60]::text rpb61	probabilities1[60] rpb61
+rpb62	rpb62	numeric	probabilities1[61]::text rpb62	probabilities1[61] rpb62
+rpb63	rpb63	numeric	probabilities1[62]::text rpb63	probabilities1[62] rpb63
+rpb64	rpb64	numeric	probabilities1[63]::text rpb64	probabilities1[63] rpb64
+rpb65	rpb65	numeric	probabilities1[64]::text rpb65	probabilities1[64] rpb65
+rpb66	rpb66	numeric	probabilities1[65]::text rpb66	probabilities1[65] rpb66
+rpb67	rpb67	numeric	probabilities1[66]::text rpb67	probabilities1[66] rpb67
+rpb68	rpb68	numeric	probabilities1[67]::text rpb68	probabilities1[67] rpb68
+rpb69	rpb69	numeric	probabilities1[68]::text rpb69	probabilities1[68] rpb69
+rpb70	rpb70	numeric	probabilities1[69]::text rpb70	probabilities1[69] rpb70
+rpb71	rpb71	numeric	probabilities1[70]::text rpb71	probabilities1[70] rpb71
+rpb72	rpb72	numeric	probabilities1[71]::text rpb72	probabilities1[71] rpb72
+rpb73	rpb73	numeric	probabilities1[72]::text rpb73	probabilities1[72] rpb73
+rpb74	rpb74	numeric	probabilities1[73]::text rpb74	probabilities1[73] rpb74
+rpb75	rpb75	numeric	probabilities1[74]::text rpb75	probabilities1[74] rpb75
+rpb76	rpb76	numeric	probabilities1[75]::text rpb76	probabilities1[75] rpb76
+rpb77	rpb77	numeric	probabilities1[76]::text rpb77	probabilities1[76] rpb77
+rpb78	rpb78	numeric	probabilities1[77]::text rpb78	probabilities1[77] rpb78
+rpb79	rpb79	numeric	probabilities1[78]::text rpb79	probabilities1[78] rpb79
+rpb80	rpb80	numeric	probabilities1[79]::text rpb80	probabilities1[79] rpb80
+rcnt1	rcnt1	numeric	runcnt[0]::text rcnt1	runcnt[0] rcnt1
+rcnt2	rcnt2	numeric	runcnt[1]::text rcnt2	runcnt[1] rcnt2
+rcnt3	rcnt3	numeric	runcnt[2]::text rcnt3	runcnt[2] rcnt3
+rcnt4	rcnt4	numeric	runcnt[3]::text rcnt4	runcnt[3] rcnt4
+rcnt5	rcnt5	numeric	runcnt[4]::text rcnt5	runcnt[4] rcnt5
+rcnt6	rcnt6	numeric	runcnt[5]::text rcnt6	runcnt[5] rcnt6
+rcntsp1	rcntsp1	numeric	runcnt_slope[0]::text rcntsp1	runcnt_slope[0] rcntsp1
+rcntsp2	rcntsp2	numeric	runcnt_slope[1]::text rcntsp2	runcnt_slope[1] rcntsp2
+rcntsp3	rcntsp3	numeric	runcnt_slope[2]::text rcntsp3	runcnt_slope[2] rcntsp3
+rcntsp4	rcntsp4	numeric	runcnt_slope[3]::text rcntsp4	runcnt_slope[3] rcntsp4
+rcntsp5	rcntsp5	numeric	runcnt_slope[4]::text rcntsp5	runcnt_slope[4] rcntsp5
+rcntsp6	rcntsp6	numeric	runcnt_slope[5]::text rcntsp6	runcnt_slope[5] rcntsp6
+cond1	cond1	numeric	cond[0]::text cond1	cond[0] cond1
+cond2	cond2	numeric	cond[1]::text cond2	cond[1] cond2
+cond3	cond3	numeric	cond[2]::text cond3	cond[2] cond3
+cond4	cond4	numeric	cond[3]::text cond4	cond[3] cond4
+cond5	cond5	numeric	cond[4]::text cond5	cond[4] cond5
+cond6	cond6	numeric	cond[5]::text cond6	cond[5] cond6
+condsp1	condsp1	numeric	cond_slope[0]::text condsp1	cond_slope[0] condsp1
+condsp2	condsp2	numeric	cond_slope[1]::text condsp2	cond_slope[1] condsp2
+condsp3	condsp3	numeric	cond_slope[2]::text condsp3	cond_slope[2] condsp3
+condsp4	condsp4	numeric	cond_slope[3]::text condsp4	cond_slope[3] condsp4
+condsp5	condsp5	numeric	cond_slope[4]::text condsp5	cond_slope[4] condsp5
+condsp6	condsp6	numeric	cond_slope[5]::text condsp6	cond_slope[5] condsp6
+n1p1	n1p1	numeric	n1point[0]::text n1p1	n1point[0] n1p1
+n1p2	n1p2	numeric	n1point[1]::text n1p2	n1point[1] n1p2
+n1p3	n1p3	numeric	n1point[2]::text n1p3	n1point[2] n1p3
+n1p4	n1p4	numeric	n1point[3]::text n1p4	n1point[3] n1p4
+n1p5	n1p5	numeric	n1point[4]::text n1p5	n1point[4] n1p5
+n1p6	n1p6	numeric	n1point[5]::text n1p6	n1point[5] n1p6
+n1psp1	n1psp1	numeric	n1point_slope[0]::text n1psp1	n1point_slope[0] n1psp1
+n1psp2	n1psp2	numeric	n1point_slope[1]::text n1psp2	n1point_slope[1] n1psp2
+n1psp3	n1psp3	numeric	n1point_slope[2]::text n1psp3	n1point_slope[2] n1psp3
+n1psp4	n1psp4	numeric	n1point_slope[3]::text n1psp4	n1point_slope[3] n1psp4
+n1psp5	n1psp5	numeric	n1point_slope[4]::text n1psp5	n1point_slope[4] n1psp5
+n1psp6	n1psp6	numeric	n1point_slope[5]::text n1psp6	n1point_slope[5] n1psp6
+n2p1	n2p1	numeric	n2point[0]::text n2p1	n2point[0] n2p1
+n2p2	n2p2	numeric	n2point[1]::text n2p2	n2point[1] n2p2
+n2p3	n2p3	numeric	n2point[2]::text n2p3	n2point[2] n2p3
+n2p4	n2p4	numeric	n2point[3]::text n2p4	n2point[3] n2p4
+n2p5	n2p5	numeric	n2point[4]::text n2p5	n2point[4] n2p5
+n2p6	n2p6	numeric	n2point[5]::text n2p6	n2point[5] n2p6
+n2psp1	n2psp1	numeric	n2point_slope[0]::text n2psp1	n2point_slope[0] n2psp1
+n2psp2	n2psp2	numeric	n2point_slope[1]::text n2psp2	n2point_slope[1] n2psp2
+n2psp3	n2psp3	numeric	n2point_slope[2]::text n2psp3	n2point_slope[2] n2psp3
+n2psp4	n2psp4	numeric	n2point_slope[3]::text n2psp4	n2point_slope[3] n2psp4
+n2psp5	n2psp5	numeric	n2point_slope[4]::text n2psp5	n2point_slope[4] n2psp5
+n2psp6	n2psp6	numeric	n2point_slope[5]::text n2psp6	n2point_slope[5] n2psp6
+n3p1	n3p1	numeric	n3point[0]::text n3p1	n3point[0] n3p1
+n3p2	n3p2	numeric	n3point[1]::text n3p2	n3point[1] n3p2
+n3p3	n3p3	numeric	n3point[2]::text n3p3	n3point[2] n3p3
+n3p4	n3p4	numeric	n3point[3]::text n3p4	n3point[3] n3p4
+n3p5	n3p5	numeric	n3point[4]::text n3p5	n3point[4] n3p5
+n3p6	n3p6	numeric	n3point[5]::text n3p6	n3point[5] n3p6
+n3psp1	n3psp1	numeric	n3point_slope[0]::text n3psp1	n3point_slope[0] n3psp1
+n3psp2	n3psp2	numeric	n3point_slope[1]::text n3psp2	n3point_slope[1] n3psp2
+n3psp3	n3psp3	numeric	n3point_slope[2]::text n3psp3	n3point_slope[2] n3psp3
+n3psp4	n3psp4	numeric	n3point_slope[3]::text n3psp4	n3point_slope[3] n3psp4
+n3psp5	n3psp5	numeric	n3point_slope[4]::text n3psp5	n3point_slope[4] n3psp5
+n3psp6	n3psp6	numeric	n3point_slope[5]::text n3psp6	n3point_slope[5] n3psp6
+n1pw1	n1pw1	numeric	n1point_waku[0]::text n1pw1	n1point_waku[0] n1pw1
+n1pw2	n1pw2	numeric	n1point_waku[1]::text n1pw2	n1point_waku[1] n1pw2
+n1pw3	n1pw3	numeric	n1point_waku[2]::text n1pw3	n1point_waku[2] n1pw3
+n1pw4	n1pw4	numeric	n1point_waku[3]::text n1pw4	n1point_waku[3] n1pw4
+n1pw5	n1pw5	numeric	n1point_waku[4]::text n1pw5	n1point_waku[4] n1pw5
+n1pw6	n1pw6	numeric	n1point_waku[5]::text n1pw6	n1point_waku[5] n1pw6
+n1pwsp1	n1pwsp1	numeric	n1point_waku_slope[0]::text n1pwsp1	n1point_waku_slope[0] n1pwsp1
+n1pwsp2	n1pwsp2	numeric	n1point_waku_slope[1]::text n1pwsp2	n1point_waku_slope[1] n1pwsp2
+n1pwsp3	n1pwsp3	numeric	n1point_waku_slope[2]::text n1pwsp3	n1point_waku_slope[2] n1pwsp3
+n1pwsp4	n1pwsp4	numeric	n1point_waku_slope[3]::text n1pwsp4	n1point_waku_slope[3] n1pwsp4
+n1pwsp5	n1pwsp5	numeric	n1point_waku_slope[4]::text n1pwsp5	n1point_waku_slope[4] n1pwsp5
+n1pwsp6	n1pwsp6	numeric	n1point_waku_slope[5]::text n1pwsp6	n1point_waku_slope[5] n1pwsp6
+n2pw1	n2pw1	numeric	n2point_waku[0]::text n2pw1	n2point_waku[0] n2pw1
+n2pw2	n2pw2	numeric	n2point_waku[1]::text n2pw2	n2point_waku[1] n2pw2
+n2pw3	n2pw3	numeric	n2point_waku[2]::text n2pw3	n2point_waku[2] n2pw3
+n2pw4	n2pw4	numeric	n2point_waku[3]::text n2pw4	n2point_waku[3] n2pw4
+n2pw5	n2pw5	numeric	n2point_waku[4]::text n2pw5	n2point_waku[4] n2pw5
+n2pw6	n2pw6	numeric	n2point_waku[5]::text n2pw6	n2point_waku[5] n2pw6
+n2pwsp1	n2pwsp1	numeric	n2point_waku_slope[0]::text n2pwsp1	n2point_waku_slope[0] n2pwsp1
+n2pwsp2	n2pwsp2	numeric	n2point_waku_slope[1]::text n2pwsp2	n2point_waku_slope[1] n2pwsp2
+n2pwsp3	n2pwsp3	numeric	n2point_waku_slope[2]::text n2pwsp3	n2point_waku_slope[2] n2pwsp3
+n2pwsp4	n2pwsp4	numeric	n2point_waku_slope[3]::text n2pwsp4	n2point_waku_slope[3] n2pwsp4
+n2pwsp5	n2pwsp5	numeric	n2point_waku_slope[4]::text n2pwsp5	n2point_waku_slope[4] n2pwsp5
+n2pwsp6	n2pwsp6	numeric	n2point_waku_slope[5]::text n2pwsp6	n2point_waku_slope[5] n2pwsp6
+n3pw1	n3pw1	numeric	n3point_waku[0]::text n3pw1	n3point_waku[0] n3pw1
+n3pw2	n3pw2	numeric	n3point_waku[1]::text n3pw2	n3point_waku[1] n3pw2
+n3pw3	n3pw3	numeric	n3point_waku[2]::text n3pw3	n3point_waku[2] n3pw3
+n3pw4	n3pw4	numeric	n3point_waku[3]::text n3pw4	n3point_waku[3] n3pw4
+n3pw5	n3pw5	numeric	n3point_waku[4]::text n3pw5	n3point_waku[4] n3pw5
+n3pw6	n3pw6	numeric	n3point_waku[5]::text n3pw6	n3point_waku[5] n3pw6
+n3pwsp1	n3pwsp1	numeric	n3point_waku_slope[0]::text n3pwsp1	n3point_waku_slope[0] n3pwsp1
+n3pwsp2	n3pwsp2	numeric	n3point_waku_slope[1]::text n3pwsp2	n3point_waku_slope[1] n3pwsp2
+n3pwsp3	n3pwsp3	numeric	n3point_waku_slope[2]::text n3pwsp3	n3point_waku_slope[2] n3pwsp3
+n3pwsp4	n3pwsp4	numeric	n3point_waku_slope[3]::text n3pwsp4	n3point_waku_slope[3] n3pwsp4
+n3pwsp5	n3pwsp5	numeric	n3point_waku_slope[4]::text n3pwsp5	n3point_waku_slope[4] n3pwsp5
+n3pwsp6	n3pwsp6	numeric	n3point_waku_slope[5]::text n3pwsp6	n3point_waku_slope[5] n3pwsp6
+avgw1	avgw1	numeric	avgstart_waku[0]::text avgw1	avgstart_waku[0] avgw1
+avgw2	avgw2	numeric	avgstart_waku[1]::text avgw2	avgstart_waku[1] avgw2
+avgw3	avgw3	numeric	avgstart_waku[2]::text avgw3	avgstart_waku[2] avgw3
+avgw4	avgw4	numeric	avgstart_waku[3]::text avgw4	avgstart_waku[3] avgw4
+avgw5	avgw5	numeric	avgstart_waku[4]::text avgw5	avgstart_waku[4] avgw5
+avgw6	avgw6	numeric	avgstart_waku[5]::text avgw6	avgstart_waku[5] avgw6
+avgwsp1	avgwsp1	numeric	avgstart_waku_slope[0]::text avgwsp1	avgstart_waku_slope[0] avgwsp1
+avgwsp2	avgwsp2	numeric	avgstart_waku_slope[1]::text avgwsp2	avgstart_waku_slope[1] avgwsp2
+avgwsp3	avgwsp3	numeric	avgstart_waku_slope[2]::text avgwsp3	avgstart_waku_slope[2] avgwsp3
+avgwsp4	avgwsp4	numeric	avgstart_waku_slope[3]::text avgwsp4	avgstart_waku_slope[3] avgwsp4
+avgwsp5	avgwsp5	numeric	avgstart_waku_slope[4]::text avgwsp5	avgstart_waku_slope[4] avgwsp5
+avgwsp6	avgwsp6	numeric	avgstart_waku_slope[5]::text avgwsp6	avgstart_waku_slope[5] avgwsp6

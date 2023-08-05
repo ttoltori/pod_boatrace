@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 import com.pengkong.boatrace.common.enums.Delimeter;
@@ -182,8 +183,23 @@ public class StringUtil {
 	}
 
 	public static void main(String[] args) {
+		HashMap<Integer, Integer> test = new HashMap<>();
+		test.put(1, 1);
+		test.put(2, 1);
+		test.put(3, 1);
+		test.put(4, 1);
+
+		List<Integer> dels = new ArrayList<>();
+		for (Integer idx : test.keySet()) {
+			if (idx < 3) {
+				dels.add(idx);
+			}
+		}
+		
+		for (Integer idx : dels) test.remove(idx);
 		
 		MlEvaluation dto = new MlEvaluation();
+		System.out.println("asaa/100".replace("/", "v"));
 		System.out.println(StringUtil.quote("1"));
 		System.out.println(StringUtil.quote("1", "2", "3"));
 		System.out.println(StringUtil.replaceBetween("12345 <optional> 123 </optional> 45678", "<optional>", "</optional>", true, true, ""));

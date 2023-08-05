@@ -108,4 +108,44 @@ public class PatternWrapper extends AbstractPatternWrapper {
 	double getOdds() {
 		return rec.getDouble("odds");
 	}
+	
+	@Override
+	String getFixedEntrance() {
+		return rec.getString("fixedentrance");
+	}
+
+	@Override
+	String getTimezone() {
+		return rec.getString("timezone");
+	}
+
+	@Override
+	String getCond1() {
+		return rec.getString("cond1");
+	}
+
+	@Override
+	String getN1point1() {
+		return rec.getString("n1point1");
+	}
+
+	@Override
+	String getN1pointWaku1() {
+		return rec.getString("n1pointwaku1");	
+	}
+
+	@Override
+	String getCond2() {
+		return rec.getString("cond2");
+	}
+
+	@Override
+	String getN1point2() {
+		return rec.getString("n1point2");
+	}
+
+	@Override
+	String getN1pointWaku2() {
+		return rec.getString("n1pointwaku2");	
+	}
 }

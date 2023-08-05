@@ -29,12 +29,12 @@ public class MlTermEvaluationCreator extends MlCreatorBase<MlTermEvaluation>
 	 * @return MlEvaluation
 	 */
 	public MlTermEvaluation create(String exNo, String modelNo, String patternId, int balanceSplitNum) throws Exception {
-		logger.debug("creating MlTermEvaluation. " + String.join(",", exNo, modelNo, stat.statBettype, stat.kumiban, patternId, stat.pattern));
+//		logger.debug("creating MlTermEvaluation. " + String.join(",", exNo, modelNo, stat.statBettype, stat.kumiban, patternId, stat.pattern));
 		// 的中が一つもなければEvaluationを作成しない
-		if (stat.listHitOdds.size() <= 0) {
-			logger.warn("Sorry zero Hit.  Evaluation skipped. " + stat.kumiban + "," +  patternId + "," + stat.pattern + ", betcnt=" + stat.sumOfBet);
-			return null;
-		}
+//		if (stat.listHitOdds.size() <= 0) {
+//			logger.warn("Sorry zero Hit.  Evaluation skipped. " + stat.kumiban + "," +  patternId + "," + stat.pattern + ", betcnt=" + stat.sumOfBet);
+//			return null;
+//		}
 		MLPropertyUtil prop = MLPropertyUtil.getInstance();
 
 		MlTermEvaluation dto = new MlTermEvaluation();

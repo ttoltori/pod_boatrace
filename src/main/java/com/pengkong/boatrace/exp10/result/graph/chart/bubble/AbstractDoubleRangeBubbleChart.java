@@ -1,5 +1,6 @@
 package com.pengkong.boatrace.exp10.result.graph.chart.bubble;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
@@ -122,16 +123,20 @@ public abstract class AbstractDoubleRangeBubbleChart extends AbstractChart {
 			xData1.add(1.0); yData1.add(1.0); bubbleData1.add(1.0);
 		}
 		
-	    if (xData1.size() > 0) {
-		    BubbleSeries series = chart.addSeries("黒字", xData1, yData1, bubbleData1);
-		    //series.setFillColor(Color.BLUE);
-	    } 
-
 	    if (xData2.size() > 0) {
 	    	BubbleSeries series = chart.addSeries("赤字", xData2, yData2, bubbleData2);
-		    //series.setFillColor(Color.ORANGE);
+		    //series.setFillColor(Color.WHITE);
+		    //series.setLineColor(Color.WHITE);
 		    
 	    }
+
+	    if (xData1.size() > 0) {
+		    BubbleSeries series = chart.addSeries("黒字", xData1, yData1, bubbleData1);
+		    //series.setFillColor(null);
+		    //series.setFillColor(Color.BLUE);
+		    series.setLineColor(Color.WHITE);
+	    } 
+
 	    
 		return chart;
 	}

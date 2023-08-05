@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.pengkong.boatrace.exp10.odds.loader.OddsRankComparator;
+import com.pengkong.boatrace.exp10.odds.loader.OddsValueComparator;
 import com.pengkong.common.collection.HashMapList;
 
 public class OddsHelperTest {
@@ -35,7 +35,7 @@ public class OddsHelperTest {
 		map.addItem("1", createOdds("3T", "135", 2.0));
 		map.addItem("1", createOdds("3T", "136", 0.0));
 		
-		HashMapList<Odds> result = OddsHelper.applyRanking(map, new OddsRankComparator());
+		HashMapList<Odds> result = OddsHelper.applyRanking(map, new OddsValueComparator());
 		List<Odds> list = result.getAllItems();
 		assertEquals(1, list.get(0).value);
 		assertEquals("124", list.get(0).kumiban);

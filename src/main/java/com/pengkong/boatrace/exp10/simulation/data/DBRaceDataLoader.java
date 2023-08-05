@@ -49,4 +49,26 @@ public class DBRaceDataLoader extends AbstractRaceDataLoader {
 			DatabaseUtil.close(session);
 		}
 	}
+	
+	public List<DBRecord> executeCustom(String fromYmd, String toYmd, String sql) throws Exception {
+		SqlSession session = DatabaseUtil.open(prop.getString("target_db_resource"), false);
+		try {
+			CustomMapper customMapper = session.getMapper(CustomMapper.class);
+			
+			sql = sql.replace("{fromYmd}", fromYmd);
+			sql = sql.replace("{toYmd}", toYmd);
+			
+			HashMap<String, String> mapParam = new HashMap<>();
+			mapParam.put("sql", sql);
+			
+			// 디비 데이터 일람 취득
+			List<DBRecord> results = customMapper.selectSql(mapParam);
+			if (results.size() <= 0) {
+				throw new Exception("db has no data. sql=" + sql);
+			}
+			return results; 
+		} finally {
+			DatabaseUtil.close(session);
+		}
+	}
 }

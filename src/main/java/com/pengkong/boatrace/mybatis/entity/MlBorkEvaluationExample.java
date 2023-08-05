@@ -1321,6 +1321,126 @@ public class MlBorkEvaluationExample {
 			addCriterion("bor_max not between", value1, value2, "borMax");
 			return (Criteria) this;
 		}
+
+		public Criteria andTermCntIsNull() {
+			addCriterion("term_cnt is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andTermCntIsNotNull() {
+			addCriterion("term_cnt is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andTermCntEqualTo(Object value) {
+			addCriterion("term_cnt =", value, "termCnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andTermCntNotEqualTo(Object value) {
+			addCriterion("term_cnt <>", value, "termCnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andTermCntGreaterThan(Object value) {
+			addCriterion("term_cnt >", value, "termCnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andTermCntGreaterThanOrEqualTo(Object value) {
+			addCriterion("term_cnt >=", value, "termCnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andTermCntLessThan(Object value) {
+			addCriterion("term_cnt <", value, "termCnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andTermCntLessThanOrEqualTo(Object value) {
+			addCriterion("term_cnt <=", value, "termCnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andTermCntIn(List<Object> values) {
+			addCriterion("term_cnt in", values, "termCnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andTermCntNotIn(List<Object> values) {
+			addCriterion("term_cnt not in", values, "termCnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andTermCntBetween(Object value1, Object value2) {
+			addCriterion("term_cnt between", value1, value2, "termCnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andTermCntNotBetween(Object value1, Object value2) {
+			addCriterion("term_cnt not between", value1, value2, "termCnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andTermPluscntIsNull() {
+			addCriterion("term_pluscnt is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andTermPluscntIsNotNull() {
+			addCriterion("term_pluscnt is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andTermPluscntEqualTo(Object value) {
+			addCriterion("term_pluscnt =", value, "termPluscnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andTermPluscntNotEqualTo(Object value) {
+			addCriterion("term_pluscnt <>", value, "termPluscnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andTermPluscntGreaterThan(Object value) {
+			addCriterion("term_pluscnt >", value, "termPluscnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andTermPluscntGreaterThanOrEqualTo(Object value) {
+			addCriterion("term_pluscnt >=", value, "termPluscnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andTermPluscntLessThan(Object value) {
+			addCriterion("term_pluscnt <", value, "termPluscnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andTermPluscntLessThanOrEqualTo(Object value) {
+			addCriterion("term_pluscnt <=", value, "termPluscnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andTermPluscntIn(List<Object> values) {
+			addCriterion("term_pluscnt in", values, "termPluscnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andTermPluscntNotIn(List<Object> values) {
+			addCriterion("term_pluscnt not in", values, "termPluscnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andTermPluscntBetween(Object value1, Object value2) {
+			addCriterion("term_pluscnt between", value1, value2, "termPluscnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andTermPluscntNotBetween(Object value1, Object value2) {
+			addCriterion("term_pluscnt not between", value1, value2, "termPluscnt");
+			return (Criteria) this;
+		}
 	}
 
 	/**

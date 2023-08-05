@@ -106,9 +106,9 @@ public class MLArffGenerator extends MLModelGeneratorBase {
 	}
 	
 	public static void main(String[] args) {
+//		String propertyFilepath = "C:/Dev/github/pod_boatrace/properties/expr10/expr10.properties";
+//		String exNoList = "79200";
 		
-//		String exNoList = "1";
-//		String propertyFilepath = "C:/Dev/workspace/Oxygen/pod_boatrace/properties/expr10/expr10.properties";
 		String propertyFilepath = args[0];
 		String exNoList = args[1];
 		try {

@@ -269,4 +269,27 @@ public class RCDefault extends AbstractResultCreator {
 
 		return numList;
 	}
+
+	@Override
+	// ２連複 12,13 2点 (통계단위 3자리)
+	protected List<MlResult> get2Gresult(String[] predictions, DBRecord rec) throws Exception {
+		List<MlResult> result = new ArrayList<>();
+		result.add(createDefault(BetType._2G, BetType._2F, String.join("", predictions[0], predictions[1]), rec));
+		result.add(createDefault(BetType._2G, BetType._2F, String.join("", predictions[0], predictions[2]), rec));
+
+		return result;
+	}
+
+	@Override
+	// ３連複 1-2-3456 4点 (통계단위 2자리)
+	protected List<MlResult> get3Gresult(String[] predictions, DBRecord rec) throws Exception {
+		List<MlResult> result = new ArrayList<>();
+		List<String> kumiban3List = getRemainKumibans(predictions[0], predictions[1]);
+		for (String kumiban3 : kumiban3List) {
+			result.add(createDefault(BetType._3G, BetType._3F,
+					String.join("", predictions[0], predictions[1], kumiban3), rec));
+		}
+
+		return result;
+	}
 }

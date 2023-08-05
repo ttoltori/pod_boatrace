@@ -14,7 +14,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
       <transactionManager type="JDBC"/>
       <dataSource type="POOLED">
         <property name="driver" value="org.postgresql.Driver"/>
-        <property name="url" value="jdbc:postgresql://localhost:55432/boatml"/>
+        <property name="url" value="jdbc:postgresql://localhost:55432/boatml3"/>
         <property name="username" value="postgres"/>
         <property name="password" value="postgres"/>
       </dataSource>
@@ -90,6 +90,11 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
     <mapper resource="com/pengkong/boatrace/mybatis/mapper/MlPorkClassificationMapper.xml"/>
     <!-- 20221220 追加 -->
     <mapper resource="com/pengkong/boatrace/mybatis/mapper/MlTermEvaluationMapper.xml"/>
+    <!-- 20230502 追加 -->
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/RecBoddsMapper.xml"/>
+    <!-- 20230520 追加 -->
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/RecRacerTrendMapper.xml"/>
+    <mapper resource="com/pengkong/boatrace/mybatis/mapper/RecRacerArr2Mapper.xml"/>
     
     <!-- 
     <mapper resource="com/pengkong/boatrace/mybatis/mapper/PowerAvgtimeBettypeMapper.xml"/>

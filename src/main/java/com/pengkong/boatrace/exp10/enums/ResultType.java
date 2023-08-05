@@ -29,8 +29,10 @@ public enum ResultType {
 	_5("5"),
 	
 	/** simulation step 2 最終確認 */
-	_6("6");
+	_6("6"),
 	
+	/** simulation step 2 受動確認 */
+	_9("9");
 	private final String featureType;
 	
 	private ResultType(String featureType) {

@@ -97,7 +97,9 @@ public class EvaluationSimulLoaderFSB extends AbstractEvaluationLoader {
 			}
 
 			// group file 保存 2022/08/12
-			new EvaluationSimulGroupFileGenerator().generateWithDBResults(sql, results);
+			if (prop.getString("save_group").equals("yes")) {
+				new EvaluationSimulGroupFileGenerator().generateWithDBResults(sql, results);
+			}
 			
 			// Evaluation生成
 			HashMap<String, String> mapDuplicateCheck = new HashMap<>();

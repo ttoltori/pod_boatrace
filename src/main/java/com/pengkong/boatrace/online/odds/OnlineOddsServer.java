@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import com.pengkong.boatrace.exp10.odds.Odds;
 import com.pengkong.boatrace.exp10.odds.OddsHelper;
-import com.pengkong.boatrace.exp10.odds.loader.OddsRankComparator;
+import com.pengkong.boatrace.exp10.odds.loader.OddsValueComparator;
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
 import com.pengkong.boatrace.mybatis.entity.OlRace;
 import com.pengkong.common.PropertyUtil;
@@ -101,7 +101,7 @@ public class OnlineOddsServer implements OddsMonitorListener {
 			mapBettypeOdds.addItem(item.createBettypeKey(), item.odds);
 		}
 		
-		mapBettypeOdds = OddsHelper.applyRanking(mapBettypeOdds, new OddsRankComparator());
+		mapBettypeOdds = OddsHelper.applyRanking(mapBettypeOdds, new OddsValueComparator());
 		
 		return mapBettypeOdds.getAllItems();
 	}

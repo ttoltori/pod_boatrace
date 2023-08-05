@@ -42,6 +42,8 @@ public class ResultOddsProvider extends AbstractOddsProvider {
 		betTypes = betTypes.replace("3Y", "3T");
         betTypes = betTypes.replace("3A", "3T");
         betTypes = betTypes.replace("2A", "2T");
+        betTypes = betTypes.replace("2G", "2F");
+        betTypes = betTypes.replace("3G", "3F");
 
 		return betTypes.split(Delimeter.COMMA.getValue());
 	}

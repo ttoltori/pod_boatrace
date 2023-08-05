@@ -9,6 +9,7 @@ import java.util.TreeMap;
 import com.pengkong.boatrace.common.enums.BetType;
 import com.pengkong.boatrace.common.enums.Delimeter;
 import com.pengkong.boatrace.exp10.odds.Odds;
+import com.pengkong.boatrace.exp10.odds.provider.AbstractOddsProvider;
 import com.pengkong.boatrace.exp10.odds.provider.OddsProviderInterface;
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
 import com.pengkong.boatrace.exp10.result.stat.BorkPatternProvider;
@@ -31,7 +32,7 @@ public abstract class AbstractResultCreator {
 	protected OddsProviderInterface beforeOddsProvider;
 
 	/** 確定オッズprovider */
-	protected OddsProviderInterface resultOddsProvider;
+	protected AbstractOddsProvider resultOddsProvider;
 	
 	/** bettype定義 !!! 追加時はResultStatBuilder#getPredictions()にも追加が必要 */
 	TreeMap<BetType , String> mapBetType;
@@ -61,6 +62,8 @@ public abstract class AbstractResultCreator {
 	protected abstract List<MlResult> get3Yresult(String[] predictions, DBRecord rec) throws Exception;
     protected abstract List<MlResult> get3Aresult(String[] predictions, DBRecord rec) throws Exception;
     protected abstract List<MlResult> get2Aresult(String[] predictions, DBRecord rec) throws Exception;
+    protected abstract List<MlResult> get2Gresult(String[] predictions, DBRecord rec) throws Exception;
+    protected abstract List<MlResult> get3Gresult(String[] predictions, DBRecord rec) throws Exception;
 
 	void initialize() {
 		mapBetType = new TreeMap<>();
@@ -80,6 +83,8 @@ public abstract class AbstractResultCreator {
 		mapBetType.put(BetType._3Y, "sanrentan"); // ３連単1-2-3456, 1-3456-2  8点 (통계단위 2자리)
         mapBetType.put(BetType._3A, "sanrentan"); // ３連単
         mapBetType.put(BetType._2A, "nirentan"); // ２連単
+        mapBetType.put(BetType._2G, "nirenhuku"); // ２連複 12,13 2点 (통계단위 3자리)
+        mapBetType.put(BetType._3G, "sanrenhuku"); // ３連複 1-2-3456 4点 (통계단위 2자리)
 		
 		preExecute();
 	}
@@ -106,21 +111,31 @@ public abstract class AbstractResultCreator {
 		
 		// ターゲットのBetTypeリストを巡回
 		String[] tokenBettype = betTypes.split(Delimeter.COMMA.getValue());
-		String[] tokenKumiban = kumibans.split(Delimeter.DASH.getValue());
+		String[] tokenKumiban = ResultHelper.parseKumiban(kumibans);
 		for (String betTypeStr : tokenBettype) {
 			// 予測組番の桁数チェック
-			if (!ResultHelper.isValidDigits(betTypeStr, predictions)) {
+//			if (!ResultHelper.isValidDigits(betTypeStr, predictions)) {
+//				continue;
+//			}
+//			// 予測組番の重複チェック
+//			String usedModelNo = prop.getString("used_model_no");
+//			//String usedModelNo = prop.getString("modelno");
+//			if (!ResultHelper.isUnique(usedModelNo, betTypeStr, predictions)) {
+//				continue;
+//			}
+//			// 予測組番の出力対象チェック
+//			if (!ResultHelper.isValidRange(betTypeStr, predictions, tokenKumiban)) {
+//				continue;
+//			}
+			
+			if (!ResultHelper.isValidPredictions(betTypeStr, predictions)) {
 				continue;
 			}
-			// 予測組番の重複チェック
-			String usedModelNo = prop.getString("used_model_no");
-			if (!ResultHelper.isUnique(usedModelNo, betTypeStr, predictions)) {
+			
+			if (!ResultHelper.isValidPredictionsRange(betTypeStr, predictions, tokenKumiban)) {
 				continue;
 			}
-			// 予測組番の出力対象チェック
-			if (!ResultHelper.isValidRange(betTypeStr, predictions, tokenKumiban)) {
-				continue;
-			}
+			
 			// 1T
 			if (BetType._1T.getValue().equals(betTypeStr)) {
 				result.addAll(get1Tresult(predictions[0], dbRec));
@@ -182,6 +197,12 @@ public abstract class AbstractResultCreator {
             }
             if (BetType._2A.getValue().equals(betTypeStr)) {
                 result.addAll(get2Aresult(predictions, dbRec));
+            }
+            if (BetType._2G.getValue().equals(betTypeStr)) {
+                result.addAll(get2Gresult(predictions, dbRec));
+            }
+            if (BetType._3G.getValue().equals(betTypeStr)) {
+                result.addAll(get3Gresult(predictions, dbRec));
             }
 		}
 		

@@ -17,7 +17,7 @@
 
     <!-- JDBCの設定 -->
     <jdbcConnection driverClass="org.postgresql.Driver"
-                        connectionURL="jdbc:postgresql://localhost:55432/boatml" userId="postgres"
+                        connectionURL="jdbc:postgresql://localhost:55432/boatml3" userId="postgres"
                         password="postgres" />
 
     <!--
@@ -85,7 +85,7 @@
           MapperでPKを指定したクエリ(selectByPrimaryKey等)のパラメータがデフォルトでPrimary Keyエンティティになります。
     <table schema="public" tableName="odds_trend"
      -->
-    <table schema="public" tableName="ml_term_evaluation"
+    <table schema="public" tableName="ml_bork_evaluation"
             enableInsert="true"
             enableSelectByExample="false"
             enableDeleteByExample="true"

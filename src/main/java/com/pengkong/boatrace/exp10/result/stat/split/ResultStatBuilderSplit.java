@@ -70,7 +70,7 @@ public class ResultStatBuilderSplit {
 		
 		
 		// bettype, prediction, pattern別
-		key = statHelper.createKey(result.getStatBettype(), prediction, result.getPattern());
+		key = statHelper.createKey(result.getStatBettype(), prediction, result.getPatternid(), result.getPattern());
 		if (!mapListStat.containsKey(key)) {
 			mapListStat.addItem(key, statHelper.createResultStat(result.getStatBettype(), prediction, result.getPatternid(), result.getPattern()));
 		}

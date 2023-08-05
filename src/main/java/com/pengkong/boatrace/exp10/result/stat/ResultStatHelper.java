@@ -96,7 +96,8 @@ public class ResultStatHelper
 	 * @param patternId パタンID ex) turn+level1
 	 * @param stat ResultStat
 	 * @return MlEvaluation
-	 */
+	 *
+	@Deprecated
 	public MlEvaluation createMlEvaluation(String exNo, String modelNo, String patternId, int balanceSplitNum) throws Exception {
 		logger.debug("creating MlEvaluation. " + String.join(",", exNo, modelNo, stat.statBettype, stat.kumiban, patternId, stat.pattern));
 		double[] regression;
@@ -213,7 +214,7 @@ public class ResultStatHelper
 		stat.evaluation = dto;
 		return dto;
 	}
-
+	*/
 	/** 範囲内データに対する集計結果を取得する */
 	Double[] getRangeDtoValues(List<RangeStatUnit> listUnit, double totalBetCnt) {
 		double rangeBetCnt = 0;

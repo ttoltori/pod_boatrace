@@ -1,11 +1,14 @@
 package com.pengkong.boatrace.exp10.result.stat;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
 import com.pengkong.boatrace.exp10.simulation.range.RangeStatUnit;
 import com.pengkong.boatrace.mybatis.entity.MlBorkEvaluation;
+import com.pengkong.boatrace.util.BoatUtil;
 import com.pengkong.common.MathUtil;
 
 public class MlBorkEvaluationCreator 
@@ -21,11 +24,11 @@ public class MlBorkEvaluationCreator
 		this.stat = stat;
 	}
 
-	public MlBorkEvaluation create(String exNo, String modelNo, String patternId, int balanceSplitNum) throws Exception {
+	public MlBorkEvaluation create(String exNo, String modelNo, String patternId) throws Exception {
 		// 的中が一つもなければEvaluationを作成しない
-		if (stat.listHitOdds.size() <= 0) {
-			return null;
-		}
+//		if (stat.listHitOdds.size() <= 0) {
+//			return null;
+//		}
 		MlBorkEvaluation dto = new MlBorkEvaluation();
 		dto.setResultno(exNo);
 		dto.setModelno(modelNo);
@@ -49,6 +52,8 @@ public class MlBorkEvaluationCreator
 		double[] incomerate = new double[arrMax];
 		double[] borMin = new double[arrMax];
 		double[] borMax = new double[arrMax];
+		int[] termcnt = new int[arrMax];
+		int[] termPluscnt = new int[arrMax];
 		
 		for (Double i = min; i <= max; i++) {
 			int idx = i.intValue() - 1;
@@ -66,6 +71,27 @@ public class MlBorkEvaluationCreator
 			incomerate[idx] = MathUtil.scale2(unit.getIncomerate());
 			borMin[idx] = MathUtil.scale2(unit.bOddsMin);
 			borMax[idx] = MathUtil.scale2(unit.bOddsMax);
+
+			// 各bork毎の期間単位黒数数を求める
+			List<BorkTermUnit> list = stat.mapBorkTerm.get(String.valueOf(i.intValue()));
+			if (list == null) {
+				continue;
+			}
+			
+			int borkTermMax = prop.getInteger("bork_term_max");
+			List<BorkTermUnit>[] arrTerm = MathUtil.splitList(list, borkTermMax);
+			if (arrTerm.length < borkTermMax) {
+				continue;
+			}
+			
+			int plusCnt = 0;
+			for (int j = 0; j < borkTermMax; j++) {
+				if (BorkTermUnit.isPlus(arrTerm[j])) {
+					plusCnt++;
+				}
+			}
+			termcnt[idx] = borkTermMax;
+			termPluscnt[idx] = plusCnt;
 		}
 		
 		dto.setBetcnt(betcnt);
@@ -78,6 +104,8 @@ public class MlBorkEvaluationCreator
 		dto.setIncomerate(incomerate);
 		dto.setBorMin(borMin);
 		dto.setBorMax(borMax);
+		dto.setTermCnt(termcnt);
+		dto.setTermPluscnt(termPluscnt);
 		
 		dto.setResultType(prop.getString("result_type"));
 		dto.setEvaluationsId(prop.getString("evaluations_id"));

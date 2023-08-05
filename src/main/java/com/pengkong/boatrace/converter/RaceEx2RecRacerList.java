@@ -46,6 +46,10 @@ public class RaceEx2RecRacerList {
 			rec.setWaku((short)waku.no);
 			rec.setRank((short)waku.resulRank);
 			rec.setStartresult(BigDecimal.valueOf(waku.resultStart));
+			rec.setGrade(race.setu.grade);
+			
+			// 20230608
+			rec.setRacetype(RaceEx2RecRace.getRaceType(race.raceInfo2.raceType));
 			
 			result.add(rec);
 		}

@@ -69,8 +69,8 @@ public class RaceEx2RecRace {
 		rec.setAveragestartrank(ci.averageStartRank);
 		
 		RaceInfo2 ri2 = race.raceInfo2;
-		rec.setFixedentrance(ri2.fixedEntrance);
-		rec.setRacetype(ri2.raceType);
+		rec.setFixedentrance(getFixedEntrance(ri2.fixedEntrance));
+		rec.setRacetype(getRaceType(ri2.raceType));
 		rec.setWakulevellist(ri2.wakuLevelList);
 		rec.setAlevelcount((short)ri2.aLevelCount);
 		rec.setFemalecount((short)ri2.femaleCount);
@@ -83,6 +83,38 @@ public class RaceEx2RecRace {
 		rec.setComConfidence((short)race.computerBetting.confidence);
 		
 		return rec;
+	}
+	
+	private static String getFixedEntrance(String str) {
+		if (str.equals("N")) {
+			return "N";
+		} else if (str.equals("安定板使用")) {
+			return "Y";
+		} else if (str.equals("進入固定")) {
+			return "F";
+		} else {
+			return "x";
+		}
+	}
+	
+	public static String getRaceType(String str) {
+		if (str.equals("予選")) {
+			return "1";
+		} else if (str.equals("予選特選") || str.equals("予選特賞")) {
+			return "2";
+		} else if (str.equals("一般戦") || str.equals("一般")) {
+			return "3";
+		} else if (str.contains("選抜")) {
+			return "4";
+		} else if (str.equals("特選") || str.equals("特賞")) {
+			return "5";
+		} else if (str.equals("準優勝戦") || str.equals("準優勝")) {
+			return "6";
+		} else if (str.equals("優勝戦")) {
+			return "7";
+		} else {
+			return "0";
+		}
 	}
 	
 	private static String getSetuNumber(String setu) {

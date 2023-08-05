@@ -22,7 +22,6 @@ import com.pengkong.boatrace.exp10.result.graph.ResultGraphBuilder;
 import com.pengkong.boatrace.exp10.result.graph.split.ResultGraphBuilderSplit;
 import com.pengkong.boatrace.exp10.result.stat.MlBorkEvaluationCreator;
 import com.pengkong.boatrace.exp10.result.stat.MlEvaluationCreator;
-import com.pengkong.boatrace.exp10.result.stat.MlPrEvaluationCreator;
 import com.pengkong.boatrace.exp10.result.stat.MlRangeEvaluationCreator;
 import com.pengkong.boatrace.exp10.result.stat.MlTermEvaluationCreator;
 import com.pengkong.boatrace.exp10.result.stat.ResultStat;
@@ -32,17 +31,13 @@ import com.pengkong.boatrace.exp10.simulation.data.AbstractRaceDataLoader;
 import com.pengkong.boatrace.exp10.simulation.data.DBRaceDataLoader;
 import com.pengkong.boatrace.mybatis.client.MlBorkEvaluationMapper;
 import com.pengkong.boatrace.mybatis.client.MlEvaluationMapper;
-import com.pengkong.boatrace.mybatis.client.MlPrEvaluationMapper;
 import com.pengkong.boatrace.mybatis.client.MlRangeEvaluationMapper;
 import com.pengkong.boatrace.mybatis.client.MlResultMapper;
-import com.pengkong.boatrace.mybatis.client.MlRorkEvaluationMapper;
 import com.pengkong.boatrace.mybatis.client.MlTermEvaluationMapper;
 import com.pengkong.boatrace.mybatis.entity.MlBorkEvaluation;
 import com.pengkong.boatrace.mybatis.entity.MlBorkEvaluationExample;
 import com.pengkong.boatrace.mybatis.entity.MlEvaluation;
 import com.pengkong.boatrace.mybatis.entity.MlEvaluationExample;
-import com.pengkong.boatrace.mybatis.entity.MlPrEvaluation;
-import com.pengkong.boatrace.mybatis.entity.MlPrEvaluationExample;
 import com.pengkong.boatrace.mybatis.entity.MlRangeEvaluation;
 import com.pengkong.boatrace.mybatis.entity.MlRangeEvaluationExample;
 import com.pengkong.boatrace.mybatis.entity.MlResult;
@@ -151,7 +146,6 @@ public class MLResultGenerator {
 	 * @throws Exception
 	 */
 	void executeExperiment(String exNo) throws Exception {
-		String evaluationsId = prop.getString("evaluations_id");
 		setupResultCreator();
 		
 		String usedModelNo = prop.getString("used_model_no");
@@ -193,9 +187,9 @@ public class MLResultGenerator {
 			MlResultMapper mapper = session.getMapper(MlResultMapper.class);
 			MlEvaluationMapper mapperEval = session.getMapper(MlEvaluationMapper.class);
 			MlBorkEvaluationMapper mapperBorkEval = session.getMapper(MlBorkEvaluationMapper.class);
-			MlRorkEvaluationMapper mapperRorkEval = session.getMapper(MlRorkEvaluationMapper.class);
 			MlRangeEvaluationMapper mapperRangeEval = session.getMapper(MlRangeEvaluationMapper.class);
-			MlPrEvaluationMapper mapperPrEval = session.getMapper(MlPrEvaluationMapper.class);
+//			MlRorkEvaluationMapper mapperRorkEval = session.getMapper(MlRorkEvaluationMapper.class);
+//			MlPrEvaluationMapper mapperPrEval = session.getMapper(MlPrEvaluationMapper.class);
 			MlTermEvaluationMapper mapperTermEval = session.getMapper(MlTermEvaluationMapper.class);
 			
 			if (isSaveResult) {
@@ -251,43 +245,48 @@ public class MLResultGenerator {
 			}
 
 			// 既存実験番号削除
-			if (isSaveStat) {
-				MlEvaluationExample exam;
-				exam = new MlEvaluationExample();
-				exam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
-				mapperEval.deleteByExample(exam);
-				
-				MlBorkEvaluationExample borkExam = new MlBorkEvaluationExample();
-				borkExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
-				mapperBorkEval.deleteByExample(borkExam);
-
-//				MlRorkEvaluationExample rorkExam = new MlRorkEvaluationExample();
-//				rorkExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
-//				mapperRorkEval.deleteByExample(rorkExam);
-				
-				MlRangeEvaluationExample rangeExam = new MlRangeEvaluationExample();
-				rangeExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
-				mapperRangeEval.deleteByExample(rangeExam);
-				
-				MlPrEvaluationExample prExam = new MlPrEvaluationExample();
-				prExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
-				mapperPrEval.deleteByExample(prExam);
-				
-				MlTermEvaluationExample termExam = new MlTermEvaluationExample();
-				termExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
-				mapperTermEval.deleteByExample(termExam);
-			}
+			// 2023/7/27 simulation時はevaluations_id単位の削除が必要でここでの一括削除はダメ。 レコード単位削除は性能悪いため、削除は受動でやることとする。
+//			if (isSaveStat) {
+//				String evaluationsId = prop.getString("evaluations_id");
+//				MlEvaluationExample exam;
+//				exam = new MlEvaluationExample();
+//				exam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
+//				mapperEval.deleteByExample(exam);
+//				
+//				MlRangeEvaluationExample rangeExam = new MlRangeEvaluationExample();
+//				rangeExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
+//				mapperRangeEval.deleteByExample(rangeExam);
+//				
+//				MlBorkEvaluationExample borkExam = new MlBorkEvaluationExample();
+//				borkExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
+//				mapperBorkEval.deleteByExample(borkExam);
+//
+////				MlRorkEvaluationExample rorkExam = new MlRorkEvaluationExample();
+////				rorkExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
+////				mapperRorkEval.deleteByExample(rorkExam);
+//				
+////				MlPrEvaluationExample prExam = new MlPrEvaluationExample();
+////				prExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
+////				mapperPrEval.deleteByExample(prExam);
+//				
+//				MlTermEvaluationExample termExam = new MlTermEvaluationExample();
+//				termExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
+//				mapperTermEval.deleteByExample(termExam);
+//			}
 			
 			if (isSaveGraph || isSaveStat) {
 				// 実験結果の統計データをDBに保存する
 				int splitNum = prop.getInteger("split");
 				for (ResultStat stat : statBuilder.getMapStat().values()) {
+					prop.evalIdBettype = stat.statBettype;
+					prop.evalIdKumiban = stat.kumiban;
+					
 					// ！注意：graph出力用データがstatに更新されるためDB保存に関係なくcreateMlEvaluationを呼び出しておく必要がある
 					MlEvaluationCreator evaluationCreator = new MlEvaluationCreator(stat);
+					MlRangeEvaluationCreator rangeEvalCreator = new MlRangeEvaluationCreator(stat);
 					MlBorkEvaluationCreator borkEvaluationCreator = new MlBorkEvaluationCreator(stat);
 //					MlRorkEvaluationCreator rorkEvaluationCreator = new MlRorkEvaluationCreator(stat);
-					MlRangeEvaluationCreator rangeEvalCreator = new MlRangeEvaluationCreator(stat);
-					MlPrEvaluationCreator prEvaluationCreator = new MlPrEvaluationCreator(stat);
+//					MlPrEvaluationCreator prEvaluationCreator = new MlPrEvaluationCreator(stat);
 					MlTermEvaluationCreator termEvaluationCreator = new MlTermEvaluationCreator(stat);
 					
 					// グラフ出力時必須
@@ -295,11 +294,12 @@ public class MLResultGenerator {
 					MlRangeEvaluation rangeRec = rangeEvalCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum);
 					
 					// オプション
-					MlBorkEvaluation borkRec = borkEvaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum);
+					MlBorkEvaluation borkRec = borkEvaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"));
 //					MlRorkEvaluation rorkRec = rorkEvaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum);
-					MlPrEvaluation prRec = prEvaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum); 
+//					MlPrEvaluation prRec = prEvaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum); 
 					MlTermEvaluation termRec = termEvaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum); 
-					if (rec == null) { // 的中が一つも存在しない場合
+					
+					if (rec == null) { // balance分割数よりbetcntが少ない
 						continue;
 					}
 					
@@ -310,7 +310,7 @@ public class MLResultGenerator {
 						
 						mapperBorkEval.insert(borkRec);
 //						mapperRorkEval.insert(rorkRec);
-						mapperPrEval.insert(prRec);
+//						mapperPrEval.insert(prRec);
 						mapperTermEval.insert(termRec);
 					}
 				}

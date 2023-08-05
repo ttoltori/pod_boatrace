@@ -2012,6 +2012,146 @@ public class RecRacerExample {
 			addCriterion("startresult not between", value1, value2, "startresult");
 			return (Criteria) this;
 		}
+
+		public Criteria andGradeIsNull() {
+			addCriterion("grade is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andGradeIsNotNull() {
+			addCriterion("grade is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andGradeEqualTo(String value) {
+			addCriterion("grade =", value, "grade");
+			return (Criteria) this;
+		}
+
+		public Criteria andGradeNotEqualTo(String value) {
+			addCriterion("grade <>", value, "grade");
+			return (Criteria) this;
+		}
+
+		public Criteria andGradeGreaterThan(String value) {
+			addCriterion("grade >", value, "grade");
+			return (Criteria) this;
+		}
+
+		public Criteria andGradeGreaterThanOrEqualTo(String value) {
+			addCriterion("grade >=", value, "grade");
+			return (Criteria) this;
+		}
+
+		public Criteria andGradeLessThan(String value) {
+			addCriterion("grade <", value, "grade");
+			return (Criteria) this;
+		}
+
+		public Criteria andGradeLessThanOrEqualTo(String value) {
+			addCriterion("grade <=", value, "grade");
+			return (Criteria) this;
+		}
+
+		public Criteria andGradeLike(String value) {
+			addCriterion("grade like", value, "grade");
+			return (Criteria) this;
+		}
+
+		public Criteria andGradeNotLike(String value) {
+			addCriterion("grade not like", value, "grade");
+			return (Criteria) this;
+		}
+
+		public Criteria andGradeIn(List<String> values) {
+			addCriterion("grade in", values, "grade");
+			return (Criteria) this;
+		}
+
+		public Criteria andGradeNotIn(List<String> values) {
+			addCriterion("grade not in", values, "grade");
+			return (Criteria) this;
+		}
+
+		public Criteria andGradeBetween(String value1, String value2) {
+			addCriterion("grade between", value1, value2, "grade");
+			return (Criteria) this;
+		}
+
+		public Criteria andGradeNotBetween(String value1, String value2) {
+			addCriterion("grade not between", value1, value2, "grade");
+			return (Criteria) this;
+		}
+
+		public Criteria andRacetypeIsNull() {
+			addCriterion("racetype is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRacetypeIsNotNull() {
+			addCriterion("racetype is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRacetypeEqualTo(String value) {
+			addCriterion("racetype =", value, "racetype");
+			return (Criteria) this;
+		}
+
+		public Criteria andRacetypeNotEqualTo(String value) {
+			addCriterion("racetype <>", value, "racetype");
+			return (Criteria) this;
+		}
+
+		public Criteria andRacetypeGreaterThan(String value) {
+			addCriterion("racetype >", value, "racetype");
+			return (Criteria) this;
+		}
+
+		public Criteria andRacetypeGreaterThanOrEqualTo(String value) {
+			addCriterion("racetype >=", value, "racetype");
+			return (Criteria) this;
+		}
+
+		public Criteria andRacetypeLessThan(String value) {
+			addCriterion("racetype <", value, "racetype");
+			return (Criteria) this;
+		}
+
+		public Criteria andRacetypeLessThanOrEqualTo(String value) {
+			addCriterion("racetype <=", value, "racetype");
+			return (Criteria) this;
+		}
+
+		public Criteria andRacetypeLike(String value) {
+			addCriterion("racetype like", value, "racetype");
+			return (Criteria) this;
+		}
+
+		public Criteria andRacetypeNotLike(String value) {
+			addCriterion("racetype not like", value, "racetype");
+			return (Criteria) this;
+		}
+
+		public Criteria andRacetypeIn(List<String> values) {
+			addCriterion("racetype in", values, "racetype");
+			return (Criteria) this;
+		}
+
+		public Criteria andRacetypeNotIn(List<String> values) {
+			addCriterion("racetype not in", values, "racetype");
+			return (Criteria) this;
+		}
+
+		public Criteria andRacetypeBetween(String value1, String value2) {
+			addCriterion("racetype between", value1, value2, "racetype");
+			return (Criteria) this;
+		}
+
+		public Criteria andRacetypeNotBetween(String value1, String value2) {
+			addCriterion("racetype not between", value1, value2, "racetype");
+			return (Criteria) this;
+		}
 	}
 
 	/**

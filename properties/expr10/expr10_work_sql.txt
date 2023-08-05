@@ -1,30 +1,12 @@
-java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
-  com.pengkong.boatrace.scraping.BoatWebDownloader 20230312 20230312
-java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
-  com.pengkong.boatrace.scraping.BoatWebDownloader 20230313 20230313
-java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
-  com.pengkong.boatrace.scraping.BoatWebDownloader 20230314 20230314
+delete from ml_evaluation where resultno::int = 10011 and bettype in ('2G', '3G', '3P', '3X',);
+delete from ml_bork_evaluation where resultno::int = 10011 and bettype in ('2G', '3G', '3P', '3X',);
+delete from ml_range_evaluation where resultno::int = 10011 and bettype in ('2G', '3G', '3P', '3X',);
 
-java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
-  com.pengkong.boatrace.scraping.BoatWebDownloader 20230318 20230319
-java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
-  com.pengkong.boatrace.scraping.BoatWebDownloader 20230320 20230321
-java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
-  com.pengkong.boatrace.scraping.BoatWebDownloader 20230322 20230323
-java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
-  com.pengkong.boatrace.scraping.BoatWebDownloader 20230324 20230325
-java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
-  com.pengkong.boatrace.scraping.BoatWebDownloader 20230326 20230327
-java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
-  com.pengkong.boatrace.scraping.BoatWebDownloader 20230328 20230329
-java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
-  com.pengkong.boatrace.scraping.BoatWebDownloader 20230330 20230331
+delete from ml_term_evaluation where resultno::int between 273965 and 274004 ;
+  
   
 
-
-  
-  
-  
+truncate 
 
 
 멜버른 2010.3.27 IWAKI AUDITORIUM
@@ -38,8 +20,10 @@ ml_result 758-852
 chcp 932
 psql -h localhost -U postgres -d boatml -p 55432
 
+
 set client_encoding='SJIS';
 
+chcp 932
 cd C:\Dev\workspace\Oxygen\pod_boatrace_test\experiment\expr10
 
 
@@ -104,7 +88,72 @@ insert into ml_classification select * from ml_classification_bk1 where modelno:
 
 !!!노트북에서 ml_classify할때 referential은 model_release, ml_classification도 동기화해두어야 한다.
 
+
 ========================================================================
+2023/07/12
+truncate ml_evaluation;
+truncate ml_bork_evaluation;
+truncate ml_range_evaluation;
+truncate ml_term_evaluation;
+
+
+
+========================================================================
+2023/6/02
+create table ml_classification_0602 as select * from ml_classification;
+create table ml_evaluation_0602 as select * from ml_evaluation;
+create table ml_bork_evaluation_0602 as select * from ml_bork_evaluation;
+create table ml_range_evaluation_0602 as select * from ml_range_evaluation;
+create table ml_term_evaluation_0602 as select * from ml_term_evaluation;
+
+delete from ml_classification where modelno not in ('11609', '21609');
+
+truncate ml_evaluation;
+truncate ml_bork_evaluation;
+truncate ml_range_evaluation;
+truncate ml_term_evaluation;
+
+========================================================================
+2023/4/11
+delete from ml_evaluation where bettype = '3N';
+delete from ml_bork_evaluation where bettype = '3N';
+delete from ml_range_evaluation where bettype = '3N';
+
+delete from ml_evaluation where patternid = 'comp';
+delete from ml_bork_evaluation where patternid = 'comp';
+delete from ml_range_evaluation where patternid = 'comp';
+
+delete from ml_evaluation where evaluations_id like '15_%';
+delete from ml_bork_evaluation where evaluations_id like '15_%';
+delete from ml_range_evaluation where evaluations_id like '15_%';
+
+========================================================================
+2023/4/8
+신전략에 맞춰 DB환경 이사.
+create database boatml2 owner postgres encoding 'UTF8';
+copy ( select * from rec_race ) to 'C:\Dev\export\20230408\rec_race.tsv' csv delimiter E'\t' header;
+copy ( select * from rec_race_waku ) to 'C:\Dev\export\20230408\rec_race_waku.tsv' csv delimiter E'\t' header;
+copy ( select * from rec_race_waku2 ) to 'C:\Dev\export\20230408\rec_race_waku2.tsv' csv delimiter E'\t' header;
+copy ( select * from rec_racer ) to 'C:\Dev\export\20230408\rec_racer.tsv' csv delimiter E'\t' header;
+copy ( select * from rec_racer_arr ) to 'C:\Dev\export\20230408\rec_racer_arr.tsv' csv delimiter E'\t' header;
+copy ( select * from ml_classification where modelno in ('79100','99100') ) to 'C:\Dev\export\20230408\ml_classification.tsv' csv delimiter E'\t' header;
+
+copy rec_race from 'C:\Dev\export\20230408\rec_race.tsv' csv delimiter E'\t' header;
+copy rec_race_waku from 'C:\Dev\export\20230408\rec_race_waku.tsv' csv delimiter E'\t' header;
+copy rec_race_waku2 from 'C:\Dev\export\20230408\rec_race_waku2.tsv' csv delimiter E'\t' header;
+copy rec_racer from 'C:\Dev\export\20230408\rec_racer.tsv' csv delimiter E'\t' header;
+copy rec_racer_arr from 'C:\Dev\export\20230408\rec_racer_arr.tsv' csv delimiter E'\t' header;
+copy ml_classification from 'C:\Dev\export\20230408\ml_classification.tsv' csv delimiter E'\t' header;
+
+
+
+
+
+========================================================================
+20230403
+
+incrace SUM([hitamt])/SUM([betamt])
+
 20230321
 chatGPT가 알려준 가중치합계 공식을 반영하여 ml_evaluation에 컬럼 추가
 
@@ -236,11 +285,6 @@ insert into stat_bork5
 create index indexes_evaluationsid on ml_evaluation (evaluations_id);
 
 
-delete from ml_evaluation where resultno::int <= 5752;
-delete from ml_bork_evaluation where resultno::int <= 5752;
-delete from ml_pr_evaluation where resultno::int <= 5752;
-delete from ml_range_evaluation where resultno::int <= 5752;
-delete from ml_term_evaluation where resultno::int <= 5752;
 
 
 
@@ -429,6 +473,8 @@ alter table rec_race add column weekday varchar(1);
 insert into rec_race 
 select *, (extract(dow from to_date('20221003', 'YYYYMMDD')))::text from tmp;
 
+
+update rec_rate set 
 ========================================================================
 20220918 stat_pr테이블 작성`
 delete from ml_evaluation where resultno::int = 93414;
@@ -2001,12 +2047,18 @@ group by sanrentanodds order by sanrentanodds;
 ----------------------------------------------------------------------------------------------
 데이터 없데이트 수순
 
+drop table rec_race_trend;
+create table rec_race_trend as~~~
+
+5.
 java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
-  com.pengkong.boatrace.scraping.BoatWebDownloader 20230130 20230308
+  com.pengkong.boatrace.exp10.racer.util.RecRacerArray2Generator 20230601 202230723 180
 
-java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*;. ^
-  com.pengkong.boatrace.util.RaceFileUploader 20221106 20221210 C:/Dev/workspace/Oxygen/pod_boatrace_test/properties/race_result_rebuild.properties
+4.
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.exp10.racer.util.RecRacerTrendGenerator 20230601 202230723 180
 
+3.
 insert into rec_racer_arr
 select 
   ymd, jyocd, raceno, 
@@ -2036,11 +2088,20 @@ select
   array_agg(startresult)
 from (
   select * from rec_racer 
-   where ymd >= '20221106' and ymd <= '20221210'
+   where ymd >= '20230601' and ymd <= '20230723'
    order by ymd, jyocd, raceno, waku 
 ) tmp
 group by ymd, jyocd, raceno;
 
+2.
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*;. ^
+  com.pengkong.boatrace.util.RaceFileUploader 20230601 202230723 C:/Dev/workspace/Oxygen/pod_boatrace_test/properties/race_result_rebuild.properties
+
+1.
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20230707 202230723
+
+-- javaに反映済み
 update rec_race set racetype = 
 	( case 
 	  when racetype = '予選' then '1'
@@ -2051,13 +2112,14 @@ update rec_race set racetype =
 	  when racetype in ('準優勝戦', '準優勝') then '6'
 	  when racetype = '優勝戦' then '7'
 	  else 'else' end )
-where ymd >= '20221106' and ymd <= '20221210';
+where ymd >= '20230421' and ymd <= '20230531';
 
+-- javaに反映済み
 update rec_race set fixedentrance = 
 	( case 
 	  when fixedentrance = 'N' then 'N'
 	  when fixedentrance = '安定板使用' then 'Y'
 	  when fixedentrance = '進入固定' then 'F'
 	  end )
-where ymd >= '20221106' and ymd <= '20221210';
+where ymd >= '20230421' and ymd <= '20230531';
 

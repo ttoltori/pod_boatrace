@@ -53,8 +53,8 @@
       pattern, bettype, kumiban, 
       betcnt, hitcnt, betamt, hitamt, 
       incamt, betrate, hitrate, 
-      incomerate, result_type, evaluations_id
-      )
+      incomerate, result_type, evaluations_id, 
+      bor_min, bor_max)
     values (#{resultno,jdbcType=VARCHAR}, #{modelno,jdbcType=VARCHAR}, #{patternid,jdbcType=VARCHAR}, 
       #{pattern,jdbcType=VARCHAR}, #{bettype,jdbcType=VARCHAR}, #{kumiban,jdbcType=VARCHAR}, 
       #{betcnt,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler}, 
@@ -65,7 +65,9 @@
       #{betrate,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler}, 
       #{hitrate,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler}, 
       #{incomerate,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler}, 
-      #{resultType,jdbcType=VARCHAR}, #{evaluationsId,jdbcType=VARCHAR}
+      #{resultType,jdbcType=VARCHAR}, #{evaluationsId,jdbcType=VARCHAR},
+      #{borMin,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler}, 
+      #{borMax,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler} 
       )
   </insert>
   <insert id="insertSelective" parameterType="com.pengkong.boatrace.mybatis.entity.MlBorkEvaluation">
@@ -123,6 +125,12 @@
       <if test="evaluationsId != null">
         evaluations_id,
       </if>
+      <if test="borMin != null">
+        bor_min,
+      </if>
+      <if test="borMax != null">
+        bor_max,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="resultno != null">
@@ -144,34 +152,40 @@
         #{kumiban,jdbcType=VARCHAR},
       </if>
       <if test="betcnt != null">
-        #{betcnt,jdbcType=ARRAY},
+        #{betcnt,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler},
       </if>
       <if test="hitcnt != null">
-        #{hitcnt,jdbcType=ARRAY},
+        #{hitcnt,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler},
       </if>
       <if test="betamt != null">
-        #{betamt,jdbcType=ARRAY},
+        #{betamt,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler},
       </if>
       <if test="hitamt != null">
-        #{hitamt,jdbcType=ARRAY},
+        #{hitamt,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler},
       </if>
       <if test="incamt != null">
-        #{incamt,jdbcType=ARRAY},
+        #{incamt,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler},
       </if>
       <if test="betrate != null">
-        #{betrate,jdbcType=ARRAY},
+        #{betrate,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler},
       </if>
       <if test="hitrate != null">
-        #{hitrate,jdbcType=ARRAY},
+        #{hitrate,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler},
       </if>
       <if test="incomerate != null">
-        #{incomerate,jdbcType=ARRAY},
+        #{incomerate,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler},
       </if>
       <if test="resultType != null">
         #{resultType,jdbcType=VARCHAR},
       </if>
       <if test="evaluationsId != null">
         #{evaluationsId,jdbcType=VARCHAR},
+      </if>
+      <if test="borMin != null">
+        #{borMin,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler},
+      </if>
+      <if test="borMax != null">
+        #{borMax,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler},
       </if>
     </trim>
   </insert>

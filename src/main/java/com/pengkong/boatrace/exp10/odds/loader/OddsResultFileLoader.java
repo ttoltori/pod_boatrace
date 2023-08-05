@@ -44,7 +44,7 @@ public class OddsResultFileLoader extends AbstractOddsFileLoader {
 			mapOddsList.addItemAll(key, getOddsList(token));
 		}
 
-		return OddsHelper.applyRanking(mapOddsList, new OddsRankComparator());
+		return OddsHelper.applyRanking(mapOddsList, new OddsValueComparator());
 	}
 	
 	/**

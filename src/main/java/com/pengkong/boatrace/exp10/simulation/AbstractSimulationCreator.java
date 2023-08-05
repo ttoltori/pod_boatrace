@@ -9,6 +9,7 @@ import com.pengkong.boatrace.common.enums.BetType;
 import com.pengkong.boatrace.common.enums.Delimeter;
 import com.pengkong.boatrace.exp10.enums.RangeValidationType;
 import com.pengkong.boatrace.exp10.odds.Odds;
+import com.pengkong.boatrace.exp10.odds.provider.AbstractOddsProvider;
 import com.pengkong.boatrace.exp10.odds.provider.BeforeOddsProvider;
 import com.pengkong.boatrace.exp10.odds.provider.OddsProviderInterface;
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
@@ -77,7 +78,7 @@ public abstract class AbstractSimulationCreator {
 	BonusProvider secondBonusProvider;
 	
 	/** 直前オッズprovider */
-	OddsProviderInterface beforeOddsProvider;
+	AbstractOddsProvider beforeOddsProvider;
 	
 	/** simulation専用パタン適用 */
 	SimulationPatternProvider simulationPatternProvider;
@@ -158,6 +159,11 @@ public abstract class AbstractSimulationCreator {
 		List<MlClassification> listClf = mmdClassifier.classify(dbRec.getString("ymd"), dbRec.getString("jyocd"),
 				dbRec.getInteger("raceno").toString());
 
+		// 20230630 31601.31602はml_classificationがない場合がある。
+		if (listClf == null) {
+			return result;
+		}
+		
 		// working変数初期化
 		// key = modelno, value=MlClassification
 		mapClassification = new HashMap<>();
@@ -229,6 +235,12 @@ public abstract class AbstractSimulationCreator {
             if (BetType._2A.getValue().equals(betType)) {
                 result.addAll(get2Aresult(dbRec));
             }
+            if (BetType._2G.getValue().equals(betType)) {
+                result.addAll(get2Gresult(dbRec));
+            }
+            if (BetType._3G.getValue().equals(betType)) {
+                result.addAll(get3Gresult(dbRec));
+            }
 		}
 
 		return result;
@@ -250,6 +262,8 @@ public abstract class AbstractSimulationCreator {
     abstract List<MlResult> get3Yresult(DBRecord rec) throws Exception;
     abstract List<MlResult> get3Aresult(DBRecord rec) throws Exception;
     abstract List<MlResult> get2Aresult(DBRecord rec) throws Exception;
+    abstract List<MlResult> get2Gresult(DBRecord rec) throws Exception;
+    abstract List<MlResult> get3Gresult(DBRecord rec) throws Exception;
 
 	/**
 	 * ①.複数のMlClassificationに対して

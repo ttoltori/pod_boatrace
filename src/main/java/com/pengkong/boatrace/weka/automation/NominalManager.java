@@ -77,8 +77,8 @@ public class NominalManager {
 			return "{" + getWaku() + "}";
 		}else if(nominalName.equals("bettype")) {
 			return "{" + getBettype() + "}";
-		}else if(nominalName.equals("bork")) {
-			return "{" + getBettype() + "}";
+		}else if(nominalName.equals("pd123")) {
+			return "{" + getPrediction123() + "}";
 		} else {
 			return null;
 		}
@@ -96,6 +96,10 @@ public class NominalManager {
 		return "1,2,3,4,5,6";
 	}
 	
+	public String getPrediction123() {
+		return "123,124,125,126,132,134,135,136,142,143,145,146,152,153,154,156,162,163,164,165,213,214,215,216,231,234,235,236,241,243,245,246,251,253,254,256,261,263,264,265,312,314,315,316,321,324,325,326,341,342,345,346,351,352,354,356,361,362,364,365,412,413,415,416,421,423,425,426,431,432,435,436,451,452,453,456,461,462,463,465";
+	}
+
 	private String getEntry() {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 1485; i <= 6000; i++ ) {

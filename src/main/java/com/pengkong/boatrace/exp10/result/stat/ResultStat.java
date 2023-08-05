@@ -19,6 +19,7 @@ import com.pengkong.boatrace.mybatis.entity.MlRorkEvaluation;
 import com.pengkong.boatrace.mybatis.entity.MlTermEvaluation;
 import com.pengkong.boatrace.util.BoatUtil;
 import com.pengkong.common.MathUtil;
+import com.pengkong.common.collection.HashMapList;
 
 public class ResultStat {
 	MLPropertyUtil prop = MLPropertyUtil.getInstance();
@@ -200,6 +201,9 @@ public class ResultStat {
 	/** 期間単位統計 的中率、収益率等 */
 	TermConverter termPerformance;
 	
+	/** bork別の投票結果リストを保持する。後で期間単位に分割してbork毎期間毎黒字カウントを計算するため。 */
+	public HashMapList<BorkTermUnit> mapBorkTerm = new HashMapList<>();
+	
 	public ResultStat(String statBettype, String kumiban, String patternId, String pattern, int startBalance) {
 		this.statBettype = statBettype;
 		this.kumiban = kumiban;
@@ -221,11 +225,12 @@ public class ResultStat {
 		Double probability;
 		// histogram化の使用可否はhistogramクラス内で判定する
 		// patternidに確率が含まれた場合はhitogram化しない
-		if (result.getPatternid().contains("prob")) {
-			probability = MathUtil.scale2(result.getProbability());
-		} else {
-			probability = histogram.convertByKey("PR", result.getProbability());
-		}
+//		if (result.getPatternid().contains("prob")) {
+//			probability = MathUtil.scale2(result.getProbability());
+//		} else {
+//			probability = histogram.convertByKey("PR", result.getProbability());
+//		}
+		probability = MathUtil.scale2(result.getProbability());
 		Double beforeOdds = histogram.convertByBettypeKumiban(result.getBettype(), result.getBetKumiban(), result.getBetOdds());
 		Double resultOdds = histogram.convertByBettypeKumiban(result.getBettype(), result.getBetKumiban(), result.getResultOdds());
 		
@@ -283,6 +288,8 @@ public class ResultStat {
 			//	listTopBeforeOdds.add(beforeOdds);
 			//	getRangeStatUnit(mapTopBeforeOddsStatUnit, beforeOdds).add(result);
 			//}
+			
+			mapBorkTerm.addItem(beforeOddsRank.toString(), new BorkTermUnit(result.getBetamt(), result.getHitamt()));
 		}
 		betrateBodds = MathUtil.scale2(sumOfBetBodds / totalBetCnt);
 		hitrateBodds = MathUtil.scale2(sumOfHitBodds / sumOfBetBodds);
@@ -291,13 +298,13 @@ public class ResultStat {
 		
 		// result生成かつ直前オッズ開始以降ならskip
 		// 20220807 직전옺즈 존재이전까지만으로 한다. resultType.startsWith(ResultType._1.getValue()) &&
-		int oddsMonitorStartYmd = Integer.parseInt(prop.getString("odds_monitoring_start_ymd"));
-		int resultStartYmd = Integer.parseInt(prop.getString("result_start_ymd"));
-		int resultYmd = Integer.parseInt(result.getYmd());
-		
-		if ( (oddsMonitorStartYmd <= resultYmd) && (resultStartYmd < oddsMonitorStartYmd) ) {
-			return;
-		}
+//		int oddsMonitorStartYmd = Integer.parseInt(prop.getString("odds_monitoring_start_ymd"));
+//		int resultStartYmd = Integer.parseInt(prop.getString("result_start_ymd"));
+//		int resultYmd = Integer.parseInt(result.getYmd());
+//		
+//		if ( (oddsMonitorStartYmd <= resultYmd) && (resultStartYmd < oddsMonitorStartYmd) ) {
+//			return;
+//		}
 
 		// add sum
 		sumOfBet++;
@@ -396,11 +403,22 @@ public class ResultStat {
 		return rsu;
 	}
 
+	int getDays() {
+		return BoatUtil.daysBetween(prop.getString("result_start_ymd"), prop.getString("result_end_ymd"));
+	}
+	
 	public double getDailyBetcnt() {
-		int days = BoatUtil.daysBetween(prop.getString("result_start_ymd"), prop.getString("result_end_ymd"));
-		double dailyBet = this.sumOfBet / (double)days;
+		double dailyBet = this.sumOfBet / (double)getDays();
 		return MathUtil.scale1(dailyBet);
-		
+	}
+	
+	public double getDailyHitrate() {
+		double dailyBet = this.sumOfBet / (double)getDays();
+		return MathUtil.scale2(dailyBet * this.hitrate);
+	}
+	
+	public int getDailyIncome() {
+		return getIncome() / getDays();
 	}
 	
 	public int getIncome() {

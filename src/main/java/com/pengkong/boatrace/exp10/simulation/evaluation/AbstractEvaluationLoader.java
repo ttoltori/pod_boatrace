@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 
 import com.pengkong.boatrace.common.enums.Delimeter;
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
+import com.pengkong.boatrace.server.db.dto.DBRecord;
 import com.pengkong.boatrace.util.DatabaseUtil;
 import com.pengkong.common.StringUtil;
 import com.pengkong.common.collection.HashMapList;
@@ -52,7 +53,7 @@ public abstract class AbstractEvaluationLoader{
 			}
 		}
 	}
-	
+
 	public void printConsole() {
 		int cnt = 1;
 		for (Evaluation eval : listEval) {

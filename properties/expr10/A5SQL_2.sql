@@ -1,4 +1,219 @@
-﻿-- evaluation 
+﻿select modelno, min(ymd) from ml_classification mc group by modelno order by modelno;
+
+select sanrentanno, count(1) cnt
+from rec_race where sanrentanno <> '不成立'
+group by sanrentanno 
+order by cnt desc;
+
+
+select count(1) from ml_evaluation;
+
+copy ( select * from rec_race ) to 'C:\Dev\export\20230408\rec_race.tsv' csv delimiter E'\t' header;
+copy ( select * from rec_race_waku ) to 'C:\Dev\export\20230408\rec_race_waku.tsv' csv delimiter E'\t' header;
+copy ( select * from rec_race_waku2 ) to 'C:\Dev\export\20230408\rec_race_waku2.tsv' csv delimiter E'\t' header;
+copy ( select * from rec_racer ) to 'C:\Dev\export\20230408\rec_racer.tsv' csv delimiter E'\t' header;
+copy ( select * from rec_racer_arr ) to 'C:\Dev\export\20230408\rec_racer_arr.tsv' csv delimiter E'\t' header;
+copy ( select * from ml_classification where modelno in ('79100','99100') ) to 'C:\Dev\export\20230408\ml_classification.tsv' csv delimiter E'\t' header;
+
+select count(1) from ml_evaluation;
+
+select max(ymd) from ml_classification mc where modelno = '99100';
+
+create database boatml2 owner postgres encoding 'UTF8';
+
+
+create table ml_eval_6664 (
+resultno varchar(6),
+modelno varchar(5),
+patternid varchar(20),
+pattern varchar(200),
+bettype varchar(30),
+kumiban varchar(30),
+betcnt int,
+hitcnt int,
+betamt int,
+hitamt int,
+betrate double precision,
+hitrate double precision,
+incomerate double precision,
+hmeanrate double precision,        -- betrate,hitrate,incomerateの調和平均（総合性能指標）2002/2/23 追加
+balance int[],                     -- 区間毎の残高評価
+bal_slope double precision[],
+betr_slope double precision,       -- 投票率変化推移
+hitr_slope double precision,       -- 的中率変化推移
+incr_slope double precision,       -- 収益率変化推移
+pt_precision double precision,     -- MLのconfusion matrix評価 (bettype,kumiban,patternの組み合わせ）
+pt_recall double precision,
+pt_fmeasure double precision,
+-- 的中オッズの記述統計量
+hodds_min double precision,
+hodds_max double precision,
+hodds_mean double precision,
+hodds_stddev double precision,
+hodds_median double precision, 
+-- 的中オッズRANKINGの記述統計量
+hoddsrk_min double precision,
+hoddsrk_max double precision,
+hoddsrk_mean double precision,
+hoddsrk_stddev double precision,
+hoddsrk_median double precision, 
+-- 確定オッズの記述統計量
+rodds_min double precision,
+rodds_max double precision,
+rodds_mean double precision,
+rodds_stddev double precision,
+rodds_median double precision,
+-- 確定オッズRANKINGの記述統計量
+roddsrk_min double precision,
+roddsrk_max double precision,
+roddsrk_mean double precision,
+roddsrk_stddev double precision,
+roddsrk_median double precision,
+-- 直前オッズ記述統計量
+bodds_min double precision,
+bodds_max double precision,
+bodds_mean double precision,
+bodds_stddev double precision,
+bodds_median double precision, 
+-- 直前オッズRANKING記述統計量
+boddsrk_min double precision,
+boddsrk_max double precision,
+boddsrk_mean double precision,
+boddsrk_stddev double precision,
+boddsrk_median double precision, 
+-- 予想確率の記述統計量
+prob_min double precision,
+prob_max double precision,
+prob_mean double precision,
+prob_stddev double precision,
+prob_median double precision,
+-- 確定オッズの最適値計算情報
+ror_bestmin double precision,       -- 黒字となった最適範囲min
+ror_bestmax double precision,       -- 黒字となった最適範囲max
+ror_betcnt int,                     -- 最適範囲内のデータ数
+ror_betamt int,                     -- 最適範囲内のbet金額
+ror_hitcnt int,                     -- 最適範囲内の的中したデータ数
+ror_hitamt int,                     -- 最適範囲内の的中金額合計
+ror_betrate double precision,       -- range_cnt / betcnt
+ror_hitrate double precision,       -- range_hitcnt / range_betcnt
+ror_incomerate double precision,    -- range_hitamt / range_betamt
+-- 確定オッズRANKINGの最適値計算情報
+rork_bestmin double precision,       -- 黒字となった最適範囲min
+rork_bestmax double precision,       -- 黒字となった最適範囲max
+rork_betcnt int,                     -- 最適範囲内のデータ数
+rork_betamt int,                     -- 最適範囲内のbet金額
+rork_hitcnt int,                     -- 最適範囲内の的中したデータ数
+rork_hitamt int,                     -- 最適範囲内の的中金額合計
+rork_betrate double precision,       -- range_cnt / betcnt
+rork_hitrate double precision,       -- range_hitcnt / range_betcnt
+rork_incomerate double precision,    -- range_hitamt / range_betamt
+-- 直前オッズの最適値計算情報
+bor_bestmin double precision,       -- 黒字となった最適範囲min
+bor_bestmax double precision,       -- 黒字となった最適範囲max
+bor_betcnt int,                     -- 最適範囲内のデータ数
+bor_betamt int,                     -- 最適範囲内のbet金額
+bor_hitcnt int,                     -- 最適範囲内の的中したデータ数
+bor_hitamt int,                     -- 最適範囲内の的中金額合計
+bor_betrate double precision,       -- range_cnt / betcnt
+bor_hitrate double precision,       -- range_hitcnt / range_betcnt
+bor_incomerate double precision,    -- range_hitamt / range_betamt
+-- 直前オッズRANKINGの最適値計算情報
+bork_bestmin double precision,       -- 黒字となった最適範囲min
+bork_bestmax double precision,       -- 黒字となった最適範囲max
+bork_betcnt int,                     -- 最適範囲内のデータ数
+bork_betamt int,                     -- 最適範囲内のbet金額
+bork_hitcnt int,                     -- 最適範囲内の的中したデータ数
+bork_hitamt int,                     -- 最適範囲内の的中金額合計
+bork_betrate double precision,       -- range_cnt / betcnt
+bork_hitrate double precision,       -- range_hitcnt / range_betcnt
+bork_incomerate double precision,    -- range_hitamt / range_betamt
+-- 予想確率の最適値計算情報
+pr_bestmin double precision,       -- 黒字となった最適範囲min
+pr_bestmax double precision,       -- 黒字となった最適範囲max
+pr_betcnt int,                     -- 最適範囲内のデータ数
+pr_betamt int,                     -- 最適範囲内のbet金額
+pr_hitcnt int,                     -- 最適範囲内の的中したデータ数
+pr_hitamt int,                     -- 最適範囲内の的中金額合計
+pr_betrate double precision,       -- range_cnt / betcnt
+pr_hitrate double precision,       -- range_hitcnt / range_betcnt
+pr_incomerate double precision,    -- range_hitamt / range_betamt
+bal_pluscnt int,                   -- 黒字の基数
+result_type varchar(10),           -- 実験のタイプ 
+evaluations_id varchar(255),         -- simulationの場合のみ、関連group no
+bonus_pr varchar(30),
+bonus_bor varchar(30),
+bonus_bork varchar(30),
+-- TOP1-3直前オッズRANKINGの最適値計算情報
+topbork_bestmin double precision,       -- 黒字となった最適範囲min
+topbork_bestmax double precision,       -- 黒字となった最適範囲max
+topbork_betcnt int,                     -- 最適範囲内のデータ数
+topbork_betamt int,                     -- 最適範囲内のbet金額
+topbork_hitcnt int,                     -- 最適範囲内の的中したデータ数
+topbork_hitamt int,                     -- 最適範囲内の的中金額合計
+topbork_betrate double precision,       -- range_cnt / betcnt
+topbork_hitrate double precision,       -- range_hitcnt / range_betcnt
+topbork_incomerate double precision    -- range_hitamt / range_betamt
+);
+
+drop index if exists indexes_ml_eval_6664;
+create index indexes_ml_eval_6664 on ml_eval_6664 (resultno, modelno, patternid, pattern, bettype, kumiban, result_type);
+drop index if exists indexes_ml_eval_6664_evaluationsid;
+create index indexes_ml_eval_6664_evaluationsid on ml_eval_6664 (evaluations_id);
+
+
+delete from ml_evaluation where resultno::int between 273965 and 274004;
+delete from ml_bork_evaluation where resultno::int between 273965 and 274004;
+delete from ml_pr_evaluation where resultno::int between 273965 and 274004 ;
+delete from ml_range_evaluation where resultno::int between 273965 and 274004 ;
+delete from ml_term_evaluation where resultno::int between 273965 and 274004 ;
+  
+
+select 
+  substring(wakulevellist from 1 for 5) || '-' || race.turn || '-' || race.raceno  ptn, 
+  count(1) cnt
+from rec_race race group by ptn order by cnt desc;
+
+
+select count(1) from ml_result;
+
+select 
+  resultno, sum(betrate), sum(betcnt), sum(hitamt-betamt)
+from ml_evaluation me 
+where resultno::int in (9001,9002)
+group by resultno
+;
+
+select 
+  sum(betrate), sum(betcnt), sum(hitamt-betamt)
+from ml_evaluation me 
+where evaluations_id = '666_3' and modelno = '99100'
+  and bettype = '3T' and kumiban = '123'
+  and patternid = 'wk12+jyo'
+--group by patternid 
+;
+
+select count(1)
+from ml_classification mc 
+where prediction1 = '1' and prediction2 = '2' and prediction3 = '3'
+ and modelno = '99100'
+ and ymd::int between 20220601 and 20221130
+;
+
+
+
+
+
+select min(ymd), max(ymd) from ml_classification mc where modelno = '79100';
+
+select * from ml_evaluation me where resultno::int = 274155;
+
+select distinct incomerate from ml_evaluation me 
+where bettype = '1T' and kumiban = '1' and incomerate > 0.89;
+
+
+select count(1) from ml_evaluation me;
+
+-- evaluation 
 select
   -- 'none' grp,
   ev.bettype, ev.kumiban, 

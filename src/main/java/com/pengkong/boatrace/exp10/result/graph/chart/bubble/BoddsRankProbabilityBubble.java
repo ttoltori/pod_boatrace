@@ -28,7 +28,7 @@ public class BoddsRankProbabilityBubble extends AbstractDoubleRangeBubbleChart {
 		}
 
 		String label;
-		label = "Boddsrk/Prob BEST(" + dto.getBorkBestmin() + "～" + dto.getBorkBestmax() + " / " + dto.getPrBestmin() + "～"
+		label = "Boddsrk/Prob (" + dto.getBorkBestmin() + "～" + dto.getBorkBestmax() + " / " + dto.getPrBestmin() + "～"
 				+ dto.getPrBestmax() + ")  ";
 
 		return label;

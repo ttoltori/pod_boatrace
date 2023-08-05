@@ -66,7 +66,7 @@ public class OddsMonitorFileLoader extends AbstractOddsFileLoader{
 					item.oddsList.get(item.oddsList.size() - 1).odds));
 		}		
 
-		return OddsHelper.applyRanking(mapOddsList, new OddsRankComparator());
+		return OddsHelper.applyRanking(mapOddsList, new OddsValueComparator());
 	}
 
 	/**

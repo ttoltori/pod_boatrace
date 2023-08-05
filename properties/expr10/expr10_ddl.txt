@@ -1,3 +1,131 @@
+drop table if exists rec_racer_trend;
+CREATE TABLE rec_racer_trend (
+  ymd varchar(8),
+  entry smallint,
+  runcnt int,                       -- 出走回数
+  cond double precision,            -- コンディション指数
+  n1point double precision,         -- 全国能力指数
+  n2point double precision,         -- 全国2連帯能力指数
+  n3point double precision,         -- 全国3連帯能力指数
+  n1point_waku double precision[],  -- 全国枠枠能力指数
+  n2point_waku double precision[],  -- 全国2連帯枠能力指数
+  n3point_waku double precision[],  -- 全国3連帯枠能力指数
+  avgstart_waku double precision[]  -- 枠平均スタート
+);
+create index indexes_rec_racer_trend on rec_racer_trend (ymd, entry);
+
+
+drop table if exists rec_racer_arr2;
+create table rec_racer_arr2 (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+runcnt int[],                          -- 出走回数
+runcnt_slope double precision[],                    -- 出走回数傾向
+cond double precision[],               -- コンディション指数
+cond_slope double precision[],         -- コンディション指数傾向
+n1point double precision[],            -- 能力指数
+n1point_slope double precision[],      -- 能力指数傾向
+n2point double precision[],            -- 2連帯能力指数
+n2point_slope double precision[],      -- 2連帯能力指数傾向
+n3point double precision[],            -- 3連帯能力指数
+n3point_slope double precision[],      -- 3連帯能力指数傾向
+n1point_waku double precision[],       -- 当該枠選手の枠能力指数
+n1point_waku_slope double precision[], -- 当該枠選手の枠能力指数傾向
+n2point_waku double precision[],       -- 当該枠選手の2連帯枠能力指数
+n2point_waku_slope double precision[], -- 当該枠選手の2連帯枠能力指数傾向
+n3point_waku double precision[],       -- 当該枠選手の3連帯枠能力指数
+n3point_waku_slope double precision[], -- 当該枠選手の3連帯枠能力指数傾向
+avgstart_waku double precision[],      -- 当該枠選手の枠平均スタート
+avgstart_waku_slope double precision[] -- 当該枠選手の枠平均スタート傾向
+);
+create index indexes_rec_racer_arr2 on rec_racer_arr2 (ymd, jyocd, raceno);
+
+
+drop table if exists rec_bodds;
+CREATE TABLE rec_bodds (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+pk_3t varchar(3)[], -- pop_kumiban_3t
+pbo_3t double precision[], -- popular_bodds_3t
+mbo_3t double precision[], -- most_bodds_3t
+mbork_3t int[] -- most_boddsrank_3t
+);
+create index indexes_rec_bodds on rec_bodds (ymd, jyocd, raceno);
+
+
+
+drop table if exists stat_bork;
+CREATE TABLE stat_bork (
+	result_type varchar(2) NULL,
+	bettype varchar(3) NULL,
+	kumiban varchar(3) NULL,
+	resultno varchar(5) NULL,
+	modelno varchar(5) NULL,
+	patternid varchar(20) NULL,
+	pattern varchar(200) NULL,
+	i0 int NULL,
+	i1 int NULL,
+	i2 int NULL,
+	i3 int NULL,
+	i4 int NULL,
+	i5 int NULL,
+	i6 int NULL,
+	i7 int NULL,
+	i8 int NULL,
+	i9 int NULL,
+	tc0 int NULL,
+	tc1 int NULL,
+	tc2 int NULL,
+	tc3 int NULL,
+	tc4 int NULL,
+	tc5 int NULL,
+	tc6 int NULL,
+	tc7 int NULL,
+	tc8 int NULL,
+	tc9 int NULL,
+	tpc0 int NULL,
+	tpc1 int NULL,
+	tpc2 int NULL,
+	tpc3 int NULL,
+	tpc4 int NULL,
+	tpc5 int NULL,
+	tpc6 int NULL,
+	tpc7 int NULL,
+	tpc8 int NULL,
+	tpc9 int NULL,
+	betcnt int NULL,
+	hitcnt int NULL,
+	betamt int NULL,
+	hitamt int NULL,
+	incamt int NULL,
+	betrate double precision NULL,
+	hitrate double precision NULL,
+	incrate double precision NULL,
+	bal_pluscnt int NULL,
+	evaluations_id varchar(255)
+);
+
+drop index if exists indexes_stat_bork;
+create index indexes_stat_bork on stat_bork (result_type, bettype, kumiban, modelno, patternid, pattern);
+drop index if exists indexes_stat_bork_evaluationsid;
+create index indexes_stat_bork_evaluationsid on stat_bork (evaluations_id);
+
+drop table if exists ml_eval_pipe;
+create table ml_eval_pipe (
+result_type varchar(10),
+bettype varchar(30),
+kumiban varchar(30),
+modelno varchar(5),
+patternid varchar(20),
+pattern varchar(200)
+);
+drop index if exists indexes_ml_eval_pipe;
+create index indexes_ml_eval_pipe on ml_eval_pipe 
+(result_type, bettype, kumiban, modelno, patternid, pattern);
+
+
 drop table if exists ml_evaluation_sim;
 create table ml_evaluation_sim (
 id_grade varchar(5),
@@ -218,9 +346,9 @@ evaluations_id varchar(255)         -- simulationの場合のみ、関連group n
 );
 
 drop index if exists indexes_ml_term_evaluation;
-create index indexes_ml_term_evaluation on ml_term_evaluation (resultno, modelno, patternid, pattern, bettype, kumiban);
+create index indexes_ml_term_evaluation on ml_term_evaluation (result_type, bettype, kumiban, modelno, patternid, pattern);
 drop index if exists indexes_ml_term_evaluation_evaluationsid;
-create index indexes_ml_term_evaluation_evaluationsid on ml_temr_evaluation (evaluations_id);
+create index indexes_ml_term_evaluation_evaluationsid on ml_term_evaluation (evaluations_id);
 
 
 -- patternid別に集計する t_; 当該patternid全体  p_当該patternid内の黒字のpatternの集計
@@ -741,14 +869,12 @@ CREATE TABLE stat_bork5 (
 	bal_pluscnt int NULL,
 	evaluations_id varchar(30),
 	hmean double precision,
-	hmeanrate double precision.
+	hmeanrate double precision,
 	bork_hmean double precision,
-	bork_hmeanrate double precision.
+	bork_hmeanrate double precision,
 	bor_hmean double precision,
 	bor_hmeanrate double precision
 );
-
-
 
 drop index if exists indexes_stat_bork5;
 create index indexes_stat_bork5 on stat_bork5 (result_type, bettype, kumiban, modelno, 
@@ -1102,7 +1228,9 @@ result_type varchar(10),           -- 実験のタイプ
 evaluations_id varchar(255)         -- simulationの場合のみ、関連group no
 );
 drop index if exists indexes_ml_range_evaluation;
-create index indexes_ml_range_evaluation on ml_range_evaluation (resultno, modelno, patternid, pattern, bettype, kumiban, result_type);
+create index indexes_ml_range_evaluation on ml_range_evaluation (result_type, bettype, kumiban, modelno, patternid, pattern);
+drop index if exists indexes_ml_range_evaluation_evaluationsid;
+create index indexes_ml_range_evaluation_evaluationsid on ml_range_evaluation (evaluations_id);
 
 drop table if exists ml_rork_evaluation;
 create table ml_rork_evaluation (
@@ -1165,12 +1293,15 @@ betrate double precision[],
 hitrate double precision[],
 incomerate double precision[],
 result_type varchar(10),           -- 実験のタイプ 
-evaluations_id varchar(20),         -- simulationの場合のみ、関連group no
+evaluations_id varchar(255),       -- simulationの場合のみ、関連group no
 bor_min double precision[],        -- 当該bork内でのbor min 20221103
-bor_max double precision[]        -- 当該bork内でのbor max 20221103
+bor_max double precision[],        -- 当該bork内でのbor max 20221103
+term_cnt int[],                      -- 期間分割総数 20230725
+term_pluscnt int[]                 -- 黒字期間分割数 20230725
 );
 drop index if exists indexes_ml_bork_evaluation;
-create index indexes_ml_bork_evaluation on ml_bork_evaluation (resultno, modelno, patternid, pattern, bettype, kumiban);drop index if exists indexes_ml_bork_evaluation_evaluationsid;
+create index indexes_ml_bork_evaluation on ml_bork_evaluation (result_type, bettype, kumiban, modelno, patternid, pattern);
+drop index if exists indexes_ml_bork_evaluation_evaluationsid;
 create index indexes_ml_bork_evaluation_evaluationsid on ml_bork_evaluation (evaluations_id);
 
 
@@ -1309,7 +1440,7 @@ topbork_incomerate double precision    -- range_hitamt / range_betamt
 );
 
 drop index if exists indexes_ml_evaluation;
-create index indexes_ml_evaluation on ml_evaluation (resultno, modelno, patternid, pattern, bettype, kumiban, result_type);
+create index indexes_ml_evaluation on ml_evaluation (result_type, bettype, kumiban, modelno, patternid, pattern);
 drop index if exists indexes_ml_evaluation_evaluationsid;
 create index indexes_ml_evaluation_evaluationsid on ml_evaluation (evaluations_id);
 
@@ -1628,6 +1759,7 @@ motor3winingrate6 numeric(5,2)
 );
 drop index if exists indexes_rec_race_waku2;
 create index indexes_rec_race_waku2 on rec_race_waku2 (ymd, jyocd, raceno);
+
 ------------------------
 drop table if exists rec_race_waku;
 create table rec_race_waku (
@@ -1721,9 +1853,10 @@ motor3winingrate numeric(5,2),
 boatno smallint,
 boat2winingrate numeric(5,2),
 boat3winingrate numeric(5,2),
-waku smallint,
+waku smallint,N1p
 rank smallint,
-startresult numeric(5,2)
+startresult numeric(5,2),
+grade varchar(2)
 );
 drop index if exists indexes_rec_racer;
 create index indexes_rec_racer on rec_racer (ymd, jyocd, raceno, entry);
@@ -1784,15 +1917,17 @@ avgstcondrank varchar(6),
 setuwinrank varchar(6),
 flrank varchar(6),
 com_predict varchar(4),
-com_confidence smallint
+com_confidence smallint,
+weekday varchar(1)
 );
+drop index if exists indexes_rec_race;
 create index indexes_rec_race on rec_race (ymd, jyocd, raceno);
 
 create schema boatstat authorization postgres
 
 create database boatml owner postgres enocding 'UTF8';
-create database boatstat2 owner postgres encoding 'UTF8';
+create database boatml2 owner postgres encoding 'UTF8';
 
 
 drop database boatstat2;
-create database boatstat2 with 
+create database boatml3 with template boatml2 owner postggres encoding 'UTF8';

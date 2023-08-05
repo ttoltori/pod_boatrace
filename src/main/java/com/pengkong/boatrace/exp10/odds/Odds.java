@@ -25,6 +25,10 @@ public class Odds implements Serializable {
 	public String getUniqueKey() {
 		return String.join("_", ymd, jyoCd, raceNo, betType, kumiban);
 	}
+
+	public String getBettypeKey() {
+		return String.join("_", ymd, jyoCd, raceNo, betType);
+	}
 	
 	public String toString() {
 		return String.join("_", ymd, jyoCd, raceNo, betType, kumiban, String.valueOf(rank), String.valueOf(value));

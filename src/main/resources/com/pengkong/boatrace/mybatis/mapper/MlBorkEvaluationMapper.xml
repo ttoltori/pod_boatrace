@@ -54,7 +54,8 @@
       betcnt, hitcnt, betamt, hitamt, 
       incamt, betrate, hitrate, 
       incomerate, result_type, evaluations_id, 
-      bor_min, bor_max)
+      bor_min, bor_max, term_cnt, 
+      term_pluscnt)
     values (#{resultno,jdbcType=VARCHAR}, #{modelno,jdbcType=VARCHAR}, #{patternid,jdbcType=VARCHAR}, 
       #{pattern,jdbcType=VARCHAR}, #{bettype,jdbcType=VARCHAR}, #{kumiban,jdbcType=VARCHAR}, 
       #{betcnt,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler}, 
@@ -67,8 +68,9 @@
       #{incomerate,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler}, 
       #{resultType,jdbcType=VARCHAR}, #{evaluationsId,jdbcType=VARCHAR},
       #{borMin,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler}, 
-      #{borMax,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler} 
-      )
+      #{borMax,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler}, 
+      #{termCnt,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler}, 
+      #{termPluscnt,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler})
   </insert>
   <insert id="insertSelective" parameterType="com.pengkong.boatrace.mybatis.entity.MlBorkEvaluation">
     <!--
@@ -131,6 +133,12 @@
       <if test="borMax != null">
         bor_max,
       </if>
+      <if test="termCnt != null">
+        term_cnt,
+      </if>
+      <if test="termPluscnt != null">
+        term_pluscnt,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="resultno != null">
@@ -186,6 +194,12 @@
       </if>
       <if test="borMax != null">
         #{borMax,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler},
+      </if>
+      <if test="termCnt != null">
+        #{termCnt,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler},
+      </if>
+      <if test="termPluscnt != null">
+        #{termPluscnt,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler},
       </if>
     </trim>
   </insert>

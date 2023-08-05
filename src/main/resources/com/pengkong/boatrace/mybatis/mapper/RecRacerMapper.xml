@@ -36,6 +36,8 @@
     <result column="waku" jdbcType="SMALLINT" property="waku" />
     <result column="rank" jdbcType="SMALLINT" property="rank" />
     <result column="startresult" jdbcType="NUMERIC" property="startresult" />
+    <result column="grade" jdbcType="VARCHAR" property="grade" />
+    <result column="racetype" jdbcType="VARCHAR" property="racetype" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -78,7 +80,7 @@
     ymd, jyocd, raceno, entry, sex, age, level, weight, branch, exhibit, startexhibit, 
     flying, late, averagestart, avgtime, nationwiningrate, nation2winingrate, nation3winingrate, 
     localwiningrate, local2winingrate, local3winingrate, motorno, motor2winingrate, motor3winingrate, 
-    boatno, boat2winingrate, boat3winingrate, waku, rank, startresult
+    boatno, boat2winingrate, boat3winingrate, waku, rank, startresult, grade, racetype
   </sql>
   <select id="selectByExample" parameterType="com.pengkong.boatrace.mybatis.entity.RecRacerExample" resultMap="BaseResultMap">
     <!--
@@ -123,8 +125,8 @@
       localwiningrate, local2winingrate, local3winingrate, 
       motorno, motor2winingrate, motor3winingrate, 
       boatno, boat2winingrate, boat3winingrate, 
-      waku, rank, startresult
-      )
+      waku, rank, startresult, 
+      grade, racetype)
     values (#{ymd,jdbcType=VARCHAR}, #{jyocd,jdbcType=VARCHAR}, #{raceno,jdbcType=SMALLINT}, 
       #{entry,jdbcType=SMALLINT}, #{sex,jdbcType=VARCHAR}, #{age,jdbcType=SMALLINT}, 
       #{level,jdbcType=VARCHAR}, #{weight,jdbcType=NUMERIC}, #{branch,jdbcType=VARCHAR}, 
@@ -134,8 +136,8 @@
       #{localwiningrate,jdbcType=NUMERIC}, #{local2winingrate,jdbcType=NUMERIC}, #{local3winingrate,jdbcType=NUMERIC}, 
       #{motorno,jdbcType=SMALLINT}, #{motor2winingrate,jdbcType=NUMERIC}, #{motor3winingrate,jdbcType=NUMERIC}, 
       #{boatno,jdbcType=SMALLINT}, #{boat2winingrate,jdbcType=NUMERIC}, #{boat3winingrate,jdbcType=NUMERIC}, 
-      #{waku,jdbcType=SMALLINT}, #{rank,jdbcType=SMALLINT}, #{startresult,jdbcType=NUMERIC}
-      )
+      #{waku,jdbcType=SMALLINT}, #{rank,jdbcType=SMALLINT}, #{startresult,jdbcType=NUMERIC}, 
+      #{grade,jdbcType=VARCHAR}, #{racetype,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pengkong.boatrace.mybatis.entity.RecRacer">
     <!--
@@ -234,6 +236,12 @@
       <if test="startresult != null">
         startresult,
       </if>
+      <if test="grade != null">
+        grade,
+      </if>
+      <if test="racetype != null">
+        racetype,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="ymd != null">
@@ -325,6 +333,12 @@
       </if>
       <if test="startresult != null">
         #{startresult,jdbcType=NUMERIC},
+      </if>
+      <if test="grade != null">
+        #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="racetype != null">
+        #{racetype,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>

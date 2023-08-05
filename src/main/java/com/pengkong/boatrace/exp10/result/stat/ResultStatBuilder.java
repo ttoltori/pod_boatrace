@@ -9,6 +9,7 @@ import java.util.TreeMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.pengkong.boatrace.common.enums.Delimeter;
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
 import com.pengkong.boatrace.exp10.result.ResultHelper;
 import com.pengkong.boatrace.mybatis.entity.MlResult;
@@ -30,6 +31,10 @@ public class ResultStatBuilder {
 
 	ResultStatBuilderHelper statHelper = new ResultStatBuilderHelper();
 
+	String[] tokenKumiban;
+	
+	boolean isLimitedFormation = false;
+	
 	private static class InstanceHolder {
 		private static final ResultStatBuilder INSTANCE = new ResultStatBuilder();
 	}
@@ -45,6 +50,13 @@ public class ResultStatBuilder {
 		mapTotalBetCnt = new HashMap<>();
 		mapStat = new TreeMap<>();
 		statHelper = new ResultStatBuilderHelper();
+		
+		isLimitedFormation = prop.getYesNo("limited_formation");
+		if (isLimitedFormation) {
+			tokenKumiban = ResultHelper.parseKumiban(prop.getString("limited_kumiban"));			
+		} else {
+			tokenKumiban = ResultHelper.parseKumiban(prop.getString("kumiban"));
+		}
 	}
 	
 	/* 以下ファイル保存機能は必要な時にpd_boatrace_oldから復元すること
@@ -60,20 +72,25 @@ public class ResultStatBuilder {
 	 * @return
 	 */
 	public MlResult add(MlResult result) throws Exception {
-		String prediction = ResultHelper.getPrediction(result);
+		String predictions = ResultHelper.getPredictions(result);
+		
+		if (isLimitedFormation && !ResultHelper.isValidPredictionsRange(result.getBettype(),
+				result.getBetKumiban().split(""), tokenKumiban)) {
+			return result;
+		}
 		
 		// bettype, prediction別
-		String key = statHelper.createKey(result.getStatBettype(), prediction); 
+		String key = statHelper.createKey(result.getStatBettype(), predictions); 
 		if (!mapTotalBetCnt.containsKey(key)) {
 			mapTotalBetCnt.put(key, 0.0);
 		}
 		mapTotalBetCnt.put(key, mapTotalBetCnt.get(key) + 1); // counting
 
 		// bettype, prediction, pattern別
-		key = statHelper.createKey(result.getStatBettype(), prediction, result.getPattern());
+		key = statHelper.createKey(result.getStatBettype(), predictions, result.getPatternid(), result.getPattern());
 		ResultStat stat = mapStat.get(key);
 		if (stat == null) {
-			stat = statHelper.createResultStat(result.getStatBettype(), prediction, result.getPatternid(), result.getPattern());
+			stat = statHelper.createResultStat(result.getStatBettype(), predictions, result.getPatternid(), result.getPattern());
 			mapStat.put(key, stat);
 		}
 		stat.add(result, mapTotalBetCnt.get(stat.statBettype + stat.kumiban));
@@ -81,18 +98,6 @@ public class ResultStatBuilder {
 		return result;
 	}
 
-	/** 現在の残高を取得する */
-	public int getCurrentBalance(String statBettype, String kumiban, String pattern) throws Exception {
-		String key = statHelper.createKey(statBettype, kumiban, pattern);
-		ResultStat stat = mapStat.get(key);
-		// まだ統計クラスが生成前なら初期値を返却する。
-		if (stat == null) {
-			return prop.getInteger("stat_start_balance");
-		}
-
-		return stat.balance;
-	}
-	
 	/**
 	 * 累積統計にml_resultデータを追加して、統計データを設定して返却する
 	 * @param listResult ml_result list

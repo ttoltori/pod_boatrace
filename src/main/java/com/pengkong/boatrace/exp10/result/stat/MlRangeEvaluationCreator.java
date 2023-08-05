@@ -26,13 +26,12 @@ public class MlRangeEvaluationCreator extends MlCreatorBase<MlRangeEvaluation>
 	 * @return MlEvaluation
 	 */
 	public MlRangeEvaluation create(String exNo, String modelNo, String patternId, int balanceSplitNum) throws Exception {
-		logger.debug("creating MlRangeEvaluation. " + String.join(",", exNo, modelNo, stat.statBettype, stat.kumiban, patternId, stat.pattern));
+//		logger.debug("creating MlRangeEvaluation. " + String.join(",", exNo, modelNo, stat.statBettype, stat.kumiban, patternId, stat.pattern));
 
 		// 的中が一つもなければEvaluationを作成しない
-		if (stat.listHitOdds.size() <= 0) {
-			logger.warn("Sorry zero Hit.  RangeEvaluation skipped. " + stat.kumiban + "," +  patternId + "," + stat.pattern + ", betcnt=" + stat.sumOfBet);
-			return null;
-		}
+//		if (stat.listHitOdds.size() <= 0) {
+//			return null;
+//		}
 		
 		MlRangeEvaluation dto = new MlRangeEvaluation();
 		dto.setResultno(exNo);

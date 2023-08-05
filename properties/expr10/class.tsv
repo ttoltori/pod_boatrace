@@ -1,6 +1,4 @@
 #id	sql_class_condition	values	sql_class_features
-r1-1x	true	1,x	(case when substring(sanrentanno from 1 for 1) = '1' then '1' else 'x' end) classes
-r1-2x	true	2,x	(case when substring(sanrentanno from 1 for 1) = '2' then '2' else 'x' end) classes
 r2-1-2x	substring(sanrentanno from 1 for 1) = '1'	2,x	(case when substring(sanrentanno from 2 for 1) = '2' then '2' else 'x' end) classes
 r2-2-1x	substring(sanrentanno from 1 for 1) = '2'	1,x	(case when substring(sanrentanno from 2 for 1) = '1' then '1' else 'x' end) classes
 r3-12-3x	substring(sanrentanno from 1 for 2) = '12'	3,x	(case when substring(sanrentanno from 3 for 1) = '3' then '3' else 'x' end) classes
@@ -50,5 +48,17 @@ r3-123456-ect1	substring(sanrentanno from 1 for 1) <> '1'	1,2,3,4,5,6	substring(
 r2-123456-inc1	substring(sanrentanno from 1 for 1) = '1'	1,2,3,4,5,6	substring(sanrentanno from 2 for 1) classes
 r3-123456-inc1	substring(sanrentanno from 1 for 1) = '1'	1,2,3,4,5,6	substring(sanrentanno from 3 for 1) classes
 rgsim-1T-1	true	numeric	(res.hitamt::float - res.betamt::float)::text classes
-r1-pork	true	1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,x	(case when mr.result_oddsrank between 1 and 20 then (mr.result_oddsrank::text) else 'x' end) classes
+r1-pork	true	1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,x	(case when mr.result_oddsrank between 1 and 20 then (mr.result_oddsrank::text)  else 'x' end) classes
 r1-12x	true	12,x	(case when substring(sanrentanno from 1 for 2) = '12' then '12' else 'x' end) classes
+r1-1234x	true	1,2,3,4,x	(case when substring(sanrentanno from 1 for 1) in ('5', '6') then 'x' else substring(sanrentanno from 1 for 1) end) classes
+r12-1234x	true	12,13,14,15,16,21,23,24,25,26,31,32,34,35,36,41,42,43,45,46,x	(case when substring(sanrentanno from 1 for 1) in ('5', '6') then 'x' else substring(sanrentanno from 1 for 2) end) classes
+r123-1234x	true	123,124,125,126,132,134,135,136,142,143,145,146,152,153,154,156,162,163,164,165,213,214,215,216,231,234,235,236,241,243,245,246,251,253,254,256,261,263,264,265,312,314,315,316,321,324,325,326,341,342,345,346,351,352,354,356,361,362,364,365,412,413,415,416,421,423,425,426,431,432,435,436,451,452,453,456,461,462,463,465,x	(case when substring(sanrentanno from 1 for 1) in ('5', '6') then 'x' else sanrentanno end) classes
+r1-123x	true	1,2,3,x	(case when substring(sanrentanno from 1 for 1) in ('4', '5', '6') then 'x' else substring(sanrentanno from 1 for 1) end) classes
+r1-12x	true	1,2,x	(case when substring(sanrentanno from 1 for 1) in ('3', '4', '5', '6') then 'x' else substring(sanrentanno from 1 for 1) end) classes
+r1-1x	true	1,x	(case when substring(sanrentanno from 1 for 1) in ('2', '3', '4', '5', '6') then 'x' else substring(sanrentanno from 1 for 1) end) classes
+r123-123x	true	123,124,125,126,132,134,135,136,142,143,145,146,152,153,154,156,162,163,164,165,213,214,215,216,231,234,235,236,241,243,245,246,251,253,254,256,261,263,264,265,312,314,315,316,321,324,325,326,341,342,345,346,351,352,354,356,361,362,364,365,xxx	(case when substring(sanrentanno from 1 for 1) in ('4', '5', '6') then 'xxx' else sanrentanno end) classes
+r123-12x	true	123,124,125,126,132,134,135,136,142,143,145,146,152,153,154,156,162,163,164,165,213,214,215,216,231,234,235,236,241,243,245,246,251,253,254,256,261,263,264,265,xxx	(case when substring(sanrentanno from 1 for 1) in ('3', '4', '5', '6')  then 'xxx' else sanrentanno end) classes
+r123-1x	true	123,124,125,126,132,134,135,136,142,143,145,146,152,153,154,156,162,163,164,165,xxx	(case when substring(sanrentanno from 1 for 1) in ('2', '3', '4', '5', '6')  then 'xxx' else sanrentanno end) classes
+r1-2x	true	2,x	(case when substring(sanrentanno from 1 for 1) = '2' then '2' else 'x' end) classes
+r2-2345	true	2,3,4,5,x	(case when substring(sanrentanno from 2 for 1) in ('2', '3', '4', '5')  then substring(sanrentanno from 2 for 1) else 'x' end) classes
+r3-3456	true	3,4,5,6,x	(case when substring(sanrentanno from 3 for 1) in ('3', '4', '5', '6')  then substring(sanrentanno from 3 for 1) else 'x' end) classes

@@ -63,14 +63,15 @@ public class ResultStatBuilderHelper {
 	}
 
 	/** bettype, prediction, patternのキーを取得する */
-	public String createKey(String statBettype, String prediction, String pattern) throws Exception {
+	public String createKey(String statBettype, String prediction, String patternid, String pattern) throws Exception {
 		ensureInitialized();
 		
 		statBettype = emptifyIfNotStatUnit("bettype", statBettype);
 		prediction = emptifyIfNotStatUnit("prediction", prediction);
+		patternid = emptifyIfNotStatUnit("patternid", patternid);
 		pattern = emptifyIfNotStatUnit("pattern", pattern);
 		
-		String key = String.join("", statBettype, prediction, pattern);
+		String key = String.join("", statBettype, prediction, patternid, pattern);
 		
 		return key;
 		

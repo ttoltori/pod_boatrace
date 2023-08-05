@@ -1,188 +1,69 @@
-model_no	model_start_ymd	model_end_ymd	class_rank1	class_rank2	class_rank3	algorithm_rank1	algorithm_rank2	algorithm_rank3	features_rank1	features_rank2	features_rank3	arff_sql_id	classification_sql_id	grade_condition	data_use_range	outlier_method	outlier_field	model_data_days	model_interval_days
-# bayes-weka와 lgbm의 비교. 																			
-## category feature의 경우																			
-99001	20190101	20211224	r1-123456	x	x	cf_bayesnet_wk	x	x	en	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99002	20190101	20211224	r1-123456	x	x	cf_lgbm-1_py	x	x	en	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-## numeric feature의 경우																			
-99003	20190101	20211224	r1-123456	x	x	cf_bayesnet_wk	x	x	nw	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99004	20190101	20211224	r1-123456	x	x	cf_lgbm-1_py	x	x	nw	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-## category. numeric feature혼합의 경우																			
-99005	20190101	20211224	r1-123456	x	x	cf_bayesnet_wk	x	x	en_nw_ext_1	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99006	20190101	20211224	r1-123456	x	x	cf_lgbm-1_py	x	x	en_nw_ext_1	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-## ML없이 강제투표한 경우																			
-99007	20190101	20211224	fixed=1	x	x	x	x	x	fixed	x	x	arff_1	clf_1	'ip', 'G1', 'G2', 'G3', 'SG'	yes	no	sanrentanprize	1825	30
-# lgbm의 learning-rate 비교																			
-## 혼합fearure   0.01, 0.001																			
-99008	20190101	20211224	r1-123456	x	x	cf_lgbm-2_py	x	x	en_nw_ext_1	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99009	20190101	20211224	r1-123456	x	x	cf_lgbm-3_py	x	x	en_nw_ext_1	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-## 혼합fearure  0.2, 0.4																			
-99010	20190101	20211224	r1-123456	x	x	cf_lgbm-4_py	x	x	en_nw_ext_1	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99011	20190101	20211224	r1-123456	x	x	cf_lgbm-5_py	x	x	en_nw_ext_1	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-# feature를 확장해서 bayes weka와 lgbm을 비교, 이하부터 날짜범위 바뀜																			
-## jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,wa12,en1,en2,en3,en4,en5,en6																			
-99012	20180601	20211224	r1-123456	x	x	cf_bayesnet_wk	x	x	en_ext_1	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99013	20180601	20211224	r1-123456	x	x	cf_lgbm-1_py	x	x	en_ext_1	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-## en1,en2,en3,en4,en5,en6																			
-99014	20180601	20211224	r1-123456	x	x	cf_bayesnet_wk	x	x	en	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-#99015	20180601	20211224	r1-123456	x	x	cf_lgbm-1_py	x	x	en	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-## en1…en6, lv1…lv6																			
-99016	20180601	20211224	r1-123456	x	x	cf_bayesnet_wk	x	x	en_lv	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99017	20180601	20211224	r1-123456	x	x	cf_lgbm-1_py	x	x	en_lv	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-## nw1..nw6																			
-99018	20180601	20211224	r1-123456	x	x	cf_bayesnet_wk	x	x	nw	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-#99019	20180601	20211224	r1-123456	x	x	cf_lgbm-1_py	x	x	nw	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-## nw1..nw6, n2w1…n2w6																			
-99020	20180601	20211224	r1-123456	x	x	cf_bayesnet_wk	x	x	nw_n2w	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99021	20180601	20211224	r1-123456	x	x	cf_lgbm-1_py	x	x	nw_n2w	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-## en1..en6, nw1…nw6																			
-99022	20180601	20211224	r1-123456	x	x	cf_bayesnet_wk	x	x	en_nw	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99023	20180601	20211224	r1-123456	x	x	cf_lgbm-1_py	x	x	en_nw	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-## jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,wa12,nw1,nw2,nw3,nw4,nw5,nw6																			
-99024	20180601	20211224	r1-123456	x	x	cf_bayesnet_wk	x	x	nw_ext_1	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99025	20180601	20211224	r1-123456	x	x	cf_lgbm-1_py	x	x	nw_ext_1	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-# lgbm분석																			
-## lgbm ex_ext_1 에 대해 양자택일식 class확인  																			
-99026	20180601	20211224	r1-1x	x	x	cf_lgbm-1_py	x	x	en_ext_1	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99027	20180601	20211224	r1-2x	x	x	cf_lgbm-1_py	x	x	en_ext_1	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-## lgbm ex_ext_1 에 대해 학습기간 조정																			
-99028	20180601	20211224	r1-123456	x	x	cf_lgbm-1_py	x	x	en_ext_1	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1095	30
-99029	20180601	20211224	r1-123456	x	x	cf_lgbm-1_py	x	x	en_ext_1	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	2555	30
-## lgbm ex_ext_1 에 대해 outlier 적용																			
-99030	20180601	20211224	r1-123456	x	x	cf_lgbm-1_py	x	x	en_ext_1	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	quartile	sanrentanprize	1825	30
-## lgbm ex_ext_1 에 대해 data_use_range해제																			
-99031	20180601	20211224	r1-123456	x	x	cf_lgbm-1_py	x	x	en_ext_1	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	no	no	sanrentanprize	1825	30
-## lgbm 에 대해 en_nw_ext2추가																			
-99032	20180601	20211224	r1-123456	x	x	cf_lgbm-1_py	x	x	en_nw_ext_2	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-## feature추가																			
-99033	20180601	20211224	r1-123456	x	x	cf_lgbm-1_py	x	x	en_ext_5	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99034	20180601	20211224	r1-123456	x	x	cf_lgbm-1_py	x	x	nw_ext_5	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99035	20180601	20211224	r1-123456	x	x	cf_lgbm-1_py	x	x	en_nw_ext_5	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-# lgbm에서 선출한 featureset으로 rank1,2,3을 조합해서 출력																			
-## featureset고정하여 class조합, 1,12,123에 대해 비교해보자																			
-99036	20180601	20211224	99035=(r1-123456)	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en_nw_ext_5	en_nw_ext_5	en_nw_ext_5	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99037	20180601	20211224	99035=(r1-123456)	r2-1-23456	r3-12-3456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en_nw_ext_5	en_nw_ext_5	en_nw_ext_5	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99038	20180601	20211224	r1-1x	r2-2x	r3-3x	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en_nw_ext_5	en_nw_ext_5	en_nw_ext_5	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99039	20180601	20211224	r123x-type1	x	x	cf_lgbm-1_py	x	x	en_nw_ext_5	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-# nw_ext의 적중율을 높여서 완성형으로 예측																			
-99040	20180601	20211224	r12-all	x	x	cf_lgbm-1_py	x	x	nw_ext_6	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99041	20180601	20211224	r12-all	x	x	cf_lgbm-1_py	x	x	nw_ext_7	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99042	20180601	20211224	r123-all	x	x	cf_lgbm-1_py	x	x	nw_ext_8	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-# nw_ext의 적중율을 높여서 조합형으로 예측																			
-99043	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw_ext_8	nw_ext_8	nw_ext_8	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99044	20180601	20211224	99043=(r1-123456)	r2-1-23456	r3-12-3456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw_ext_8	nw_ext_8	nw_ext_8	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-## featureset 두가지로 고정하고 조합형및 완성형으로 예측																			
-99045	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en_nw_ext_9	en_nw_ext_9	en_nw_ext_9	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99046	20180601	20211224	99045=(r1-123456)	r2-1-23456	r3-12-3456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en_nw_ext_9	en_nw_ext_9	en_nw_ext_9	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99047	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw_ext_9	nw_ext_9	nw_ext_9	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99048	20180601	20211224	99047=(r1-123456)	r2-1-23456	r3-12-3456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw_ext_9	nw_ext_9	nw_ext_9	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-## featureset nw_ext_24로 고정하고 class변형																			
-99049	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw_ext_24	nw_ext_24	nw_ext_24	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99050	20180601	20211224	99049=(r1-123456)	r2-1-23456	r3-12-3456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw_ext_24	nw_ext_24	nw_ext_24	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99051	20180601	20211224	r123-all	x	x	cf_lgbm-1_py	x	x	nw_ext_24	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99052	20180601	20211224	r123x-type1	x	x	cf_lgbm-1_py	x	x	nw_ext_24	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99053	20180601	20211224	r1-1x	r2-2x	r3-3x	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw_ext_24	nw_ext_24	nw_ext_24	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99054	20180601	20211224	99053=(r1-1x)	99053=(r2-2x)	r3-4x	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw_ext_24	nw_ext_24	nw_ext_24	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99055	20180601	20211224	r1-2x	r2-1x	99053=(r3-3x)	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw_ext_24	nw_ext_24	nw_ext_24	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99056	20180601	20211224	99053=(r1-1x)	r2-1-2x	r3-12-3x	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw_ext_24	nw_ext_24	nw_ext_24	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99057	20180601	20211224	99053=(r1-1x)	99056=(r2-1-2x)	r3-12-4x	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw_ext_24	nw_ext_24	nw_ext_24	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99058	20180601	20211224	99055=(r1-2x)	r2-2-1x	r3-21-3x	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw_ext_24	nw_ext_24	nw_ext_24	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-## r1-1x (99503)로 arff 첫자리를 제한한다. 2,3자리는 종래의 조합형,    (r1-123456에서 1T-1에 너무 많이 베팅되어버리므로. 첫자리예측을 r1-1x와 1-23456x로 나누고 2,3자리를 class 변형)																			
-99059	20180601	20211224	99053=(r1-1x)	99049=(r2-123456)	99049=(r3-123456)	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw_ext_24	nw_ext_24	nw_ext_24	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-## 애초의 arff에서 아예 1을 제외해버린다.2,3자리는 종래의 조합형, 																			
-99060	20180601	20211224	r1-23456	99049=(r2-123456)	99049=(r3-123456)	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw_ext_24	nw_ext_24	nw_ext_24	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-## 애초의 arff에서 아예 1을 제외해버리는 조건으로 1,2,3자리를 모두 제한한다.																			
-99061	20180601	20211224	99060=(r1-23456)	r2-123456-ect1	r3-123456-ect1	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw_ext_24	nw_ext_24	nw_ext_24	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-## r1-1x (99503)로 arff 첫자리를 1로 제한해버리는 조건으로 1,2,3자리를 모두 제한한다.																			
-99062	20180601	20211224	99053=(r1-1x)	r2-123456-inc1	r3-123456-inc1	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw_ext_24	nw_ext_24	nw_ext_24	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-## en_nw_ext도 확장해보자																			
-#99063	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en_nw_ext_24	en_nw_ext_24	en_nw_ext_24	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99064	20180601	20211224	r1-1x	99063=(r2-123456)	99063=(r3-123456)	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en_nw_ext_24	en_nw_ext_24	en_nw_ext_24	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-## nw_ext_24를 간소화 (importance낮은 것 정리)																			
-99065	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw_ext_25	nw_ext_25	nw_ext_25	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-## nw_ext_25에 importance높은 category feature를 추가하고 lv1n…을 추가 삭제																			
-99066	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw_ext_26	nw_ext_26	nw_ext_26	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-## nw_ext_26에서 오피셜 컴퓨터예측은 제거 																			
-99067	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw_ext_27	nw_ext_27	nw_ext_27	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-# weka에대해서 실험 계속																			
-99068	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_bayesnet_wk	cf_bayesnet_wk	cf_bayesnet_wk	nw_ext_25	nw_ext_25	nw_ext_25	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99069	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_bayesnet_wk	cf_bayesnet_wk	cf_bayesnet_wk	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99070	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_bayesnet_wk	cf_bayesnet_wk	cf_bayesnet_wk	en_ext_27	en_ext_27	en_ext_27	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99071	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_bayesnet-filtered-1_wk	cf_bayesnet-filtered-1_wk	cf_bayesnet-filtered-1_wk	nw_ext_25	nw_ext_25	nw_ext_25	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99072	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_bayesnet-filtered-1_wk	cf_bayesnet-filtered-1_wk	cf_bayesnet-filtered-1_wk	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99073	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_bayesnet-filtered-1_wk	cf_bayesnet-filtered-1_wk	cf_bayesnet-filtered-1_wk	en_ext_27	en_ext_27	en_ext_27	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-## 추가적인 알고리즘을 en_nw_ext25와 en_ext_27에 시행해보고 bayes와 다르게 특별한 점이 없다면 모두 제외하자																			
-99074	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_randomforest_wk	cf_randomforest_wk	cf_randomforest_wk	en_ext_27	en_ext_27	en_ext_27	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99075	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_j48_wk	cf_j48_wk	cf_j48_wk	en_ext_27	en_ext_27	en_ext_27	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99076	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_logistic_wk	cf_logistic_wk	cf_logistic_wk	en_ext_27	en_ext_27	en_ext_27	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99077	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_randomforest_wk	cf_randomforest_wk	cf_randomforest_wk	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99078	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_j48_wk	cf_j48_wk	cf_j48_wk	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99079	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_logistic_wk	cf_logistic_wk	cf_logistic_wk	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-# old_expr10의 selected result를 근거로 최소화한 featureset을 정의하고 weka와 lgbm모델을 생성하자																			
-#99080	20180601	20211224	99015=(r1-123456)	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en	en	en	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99081	20180601	20211224	99014=(r1-123456)	r2-123456	r3-123456	cf_bayesnet_wk	cf_bayesnet_wk	cf_bayesnet_wk	en	en	en	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99082	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_bayesnet-filtered-1_wk	cf_bayesnet-filtered-1_wk	cf_bayesnet-filtered-1_wk	en	en	en	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-#99083	20180601	20211224	99019=(r1-123456)	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw	nw	nw	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99084	20180601	20211224	99018=(r1-123456)	r2-123456	r3-123456	cf_bayesnet_wk	cf_bayesnet_wk	cf_bayesnet_wk	nw	nw	nw	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99085	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_bayesnet-filtered-1_wk	cf_bayesnet-filtered-1_wk	cf_bayesnet-filtered-1_wk	nw	nw	nw	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-#99086	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en_30	en_30	en_30	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99087	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_bayesnet_wk	cf_bayesnet_wk	cf_bayesnet_wk	en_30	en_30	en_30	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99088	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_bayesnet-filtered-1_wk	cf_bayesnet-filtered-1_wk	cf_bayesnet-filtered-1_wk	en_30	en_30	en_30	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-#99089	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw_30	nw_30	nw_30	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99090	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_bayesnet_wk	cf_bayesnet_wk	cf_bayesnet_wk	nw_30	nw_30	nw_30	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99091	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_bayesnet-filtered-1_wk	cf_bayesnet-filtered-1_wk	cf_bayesnet-filtered-1_wk	nw_30	nw_30	nw_30	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-# hitrate와 betcnt를 고려한 모델 조합형 뽑아보니 bayes-fileter이다.  개별 모델은 수익률이 나쁜데 어떤 이유일까																			
-99092	20180601	20211224	99073=(r1-123456)	99072=(r1-123456)	99071=(r1-123456)	cf_bayesnet-filtered-1_wk	cf_bayesnet-filtered-1_wk	cf_bayesnet-filtered-1_wk	en_ext_27	en_nw_ext_25	nw_ext_25	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-# hitrate와 betcnt를 고려한 모델 조합형 bayes-filter를 제외하고																			
-99093	20180601	20211224	99064=(r1-1x)	99069=(r2-123456)	99089=(r3-123456)	cf_lgbm-1_py	cf_bayesnet_wk	cf_lgbm-1_py	en_nw_ext_24	en_nw_ext_25	nw_30	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-# en_nw계도 추가 생성하자																			
-#99094	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en_nw_30	en_nw_30	en_nw_30	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99095	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_bayesnet_wk	cf_bayesnet_wk	cf_bayesnet_wk	en_nw_30	en_nw_30	en_nw_30	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99096	20180601	20211224	r1-123456	r2-123456	r3-123456	cf_bayesnet-filtered-1_wk	cf_bayesnet-filtered-1_wk	cf_bayesnet-filtered-1_wk	en_nw_30	en_nw_30	en_nw_30	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-# 앙상블 featureset																			
-# 착순각각의 적중율 최우선　(overall)																			
-#99097	20180601	20211224	99089=(r1-123456)	99089=(r1-123456)	99083=(r1-123456)	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw_30	nw_30	nw	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-# 착순각각의 적중율 최우선　(1-2-3) 특정 구미방																			
-#99098	20180601	20211224	99096=(r1-123456)	99072=(r1-123456)	99069=(r1-123456)	cf_bayesnet-filtered-1_wk	cf_bayesnet-filtered-1_wk	cf_bayesnet_wk	en_nw_30	en_nw_ext_25	en_nw_ext_25	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-# 선정모델들 2022/2/17																			
-# 단일 feature set  주의!!   90092,90093제외했으므로 evaluation select할때도 제외해야한다. 																			
-# bayes계열도 제외하였다.  해보고 안되면 다시 생각하자.																			
-99015	20211225	20220122	r1-123456	x	x	cf_lgbm-1_py	x	x	en	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99019	20211225	20220122	r1-123456	x	x	cf_lgbm-1_py	x	x	nw	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99063	20211225	20220122	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en_nw_ext_24	en_nw_ext_24	en_nw_ext_24	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99086	20211225	20220122	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en_30	en_30	en_30	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99089	20211225	20220122	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw_30	nw_30	nw_30	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99094	20211225	20220122	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en_nw_30	en_nw_30	en_nw_30	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-# 앙상블 featureset																			
-# 착순각각의 적중율 최우선　(overall)																			
-99097	20180601	20220309	99089=(r1-123456)	99089=(r1-123456)	99083=(r1-123456)	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw_30	nw_30	nw	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-# 착순각각의 적중율 최우선　(1-2-3) 특정 구미방																			
-99098	20180601	20220309	99063=(r1-123456)	99080=(r1-123456)	99094=(r1-123456)	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en_nw_ext_24	en	en_nw_30	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-# 2022/3/10 위99063-99098에 대해 모델 추가생성 20180601~20211224  +  20220123~20220310																			
-# ml_result에대한 수익률을 regression학습																			
-99099	20211201	20211201	rgsim-1T-1	x	x	rg_lgbm-1_py	x	x	rg_sim_1	x	x	arff_rgsim_1	clf_rgsim_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	180	180
-# 직전정보를 제외한 featureset으로 99063을 대신할 모델																			
-# online
-99100	20221101	20221105	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99080	20221101	20221105	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en	en	en	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99083	20221101	20221105	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw	nw	nw	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99102	20220923	20221031	r12-all	x	x	cf_lgbm-1_py	x	x	en_nw_ext_25	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-99103	20220923	20221031	r123-all	x	x	cf_lgbm-1_py	x	x	en_nw_ext_25	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-#99201	20220401	20220901	r1-pork	x	x	cf_lgbm-1_py	x	x	pork_25	x	x	arff_prok_99100	clf_prok_99100	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	363	363	30
-#99301	20220601	20221031	r1-12x	x	x	cf_lgbm-1_py	x	x	bork_25	x	x	arff_2	clf_2	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	363	30
-# class_weight=balanced																			
-98100	20221106	20221130	r1-123456	r2-123456	r3-123456	cf_lgbm-6_py	cf_lgbm-6_py	cf_lgbm-6_py	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-98080	20221106	20221130	r1-123456	r2-123456	r3-123456	cf_lgbm-6_py	cf_lgbm-6_py	cf_lgbm-6_py	en	en	en	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-98083	20221106	20221130	r1-123456	r2-123456	r3-123456	cf_lgbm-6_py	cf_lgbm-6_py	cf_lgbm-6_py	nw	nw	nw	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-98102	20221106	20221130	r12-all	x	x	cf_lgbm-6_py	x	x	en_nw_ext_25	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-98103	20221106	20221130	r123-all	x	x	cf_lgbm-6_py	x	x	en_nw_ext_25	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1825	30
-# 7년전부터 시작해서 데이터 누적. 3개월단위 갱신																			
-97100	20180601	20221130	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	no	no	sanrentanprize	2555	90
-97080	20180601	20221130	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en	en	en	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	no	no	sanrentanprize	2555	90
-97083	20180601	20221130	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw	nw	nw	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	no	no	sanrentanprize	2555	90
-97102	20180601	20221130	r12-all	x	x	cf_lgbm-1_py	x	x	en_nw_ext_25	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	no	no	sanrentanprize	2555	90
-97103	20180601	20221130	r123-all	x	x	cf_lgbm-1_py	x	x	en_nw_ext_25	x	x	arff_1	clf_1	'ip', 'G3', 'G2', 'G1', 'SG'	no	no	sanrentanprize	2555	90
-96100	20180601	20221130	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	arff_3	clf_3	'ip', 'G3', 'G2'	yes	no	sanrentanprize	1825	30
-#2차적으,로 ml_classification을 학습시키는 모델을 만들어보자																					
-89100	20210602	20221130	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	classifyr1	classifyr2	classifyr3	arff_4	clf_4	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1095	30
-79100	20210602	20221130	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	classifyr1	classifyr2	classifyr3	arff_4	clf_4	'ip', 'G3', 'G2', 'G1', 'SG'	no	no	sanrentanprize	1095	30
-69100	20210602	20210602	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	classifyr1	classifyr2	classifyr3	arff_4	clf_4	'ip', 'G3', 'G2', 'G1', 'SG'	yes	no	sanrentanprize	1095	30
+model_no	model_start_ymd	model_end_ymd	class_rank1	class_rank2	class_rank3	algorithm_rank1	algorithm_rank2	algorithm_rank3	features_rank1	features_rank2	features_rank3	arff_sql_id	classification_sql_id	data_use_range	model_data_days	model_interval_days
+# 최초모델 학습률 디폴트 0.1																
+99080	20210602	20210602	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en	en	en	arff_1	clf_1	yes	1825	30
+99083	20210602	20210602	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw	nw	nw	arff_1	clf_1	yes	1825	30
+99103	20210602	20210602	r123-all	x	x	cf_lgbm-1_py	x	x	en_nw_ext_25	x	x	arff_1	clf_1	yes	1825	30
+# 99100을 첫자리 1234제한, 학습률 조정																
+90100	20210602	20210602	r1-1234x	r2-123456	r3-123456	cf_lgbm-0.02_py	cf_lgbm-0.01_py	cf_lgbm-0.01_py	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	arff_1	clf_1	yes	1825	30
+# 99103을 첫자리 1234제한, 학습률 조정																
+90103	20210602	20210602	r123-1234x	x	x	cf_lgbm-0.01_py	x	x	en_nw_ext_25	x	x	arff_1	clf_1	yes	1825	30
+# !!!주의 99100에 대해 먼저 ml_classify까지 끝난 후에 모델 만들어야한다.  시작일자는 늘 최초(20210602)여야한다.(누적해서 arff생성해야하므로)																
+# 99100의; classification이 20180601부터 시작하고 그로부터 3년치부터 학습하기 위해 시작은 20210602이 되어야한다																
+# 90100을 probabilities로 2차학습  79101보다 미세하게 성능이 좋다																
+70101	20210602	20230331	r1-1234x	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	classifyr123_2	classifyr123_2	classifyr123_2	arff_2_70101	clf_2_70101	yes	1095	30
+# 90103을 probabilities로 2차학습 																
+70103	20210602	20210602	r123-1234x	x	x	cf_lgbm-0.01_py	x	x	classify103	x	x	arff_2_70103	clf_2_70103	yes	1095	30
+# 79101을 bodds로 3차 학습																
+79201	20220602	20230331	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	mbo_20	mbo_20	mbo_20	arff_3_79201	clf_3_79201	no	365	30
+# 70103을 bodds로 3차 학습																
+70203	20230331	20230331	r123-1234x	x	x	cf_lgbm-1_py	x	x	mbo_20	mbo_20	mbo_20	arff_3_70203	clf_3_70203	no	365	30
+# 70101을 bodds로 3차 학습 79201보다 성능이 좋다  -> 최초모델을 바로 추가학습하지 말고 최초모델에 제한 및 학습률 조정한 후에 추가학습하는 것이 좋다																
+70201	20220602	20230331	r1-1234x	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	mbo_20	mbo_20	mbo_20	arff_3_70201	clf_3_70201	no	1095	30
+# 모델 번호 첫자리 학습차수,   두자리 1=rank한자리  3=rank3자리,    세번째자리 구미방제한방법 6=123456,  2=12, 0=분포수																
+# featureset fs_1																
+11600	20210602	20210602	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_2	fs_2	fs_2	arff_1	clf_1	yes	1825	30
+11601	20210602	20210602	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_3	fs_3	fs_3	arff_1	clf_1	yes	1825	30
+11602	20210602	20210602	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_4	fs_4	fs_4	arff_1	clf_1	yes	1825	30
+11603	20210602	20210602	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_5	fs_5	fs_5	arff_1	clf_1	yes	1825	30
+11604	20210602	20210602	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_6	fs_6	fs_6	arff_1	clf_1	yes	1825	30
+13600	20210602	20210602	r123-all	x	x	cf_lgbm-1_py	x	x	fs_5	fs_5	fs_5	arff_1	clf_1	yes	1825	30
+11100	20210602	20220601	r1-1x	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_5	fs_5	fs_5	arff_1	clf_1	yes	1825	30
+11101	20210602	20220601	11100=(r1-1x)	r2-2345	r3-3456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_5	fs_5	fs_5	arff_1	clf_1	yes	1825	30
+11102	20210602	20220601	r1-1x	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_14	fs_14	fs_14	arff_11	clf_11	yes	1825	30
+11103	20210602	20220601	11102=(r1-1x)	r2-2345	r3-3456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_14	fs_14	fs_14	arff_11	clf_11	yes	1825	30
+11104	20210602	20230420	r1-1x	r2-2345	r3-3456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_10	fs_11	fs_11	arff_11	clf_11	yes	1825	30
+11200	20180601	20230420	r1-12x	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_5	fs_5	fs_5	arff_1	clf_1	yes	1825	30
+11300	20210602	20210602	r1-123x	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_5	fs_5	fs_5	arff_1	clf_1	yes	1825	30
+11400	20210602	20210602	r1-1234x	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_5	fs_5	fs_5	arff_1	clf_1	yes	1825	30
+13100	20210602	20210602	r123-1x	x	x	cf_lgbm-1_py	x	x	fs_5	fs_5	fs_5	arff_1	clf_1	yes	1825	30
+13200	20180601	20230420	r123-12x	x	x	cf_lgbm-0.05_py	x	x	fs_5	fs_5	fs_5	arff_1	clf_1	yes	1825	30
+13300	20210602	20210602	r123-123x	x	x	cf_lgbm-1_py	x	x	fs_5	fs_5	fs_5	arff_1	clf_1	yes	1825	30
+13400	20210602	20210602	r123-1234x	x	x	cf_lgbm-1_py	x	x	fs_5	fs_5	fs_5	arff_1	clf_1	yes	1825	30
+11401	20210602	20210602	r1-1234x	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_7	fs_7	fs_7	arff_1	clf_1	yes	1825	30
+13401	20210602	20210602	r123-1234x	x	x	cf_lgbm-1_py	x	x	fs_7	fs_7	fs_7	arff_1	clf_1	yes	1825	30
+#枠番1,2,6																
+11402	20180601	20230331	r1-1234x	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_9	fs_9	fs_9	arff_1	clf_1	yes	1825	30
+13402	20190712	20230331	r123-1234x	x	x	cf_lgbm-1_py	x	x	fs_9	fs_9	fs_9	arff_1	clf_1	yes	1825	30
+#選手傾向 + nw																
+11605	20210602	20220601	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_10	fs_10	fs_10	arff_11	clf_11	yes	1825	30
+# 選手傾向 + nw + en																
+11606	20220505	20220601	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_11	fs_11	fs_11	arff_11	clf_11	yes	1825	30
+# 選手傾向 + en																
+11607	20210602	20220601	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_12	fs_12	fs_12	arff_11	clf_11	yes	1825	30
+# 選手傾向 only																
+11608	20210602	20220601	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_13	fs_13	fs_13	arff_11	clf_11	yes	1825	30
+# 選手傾向 + nw + en、削除：slope全体, motor, sex, age, late, avgst																
+11609	20221028	20230531	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_14	fs_14	fs_14	arff_11	clf_11	yes	1825	30
+13609	20180601	20180601	r123-all	x	x	cf_lgbm-1_py	x	x	fs_14	x	x	arff_11	clf_11	yes	1825	30
+# 11609結果 + probabilities + bodds 																
+31609	20220602	20230420	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_15	fs_15	fs_15	arff_3_31609	clf_3_31609	no	365	30
+# 13609結果  + bodds 																
+33609	20220602	20230420	r123-all	x	x	cf_lgbm-1_py	x	x	fs_16	x	x	arff_3_33609	clf_3_33609	no	365	30
+# 11609結果 + probabilities																
+21609	20230103	20230531	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_17	fs_17	fs_17	arff_2_21609	clf_2_21609	yes	1095	30
+# 11609結果 + bodds																
+31610	20220602	20230420	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_18	fs_18	fs_18	arff_3_31609	clf_3_31609	no	365	30
+#default
+99100	20220901	20230531	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	arff_1	clf_1	yes	1825	30
+# 99100을 probabilities로 2차학습																
+79101	20220901	20230531	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	classifyr123	classifyr123	classifyr123	arff_2_79101	clf_2_79101	yes	1095	30

@@ -120,8 +120,8 @@ public abstract class AbstractPatternWrapper {
 			return String.join("-", nw1(), pd12());
 		
 		// # 키 항목간 조합 2단위+2단위
-		case "prob12+wk12":
-			return String.join("-", prob12(), wk12());
+		case "wk12+prob12":
+			return String.join("-", wk12(), prob12());
 		case "prob12+nw12":
 			return String.join("-", prob12(), nw12());
 		case "prob12+pd12":
@@ -329,6 +329,27 @@ public abstract class AbstractPatternWrapper {
 			return String.join("-", wk1(), wk2(), wk3(), wk4(), wk5());
 		case "wk123456":
 			return String.join("-", wk1(), wk2(), wk3(), wk4(), wk5(), wk6());
+		case "wk1+jyo+race":
+			return String.join("-", wk1(), jyo(), race());
+		case "wk1+jyo+turn":
+			return String.join("-", wk1(), jyo(), turn());
+		case "wk12+turn+race":
+			return String.join("-", wk12(), turn(), race());
+		case "wk12+jyo+race":
+			return String.join("-", wk12(), jyo(), race());
+			
+		// 20230411 追加	
+		case "wk123+fx+tm":
+			return String.join("-", wk123(), getFixedEntrance(), getTimezone());
+		case "comp":
+			return getComPredict();
+
+		case "cond1":
+			return getCond1();
+		case "n1pt1":
+			return getN1point1();
+		case "n1ptwaku1":
+			return getN1pointWaku1();
 			
 		// 패턴 없음
 		case "nopattern":
@@ -362,6 +383,7 @@ public abstract class AbstractPatternWrapper {
 	String rtype() { return getRtype(); }
 	String alcnt() { return getAlcnt(); }
 
+	
 	String prob1() {
 		return subStringDouble(getProbability1(), 0, 3);
 	}
@@ -475,4 +497,20 @@ public abstract class AbstractPatternWrapper {
 	abstract double getProbability3();
 
 	abstract double getOdds();
+	
+	abstract String getFixedEntrance();
+
+	abstract String getTimezone();
+	
+	abstract String getCond1();
+	
+	abstract String getN1point1();
+	
+	abstract String getN1pointWaku1();
+
+	abstract String getCond2();
+	
+	abstract String getN1point2();
+	
+	abstract String getN1pointWaku2();
 }

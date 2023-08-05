@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.pengkong.boatrace.common.enums.Delimeter;
+import com.pengkong.boatrace.exp10.util.EvaluationsIdToolJSJ;
 import com.pengkong.common.ExcelFileUtil;
 import com.pengkong.common.FileUtil;
 import com.pengkong.common.PropertyUtil;
@@ -18,7 +19,11 @@ public class MLPropertyUtil extends PropertyUtil {
 	int configIndex = 0;
 	String[] configTitles;
 	List<String> listConfigString;
-
+	
+	/** simulation時に複数のResultStatのbettype, kumibanを代入するための一時変数 */
+	public String evalIdBettype;
+	public String evalIdKumiban;
+	
 	private static class MLPropertyUtilInstanceHolder {
 		private static final MLPropertyUtil INSTANCE = new MLPropertyUtil();
 	}
@@ -52,8 +57,29 @@ public class MLPropertyUtil extends PropertyUtil {
 		if (key.equals("grade_condition")) {
 			return getGrade(key);
 		}
+		
+		//simulation時に複数のResultStatのbettype, kumibanを代入する
+		if (key.equals("evaluations_id")) {
+			String evalId = super.getString(key);
+			if (evalId.contains("{bettype}")) {
+				evalId = evalId.replace("{bettype}", this.evalIdBettype);
+			}
+			if (evalId.contains("{kumiban}")) {
+				evalId = evalId.replace("{kumiban}", this.evalIdKumiban);
+			}
+			
+			return evalId;
+		}
 	
 		return super.getString(key);
+	}
+	
+	public boolean getYesNo(String key) {
+		if (getString(key).toLowerCase().equals("yes")) {
+			return true;
+		}
+		
+		return false;
 	}
 	
 	String getTerm(String key) {

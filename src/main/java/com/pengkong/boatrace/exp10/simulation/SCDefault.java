@@ -102,6 +102,16 @@ public class SCDefault extends AbstractSimulationCreator {
         List<MlResult> result = execute(BetType._2A, rec);
         return result;
     }
+    @Override
+    List<MlResult> get2Gresult(DBRecord rec) throws Exception {
+        List<MlResult> result = execute(BetType._2G, rec);
+        return result;
+    }
+    @Override
+    List<MlResult> get3Gresult(DBRecord rec) throws Exception {
+        List<MlResult> result = execute(BetType._3G, rec);
+        return result;
+    }
     /**
 	 * ①.複数のMlClassificationに対して
 	 * ②-1.各MlClassificationに対して対してパタンマッチングしたい複数のEvaluationを取得する。

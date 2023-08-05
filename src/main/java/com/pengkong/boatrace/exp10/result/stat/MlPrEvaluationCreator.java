@@ -23,9 +23,9 @@ public class MlPrEvaluationCreator
 
 	public MlPrEvaluation create(String exNo, String modelNo, String patternId, int balanceSplitNum) throws Exception {
 		// 的中が一つもなければEvaluationを作成しない
-		if (stat.listHitOdds.size() <= 0) {
-			return null;
-		}
+//		if (stat.listHitOdds.size() <= 0) {
+//			return null;
+//		}
 		MlPrEvaluation dto = new MlPrEvaluation();
 		dto.setResultno(exNo);
 		dto.setModelno(modelNo);

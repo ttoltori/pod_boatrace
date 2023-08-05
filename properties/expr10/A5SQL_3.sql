@@ -1,69 +1,243 @@
-﻿delete from ml_evaluation where resultno = '95351';
+﻿select distinct ymd 
+from (
+  select ymd, jyocd, raceno, count(1) cnt
+  from rec_race 
+  -- where modelno = '79100'
+  group by ymd, jyocd, raceno
+) tmp 
+where cnt > 1
+order by ymd
+;
 
-select distinct evaluations_id  from stat_bork5;
+select modelno, min(ymd), max(ymd) from ml_classification mc group by modelno;
 
+select
+  bettype, sum(betcnt) 
+from ml_evaluation me  
+where resultno = '10093'
+group by bettype
+;
+
+
+select
+  id_resultno, id_modelno, count(distinct id_bettype)
+from sim_eval 
+group by id_resultno, id_modelno
+order by id_resultno, id_modelno
+;
+
+
+
+select modelno, max(ymd) from ml_classification mc group by modelno order by modelno;
+
+select * from ml_evaluation me where resultno = '88888';
+
+select count(1) from ml_evaluation me ;
 
 select 
-  ranking, mes.* 
-from ml_evaluation_sim mes,
-(
+  '~' sel, (case when t3.result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, t3.bettype, t3.kumiban, t3.modelno, t3.patternid, t3.pattern,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from ml_eval_6661 t1, ml_eval_6662 t2, ml_eval_6663 t3
+where
+	  t1.result_type = t2.result_type and t1.bettype = t2.bettype and t1.kumiban = t2.kumiban and t1.modelno = t2.modelno and t1.patternid = t2.patternid and t1.pattern = t2.pattern and
+	  t1.result_type = t3.result_type and t1.bettype = t3.bettype and t1.kumiban = t3.kumiban and t1.modelno = t3.modelno and t1.patternid = t3.patternid and t1.pattern = t3.pattern and
+ 	  t1.bettype = '{bettype}' and t1.patternid = '{patternid}'
+ 	  and t1.{factor} between {factor_min} and {factor_max}
+ 	  and t2.{factor} between {factor_min} and {factor_max}
+ 	  and t3.{factor} between {factor_min} and {factor_max}
+order by grades, bettype, kumiban, modelno, patternid, pattern
+;
+
+select 
+  sum(t4.betcnt) / 120 dailybet,
+  (sum(t4.hitcnt)::float / sum(t4.betcnt)::float) hitrate,
+  (sum(t4.hitamt)::float / sum(t4.betamt)::float) incomerate,
+  sum(t4.hitamt-t4.betamt) incamt
+from ml_eval_6661 t1, ml_eval_6662 t2, ml_eval_6663 t3, ml_eval_6664 t4
+where
+	  t1.result_type = t2.result_type and t1.bettype = t2.bettype and t1.kumiban = t2.kumiban and t1.modelno = t2.modelno and t1.patternid = t2.patternid and t1.pattern = t2.pattern and
+	  t1.result_type = t3.result_type and t1.bettype = t3.bettype and t1.kumiban = t3.kumiban and t1.modelno = t3.modelno and t1.patternid = t3.patternid and t1.pattern = t3.pattern and
+	  t1.result_type = t4.result_type and t1.bettype = t4.bettype and t1.kumiban = t4.kumiban and t1.modelno = t4.modelno and t1.patternid = t4.patternid and t1.pattern = t4.pattern and
+ 	  t1.bettype = '3T' and t1.patternid = 'wk12+jyo' 
+ 	  and t1.kumiban not in ('x')
+-- 	  and t1.hodds_median  between 2.5 and 99
+-- 	  and t2.hodds_median between 2.5 and 99
+-- 	  and t3.hodds_median between 2.5 and 99
+ 	  and t1.incomerate between 0 and 999
+ 	  and t2.incomerate between 0 and 999
+ 	  and t3.incomerate between 0 and 999
+;
+
+select count(1) from ml_eval_6661 t1 where  t1.bettype = '3T' and t1.patternid = 'wk12+jyo';
+
+
+select * from ml_eval_pipe t1 where  t1.bettype = '3T' and t1.patternid = 'wk12+jyo' order by kumiban, pattern;
+
+-- tableau 전략2 간략화 tsb start
+truncate ml_eval_6661;
+truncate ml_eval_6662;
+truncate ml_eval_6663;
+truncate ml_eval_pipe;
+
+insert into ml_eval_6661 ( select * from ml_evaluation where evaluations_id = '666_1' and modelno = '99100' );
+insert into ml_eval_6662 ( select * from ml_evaluation where evaluations_id = '666_2' and modelno = '99100' );
+insert into ml_eval_6663 ( select * from ml_evaluation where evaluations_id = '666_3' and modelno = '99100' );
+insert into ml_eval_6664 ( select * from ml_evaluation where evaluations_id = '666_4' and modelno = '99100' );
+
+insert into ml_eval_pipe (
 	select 
-	  ranking, id_grade, id_bettype, id_kumiban, id_factor, id_custom, id_limit, id_modelno, id_sql
-	from
-	(
-	select row_number() over (partition by id_bettype, id_kumiban order by incamt desc) as ranking, * from
-	(
+	  t1.result_type, t1.bettype, t1.kumiban, t1.modelno, t1.patternid, t1.pattern
+	from ml_eval_6661 t1, ml_eval_6662 t2, ml_eval_6663 t3
+	where 
+	  t1.result_type = t2.result_type and t1.bettype = t2.bettype and t1.kumiban = t2.kumiban and t1.modelno = t2.modelno and t1.patternid = t2.patternid and t1.pattern = t2.pattern and
+	  t1.result_type = t3.result_type and t1.bettype = t3.bettype and t1.kumiban = t3.kumiban and t1.modelno = t3.modelno and t1.patternid = t3.patternid and t1.pattern = t3.pattern
+);
+
+
+copy(
+select '666_1' as term, pipe.result_type, pipe.bettype, pipe.kumiban, pipe.modelno, pipe.patternid, pipe.pattern,
+      me.betcnt, me.hitcnt, me.betamt, me.hitamt, (me.hitamt - me.betamt) incamt, me.betrate, me.hitrate, me.incomerate, me.hmeanrate,  
+      me.hitr_slope, me.incr_slope, me.pt_fmeasure, me.hodds_min, me.hodds_max, me.hodds_mean, me.hodds_stddev, me.hodds_median, me.hoddsrk_min, me.hoddsrk_max, me.hoddsrk_mean, 
+      me.hoddsrk_stddev, me.hoddsrk_median, me.rodds_min, me.rodds_max, me.rodds_mean, me.rodds_stddev, me.rodds_median, me.roddsrk_min, me.roddsrk_max, me.roddsrk_mean, me.roddsrk_stddev, me.roddsrk_median, 
+      me.bodds_min, me.bodds_max, me.bodds_mean, me.bodds_stddev, me.bodds_median, me.boddsrk_min, me.boddsrk_max, me.boddsrk_mean, me.boddsrk_stddev, me.boddsrk_median, me.prob_min, me.prob_max, me.prob_mean, me.prob_stddev, 
+      me.prob_median, me.ror_bestmin, me.ror_bestmax, me.ror_betcnt, me.ror_betamt, me.ror_hitcnt, me.ror_hitamt, me.ror_betrate, me.ror_hitrate, me.ror_incomerate, me.rork_bestmin, me.rork_bestmax, me.rork_betcnt, me.rork_betamt, 
+      me.rork_hitcnt, me.rork_hitamt, me.rork_betrate, me.rork_hitrate, me.rork_incomerate, me.bor_bestmin, me.bor_bestmax, me.bor_betcnt, me.bor_betamt, me.bor_hitcnt, me.bor_hitamt, me.bor_betrate, me.bor_hitrate, me.bor_incomerate, 
+      me.bork_bestmin, me.bork_bestmax, me.bork_betcnt, me.bork_betamt, me.bork_hitcnt, me.bork_hitamt, me.bork_betrate, me.bork_hitrate, me.bork_incomerate, me.pr_bestmin, me.pr_bestmax, me.pr_betcnt, me.pr_betamt, me.pr_hitcnt, me.pr_hitamt, 
+      me.pr_betrate, me.pr_hitrate, me.pr_incomerate, me.bal_pluscnt
+from ml_eval_pipe pipe, ml_eval_6661 me 
+where pipe.result_type = me.result_type and pipe.bettype = me.bettype and pipe.kumiban = me.kumiban and pipe.modelno = me.modelno and pipe.patternid = me.patternid and pipe.pattern = me.pattern
+union 
+select '666_2' as term, pipe.result_type, pipe.bettype, pipe.kumiban, pipe.modelno, pipe.patternid, pipe.pattern,
+      me.betcnt, me.hitcnt, me.betamt, me.hitamt, (me.hitamt - me.betamt) incamt, me.betrate, me.hitrate, me.incomerate, me.hmeanrate,  
+      me.hitr_slope, me.incr_slope, me.pt_fmeasure, me.hodds_min, me.hodds_max, me.hodds_mean, me.hodds_stddev, me.hodds_median, me.hoddsrk_min, me.hoddsrk_max, me.hoddsrk_mean, 
+      me.hoddsrk_stddev, me.hoddsrk_median, me.rodds_min, me.rodds_max, me.rodds_mean, me.rodds_stddev, me.rodds_median, me.roddsrk_min, me.roddsrk_max, me.roddsrk_mean, me.roddsrk_stddev, me.roddsrk_median, 
+      me.bodds_min, me.bodds_max, me.bodds_mean, me.bodds_stddev, me.bodds_median, me.boddsrk_min, me.boddsrk_max, me.boddsrk_mean, me.boddsrk_stddev, me.boddsrk_median, me.prob_min, me.prob_max, me.prob_mean, me.prob_stddev, 
+      me.prob_median, me.ror_bestmin, me.ror_bestmax, me.ror_betcnt, me.ror_betamt, me.ror_hitcnt, me.ror_hitamt, me.ror_betrate, me.ror_hitrate, me.ror_incomerate, me.rork_bestmin, me.rork_bestmax, me.rork_betcnt, me.rork_betamt, 
+      me.rork_hitcnt, me.rork_hitamt, me.rork_betrate, me.rork_hitrate, me.rork_incomerate, me.bor_bestmin, me.bor_bestmax, me.bor_betcnt, me.bor_betamt, me.bor_hitcnt, me.bor_hitamt, me.bor_betrate, me.bor_hitrate, me.bor_incomerate, 
+      me.bork_bestmin, me.bork_bestmax, me.bork_betcnt, me.bork_betamt, me.bork_hitcnt, me.bork_hitamt, me.bork_betrate, me.bork_hitrate, me.bork_incomerate, me.pr_bestmin, me.pr_bestmax, me.pr_betcnt, me.pr_betamt, me.pr_hitcnt, me.pr_hitamt, 
+      me.pr_betrate, me.pr_hitrate, me.pr_incomerate, me.bal_pluscnt
+from ml_eval_pipe pipe, ml_eval_6662 me 
+where pipe.result_type = me.result_type and pipe.bettype = me.bettype and pipe.kumiban = me.kumiban and pipe.modelno = me.modelno and pipe.patternid = me.patternid and pipe.pattern = me.pattern
+union 
+select '666_3' as term, pipe.result_type, pipe.bettype, pipe.kumiban, pipe.modelno, pipe.patternid, pipe.pattern,
+      me.betcnt, me.hitcnt, me.betamt, me.hitamt, (me.hitamt - me.betamt) incamt, me.betrate, me.hitrate, me.incomerate, me.hmeanrate,  
+      me.hitr_slope, me.incr_slope, me.pt_fmeasure, me.hodds_min, me.hodds_max, me.hodds_mean, me.hodds_stddev, me.hodds_median, me.hoddsrk_min, me.hoddsrk_max, me.hoddsrk_mean, 
+      me.hoddsrk_stddev, me.hoddsrk_median, me.rodds_min, me.rodds_max, me.rodds_mean, me.rodds_stddev, me.rodds_median, me.roddsrk_min, me.roddsrk_max, me.roddsrk_mean, me.roddsrk_stddev, me.roddsrk_median, 
+      me.bodds_min, me.bodds_max, me.bodds_mean, me.bodds_stddev, me.bodds_median, me.boddsrk_min, me.boddsrk_max, me.boddsrk_mean, me.boddsrk_stddev, me.boddsrk_median, me.prob_min, me.prob_max, me.prob_mean, me.prob_stddev, 
+      me.prob_median, me.ror_bestmin, me.ror_bestmax, me.ror_betcnt, me.ror_betamt, me.ror_hitcnt, me.ror_hitamt, me.ror_betrate, me.ror_hitrate, me.ror_incomerate, me.rork_bestmin, me.rork_bestmax, me.rork_betcnt, me.rork_betamt, 
+      me.rork_hitcnt, me.rork_hitamt, me.rork_betrate, me.rork_hitrate, me.rork_incomerate, me.bor_bestmin, me.bor_bestmax, me.bor_betcnt, me.bor_betamt, me.bor_hitcnt, me.bor_hitamt, me.bor_betrate, me.bor_hitrate, me.bor_incomerate, 
+      me.bork_bestmin, me.bork_bestmax, me.bork_betcnt, me.bork_betamt, me.bork_hitcnt, me.bork_hitamt, me.bork_betrate, me.bork_hitrate, me.bork_incomerate, me.pr_bestmin, me.pr_bestmax, me.pr_betcnt, me.pr_betamt, me.pr_hitcnt, me.pr_hitamt, 
+      me.pr_betrate, me.pr_hitrate, me.pr_incomerate, me.bal_pluscnt
+from ml_eval_pipe pipe, ml_eval_6663 me 
+where pipe.result_type = me.result_type and pipe.bettype = me.bettype and pipe.kumiban = me.kumiban and pipe.modelno = me.modelno and pipe.patternid = me.patternid and pipe.pattern = me.pattern
+) to 'D:\Dev\experiment\expr10\simulation_step1\strategy2_666_123.tsv' csv delimiter E'\t' header;
+;  
+
+
+
+-- tableau 전략2 간략화 tsb end
+
+
+-- tableau 전략2 용 tsb start
+drop table tmp_stat_bork5;
+
+create table tmp_stat_bork5 as
 	select 
-	  id_grade,
-	  id_bettype, 
-	  
-	  id_kumiban,
-	  id_factor,
-	  id_custom,
-	  id_limit,
-	  id_modelno,
-	  id_sql,
-	  count(1) incrnum,
-	  (sum(betcnt)::float / (31*6)::float)::numeric(7,2) dailybet,
-	  (sum(hitamt) - sum(betamt)) incamt,
-	  (sum(hitcnt)::float / sum(betcnt)::float)::numeric(5,2) hitrate,
-	  (sum(hitamt)::float / sum(betamt)::float)::numeric(5,2) incrate
-	from
-	(
-	    select
-	      me2.*
-	    from
-		(
-	      select * from ml_evaluation_sim mes where id_term = '6661' and incomerate > 1 and bal_slope[0] > 0
-	    ) me1,
-		(
-	      select * from ml_evaluation_sim mes where id_term = '6662' and incomerate > 1 and bal_slope[0] > 0
-	    ) me2
-	    where 
-	      me1.id_grade = me2.id_grade and me1.id_bettype = me2.id_bettype and me1.id_kumiban = me2.id_kumiban and me1.id_factor = me2.id_factor and me1.id_custom = me2.id_custom 
-	      and me1.id_incr = me2.id_incr and me1.id_limit = me2.id_limit and me1.id_modelno = me2.id_modelno and me1.id_sql = me2.id_sql 
-	) ev
-	where id_limit = '30' 
-	   and id_bettype = '2T' and id_kumiban = '12'
-	group by
-	  id_grade,
-	  id_bettype, 
-	  id_kumiban,
-	  id_factor,
-	  id_custom,
-	  id_limit,
-	  id_modelno,
-	  id_sql
-	order by id_bettype, id_kumiban, incamt desc
-	) tmp
-	) tmp2
-	where ranking = 1
-	order by id_bettype, id_kumiban, ranking
-) tmp3
-where mes.id_grade = tmp3.id_grade and mes.id_bettype = tmp3.id_bettype and mes.id_kumiban = tmp3.id_kumiban and mes.id_sql = tmp3.id_sql 
-  and mes.id_factor = tmp3.id_factor and mes.id_custom = tmp3.id_custom and mes.id_modelno = tmp3.id_modelno and mes.id_limit = tmp3.id_limit
-order by 
-  id_grade, id_bettype, id_kumiban, id_factor, id_custom, id_limit, id_modelno, id_sql, id_incr, id_term
+	  t1.result_type, t1.grades, t1.bettype, t1.kumiban, t1.modelno, t1.patternid, t1.pattern
+	from 
+	  ( select * from stat_bork5 where evaluations_id in ('79100_6m_1', '99100_6m_1') ) t1,
+	  ( select * from stat_bork5 where evaluations_id in ('79100_6m_2', '99100_6m_2') ) t2,
+	  ( select * from stat_bork5 where evaluations_id in ('79100_6m_3', '99100_6m_3') ) t3
+	where 
+	  t1.result_type = t2.result_type and t1.grades = t2.grades and t1.bettype = t2.bettype and t1.kumiban = t2.kumiban and t1.modelno = t2.modelno and t1.patternid = t2.patternid and t1.pattern = t2.pattern and
+	  t1.result_type = t3.result_type and t1.grades = t3.grades and t1.bettype = t3.bettype and t1.kumiban = t3.kumiban and t1.modelno = t3.modelno and t1.patternid = t3.patternid and t1.pattern = t3.pattern
+	order by t1.result_type, t1.grades, t1.bettype, t1.kumiban, t1.modelno, t1.patternid, t1.pattern
+;
+
+
+copy(
+select '666_1' as term, (sb.modelno || '_' || sb.patternid || '_' || sb.pattern) pipe, sb.result_type, sb.grades, sb.bettype, sb.kumiban, sb.modelno, sb.patternid, sb.pattern,
+      sb.i0, sb.i1, sb.i2, sb.i3, sb.i4, sb.i5, sb.i6, sb.i7, sb.i8, sb.i9, sb.i04, sb.i27, sb.i59, sb.i09, sb.evaluations_id sb_eval_id, sb.hm, sb.borkhm, sb.borhm, sb.gp, sb.borkgp, sb.borgp,
+      me.betcnt, me.hitcnt, me.betamt, me.hitamt, (me.hitamt - me.betamt) incamt, me.betrate, me.hitrate, me.incomerate, me.hmeanrate,  
+      me.hitr_slope, me.incr_slope, me.pt_fmeasure, me.hodds_min, me.hodds_max, me.hodds_mean, me.hodds_stddev, me.hodds_median, me.hoddsrk_min, me.hoddsrk_max, me.hoddsrk_mean, 
+      me.hoddsrk_stddev, me.hoddsrk_median, me.rodds_min, me.rodds_max, me.rodds_mean, me.rodds_stddev, me.rodds_median, me.roddsrk_min, me.roddsrk_max, me.roddsrk_mean, me.roddsrk_stddev, me.roddsrk_median, 
+      me.bodds_min, me.bodds_max, me.bodds_mean, me.bodds_stddev, me.bodds_median, me.boddsrk_min, me.boddsrk_max, me.boddsrk_mean, me.boddsrk_stddev, me.boddsrk_median, me.prob_min, me.prob_max, me.prob_mean, me.prob_stddev, 
+      me.prob_median, me.ror_bestmin, me.ror_bestmax, me.ror_betcnt, me.ror_betamt, me.ror_hitcnt, me.ror_hitamt, me.ror_betrate, me.ror_hitrate, me.ror_incomerate, me.rork_bestmin, me.rork_bestmax, me.rork_betcnt, me.rork_betamt, 
+      me.rork_hitcnt, me.rork_hitamt, me.rork_betrate, me.rork_hitrate, me.rork_incomerate, me.bor_bestmin, me.bor_bestmax, me.bor_betcnt, me.bor_betamt, me.bor_hitcnt, me.bor_hitamt, me.bor_betrate, me.bor_hitrate, me.bor_incomerate, 
+      me.bork_bestmin, me.bork_bestmax, me.bork_betcnt, me.bork_betamt, me.bork_hitcnt, me.bork_hitamt, me.bork_betrate, me.bork_hitrate, me.bork_incomerate, me.pr_bestmin, me.pr_bestmax, me.pr_betcnt, me.pr_betamt, me.pr_hitcnt, me.pr_hitamt, 
+      me.pr_betrate, me.pr_hitrate, me.pr_incomerate, me.bal_pluscnt
+from stat_bork5 sb, tmp_stat_bork5 tmp, ml_evaluation me 
+where sb.evaluations_id in ('79100_6m_1', '99100_6m_1') and me.evaluations_id = '666_1' and 
+  sb.result_type = tmp.result_type and sb.grades = tmp.grades and sb.bettype = tmp.bettype and sb.kumiban = tmp.kumiban and sb.modelno = tmp.modelno and sb.patternid = tmp.patternid and sb.pattern = tmp.pattern and 
+  sb.result_type = me.result_type and sb.bettype = me.bettype and sb.kumiban = me.kumiban and sb.modelno = me.modelno and sb.patternid = me.patternid and sb.pattern = me.pattern
+union
+select '666_2' as term, (sb.modelno || '_' || sb.patternid || '_' || sb.pattern) pipe, sb.result_type, sb.grades, sb.bettype, sb.kumiban, sb.modelno, sb.patternid, sb.pattern,
+      sb.i0, sb.i1, sb.i2, sb.i3, sb.i4, sb.i5, sb.i6, sb.i7, sb.i8, sb.i9, sb.i04, sb.i27, sb.i59, sb.i09, sb.evaluations_id sb_eval_id, sb.hm, sb.borkhm, sb.borhm, sb.gp, sb.borkgp, sb.borgp,
+      me.betcnt, me.hitcnt, me.betamt, me.hitamt, (me.hitamt - me.betamt) incamt, me.betrate, me.hitrate, me.incomerate, me.hmeanrate,  
+      me.hitr_slope, me.incr_slope, me.pt_fmeasure, me.hodds_min, me.hodds_max, me.hodds_mean, me.hodds_stddev, me.hodds_median, me.hoddsrk_min, me.hoddsrk_max, me.hoddsrk_mean, 
+      me.hoddsrk_stddev, me.hoddsrk_median, me.rodds_min, me.rodds_max, me.rodds_mean, me.rodds_stddev, me.rodds_median, me.roddsrk_min, me.roddsrk_max, me.roddsrk_mean, me.roddsrk_stddev, me.roddsrk_median, 
+      me.bodds_min, me.bodds_max, me.bodds_mean, me.bodds_stddev, me.bodds_median, me.boddsrk_min, me.boddsrk_max, me.boddsrk_mean, me.boddsrk_stddev, me.boddsrk_median, me.prob_min, me.prob_max, me.prob_mean, me.prob_stddev, 
+      me.prob_median, me.ror_bestmin, me.ror_bestmax, me.ror_betcnt, me.ror_betamt, me.ror_hitcnt, me.ror_hitamt, me.ror_betrate, me.ror_hitrate, me.ror_incomerate, me.rork_bestmin, me.rork_bestmax, me.rork_betcnt, me.rork_betamt, 
+      me.rork_hitcnt, me.rork_hitamt, me.rork_betrate, me.rork_hitrate, me.rork_incomerate, me.bor_bestmin, me.bor_bestmax, me.bor_betcnt, me.bor_betamt, me.bor_hitcnt, me.bor_hitamt, me.bor_betrate, me.bor_hitrate, me.bor_incomerate, 
+      me.bork_bestmin, me.bork_bestmax, me.bork_betcnt, me.bork_betamt, me.bork_hitcnt, me.bork_hitamt, me.bork_betrate, me.bork_hitrate, me.bork_incomerate, me.pr_bestmin, me.pr_bestmax, me.pr_betcnt, me.pr_betamt, me.pr_hitcnt, me.pr_hitamt, 
+      me.pr_betrate, me.pr_hitrate, me.pr_incomerate, me.bal_pluscnt
+from stat_bork5 sb, tmp_stat_bork5 tmp, ml_evaluation me 
+where sb.evaluations_id in ('79100_6m_2', '99100_6m_2') and me.evaluations_id = '666_2' and 
+  sb.result_type = tmp.result_type and sb.grades = tmp.grades and sb.bettype = tmp.bettype and sb.kumiban = tmp.kumiban and sb.modelno = tmp.modelno and sb.patternid = tmp.patternid and sb.pattern = tmp.pattern and 
+  sb.result_type = me.result_type and sb.bettype = me.bettype and sb.kumiban = me.kumiban and sb.modelno = me.modelno and sb.patternid = me.patternid and sb.pattern = me.pattern
+union
+select '666_3' as term, (sb.modelno || '_' || sb.patternid || '_' || sb.pattern) pipe, sb.result_type, sb.grades, sb.bettype, sb.kumiban, sb.modelno, sb.patternid, sb.pattern,
+      sb.i0, sb.i1, sb.i2, sb.i3, sb.i4, sb.i5, sb.i6, sb.i7, sb.i8, sb.i9, sb.i04, sb.i27, sb.i59, sb.i09, sb.evaluations_id sb_eval_id, sb.hm, sb.borkhm, sb.borhm, sb.gp, sb.borkgp, sb.borgp,
+      me.betcnt, me.hitcnt, me.betamt, me.hitamt, (me.hitamt - me.betamt) incamt, me.betrate, me.hitrate, me.incomerate, me.hmeanrate,  
+      me.hitr_slope, me.incr_slope, me.pt_fmeasure, me.hodds_min, me.hodds_max, me.hodds_mean, me.hodds_stddev, me.hodds_median, me.hoddsrk_min, me.hoddsrk_max, me.hoddsrk_mean, 
+      me.hoddsrk_stddev, me.hoddsrk_median, me.rodds_min, me.rodds_max, me.rodds_mean, me.rodds_stddev, me.rodds_median, me.roddsrk_min, me.roddsrk_max, me.roddsrk_mean, me.roddsrk_stddev, me.roddsrk_median, 
+      me.bodds_min, me.bodds_max, me.bodds_mean, me.bodds_stddev, me.bodds_median, me.boddsrk_min, me.boddsrk_max, me.boddsrk_mean, me.boddsrk_stddev, me.boddsrk_median, me.prob_min, me.prob_max, me.prob_mean, me.prob_stddev, 
+      me.prob_median, me.ror_bestmin, me.ror_bestmax, me.ror_betcnt, me.ror_betamt, me.ror_hitcnt, me.ror_hitamt, me.ror_betrate, me.ror_hitrate, me.ror_incomerate, me.rork_bestmin, me.rork_bestmax, me.rork_betcnt, me.rork_betamt, 
+      me.rork_hitcnt, me.rork_hitamt, me.rork_betrate, me.rork_hitrate, me.rork_incomerate, me.bor_bestmin, me.bor_bestmax, me.bor_betcnt, me.bor_betamt, me.bor_hitcnt, me.bor_hitamt, me.bor_betrate, me.bor_hitrate, me.bor_incomerate, 
+      me.bork_bestmin, me.bork_bestmax, me.bork_betcnt, me.bork_betamt, me.bork_hitcnt, me.bork_hitamt, me.bork_betrate, me.bork_hitrate, me.bork_incomerate, me.pr_bestmin, me.pr_bestmax, me.pr_betcnt, me.pr_betamt, me.pr_hitcnt, me.pr_hitamt, 
+      me.pr_betrate, me.pr_hitrate, me.pr_incomerate, me.bal_pluscnt
+from stat_bork5 sb, tmp_stat_bork5 tmp, ml_evaluation me 
+where sb.evaluations_id in ('79100_6m_3', '99100_6m_3') and me.evaluations_id = '666_3' and 
+  sb.result_type = tmp.result_type and sb.grades = tmp.grades and sb.bettype = tmp.bettype and sb.kumiban = tmp.kumiban and sb.modelno = tmp.modelno and sb.patternid = tmp.patternid and sb.pattern = tmp.pattern and 
+  sb.result_type = me.result_type and sb.bettype = me.bettype and sb.kumiban = me.kumiban and sb.modelno = me.modelno and sb.patternid = me.patternid and sb.pattern = me.pattern
+) to 'D:\Dev\experiment\expr10\simulation_step1\strategy2_666_123.tsv' csv delimiter E'\t' header;
+;  
+
+-- tableau 전략2 용 tsb end  
+  
+copy(
+select 
+ ( case  when evaluations_id in ('79100_6m_1', '99100_6m_1') then '666_1' 
+   when evaluations_id in ('79100_6m_2', '99100_6m_2') then '666_2'
+   else '666_3' end ) term,  * 
+from stat_bork5 sb 
+where evaluations_id in ('79100_6m_1', '79100_6m_2','79100_6m_3','99100_6m_1','99100_6m_2','99100_6m_3')
+order by term
+) to 'D:\Dev\experiment\expr10\simulation_step1\666_123.tsv' csv delimiter E'\t' header;
+;
+
+select * from ml_evaluation me 
+
+copy(
+select 
+  (case when resultno::int between 95351 and 95824 then 'lim30' 
+    when resultno::int between 95825 and 96298 then 'lim10'
+    else 'lim30wk' end) type_limit,
+  (case when ids[8] in ('FSB-2', 'FSB-6''FSB-8', 'GPT-5', 'GPT-6') then 'st'
+    else 'ev' end) type_ev_st,  
+  ids[1] id_grade, ids[2] id_bettype, kumiban id_kumiban, ids[4] id_rank, ids[5] id_incr, ids[6] id_limit, 
+  ids[7] id_simul_bonus, ids[8] id_sql, ids[9] id_factor, ids[10] id_custom, ids[11] id_modelno, (ids[14] || ids[15]) id_term,
+  (hitamt - betamt) incamt,
+  *
+from (
+  select 
+    *, string_to_array(evaluations_id, '_') ids
+  from ml_evaluation me 
+  where resultno::int between 95351 and 96772
+) meid
+where (ids[14] || ids[15]) = '6663'
+order by type_limit, id_grade, id_bettype, id_kumiban, id_rank, id_incr, id_limit  
+) to 'D:\Dev\experiment\expr10\simulation_step1\test_FSB(4)_6663.tsv' csv delimiter E'\t' header;
 ;
 
 
