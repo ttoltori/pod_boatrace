@@ -97,6 +97,8 @@ public class OddsDownloader {
 	
 	public void save(String yyyyMMdd, String csv) throws Exception {
 		String filepath = prop.getString("DIRECTORY_ODDS") + "odds_" + yyyyMMdd + ".csv";
+		
+		// 상위에서 루프로 실행되므로 여기서 삭제해선 안된다. FileUtil.deleteFileIfExist(filepath);
 		FileUtil.appendFileByLine(filepath, csv);
 	}
 	

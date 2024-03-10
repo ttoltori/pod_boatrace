@@ -2,6 +2,7 @@ package com.pengkong.boatrace.exp10;
 
 import java.util.List;
 
+import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.apache.ibatis.session.SqlSession;
 
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
@@ -37,25 +38,22 @@ public class MLPorkClassificationGenerator extends MLClassificationGenerator {
 
 			rec.setPrediction1(listClassification.get(0).prediction);
 			rec.setProbability1(listClassification.get(0).probability);
-			rec.setProbabilities1(listClassification.get(0).probabilities);
-			rec.setSkewness1(listClassification.get(0).skewness);
-			rec.setKurtosis1(listClassification.get(0).kurtosis);
 			
 			if (listClassification.size() > 1) {
 				rec.setPrediction2(listClassification.get(1).prediction);
 				rec.setProbability2(listClassification.get(1).probability);
-				rec.setProbabilities2(listClassification.get(1).probabilities);
-				rec.setSkewness2(listClassification.get(1).skewness);
-				rec.setKurtosis2(listClassification.get(1).kurtosis);
 			}
 
 			if (listClassification.size() > 2) {
 				rec.setPrediction3(listClassification.get(2).prediction);
 				rec.setProbability3(listClassification.get(2).probability);
-				rec.setProbabilities3(listClassification.get(2).probabilities);
-				rec.setSkewness3(listClassification.get(2).skewness);
-				rec.setKurtosis3(listClassification.get(2).kurtosis);
 			}
+
+			DescriptiveStatistics desc = new DescriptiveStatistics();
+			for (int i = 0; i < listClassification.size(); i++) {
+				desc.addValue(listClassification.get(i).probability);
+			}
+			
 			mapper.insert(rec);
 		}
 	}

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 
 import com.pengkong.boatrace.exception.NullValueException;
+import com.pengkong.common.MathUtil;
 
 @SuppressWarnings("serial")
 public class DBRecord extends HashMap<String, Object> {
@@ -17,6 +18,10 @@ public class DBRecord extends HashMap<String, Object> {
 	
 	public Double getDouble(String key) {
 		return (Double) super.get(key);
+	}
+	
+	public Double getPercentizedDouble(String key, double min, double max) {
+		return MathUtil.convertToPercentile((Double) super.get(key), min, max, 20); 
 	}
 	
 	public double[] getDoubleArray(String key) {

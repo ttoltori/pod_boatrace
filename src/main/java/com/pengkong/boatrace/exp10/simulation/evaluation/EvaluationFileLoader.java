@@ -29,7 +29,7 @@ public class EvaluationFileLoader extends AbstractEvaluationLoader {
 		String groups = prop.getString("groups");
 		String[] evaluations = {};
 		// *の場合、全てのgroup fileが対象となる
-		if (!groups.equals("*")) {
+		if (!groups.contains("*")) {
 			evaluations = prop.getString("groups").split(Delimeter.COMMA.getValue());	
 		}
 
@@ -77,7 +77,7 @@ public class EvaluationFileLoader extends AbstractEvaluationLoader {
 		Set<String> groupSet = new HashSet<>(Arrays.asList(groups));
 		
 		
-		List<File> files = FileUtil.listFilesByExtensionRecursively(dir, "tsv");
+		List<File> files = Arrays.asList(FileUtil.listFilesByExtension(dir, "tsv"));
 		for (File file : files) {
 			// 全ファイル対象
 			if (groupSet.isEmpty()) {
@@ -85,9 +85,8 @@ public class EvaluationFileLoader extends AbstractEvaluationLoader {
 				continue;
 			}
 
-			// ex) 00001_1T-1.tsv -> [00001, 1T-1.tsv]
-			String[] token = file.getName().split(Delimeter.UNDERBAR.getValue());
-			if (groupSet.contains(StringUtil.unpadZero(token[0]))) {
+			String namePart = file.getName().split(Delimeter.PERIOD.getValue())[0];
+			if (groupSet.contains(namePart)) {
 				listFiles.add(file);
 			}
 		}

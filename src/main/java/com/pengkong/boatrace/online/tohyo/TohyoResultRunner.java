@@ -10,16 +10,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
-import com.pengkong.boatrace.mybatis.entity.MlResult;
 import com.pengkong.boatrace.mybatis.entity.OlRace;
-import com.pengkong.boatrace.online.dao.MlResultDAO;
+import com.pengkong.boatrace.mybatis.entity.OlResult;
+import com.pengkong.boatrace.online.dao.OlResultDAO;
 import com.pengkong.boatrace.online.race.AbstractDailyRaceQueue;
 import com.pengkong.boatrace.online.race.DailyResultRaceQueue;
 import com.pengkong.boatrace.util.BoatUtil;
 import com.pengkong.boatrace.util.DatabaseUtil;
 
 public class TohyoResultRunner implements Runnable {
-	Logger logger = LoggerFactory.getLogger(AbstractTohyoRunner.class);
+	Logger logger = LoggerFactory.getLogger(TohyoResultRunner.class);
 
 	MLPropertyUtil prop =  MLPropertyUtil.getInstance();
 	
@@ -64,7 +64,7 @@ public class TohyoResultRunner implements Runnable {
 					race = raceQueue.poll();
 					try {
 						// 投票結果DB取得
-						List<MlResult> results = loadOlResults(race);
+						List<OlResult> results = loadOlResults(race);
 						
 						if (results.size() <= 0) {
 							logger.info("race result for update does not exist. " + race);
@@ -117,14 +117,14 @@ public class TohyoResultRunner implements Runnable {
 		return now.isAfter(tohyoResultStart);
 	}
 
-	/** 当該レースのMlResultのリストを取得する 
+	/** 当該レースのOlResultのリストを取得する 
 	 * @throws SQLException */
-	List<MlResult> loadOlResults(OlRace race) throws IOException, SQLException {
-		List<MlResult> results;
+	List<OlResult> loadOlResults(OlRace race) throws IOException, SQLException {
+		List<OlResult> results;
 		SqlSession session = DatabaseUtil.open(prop.getString("target_db_resource"), false);
 		try {
-			MlResultDAO dao = new MlResultDAO(session);
-			results = dao.select(race.getYmd(), race.getJyocd(), race.getRaceno().shortValue());
+			OlResultDAO dao = new OlResultDAO(session);
+			results = dao.select(race.getYmd(), race.getJyocd(), race.getRaceno());
 			
 			return results;
 		} finally {

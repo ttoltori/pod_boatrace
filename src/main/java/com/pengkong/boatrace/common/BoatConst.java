@@ -57,8 +57,13 @@ public class BoatConst {
 	@SuppressWarnings("serial")
 	public static Map<String, String> featureTypeMap = new HashMap<String, String>() {
 		{
-			put("numeric", "float");
-			put("nominal", "category");
+			/*  실험10.xlsx#実験 시트의    2024/2/25 참조.    
+			 put("numeric", "float");
+			put("nominal", "category"); */
+			put("int", "int");
+			put("int64", "int64");
+			put("category", "category");
+			put("float", "float");
 		}
 	};
 

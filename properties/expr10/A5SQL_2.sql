@@ -1,19 +1,92 @@
-﻿select modelno, min(ymd) from ml_classification mc group by modelno order by modelno;
+﻿insert into rec_racer2 
+  select ymd, jyocd, raceno, generate_series(1, array_length(runcnt, 1)) AS waku,
+    unnest(runcnt), unnest(runcnt_slope), unnest(cond), unnest(cond_slope), 
+    unnest(n1point), unnest(n1point_slope), unnest(n2point), unnest(n2point_slope), unnest(n3point), unnest(n3point_slope), 
+    unnest(n1point_waku), unnest(n1point_waku_slope), unnest(n2point_waku), unnest(n2point_waku_slope), unnest(n3point_waku), unnest(n3point_waku_slope), 
+    unnest(avgstart_waku), unnest(avgstart_waku_slope)
+  from rec_racer_arr2
+;
+
+  
+select *
+  from rec_racer2
+  where ymd = '20090227' and jyocd = '15' and raceno = 9;
+
+select 
+ ymd, jyocd, raceno,  unnest(runcnt)
+from rec_racer_arr2
+where ymd = '20090221' and jyocd = '02' and raceno = 1; 
+
+select model, ymd from
+
+select min(probability1) min1, max(probability1) max1,
+	 min(probability2) min2,  max(probability2)  max2,
+	 min(probability3) min3,  max(probability3)  max3,
+	 min(probability4) min4,  max(probability4)  max4,
+	 min(probability5) min5,  max(probability5)  max5,
+	 min(probability6) min6,  max(probability6)  max6
+from ml_classification mc;  where modelno = '89100';
+
+select min(probability1)::numeric(5,2) min1, max(probability1)::numeric(5,2) max1,
+   min(probability1+probability2)::numeric(5,2) min12,  max(probability1+probability2)::numeric(5,2) max12,
+   min(probability1+probability2+probability3)::numeric(5,2) min123,  max(probability1+probability2+probability3)::numeric(5,2) max123
+from ml_classification mc;  where modelno = '89100';
+
+select  min(popu_variance), max (popu_variance) from ml_classification mc  where modelno = '89100';
+
+select * from ml_classification order by ymd, jyocd, raceno, modelno;
+
+
+
+DELETE FROM ml_classification;
+
+copy ml_classification from 'C:\jsj\!japan_backup\Backup\DB\ml_classification.tsv' csv delimiter E'\t' header;
+;
+
+select concat_ws('_', race.ymd, race.jyocd, lpad(race.raceno::text, 2, '0')) raceid,
+race.jyocd,race.raceno::text,turn::text,race.grade,race.racetype::text,fixedentrance,entry::text en,sex sex,age::text age,level lv,weight::text weight,branch branch,exhibit::text exhibit,
+(rank::text) classes
+from rec_race race, rec_racer racer
+where race.ymd = racer.ymd and race.jyocd = racer.jyocd and race.raceno = racer.raceno
+and sanrentanno <> '不成立'
+and race.grade in ('ip', 'G3', 'G2', 'G1', 'SG')
+and race.ymd >= '20160602' and race.ymd <= '20210601'
+and (true)
+order by race.ymd, race.sime
+
+;
+
+
+
+select max(ymd) from rec_race;
+
+truncate rec_race;
+truncate rec_race_waku;
+truncate rec_race_waku2;
+truncate rec_racer;
+truncate rec_racer_arr;
+truncate ml_classification;
+
+
+select modelno, min(ymd) from ml_classification mc group by modelno order by modelno;
 
 select sanrentanno, count(1) cnt
 from rec_race where sanrentanno <> '不成立'
 group by sanrentanno 
 order by cnt desc;
 
-
+select distinct modelno from ml_classification mc; 
 select count(1) from ml_evaluation;
 
-copy ( select * from rec_race ) to 'C:\Dev\export\20230408\rec_race.tsv' csv delimiter E'\t' header;
-copy ( select * from rec_race_waku ) to 'C:\Dev\export\20230408\rec_race_waku.tsv' csv delimiter E'\t' header;
-copy ( select * from rec_race_waku2 ) to 'C:\Dev\export\20230408\rec_race_waku2.tsv' csv delimiter E'\t' header;
-copy ( select * from rec_racer ) to 'C:\Dev\export\20230408\rec_racer.tsv' csv delimiter E'\t' header;
-copy ( select * from rec_racer_arr ) to 'C:\Dev\export\20230408\rec_racer_arr.tsv' csv delimiter E'\t' header;
-copy ( select * from ml_classification where modelno in ('79100','99100') ) to 'C:\Dev\export\20230408\ml_classification.tsv' csv delimiter E'\t' header;
+copy ml_model_config from 'C:\jsj\!japan_backup\Backup\DB\rec_race_waku.tsv' csv delimiter E'\t';
+
+
+copy ( select * from rec_race ) to 'C:\Dev\export\20240117\rec_race.tsv' csv delimiter E'\t' header;
+copy ( select * from rec_race_waku ) to 'C:\Dev\export\20240117\rec_race_waku.tsv' csv delimiter E'\t' header;
+copy ( select * from rec_race_waku2 ) to 'C:\Dev\export\20240117\rec_race_waku2.tsv' csv delimiter E'\t' header;
+copy ( select * from rec_racer ) to 'C:\Dev\export\20240117\rec_racer.tsv' csv delimiter E'\t' header;
+copy ( select * from rec_racer_arr ) to 'C:\Dev\export\20240117\rec_racer_arr.tsv' csv delimiter E'\t' header;
+copy ( select * from ml_classification ) to 'C:\Dev\export\20240117\ml_classification.tsv' csv delimiter E'\t' header;
 
 select count(1) from ml_evaluation;
 

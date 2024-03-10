@@ -5,7 +5,6 @@ import java.util.List;
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
 import com.pengkong.boatrace.exp10.simulation.classifier.MultiModelDBClassifierCache;
 import com.pengkong.boatrace.exp10.simulation.data.AbstractMultiClassificationDataLoader;
-import com.pengkong.boatrace.exp10.simulation.data.DBMultiClassificationDataLoader;
 import com.pengkong.boatrace.util.BoatUtil;
 
 public class DailyMultiModelDBClassifierCache extends MultiModelDBClassifierCache {
@@ -16,7 +15,8 @@ public class DailyMultiModelDBClassifierCache extends MultiModelDBClassifierCach
 	@Override
 	protected AbstractMultiClassificationDataLoader createLoader() {
 		// return new RmiMultiClassificationDataProvider();
-		return new DBMultiClassificationDataLoader(MLPropertyUtil.getInstance().getString("target_db_resource"));
+		//return new DBMultiClassificationDataLoader(MLPropertyUtil.getInstance().getString("target_db_resource"));
+		return new OnlineDBMultiClassificationDataLoader(MLPropertyUtil.getInstance().getString("target_db_resource"));
 	}
 	
 	@Override

@@ -1,6 +1,6 @@
 package com.pengkong.boatrace.common.enums;
 
-import com.pengkong.boatrace.exp10.odds.provider.ResultOddsProvider;
+import com.pengkong.boatrace.exp10.odds.provider.AbstractOddsProvider;
 import com.pengkong.boatrace.exp10.result.AbstractResultCreator;
 import com.pengkong.boatrace.exp10.result.RCDefault;
 import com.pengkong.boatrace.exp10.result.ResultHelper;
@@ -9,9 +9,9 @@ import com.pengkong.boatrace.exp10.simulation.SCDefault;
 
 /**
  * !!! bettypec추가시 아래 클래스에도 정의를 추가해주어야한다. !!!
- * {@link ResultOddsProvider}.createBettypes()
+ * {@link AbstractOddsProvider}.createBettypes()
+ * {@link ResultHelper}.getPredictions(), isValidDigits(), isValidRange()
  * {@link AbstractResultCreator}
- * {@link ResultHelper}.getPrediction(), isValidDigits(), isValidRange()
  * {@link RCDefault}
  * {@link AbstractSimulationCreator}.getPredictions()
  * {@link SCDefault}
@@ -39,7 +39,11 @@ public enum BetType {
     _3A("3A"),  // ３連単
     _2A("2A"),  // ２連単
     _2G("2G"),  // ２連複 12,13 2点 (통계단위 3자리)
-    _3G("3G");  // ３連複 1-2-3456 4点 (통계단위 2자리)
+    _3G("3G"),  // ３連複 1-2-3456 4点 (통계단위 2자리)
+	_3B("3B"),  // 3連単 123,132 2点 (통계단위 3자리)
+	_3C("3C"),  // 3連単 123,124 2点 (통계단위 4자리)
+	_3D("3D"),  // 3連単 123,124,213,214 4点 (통계단위 4자리)
+	_3E("3E");  // 3連単 123,124,132,134,142,143 6点 (통계단위 4자리)
 
 	private final String bettype;
 	

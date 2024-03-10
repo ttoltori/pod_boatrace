@@ -702,186 +702,6 @@ public class MlClassificationExample {
 			return (Criteria) this;
 		}
 
-		public Criteria andProbabilities1IsNull() {
-			addCriterion("probabilities1 is null");
-			return (Criteria) this;
-		}
-
-		public Criteria andProbabilities1IsNotNull() {
-			addCriterion("probabilities1 is not null");
-			return (Criteria) this;
-		}
-
-		public Criteria andProbabilities1EqualTo(Object value) {
-			addCriterion("probabilities1 =", value, "probabilities1");
-			return (Criteria) this;
-		}
-
-		public Criteria andProbabilities1NotEqualTo(Object value) {
-			addCriterion("probabilities1 <>", value, "probabilities1");
-			return (Criteria) this;
-		}
-
-		public Criteria andProbabilities1GreaterThan(Object value) {
-			addCriterion("probabilities1 >", value, "probabilities1");
-			return (Criteria) this;
-		}
-
-		public Criteria andProbabilities1GreaterThanOrEqualTo(Object value) {
-			addCriterion("probabilities1 >=", value, "probabilities1");
-			return (Criteria) this;
-		}
-
-		public Criteria andProbabilities1LessThan(Object value) {
-			addCriterion("probabilities1 <", value, "probabilities1");
-			return (Criteria) this;
-		}
-
-		public Criteria andProbabilities1LessThanOrEqualTo(Object value) {
-			addCriterion("probabilities1 <=", value, "probabilities1");
-			return (Criteria) this;
-		}
-
-		public Criteria andProbabilities1In(List<Object> values) {
-			addCriterion("probabilities1 in", values, "probabilities1");
-			return (Criteria) this;
-		}
-
-		public Criteria andProbabilities1NotIn(List<Object> values) {
-			addCriterion("probabilities1 not in", values, "probabilities1");
-			return (Criteria) this;
-		}
-
-		public Criteria andProbabilities1Between(Object value1, Object value2) {
-			addCriterion("probabilities1 between", value1, value2, "probabilities1");
-			return (Criteria) this;
-		}
-
-		public Criteria andProbabilities1NotBetween(Object value1, Object value2) {
-			addCriterion("probabilities1 not between", value1, value2, "probabilities1");
-			return (Criteria) this;
-		}
-
-		public Criteria andSkewness1IsNull() {
-			addCriterion("skewness1 is null");
-			return (Criteria) this;
-		}
-
-		public Criteria andSkewness1IsNotNull() {
-			addCriterion("skewness1 is not null");
-			return (Criteria) this;
-		}
-
-		public Criteria andSkewness1EqualTo(Double value) {
-			addCriterion("skewness1 =", value, "skewness1");
-			return (Criteria) this;
-		}
-
-		public Criteria andSkewness1NotEqualTo(Double value) {
-			addCriterion("skewness1 <>", value, "skewness1");
-			return (Criteria) this;
-		}
-
-		public Criteria andSkewness1GreaterThan(Double value) {
-			addCriterion("skewness1 >", value, "skewness1");
-			return (Criteria) this;
-		}
-
-		public Criteria andSkewness1GreaterThanOrEqualTo(Double value) {
-			addCriterion("skewness1 >=", value, "skewness1");
-			return (Criteria) this;
-		}
-
-		public Criteria andSkewness1LessThan(Double value) {
-			addCriterion("skewness1 <", value, "skewness1");
-			return (Criteria) this;
-		}
-
-		public Criteria andSkewness1LessThanOrEqualTo(Double value) {
-			addCriterion("skewness1 <=", value, "skewness1");
-			return (Criteria) this;
-		}
-
-		public Criteria andSkewness1In(List<Double> values) {
-			addCriterion("skewness1 in", values, "skewness1");
-			return (Criteria) this;
-		}
-
-		public Criteria andSkewness1NotIn(List<Double> values) {
-			addCriterion("skewness1 not in", values, "skewness1");
-			return (Criteria) this;
-		}
-
-		public Criteria andSkewness1Between(Double value1, Double value2) {
-			addCriterion("skewness1 between", value1, value2, "skewness1");
-			return (Criteria) this;
-		}
-
-		public Criteria andSkewness1NotBetween(Double value1, Double value2) {
-			addCriterion("skewness1 not between", value1, value2, "skewness1");
-			return (Criteria) this;
-		}
-
-		public Criteria andKurtosis1IsNull() {
-			addCriterion("kurtosis1 is null");
-			return (Criteria) this;
-		}
-
-		public Criteria andKurtosis1IsNotNull() {
-			addCriterion("kurtosis1 is not null");
-			return (Criteria) this;
-		}
-
-		public Criteria andKurtosis1EqualTo(Double value) {
-			addCriterion("kurtosis1 =", value, "kurtosis1");
-			return (Criteria) this;
-		}
-
-		public Criteria andKurtosis1NotEqualTo(Double value) {
-			addCriterion("kurtosis1 <>", value, "kurtosis1");
-			return (Criteria) this;
-		}
-
-		public Criteria andKurtosis1GreaterThan(Double value) {
-			addCriterion("kurtosis1 >", value, "kurtosis1");
-			return (Criteria) this;
-		}
-
-		public Criteria andKurtosis1GreaterThanOrEqualTo(Double value) {
-			addCriterion("kurtosis1 >=", value, "kurtosis1");
-			return (Criteria) this;
-		}
-
-		public Criteria andKurtosis1LessThan(Double value) {
-			addCriterion("kurtosis1 <", value, "kurtosis1");
-			return (Criteria) this;
-		}
-
-		public Criteria andKurtosis1LessThanOrEqualTo(Double value) {
-			addCriterion("kurtosis1 <=", value, "kurtosis1");
-			return (Criteria) this;
-		}
-
-		public Criteria andKurtosis1In(List<Double> values) {
-			addCriterion("kurtosis1 in", values, "kurtosis1");
-			return (Criteria) this;
-		}
-
-		public Criteria andKurtosis1NotIn(List<Double> values) {
-			addCriterion("kurtosis1 not in", values, "kurtosis1");
-			return (Criteria) this;
-		}
-
-		public Criteria andKurtosis1Between(Double value1, Double value2) {
-			addCriterion("kurtosis1 between", value1, value2, "kurtosis1");
-			return (Criteria) this;
-		}
-
-		public Criteria andKurtosis1NotBetween(Double value1, Double value2) {
-			addCriterion("kurtosis1 not between", value1, value2, "kurtosis1");
-			return (Criteria) this;
-		}
-
 		public Criteria andPrediction2IsNull() {
 			addCriterion("prediction2 is null");
 			return (Criteria) this;
@@ -1009,186 +829,6 @@ public class MlClassificationExample {
 
 		public Criteria andProbability2NotBetween(Double value1, Double value2) {
 			addCriterion("probability2 not between", value1, value2, "probability2");
-			return (Criteria) this;
-		}
-
-		public Criteria andProbabilities2IsNull() {
-			addCriterion("probabilities2 is null");
-			return (Criteria) this;
-		}
-
-		public Criteria andProbabilities2IsNotNull() {
-			addCriterion("probabilities2 is not null");
-			return (Criteria) this;
-		}
-
-		public Criteria andProbabilities2EqualTo(Object value) {
-			addCriterion("probabilities2 =", value, "probabilities2");
-			return (Criteria) this;
-		}
-
-		public Criteria andProbabilities2NotEqualTo(Object value) {
-			addCriterion("probabilities2 <>", value, "probabilities2");
-			return (Criteria) this;
-		}
-
-		public Criteria andProbabilities2GreaterThan(Object value) {
-			addCriterion("probabilities2 >", value, "probabilities2");
-			return (Criteria) this;
-		}
-
-		public Criteria andProbabilities2GreaterThanOrEqualTo(Object value) {
-			addCriterion("probabilities2 >=", value, "probabilities2");
-			return (Criteria) this;
-		}
-
-		public Criteria andProbabilities2LessThan(Object value) {
-			addCriterion("probabilities2 <", value, "probabilities2");
-			return (Criteria) this;
-		}
-
-		public Criteria andProbabilities2LessThanOrEqualTo(Object value) {
-			addCriterion("probabilities2 <=", value, "probabilities2");
-			return (Criteria) this;
-		}
-
-		public Criteria andProbabilities2In(List<Object> values) {
-			addCriterion("probabilities2 in", values, "probabilities2");
-			return (Criteria) this;
-		}
-
-		public Criteria andProbabilities2NotIn(List<Object> values) {
-			addCriterion("probabilities2 not in", values, "probabilities2");
-			return (Criteria) this;
-		}
-
-		public Criteria andProbabilities2Between(Object value1, Object value2) {
-			addCriterion("probabilities2 between", value1, value2, "probabilities2");
-			return (Criteria) this;
-		}
-
-		public Criteria andProbabilities2NotBetween(Object value1, Object value2) {
-			addCriterion("probabilities2 not between", value1, value2, "probabilities2");
-			return (Criteria) this;
-		}
-
-		public Criteria andSkewness2IsNull() {
-			addCriterion("skewness2 is null");
-			return (Criteria) this;
-		}
-
-		public Criteria andSkewness2IsNotNull() {
-			addCriterion("skewness2 is not null");
-			return (Criteria) this;
-		}
-
-		public Criteria andSkewness2EqualTo(Double value) {
-			addCriterion("skewness2 =", value, "skewness2");
-			return (Criteria) this;
-		}
-
-		public Criteria andSkewness2NotEqualTo(Double value) {
-			addCriterion("skewness2 <>", value, "skewness2");
-			return (Criteria) this;
-		}
-
-		public Criteria andSkewness2GreaterThan(Double value) {
-			addCriterion("skewness2 >", value, "skewness2");
-			return (Criteria) this;
-		}
-
-		public Criteria andSkewness2GreaterThanOrEqualTo(Double value) {
-			addCriterion("skewness2 >=", value, "skewness2");
-			return (Criteria) this;
-		}
-
-		public Criteria andSkewness2LessThan(Double value) {
-			addCriterion("skewness2 <", value, "skewness2");
-			return (Criteria) this;
-		}
-
-		public Criteria andSkewness2LessThanOrEqualTo(Double value) {
-			addCriterion("skewness2 <=", value, "skewness2");
-			return (Criteria) this;
-		}
-
-		public Criteria andSkewness2In(List<Double> values) {
-			addCriterion("skewness2 in", values, "skewness2");
-			return (Criteria) this;
-		}
-
-		public Criteria andSkewness2NotIn(List<Double> values) {
-			addCriterion("skewness2 not in", values, "skewness2");
-			return (Criteria) this;
-		}
-
-		public Criteria andSkewness2Between(Double value1, Double value2) {
-			addCriterion("skewness2 between", value1, value2, "skewness2");
-			return (Criteria) this;
-		}
-
-		public Criteria andSkewness2NotBetween(Double value1, Double value2) {
-			addCriterion("skewness2 not between", value1, value2, "skewness2");
-			return (Criteria) this;
-		}
-
-		public Criteria andKurtosis2IsNull() {
-			addCriterion("kurtosis2 is null");
-			return (Criteria) this;
-		}
-
-		public Criteria andKurtosis2IsNotNull() {
-			addCriterion("kurtosis2 is not null");
-			return (Criteria) this;
-		}
-
-		public Criteria andKurtosis2EqualTo(Double value) {
-			addCriterion("kurtosis2 =", value, "kurtosis2");
-			return (Criteria) this;
-		}
-
-		public Criteria andKurtosis2NotEqualTo(Double value) {
-			addCriterion("kurtosis2 <>", value, "kurtosis2");
-			return (Criteria) this;
-		}
-
-		public Criteria andKurtosis2GreaterThan(Double value) {
-			addCriterion("kurtosis2 >", value, "kurtosis2");
-			return (Criteria) this;
-		}
-
-		public Criteria andKurtosis2GreaterThanOrEqualTo(Double value) {
-			addCriterion("kurtosis2 >=", value, "kurtosis2");
-			return (Criteria) this;
-		}
-
-		public Criteria andKurtosis2LessThan(Double value) {
-			addCriterion("kurtosis2 <", value, "kurtosis2");
-			return (Criteria) this;
-		}
-
-		public Criteria andKurtosis2LessThanOrEqualTo(Double value) {
-			addCriterion("kurtosis2 <=", value, "kurtosis2");
-			return (Criteria) this;
-		}
-
-		public Criteria andKurtosis2In(List<Double> values) {
-			addCriterion("kurtosis2 in", values, "kurtosis2");
-			return (Criteria) this;
-		}
-
-		public Criteria andKurtosis2NotIn(List<Double> values) {
-			addCriterion("kurtosis2 not in", values, "kurtosis2");
-			return (Criteria) this;
-		}
-
-		public Criteria andKurtosis2Between(Double value1, Double value2) {
-			addCriterion("kurtosis2 between", value1, value2, "kurtosis2");
-			return (Criteria) this;
-		}
-
-		public Criteria andKurtosis2NotBetween(Double value1, Double value2) {
-			addCriterion("kurtosis2 not between", value1, value2, "kurtosis2");
 			return (Criteria) this;
 		}
 
@@ -1322,183 +962,993 @@ public class MlClassificationExample {
 			return (Criteria) this;
 		}
 
-		public Criteria andProbabilities3IsNull() {
-			addCriterion("probabilities3 is null");
+		public Criteria andPrediction4IsNull() {
+			addCriterion("prediction4 is null");
 			return (Criteria) this;
 		}
 
-		public Criteria andProbabilities3IsNotNull() {
-			addCriterion("probabilities3 is not null");
+		public Criteria andPrediction4IsNotNull() {
+			addCriterion("prediction4 is not null");
 			return (Criteria) this;
 		}
 
-		public Criteria andProbabilities3EqualTo(Object value) {
-			addCriterion("probabilities3 =", value, "probabilities3");
+		public Criteria andPrediction4EqualTo(String value) {
+			addCriterion("prediction4 =", value, "prediction4");
 			return (Criteria) this;
 		}
 
-		public Criteria andProbabilities3NotEqualTo(Object value) {
-			addCriterion("probabilities3 <>", value, "probabilities3");
+		public Criteria andPrediction4NotEqualTo(String value) {
+			addCriterion("prediction4 <>", value, "prediction4");
 			return (Criteria) this;
 		}
 
-		public Criteria andProbabilities3GreaterThan(Object value) {
-			addCriterion("probabilities3 >", value, "probabilities3");
+		public Criteria andPrediction4GreaterThan(String value) {
+			addCriterion("prediction4 >", value, "prediction4");
 			return (Criteria) this;
 		}
 
-		public Criteria andProbabilities3GreaterThanOrEqualTo(Object value) {
-			addCriterion("probabilities3 >=", value, "probabilities3");
+		public Criteria andPrediction4GreaterThanOrEqualTo(String value) {
+			addCriterion("prediction4 >=", value, "prediction4");
 			return (Criteria) this;
 		}
 
-		public Criteria andProbabilities3LessThan(Object value) {
-			addCriterion("probabilities3 <", value, "probabilities3");
+		public Criteria andPrediction4LessThan(String value) {
+			addCriterion("prediction4 <", value, "prediction4");
 			return (Criteria) this;
 		}
 
-		public Criteria andProbabilities3LessThanOrEqualTo(Object value) {
-			addCriterion("probabilities3 <=", value, "probabilities3");
+		public Criteria andPrediction4LessThanOrEqualTo(String value) {
+			addCriterion("prediction4 <=", value, "prediction4");
 			return (Criteria) this;
 		}
 
-		public Criteria andProbabilities3In(List<Object> values) {
-			addCriterion("probabilities3 in", values, "probabilities3");
+		public Criteria andPrediction4Like(String value) {
+			addCriterion("prediction4 like", value, "prediction4");
 			return (Criteria) this;
 		}
 
-		public Criteria andProbabilities3NotIn(List<Object> values) {
-			addCriterion("probabilities3 not in", values, "probabilities3");
+		public Criteria andPrediction4NotLike(String value) {
+			addCriterion("prediction4 not like", value, "prediction4");
 			return (Criteria) this;
 		}
 
-		public Criteria andProbabilities3Between(Object value1, Object value2) {
-			addCriterion("probabilities3 between", value1, value2, "probabilities3");
+		public Criteria andPrediction4In(List<String> values) {
+			addCriterion("prediction4 in", values, "prediction4");
 			return (Criteria) this;
 		}
 
-		public Criteria andProbabilities3NotBetween(Object value1, Object value2) {
-			addCriterion("probabilities3 not between", value1, value2, "probabilities3");
+		public Criteria andPrediction4NotIn(List<String> values) {
+			addCriterion("prediction4 not in", values, "prediction4");
 			return (Criteria) this;
 		}
 
-		public Criteria andSkewness3IsNull() {
-			addCriterion("skewness3 is null");
+		public Criteria andPrediction4Between(String value1, String value2) {
+			addCriterion("prediction4 between", value1, value2, "prediction4");
 			return (Criteria) this;
 		}
 
-		public Criteria andSkewness3IsNotNull() {
-			addCriterion("skewness3 is not null");
+		public Criteria andPrediction4NotBetween(String value1, String value2) {
+			addCriterion("prediction4 not between", value1, value2, "prediction4");
 			return (Criteria) this;
 		}
 
-		public Criteria andSkewness3EqualTo(Double value) {
-			addCriterion("skewness3 =", value, "skewness3");
+		public Criteria andProbability4IsNull() {
+			addCriterion("probability4 is null");
 			return (Criteria) this;
 		}
 
-		public Criteria andSkewness3NotEqualTo(Double value) {
-			addCriterion("skewness3 <>", value, "skewness3");
+		public Criteria andProbability4IsNotNull() {
+			addCriterion("probability4 is not null");
 			return (Criteria) this;
 		}
 
-		public Criteria andSkewness3GreaterThan(Double value) {
-			addCriterion("skewness3 >", value, "skewness3");
+		public Criteria andProbability4EqualTo(Double value) {
+			addCriterion("probability4 =", value, "probability4");
 			return (Criteria) this;
 		}
 
-		public Criteria andSkewness3GreaterThanOrEqualTo(Double value) {
-			addCriterion("skewness3 >=", value, "skewness3");
+		public Criteria andProbability4NotEqualTo(Double value) {
+			addCriterion("probability4 <>", value, "probability4");
 			return (Criteria) this;
 		}
 
-		public Criteria andSkewness3LessThan(Double value) {
-			addCriterion("skewness3 <", value, "skewness3");
+		public Criteria andProbability4GreaterThan(Double value) {
+			addCriterion("probability4 >", value, "probability4");
 			return (Criteria) this;
 		}
 
-		public Criteria andSkewness3LessThanOrEqualTo(Double value) {
-			addCriterion("skewness3 <=", value, "skewness3");
+		public Criteria andProbability4GreaterThanOrEqualTo(Double value) {
+			addCriterion("probability4 >=", value, "probability4");
 			return (Criteria) this;
 		}
 
-		public Criteria andSkewness3In(List<Double> values) {
-			addCriterion("skewness3 in", values, "skewness3");
+		public Criteria andProbability4LessThan(Double value) {
+			addCriterion("probability4 <", value, "probability4");
 			return (Criteria) this;
 		}
 
-		public Criteria andSkewness3NotIn(List<Double> values) {
-			addCriterion("skewness3 not in", values, "skewness3");
+		public Criteria andProbability4LessThanOrEqualTo(Double value) {
+			addCriterion("probability4 <=", value, "probability4");
 			return (Criteria) this;
 		}
 
-		public Criteria andSkewness3Between(Double value1, Double value2) {
-			addCriterion("skewness3 between", value1, value2, "skewness3");
+		public Criteria andProbability4In(List<Double> values) {
+			addCriterion("probability4 in", values, "probability4");
 			return (Criteria) this;
 		}
 
-		public Criteria andSkewness3NotBetween(Double value1, Double value2) {
-			addCriterion("skewness3 not between", value1, value2, "skewness3");
+		public Criteria andProbability4NotIn(List<Double> values) {
+			addCriterion("probability4 not in", values, "probability4");
 			return (Criteria) this;
 		}
 
-		public Criteria andKurtosis3IsNull() {
-			addCriterion("kurtosis3 is null");
+		public Criteria andProbability4Between(Double value1, Double value2) {
+			addCriterion("probability4 between", value1, value2, "probability4");
 			return (Criteria) this;
 		}
 
-		public Criteria andKurtosis3IsNotNull() {
-			addCriterion("kurtosis3 is not null");
+		public Criteria andProbability4NotBetween(Double value1, Double value2) {
+			addCriterion("probability4 not between", value1, value2, "probability4");
 			return (Criteria) this;
 		}
 
-		public Criteria andKurtosis3EqualTo(Double value) {
-			addCriterion("kurtosis3 =", value, "kurtosis3");
+		public Criteria andPrediction5IsNull() {
+			addCriterion("prediction5 is null");
 			return (Criteria) this;
 		}
 
-		public Criteria andKurtosis3NotEqualTo(Double value) {
-			addCriterion("kurtosis3 <>", value, "kurtosis3");
+		public Criteria andPrediction5IsNotNull() {
+			addCriterion("prediction5 is not null");
 			return (Criteria) this;
 		}
 
-		public Criteria andKurtosis3GreaterThan(Double value) {
-			addCriterion("kurtosis3 >", value, "kurtosis3");
+		public Criteria andPrediction5EqualTo(String value) {
+			addCriterion("prediction5 =", value, "prediction5");
 			return (Criteria) this;
 		}
 
-		public Criteria andKurtosis3GreaterThanOrEqualTo(Double value) {
-			addCriterion("kurtosis3 >=", value, "kurtosis3");
+		public Criteria andPrediction5NotEqualTo(String value) {
+			addCriterion("prediction5 <>", value, "prediction5");
 			return (Criteria) this;
 		}
 
-		public Criteria andKurtosis3LessThan(Double value) {
-			addCriterion("kurtosis3 <", value, "kurtosis3");
+		public Criteria andPrediction5GreaterThan(String value) {
+			addCriterion("prediction5 >", value, "prediction5");
 			return (Criteria) this;
 		}
 
-		public Criteria andKurtosis3LessThanOrEqualTo(Double value) {
-			addCriterion("kurtosis3 <=", value, "kurtosis3");
+		public Criteria andPrediction5GreaterThanOrEqualTo(String value) {
+			addCriterion("prediction5 >=", value, "prediction5");
 			return (Criteria) this;
 		}
 
-		public Criteria andKurtosis3In(List<Double> values) {
-			addCriterion("kurtosis3 in", values, "kurtosis3");
+		public Criteria andPrediction5LessThan(String value) {
+			addCriterion("prediction5 <", value, "prediction5");
 			return (Criteria) this;
 		}
 
-		public Criteria andKurtosis3NotIn(List<Double> values) {
-			addCriterion("kurtosis3 not in", values, "kurtosis3");
+		public Criteria andPrediction5LessThanOrEqualTo(String value) {
+			addCriterion("prediction5 <=", value, "prediction5");
 			return (Criteria) this;
 		}
 
-		public Criteria andKurtosis3Between(Double value1, Double value2) {
-			addCriterion("kurtosis3 between", value1, value2, "kurtosis3");
+		public Criteria andPrediction5Like(String value) {
+			addCriterion("prediction5 like", value, "prediction5");
 			return (Criteria) this;
 		}
 
-		public Criteria andKurtosis3NotBetween(Double value1, Double value2) {
-			addCriterion("kurtosis3 not between", value1, value2, "kurtosis3");
+		public Criteria andPrediction5NotLike(String value) {
+			addCriterion("prediction5 not like", value, "prediction5");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrediction5In(List<String> values) {
+			addCriterion("prediction5 in", values, "prediction5");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrediction5NotIn(List<String> values) {
+			addCriterion("prediction5 not in", values, "prediction5");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrediction5Between(String value1, String value2) {
+			addCriterion("prediction5 between", value1, value2, "prediction5");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrediction5NotBetween(String value1, String value2) {
+			addCriterion("prediction5 not between", value1, value2, "prediction5");
+			return (Criteria) this;
+		}
+
+		public Criteria andProbability5IsNull() {
+			addCriterion("probability5 is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andProbability5IsNotNull() {
+			addCriterion("probability5 is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andProbability5EqualTo(Double value) {
+			addCriterion("probability5 =", value, "probability5");
+			return (Criteria) this;
+		}
+
+		public Criteria andProbability5NotEqualTo(Double value) {
+			addCriterion("probability5 <>", value, "probability5");
+			return (Criteria) this;
+		}
+
+		public Criteria andProbability5GreaterThan(Double value) {
+			addCriterion("probability5 >", value, "probability5");
+			return (Criteria) this;
+		}
+
+		public Criteria andProbability5GreaterThanOrEqualTo(Double value) {
+			addCriterion("probability5 >=", value, "probability5");
+			return (Criteria) this;
+		}
+
+		public Criteria andProbability5LessThan(Double value) {
+			addCriterion("probability5 <", value, "probability5");
+			return (Criteria) this;
+		}
+
+		public Criteria andProbability5LessThanOrEqualTo(Double value) {
+			addCriterion("probability5 <=", value, "probability5");
+			return (Criteria) this;
+		}
+
+		public Criteria andProbability5In(List<Double> values) {
+			addCriterion("probability5 in", values, "probability5");
+			return (Criteria) this;
+		}
+
+		public Criteria andProbability5NotIn(List<Double> values) {
+			addCriterion("probability5 not in", values, "probability5");
+			return (Criteria) this;
+		}
+
+		public Criteria andProbability5Between(Double value1, Double value2) {
+			addCriterion("probability5 between", value1, value2, "probability5");
+			return (Criteria) this;
+		}
+
+		public Criteria andProbability5NotBetween(Double value1, Double value2) {
+			addCriterion("probability5 not between", value1, value2, "probability5");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrediction6IsNull() {
+			addCriterion("prediction6 is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrediction6IsNotNull() {
+			addCriterion("prediction6 is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrediction6EqualTo(String value) {
+			addCriterion("prediction6 =", value, "prediction6");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrediction6NotEqualTo(String value) {
+			addCriterion("prediction6 <>", value, "prediction6");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrediction6GreaterThan(String value) {
+			addCriterion("prediction6 >", value, "prediction6");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrediction6GreaterThanOrEqualTo(String value) {
+			addCriterion("prediction6 >=", value, "prediction6");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrediction6LessThan(String value) {
+			addCriterion("prediction6 <", value, "prediction6");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrediction6LessThanOrEqualTo(String value) {
+			addCriterion("prediction6 <=", value, "prediction6");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrediction6Like(String value) {
+			addCriterion("prediction6 like", value, "prediction6");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrediction6NotLike(String value) {
+			addCriterion("prediction6 not like", value, "prediction6");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrediction6In(List<String> values) {
+			addCriterion("prediction6 in", values, "prediction6");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrediction6NotIn(List<String> values) {
+			addCriterion("prediction6 not in", values, "prediction6");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrediction6Between(String value1, String value2) {
+			addCriterion("prediction6 between", value1, value2, "prediction6");
+			return (Criteria) this;
+		}
+
+		public Criteria andPrediction6NotBetween(String value1, String value2) {
+			addCriterion("prediction6 not between", value1, value2, "prediction6");
+			return (Criteria) this;
+		}
+
+		public Criteria andProbability6IsNull() {
+			addCriterion("probability6 is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andProbability6IsNotNull() {
+			addCriterion("probability6 is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andProbability6EqualTo(Double value) {
+			addCriterion("probability6 =", value, "probability6");
+			return (Criteria) this;
+		}
+
+		public Criteria andProbability6NotEqualTo(Double value) {
+			addCriterion("probability6 <>", value, "probability6");
+			return (Criteria) this;
+		}
+
+		public Criteria andProbability6GreaterThan(Double value) {
+			addCriterion("probability6 >", value, "probability6");
+			return (Criteria) this;
+		}
+
+		public Criteria andProbability6GreaterThanOrEqualTo(Double value) {
+			addCriterion("probability6 >=", value, "probability6");
+			return (Criteria) this;
+		}
+
+		public Criteria andProbability6LessThan(Double value) {
+			addCriterion("probability6 <", value, "probability6");
+			return (Criteria) this;
+		}
+
+		public Criteria andProbability6LessThanOrEqualTo(Double value) {
+			addCriterion("probability6 <=", value, "probability6");
+			return (Criteria) this;
+		}
+
+		public Criteria andProbability6In(List<Double> values) {
+			addCriterion("probability6 in", values, "probability6");
+			return (Criteria) this;
+		}
+
+		public Criteria andProbability6NotIn(List<Double> values) {
+			addCriterion("probability6 not in", values, "probability6");
+			return (Criteria) this;
+		}
+
+		public Criteria andProbability6Between(Double value1, Double value2) {
+			addCriterion("probability6 between", value1, value2, "probability6");
+			return (Criteria) this;
+		}
+
+		public Criteria andProbability6NotBetween(Double value1, Double value2) {
+			addCriterion("probability6 not between", value1, value2, "probability6");
+			return (Criteria) this;
+		}
+
+		public Criteria andMeanIsNull() {
+			addCriterion("mean is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andMeanIsNotNull() {
+			addCriterion("mean is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andMeanEqualTo(Double value) {
+			addCriterion("mean =", value, "mean");
+			return (Criteria) this;
+		}
+
+		public Criteria andMeanNotEqualTo(Double value) {
+			addCriterion("mean <>", value, "mean");
+			return (Criteria) this;
+		}
+
+		public Criteria andMeanGreaterThan(Double value) {
+			addCriterion("mean >", value, "mean");
+			return (Criteria) this;
+		}
+
+		public Criteria andMeanGreaterThanOrEqualTo(Double value) {
+			addCriterion("mean >=", value, "mean");
+			return (Criteria) this;
+		}
+
+		public Criteria andMeanLessThan(Double value) {
+			addCriterion("mean <", value, "mean");
+			return (Criteria) this;
+		}
+
+		public Criteria andMeanLessThanOrEqualTo(Double value) {
+			addCriterion("mean <=", value, "mean");
+			return (Criteria) this;
+		}
+
+		public Criteria andMeanIn(List<Double> values) {
+			addCriterion("mean in", values, "mean");
+			return (Criteria) this;
+		}
+
+		public Criteria andMeanNotIn(List<Double> values) {
+			addCriterion("mean not in", values, "mean");
+			return (Criteria) this;
+		}
+
+		public Criteria andMeanBetween(Double value1, Double value2) {
+			addCriterion("mean between", value1, value2, "mean");
+			return (Criteria) this;
+		}
+
+		public Criteria andMeanNotBetween(Double value1, Double value2) {
+			addCriterion("mean not between", value1, value2, "mean");
+			return (Criteria) this;
+		}
+
+		public Criteria andGeoMeanIsNull() {
+			addCriterion("geo_mean is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andGeoMeanIsNotNull() {
+			addCriterion("geo_mean is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andGeoMeanEqualTo(Double value) {
+			addCriterion("geo_mean =", value, "geoMean");
+			return (Criteria) this;
+		}
+
+		public Criteria andGeoMeanNotEqualTo(Double value) {
+			addCriterion("geo_mean <>", value, "geoMean");
+			return (Criteria) this;
+		}
+
+		public Criteria andGeoMeanGreaterThan(Double value) {
+			addCriterion("geo_mean >", value, "geoMean");
+			return (Criteria) this;
+		}
+
+		public Criteria andGeoMeanGreaterThanOrEqualTo(Double value) {
+			addCriterion("geo_mean >=", value, "geoMean");
+			return (Criteria) this;
+		}
+
+		public Criteria andGeoMeanLessThan(Double value) {
+			addCriterion("geo_mean <", value, "geoMean");
+			return (Criteria) this;
+		}
+
+		public Criteria andGeoMeanLessThanOrEqualTo(Double value) {
+			addCriterion("geo_mean <=", value, "geoMean");
+			return (Criteria) this;
+		}
+
+		public Criteria andGeoMeanIn(List<Double> values) {
+			addCriterion("geo_mean in", values, "geoMean");
+			return (Criteria) this;
+		}
+
+		public Criteria andGeoMeanNotIn(List<Double> values) {
+			addCriterion("geo_mean not in", values, "geoMean");
+			return (Criteria) this;
+		}
+
+		public Criteria andGeoMeanBetween(Double value1, Double value2) {
+			addCriterion("geo_mean between", value1, value2, "geoMean");
+			return (Criteria) this;
+		}
+
+		public Criteria andGeoMeanNotBetween(Double value1, Double value2) {
+			addCriterion("geo_mean not between", value1, value2, "geoMean");
+			return (Criteria) this;
+		}
+
+		public Criteria andQuadMeanIsNull() {
+			addCriterion("quad_mean is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andQuadMeanIsNotNull() {
+			addCriterion("quad_mean is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andQuadMeanEqualTo(Double value) {
+			addCriterion("quad_mean =", value, "quadMean");
+			return (Criteria) this;
+		}
+
+		public Criteria andQuadMeanNotEqualTo(Double value) {
+			addCriterion("quad_mean <>", value, "quadMean");
+			return (Criteria) this;
+		}
+
+		public Criteria andQuadMeanGreaterThan(Double value) {
+			addCriterion("quad_mean >", value, "quadMean");
+			return (Criteria) this;
+		}
+
+		public Criteria andQuadMeanGreaterThanOrEqualTo(Double value) {
+			addCriterion("quad_mean >=", value, "quadMean");
+			return (Criteria) this;
+		}
+
+		public Criteria andQuadMeanLessThan(Double value) {
+			addCriterion("quad_mean <", value, "quadMean");
+			return (Criteria) this;
+		}
+
+		public Criteria andQuadMeanLessThanOrEqualTo(Double value) {
+			addCriterion("quad_mean <=", value, "quadMean");
+			return (Criteria) this;
+		}
+
+		public Criteria andQuadMeanIn(List<Double> values) {
+			addCriterion("quad_mean in", values, "quadMean");
+			return (Criteria) this;
+		}
+
+		public Criteria andQuadMeanNotIn(List<Double> values) {
+			addCriterion("quad_mean not in", values, "quadMean");
+			return (Criteria) this;
+		}
+
+		public Criteria andQuadMeanBetween(Double value1, Double value2) {
+			addCriterion("quad_mean between", value1, value2, "quadMean");
+			return (Criteria) this;
+		}
+
+		public Criteria andQuadMeanNotBetween(Double value1, Double value2) {
+			addCriterion("quad_mean not between", value1, value2, "quadMean");
+			return (Criteria) this;
+		}
+
+		public Criteria andMinIsNull() {
+			addCriterion("min is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andMinIsNotNull() {
+			addCriterion("min is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andMinEqualTo(Double value) {
+			addCriterion("min =", value, "min");
+			return (Criteria) this;
+		}
+
+		public Criteria andMinNotEqualTo(Double value) {
+			addCriterion("min <>", value, "min");
+			return (Criteria) this;
+		}
+
+		public Criteria andMinGreaterThan(Double value) {
+			addCriterion("min >", value, "min");
+			return (Criteria) this;
+		}
+
+		public Criteria andMinGreaterThanOrEqualTo(Double value) {
+			addCriterion("min >=", value, "min");
+			return (Criteria) this;
+		}
+
+		public Criteria andMinLessThan(Double value) {
+			addCriterion("min <", value, "min");
+			return (Criteria) this;
+		}
+
+		public Criteria andMinLessThanOrEqualTo(Double value) {
+			addCriterion("min <=", value, "min");
+			return (Criteria) this;
+		}
+
+		public Criteria andMinIn(List<Double> values) {
+			addCriterion("min in", values, "min");
+			return (Criteria) this;
+		}
+
+		public Criteria andMinNotIn(List<Double> values) {
+			addCriterion("min not in", values, "min");
+			return (Criteria) this;
+		}
+
+		public Criteria andMinBetween(Double value1, Double value2) {
+			addCriterion("min between", value1, value2, "min");
+			return (Criteria) this;
+		}
+
+		public Criteria andMinNotBetween(Double value1, Double value2) {
+			addCriterion("min not between", value1, value2, "min");
+			return (Criteria) this;
+		}
+
+		public Criteria andMaxIsNull() {
+			addCriterion("max is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andMaxIsNotNull() {
+			addCriterion("max is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andMaxEqualTo(Double value) {
+			addCriterion("max =", value, "max");
+			return (Criteria) this;
+		}
+
+		public Criteria andMaxNotEqualTo(Double value) {
+			addCriterion("max <>", value, "max");
+			return (Criteria) this;
+		}
+
+		public Criteria andMaxGreaterThan(Double value) {
+			addCriterion("max >", value, "max");
+			return (Criteria) this;
+		}
+
+		public Criteria andMaxGreaterThanOrEqualTo(Double value) {
+			addCriterion("max >=", value, "max");
+			return (Criteria) this;
+		}
+
+		public Criteria andMaxLessThan(Double value) {
+			addCriterion("max <", value, "max");
+			return (Criteria) this;
+		}
+
+		public Criteria andMaxLessThanOrEqualTo(Double value) {
+			addCriterion("max <=", value, "max");
+			return (Criteria) this;
+		}
+
+		public Criteria andMaxIn(List<Double> values) {
+			addCriterion("max in", values, "max");
+			return (Criteria) this;
+		}
+
+		public Criteria andMaxNotIn(List<Double> values) {
+			addCriterion("max not in", values, "max");
+			return (Criteria) this;
+		}
+
+		public Criteria andMaxBetween(Double value1, Double value2) {
+			addCriterion("max between", value1, value2, "max");
+			return (Criteria) this;
+		}
+
+		public Criteria andMaxNotBetween(Double value1, Double value2) {
+			addCriterion("max not between", value1, value2, "max");
+			return (Criteria) this;
+		}
+
+		public Criteria andStdDeviationIsNull() {
+			addCriterion("std_deviation is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andStdDeviationIsNotNull() {
+			addCriterion("std_deviation is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andStdDeviationEqualTo(Double value) {
+			addCriterion("std_deviation =", value, "stdDeviation");
+			return (Criteria) this;
+		}
+
+		public Criteria andStdDeviationNotEqualTo(Double value) {
+			addCriterion("std_deviation <>", value, "stdDeviation");
+			return (Criteria) this;
+		}
+
+		public Criteria andStdDeviationGreaterThan(Double value) {
+			addCriterion("std_deviation >", value, "stdDeviation");
+			return (Criteria) this;
+		}
+
+		public Criteria andStdDeviationGreaterThanOrEqualTo(Double value) {
+			addCriterion("std_deviation >=", value, "stdDeviation");
+			return (Criteria) this;
+		}
+
+		public Criteria andStdDeviationLessThan(Double value) {
+			addCriterion("std_deviation <", value, "stdDeviation");
+			return (Criteria) this;
+		}
+
+		public Criteria andStdDeviationLessThanOrEqualTo(Double value) {
+			addCriterion("std_deviation <=", value, "stdDeviation");
+			return (Criteria) this;
+		}
+
+		public Criteria andStdDeviationIn(List<Double> values) {
+			addCriterion("std_deviation in", values, "stdDeviation");
+			return (Criteria) this;
+		}
+
+		public Criteria andStdDeviationNotIn(List<Double> values) {
+			addCriterion("std_deviation not in", values, "stdDeviation");
+			return (Criteria) this;
+		}
+
+		public Criteria andStdDeviationBetween(Double value1, Double value2) {
+			addCriterion("std_deviation between", value1, value2, "stdDeviation");
+			return (Criteria) this;
+		}
+
+		public Criteria andStdDeviationNotBetween(Double value1, Double value2) {
+			addCriterion("std_deviation not between", value1, value2, "stdDeviation");
+			return (Criteria) this;
+		}
+
+		public Criteria andVarianceIsNull() {
+			addCriterion("variance is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andVarianceIsNotNull() {
+			addCriterion("variance is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andVarianceEqualTo(Double value) {
+			addCriterion("variance =", value, "variance");
+			return (Criteria) this;
+		}
+
+		public Criteria andVarianceNotEqualTo(Double value) {
+			addCriterion("variance <>", value, "variance");
+			return (Criteria) this;
+		}
+
+		public Criteria andVarianceGreaterThan(Double value) {
+			addCriterion("variance >", value, "variance");
+			return (Criteria) this;
+		}
+
+		public Criteria andVarianceGreaterThanOrEqualTo(Double value) {
+			addCriterion("variance >=", value, "variance");
+			return (Criteria) this;
+		}
+
+		public Criteria andVarianceLessThan(Double value) {
+			addCriterion("variance <", value, "variance");
+			return (Criteria) this;
+		}
+
+		public Criteria andVarianceLessThanOrEqualTo(Double value) {
+			addCriterion("variance <=", value, "variance");
+			return (Criteria) this;
+		}
+
+		public Criteria andVarianceIn(List<Double> values) {
+			addCriterion("variance in", values, "variance");
+			return (Criteria) this;
+		}
+
+		public Criteria andVarianceNotIn(List<Double> values) {
+			addCriterion("variance not in", values, "variance");
+			return (Criteria) this;
+		}
+
+		public Criteria andVarianceBetween(Double value1, Double value2) {
+			addCriterion("variance between", value1, value2, "variance");
+			return (Criteria) this;
+		}
+
+		public Criteria andVarianceNotBetween(Double value1, Double value2) {
+			addCriterion("variance not between", value1, value2, "variance");
+			return (Criteria) this;
+		}
+
+		public Criteria andPopuVarianceIsNull() {
+			addCriterion("popu_variance is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andPopuVarianceIsNotNull() {
+			addCriterion("popu_variance is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andPopuVarianceEqualTo(Double value) {
+			addCriterion("popu_variance =", value, "popuVariance");
+			return (Criteria) this;
+		}
+
+		public Criteria andPopuVarianceNotEqualTo(Double value) {
+			addCriterion("popu_variance <>", value, "popuVariance");
+			return (Criteria) this;
+		}
+
+		public Criteria andPopuVarianceGreaterThan(Double value) {
+			addCriterion("popu_variance >", value, "popuVariance");
+			return (Criteria) this;
+		}
+
+		public Criteria andPopuVarianceGreaterThanOrEqualTo(Double value) {
+			addCriterion("popu_variance >=", value, "popuVariance");
+			return (Criteria) this;
+		}
+
+		public Criteria andPopuVarianceLessThan(Double value) {
+			addCriterion("popu_variance <", value, "popuVariance");
+			return (Criteria) this;
+		}
+
+		public Criteria andPopuVarianceLessThanOrEqualTo(Double value) {
+			addCriterion("popu_variance <=", value, "popuVariance");
+			return (Criteria) this;
+		}
+
+		public Criteria andPopuVarianceIn(List<Double> values) {
+			addCriterion("popu_variance in", values, "popuVariance");
+			return (Criteria) this;
+		}
+
+		public Criteria andPopuVarianceNotIn(List<Double> values) {
+			addCriterion("popu_variance not in", values, "popuVariance");
+			return (Criteria) this;
+		}
+
+		public Criteria andPopuVarianceBetween(Double value1, Double value2) {
+			addCriterion("popu_variance between", value1, value2, "popuVariance");
+			return (Criteria) this;
+		}
+
+		public Criteria andPopuVarianceNotBetween(Double value1, Double value2) {
+			addCriterion("popu_variance not between", value1, value2, "popuVariance");
+			return (Criteria) this;
+		}
+
+		public Criteria andSkewnessIsNull() {
+			addCriterion("skewness is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andSkewnessIsNotNull() {
+			addCriterion("skewness is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andSkewnessEqualTo(Double value) {
+			addCriterion("skewness =", value, "skewness");
+			return (Criteria) this;
+		}
+
+		public Criteria andSkewnessNotEqualTo(Double value) {
+			addCriterion("skewness <>", value, "skewness");
+			return (Criteria) this;
+		}
+
+		public Criteria andSkewnessGreaterThan(Double value) {
+			addCriterion("skewness >", value, "skewness");
+			return (Criteria) this;
+		}
+
+		public Criteria andSkewnessGreaterThanOrEqualTo(Double value) {
+			addCriterion("skewness >=", value, "skewness");
+			return (Criteria) this;
+		}
+
+		public Criteria andSkewnessLessThan(Double value) {
+			addCriterion("skewness <", value, "skewness");
+			return (Criteria) this;
+		}
+
+		public Criteria andSkewnessLessThanOrEqualTo(Double value) {
+			addCriterion("skewness <=", value, "skewness");
+			return (Criteria) this;
+		}
+
+		public Criteria andSkewnessIn(List<Double> values) {
+			addCriterion("skewness in", values, "skewness");
+			return (Criteria) this;
+		}
+
+		public Criteria andSkewnessNotIn(List<Double> values) {
+			addCriterion("skewness not in", values, "skewness");
+			return (Criteria) this;
+		}
+
+		public Criteria andSkewnessBetween(Double value1, Double value2) {
+			addCriterion("skewness between", value1, value2, "skewness");
+			return (Criteria) this;
+		}
+
+		public Criteria andSkewnessNotBetween(Double value1, Double value2) {
+			addCriterion("skewness not between", value1, value2, "skewness");
+			return (Criteria) this;
+		}
+
+		public Criteria andKurtosisIsNull() {
+			addCriterion("kurtosis is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andKurtosisIsNotNull() {
+			addCriterion("kurtosis is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andKurtosisEqualTo(Double value) {
+			addCriterion("kurtosis =", value, "kurtosis");
+			return (Criteria) this;
+		}
+
+		public Criteria andKurtosisNotEqualTo(Double value) {
+			addCriterion("kurtosis <>", value, "kurtosis");
+			return (Criteria) this;
+		}
+
+		public Criteria andKurtosisGreaterThan(Double value) {
+			addCriterion("kurtosis >", value, "kurtosis");
+			return (Criteria) this;
+		}
+
+		public Criteria andKurtosisGreaterThanOrEqualTo(Double value) {
+			addCriterion("kurtosis >=", value, "kurtosis");
+			return (Criteria) this;
+		}
+
+		public Criteria andKurtosisLessThan(Double value) {
+			addCriterion("kurtosis <", value, "kurtosis");
+			return (Criteria) this;
+		}
+
+		public Criteria andKurtosisLessThanOrEqualTo(Double value) {
+			addCriterion("kurtosis <=", value, "kurtosis");
+			return (Criteria) this;
+		}
+
+		public Criteria andKurtosisIn(List<Double> values) {
+			addCriterion("kurtosis in", values, "kurtosis");
+			return (Criteria) this;
+		}
+
+		public Criteria andKurtosisNotIn(List<Double> values) {
+			addCriterion("kurtosis not in", values, "kurtosis");
+			return (Criteria) this;
+		}
+
+		public Criteria andKurtosisBetween(Double value1, Double value2) {
+			addCriterion("kurtosis between", value1, value2, "kurtosis");
+			return (Criteria) this;
+		}
+
+		public Criteria andKurtosisNotBetween(Double value1, Double value2) {
+			addCriterion("kurtosis not between", value1, value2, "kurtosis");
 			return (Criteria) this;
 		}
 	}

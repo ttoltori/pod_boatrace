@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,7 +61,7 @@ public class RemoteClassifier {
 	 * @return ML結果リスト
 	 * @throws Exception
 	 */
-	public List<Classification> classify(MlClassificationMapper mapper, HashMap<String, ?> hashmap) throws Exception {
+	public List<Classification> classify(SqlSession session, HashMap<String, ?> hashmap) throws Exception {
 
 		RemoteRequestSet rrs = new RemoteRequestSet();
 		for (int rankNo = 1; rankNo <= 3; rankNo++) {
@@ -79,7 +80,7 @@ public class RemoteClassifier {
 			
 			// 他モデル参照への要求ならDBから応答を生成する
 			if (req.isReferentialRequest()) {
-				RemoteResponse res = createResponseFromDB(rankNo, req, hashmap, mapper);
+				RemoteResponse res = createResponseFromDB(rankNo, req, hashmap, session);
 				rrs.receivedResponse(res);
 			}
 		}
@@ -102,7 +103,8 @@ public class RemoteClassifier {
 	 * @return
 	 */
 	RemoteResponse createResponseFromDB(int rankNo, RemoteRequest req, HashMap<String, ?> hashmap,
-			MlClassificationMapper mapper) {
+			SqlSession session) {
+		MlClassificationMapper mapper = session.getMapper(MlClassificationMapper.class);
 		RemoteRequestParam param = (RemoteRequestParam)req.param;
 		MlClassificationExample example = new MlClassificationExample();
 		example.createCriteria().andModelnoEqualTo(param.modelNo)
@@ -116,13 +118,6 @@ public class RemoteClassifier {
 		RemoteResponse res = new RemoteResponse();
 		res.id = req.id;
 		res.algorithmId = req.algorithmId;
-		if (rankNo == 1) {
-			res.values = (double[])clf.getProbabilities1();	
-		} else if (rankNo == 2) {
-			res.values = (double[])clf.getProbabilities2();
-		} else {
-			res.values = (double[])clf.getProbabilities3();
-		}
 		res.status = RemoteServiceStatus.OK.getValue();
 		
 		return res;
@@ -138,10 +133,7 @@ public class RemoteClassifier {
 		Classification cls = new Classification();
 		// ex) fixed=123  -> 123
 		cls.prediction = classId.split(Delimeter.EQUAL.getValue())[1];
-		cls.probabilities = new double[0];
 		cls.probability = 1;
-		cls.skewness = 0;
-		cls.kurtosis = 0;
 		result.add(cls);
 		
 		return result;
@@ -236,13 +228,6 @@ public class RemoteClassifier {
     		ModelInfo mi = mim.get(param.exNo, param.rankNo, param.pattern, param.ymd);
     		clsn.prediction = mi.classValues[indexOfMax];
     		clsn.probability = MathUtil.scale3(res.values[indexOfMax]);
-    		clsn.probabilities = new double[res.values.length];
-        	for (int i=0; i < res.values.length; i++) {
-        		clsn.probabilities[i] = MathUtil.scale3(res.values[i]);
-        	}
-        	clsn.skewness = MathUtil.scale3(descStat.getSkewness());
-        	clsn.kurtosis = MathUtil.scale3(descStat.getKurtosis());
-
     		//result.prediction = mi.classValues
     	} else if (res.algorithmId.startsWith("rg_")) { // regression
     		clsn.prediction = "rg";

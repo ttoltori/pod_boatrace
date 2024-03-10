@@ -46,8 +46,9 @@ public class TohyoManager {
 	Logger logger = LoggerFactory.getLogger(TohyoManager.class);
 
 	private final String BROWSER_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36";
+	//private final String BROWSER_USER_AGENT = "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)";
 	private final String URL_BASE = "https://ib.mbrace.or.jp/";
-	//private final String URL_BASE = "https://debug10.brtb.jp/";
+	//private final String URL_BASE = "https://d-pc.test.brtb.jp/";
 	private final String URL_PCTOHYO_BASE = URL_BASE + "tohyo-ap-pctohyo-web/";
 	private final String URL_PCTOHYO_SERVICE_BASE = URL_PCTOHYO_BASE + "service/";
 	private final String URL_LOGIN_REQUEST = URL_PCTOHYO_BASE + "auth/login";
@@ -70,6 +71,8 @@ public class TohyoManager {
 	private String centerNo;
 	private String r;
 	private String token;
+	private String rctoken;
+	private String resJson;
 
 	/** 入金用JSON */
 	private Deposit deposit;
@@ -102,14 +105,13 @@ public class TohyoManager {
 
 	
 	public TohyoManager() {
-		initialize();
 	}
 
 	public void initialize() {
-		this.memberNo = prop.getString("memberNo");
-		this.pin = prop.getString("pin");
-		this.authPassword = prop.getString("authPassword");
-		this.betPassword = prop.getString("betPassword");
+		this.memberNo = prop.getString("user_memberno");
+		this.pin = prop.getString("user_pin");
+		this.authPassword = prop.getString("user_auth_pwd");
+		this.betPassword = prop.getString("user_bet_pwd");
 
 		loginComplete = false;
 		logoutComplete = false;
@@ -171,6 +173,51 @@ public class TohyoManager {
 	}
 	
 	/**
+	 * ログイン
+	 * 
+	 * @throws Exception
+	 */
+	public synchronized void login() throws Exception {
+		if (loginComplete) {
+			return;
+		}
+		
+		// ログインページ表示
+		res = Jsoup.connect(URL_BASE).userAgent(BROWSER_USER_AGENT).validateTLSCertificates(false)
+		//res = Jsoup.connect(URL_BASE).userAgent(BROWSER_USER_AGENT)
+				.method(Method.GET).execute();
+		jsessionId = res.cookies().get("JSESSIONID");
+
+		doc = res.parse();
+		centerNo = getCenterNoFromMeta();
+		csrf = getCsrfFromMeta();
+		r = getRFromLoginForm();
+		doc = null;
+		
+				
+		rctoken = getRecaptchaToken();
+		
+		// ログインrequest
+		String url = getLoginUrl();
+		res = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT).validateTLSCertificates(false)
+		//res = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT)
+				.data("dummyA", "", "dummyB", "", "memberNo", memberNo, "pin", pin, "authPassword", authPassword,
+						"operationKbn", "", "screenFrom", "A604", "token", "", "_csrf", csrf, "rctoken", rctoken)
+				.cookie("JSESSIONID", jsessionId)
+				.method(Method.POST).followRedirects(true).execute();
+		doc = res.parse();
+		jsessionId = res.cookies().get("JSESSIONID");
+		// TOPページへリダイレクト
+		csrf = getCsrfFromMeta();
+		centerNo = getCenterNoFromMeta();
+		token = getTokenFromInputTag();
+		loginComplete = true;
+		logger.info("ログイン:" + memberNo);
+		
+		//startHeartbeat();
+	}
+
+	/**
 	 * 残高をチェックして入金が必要なら入金する。
 	 * @return
 	 * @throws Exception
@@ -206,19 +253,26 @@ public class TohyoManager {
 	 */
 	private void deposit(int money) throws Exception {
 		int amount = money / 1000; // 100円単位
-		String url = getDepositRequestUrl();
-		//String resJson = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT).validateTLSCertificates(false)
-		String resJson = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT)
-				.header("Accept", "application/json, text/javascript, */*; q=0.01")
-				.header("X-CSRF-TOKEN", csrf).header("X-Requested-With", "XMLHttpRequest")
-				.cookie("JSESSIONID", jsessionId)
-				.data("chargeInstructAmt", String.valueOf(amount), "betPassword", betPassword, "screenFrom", "B610",
-						"token", token)
-				.cookie("JSESSIONID", jsessionId).ignoreContentType(true).method(Method.POST).execute().body();
-		deposit = gson.fromJson(resJson, Deposit.class);
-		token = deposit.token;
 		
-		logger.info("入金:" + resJson);
+		rctoken = getRecaptchaToken();
+		
+		try {
+			String url = getDepositRequestUrl();
+			resJson = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT).validateTLSCertificates(false)
+			//String resJson = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT)
+					.header("Accept", "application/json, text/javascript, */*; q=0.01")
+					.header("X-CSRF-TOKEN", csrf).header("X-Requested-With", "XMLHttpRequest")
+					.cookie("JSESSIONID", jsessionId)
+					.data("chargeInstructAmt", String.valueOf(amount), "betPassword", betPassword, "screenFrom", "B610",
+							"token", token, "rctoken", rctoken)
+					.cookie("JSESSIONID", jsessionId).ignoreContentType(true).method(Method.POST).execute().body();
+			deposit = gson.fromJson(resJson, Deposit.class);
+			token = deposit.token;
+			
+			logger.info("入金:" + resJson);
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
 	/**
@@ -226,13 +280,15 @@ public class TohyoManager {
 	 */
 	public void updateBalance() throws Exception {
 		String url = getBalanceRequestUrl();
-		//String resJson = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT).validateTLSCertificates(false)
-		String resJson = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT)
+		String resJson = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT).validateTLSCertificates(false)
+		//String resJson = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT)
 				.header("Accept", "application/json, text/javascript, */*; q=0.01")
-				.header("X-CSRF-TOKEN", csrf).header("X-Requested-With", "XMLHttpRequest")
 				.cookie("JSESSIONID", jsessionId)
 				.data("screenFrom", "B610", "token", token)
-				.cookie("JSESSIONID", jsessionId)
+				.header("X-CSRF-TOKEN", csrf).header("X-Requested-With", "XMLHttpRequest")
+				//.cookie("JSESSIONID", "2B22A275F067E3CCB414F6DB58B3DFAF")
+				//.data("screenFrom", "B610", "token", "hMghuNiyJq74Y06R0iVeVEiH2sKclvyO")
+				//.header("X-CSRF-TOKEN", "e316da5e-da4a-460c-930a-867854d98993").header("X-Requested-With", "XMLHttpRequest")
 				.ignoreContentType(true)
 				.method(Method.POST).execute().body();
 		balance = gson.fromJson(resJson, Balance.class);
@@ -240,46 +296,6 @@ public class TohyoManager {
 		logger.debug("残高更新:" + resJson);
 	}
 
-	/**
-	 * ログイン
-	 * 
-	 * @throws Exception
-	 */
-	public synchronized void login() throws Exception {
-		if (loginComplete) {
-			return;
-		}
-		
-		// ログインページ表示
-		//res = Jsoup.connect(URL_BASE).userAgent(BROWSER_USER_AGENT).validateTLSCertificates(false)
-		res = Jsoup.connect(URL_BASE).userAgent(BROWSER_USER_AGENT)
-				.method(Method.GET).execute();
-		jsessionId = res.cookies().get("JSESSIONID");
-
-		doc = res.parse();
-		centerNo = getCenterNoFromMeta();
-		csrf = getCsrfFromMeta();
-		r = getRFromLoginForm();
-		doc = null;
-
-		// ログインrequest
-		String url = getLoginUrl();
-		//res = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT).validateTLSCertificates(false)
-		res = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT)
-				.data("dummyA", "", "dummyB", "", "memberNo", memberNo, "pin", pin, "authPassword", authPassword,
-						"operationKbn", "", "screenFrom", "A604", "token", "", "_csrf", csrf)
-				.cookie("JSESSIONID", jsessionId).method(Method.POST).followRedirects(true).execute();
-		jsessionId = res.cookies().get("JSESSIONID");
-		doc = res.parse();
-		// TOPページへリダイレクト
-		csrf = getCsrfFromMeta();
-		centerNo = getCenterNoFromMeta();
-		token = getTokenFromInputTag();
-		loginComplete = true;
-		logger.info("ログイン:" + memberNo);
-		
-		startHeartbeat();
-	}
 
 	private void startHeartbeat() {
 		ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -301,14 +317,14 @@ public class TohyoManager {
 		}
 		
 		String url = getPayoffUrl();
-		//String resJson = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT).validateTLSCertificates(false)
-		String resJson = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT)
+		String resJson = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT).validateTLSCertificates(false)
+		//String resJson = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT)
 				.header("Accept", "application/json, text/javascript, */*; q=0.01").header("X-CSRF-TOKEN", csrf)
 				.header("X-Requested-With", "XMLHttpRequest").cookie("JSESSIONID", jsessionId)
 				.data("betPassword", betPassword, "screenFrom", "B636", "token", token).cookie("JSESSIONID", jsessionId)
 				.ignoreContentType(true).method(Method.POST).execute().body();
 		payOff = gson.fromJson(resJson, PayOff.class);
-		token = deposit.token;
+		token = payOff.token;
 		
 		logger.info("精算:" + resJson);
 		return payOff.accountInstructAmt;
@@ -325,8 +341,8 @@ public class TohyoManager {
 		stopHeartbeat();
 		
 		String url = getLogoutUrl();
-		//Jsoup.connect(url).userAgent(BROWSER_USER_AGENT).validateTLSCertificates(false)
-		Jsoup.connect(url).userAgent(BROWSER_USER_AGENT)
+		Jsoup.connect(url).userAgent(BROWSER_USER_AGENT).validateTLSCertificates(false)
+		//Jsoup.connect(url).userAgent(BROWSER_USER_AGENT)
 				.header("Accept", "application/json, text/javascript, */*; q=0.01").header("X-CSRF-TOKEN", csrf)
 				.header("X-Requested-With", "XMLHttpRequest")
 				.data("screenFrom", "B610", "token", token)
@@ -341,80 +357,91 @@ public class TohyoManager {
 	}
 
 	public synchronized void bet(BetRequest betReq) throws Exception {
-		// 投票確認
-		String url = getBetlistConfirmUrl();
-		//Connection conn = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT).validateTLSCertificates(false)
-		Connection conn = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT)
-				.data("token", token,
-				"_csrf", csrf, 
-				"betWay", "1", 
-				"jyoCode", betReq.jyoCd, 
-				"multiJyo", "false", 
-				"multiRace", "false",
-				"lastSelectionKachishiki", "6", 
-				"lastSelectionBetWay", "", 
-				"lastSelectionRacer", "1", 
-				"operationKbn","", 
-				"screenFrom", "C614");
-				for (int i = 0; i < betReq.betList.size(); i++) {
-					Bet bet = betReq.betList.get(i);
-					conn = conn.data("betContentsList[" + i + "].betList[0].betJyoCode", betReq.jyoCd);
-					conn = conn.data("betContentsList[" + i + "].betList[0].raceNo", betReq.raceNo);
-					conn = conn.data("betContentsList[" + i + "].betList[0].kachishiki", BoatUtil.typeToKachisiki(bet.type));
-					conn = conn.data("betContentsList[" + i + "].betList[0].betWay", "1");
-					conn = conn.data("betContentsList[" + i + "].betList[0].kumiban", "");
-					conn = conn.data("betContentsList[" + i + "].betList[0].numberOfSheets", "");
-					conn = conn.data("betContentsList[" + i + "].betList[0].unfoldedFlg", "1");
-					conn = conn.data("betContentsList[" + i + "].betList[0].unfoldedKumiban", bet.getTohyoBetKumiban());
-					conn = conn.data("betContentsList[" + i + "].betList[0].unfoldedNum", String.valueOf((int) (bet.money / 100)));
-				}
-		res = conn.data(
-				"selectionJyoList[0]", betReq.jyoCd,
-				"selectionRaceNoList[0]", betReq.raceNo
-				)
-				.cookie("JSESSIONID", jsessionId)
-				.method(Method.POST)
-				.followRedirects(true)
-				.execute();
-		doc = res.parse();
-		csrf = getCsrfFromMeta();
-		centerNo = getCenterNoFromMeta();
-		token = getTokenFromInputTag();
-
-		Thread.sleep(500);
-
-		url = getBetCompleteUrl();
-		//res = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT).validateTLSCertificates(false)
-		res = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT)
-				.data("dummyA", "", 
-						"dummyB", "", 
-						"betAmount", String.valueOf(betReq.getBetAmount()), 
-						"betPassword", betPassword, 
-						"operationKbn", "", 
-						"token", token, 
-						"_csrf", csrf, 
-						"screenFrom", "D628", 
-						"betWay", "1", 
-						"jyoCode", betReq.jyoCd, 
-						"multiJyo", "false", 
-						"selectionJyoList", betReq.jyoCd,
-						"multiRace", "false", 
-						"selectionRaceNoList", betReq.raceNo, 
-						"lastSelectionKachishiki", "6",
-						"lastSelectionBetWay", "", 
-						"lastSelectionRacer", ""
+		try {
+			String rctoken = getRecaptchaToken();
+			
+			// 投票確認
+			String url = getBetlistConfirmUrl();
+			Connection conn = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT).validateTLSCertificates(false)
+			//Connection conn = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT)
+					.data("token", token,
+					"rctoken", rctoken,
+					"_csrf", csrf, 
+					"betWay", "1", 
+					"jyoCode", betReq.jyoCd, 
+					"multiJyo", "false", 
+					"multiRace", "false",
+					"lastSelectionKachishiki", "6", 
+					"lastSelectionBetWay", "", 
+					"lastSelectionRacer", "1", 
+					"operationKbn","", 
+					"screenFrom", "C614");
+					for (int i = 0; i < betReq.betList.size(); i++) {
+						Bet bet = betReq.betList.get(i);
+						conn = conn.data("betContentsList[" + i + "].betList[0].betJyoCode", betReq.jyoCd);
+						conn = conn.data("betContentsList[" + i + "].betList[0].raceNo", betReq.raceNo);
+						conn = conn.data("betContentsList[" + i + "].betList[0].kachishiki", BoatUtil.typeToKachisiki(bet.type));
+						conn = conn.data("betContentsList[" + i + "].betList[0].betWay", "1");
+						conn = conn.data("betContentsList[" + i + "].betList[0].kumiban", "");
+						conn = conn.data("betContentsList[" + i + "].betList[0].numberOfSheets", "");
+						conn = conn.data("betContentsList[" + i + "].betList[0].unfoldedFlg", "1");
+						conn = conn.data("betContentsList[" + i + "].betList[0].unfoldedKumiban", bet.getTohyoBetKumiban());
+						conn = conn.data("betContentsList[" + i + "].betList[0].unfoldedNum", String.valueOf((int) (bet.money / 100)));
+					}
+			res = conn.data(
+					"selectionJyoList[0]", betReq.jyoCd,
+					"selectionRaceNoList[0]", betReq.raceNo
 					)
-				.cookie("JSESSIONID", jsessionId)
-				.method(Method.POST)
-				.followRedirects(true)
-				.execute();
-		doc = res.parse();
-		csrf = getCsrfFromMeta();
-		centerNo = getCenterNoFromMeta();
-		token = getTokenFromInputTag();
-		
-		Thread.sleep(500);
-		logger.info("投票要求:" + betReq.toString());
+					.cookie("JSESSIONID", jsessionId)
+					.method(Method.POST)
+					.followRedirects(true)
+					.execute();
+			doc = res.parse();
+			csrf = getCsrfFromMeta();
+			centerNo = getCenterNoFromMeta();
+			token = getTokenFromInputTag();
+
+			Thread.sleep(1000);
+
+			rctoken = getRecaptchaToken();
+			
+			url = getBetCompleteUrl();
+			res = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT).validateTLSCertificates(false)
+			//res = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT)
+					.data("dummyA", "", 
+							"dummyB", "", 
+							"betAmount", String.valueOf(betReq.getBetAmount()), 
+							"betPassword", betPassword, 
+							"operationKbn", "", 
+							"token", token, 
+							"rctoken", rctoken, 
+							"_csrf", csrf, 
+							"screenFrom", "D628", 
+							"betWay", "1", 
+							"jyoCode", betReq.jyoCd, 
+							"multiJyo", "false", 
+							"selectionJyoList", betReq.jyoCd,
+							"multiRace", "false", 
+							"selectionRaceNoList", betReq.raceNo, 
+							"lastSelectionKachishiki", "6",
+							"lastSelectionBetWay", "", 
+							"lastSelectionRacer", ""
+						)
+					.cookie("JSESSIONID", jsessionId)
+					.method(Method.POST)
+					.followRedirects(true)
+					.execute();
+			doc = res.parse();
+			csrf = getCsrfFromMeta();
+			centerNo = getCenterNoFromMeta();
+			token = getTokenFromInputTag();
+			
+			Thread.sleep(500);
+			logger.info("投票要求:" + betReq.toString());
+			
+		} catch(Exception e) {
+			throw e;
+		}
 	}
 
 	private String getPayoffUrl() {
@@ -486,16 +513,46 @@ public class TohyoManager {
 		return token[token.length - 1];
 	}
 
+	
+	private static BetRequest createBetReq(String type, String[] kumiban) {
+		BetRequest betReq = new BetRequest();
+		//betReq.kachisiki = BoatUtil.typeToKachisiki(type);
+		betReq.jyoCd = "08";
+		betReq.raceNo = "07";
+		List<Bet> betList = new ArrayList<>();
+		for (int i = 0; i < kumiban.length; i++) {
+			betList.add(new Bet(type, kumiban[i], 100, 1.5f, 0 ));
+		}
+		betReq.betList =betList;
+
+		return betReq;
+	}
+	
+	private String getRecaptchaToken() throws Exception{
+		// ログインページ表示
+		res = Jsoup.connect("https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LfGKGMfAAAAAIfOJqse31B3PEoEnaZ-_6bOQc_a&co=aHR0cHM6Ly9kLXBjLnRlc3QuYnJ0Yi5qcDo0NDM.&hl=en&v=fGZmEzpfeSeqDJiApS_XZ4Y2&size=invisible").userAgent(BROWSER_USER_AGENT).validateTLSCertificates(false)
+				.method(Method.GET).execute();
+		doc = res.parse();
+		
+		Element input = doc.getElementById("recaptcha-token");
+		String attr = input.attr("value");
+		
+		return attr;
+	}
+
 	public static void main(String[] args) {
 		try {
+			PropertyUtil.getInstance().addFile("c:/boatrace/online/properties/online.properties");
+			
 			TohyoManager tohyoManager = TohyoManager.getInstance();
+			tohyoManager.initialize();
 			
 			tohyoManager.login();
-			Thread.sleep(500);
+			Thread.sleep(1000);
 			
-			tohyoManager.deposit(10000);
-			Thread.sleep(3000);
-			
+//			tohyoManager.deposit(10000);
+//			Thread.sleep(3000);
+	
 			tohyoManager.updateBalance();
 			Thread.sleep(500);
 			
@@ -506,17 +563,17 @@ public class TohyoManager {
 			BetRequest betReq = createBetReq("1T", new String[] {"1"});
 			tohyoManager.bet(betReq);
 			
-			betReq = createBetReq("2T", new String[] {"12"});
-			tohyoManager.bet(betReq);
-
-			betReq = createBetReq("2F", new String[] {"12", "13"});
-			tohyoManager.bet(betReq);
-			
-			betReq = createBetReq("3T", new String[] {"123", "124"});
-			tohyoManager.bet(betReq);
-			
-			betReq = createBetReq("3F", new String[] {"123", "134", "145", "156"});
-			tohyoManager.bet(betReq);
+//			betReq = createBetReq("2T", new String[] {"12"});
+//			tohyoManager.bet(betReq);
+//
+//			betReq = createBetReq("2F", new String[] {"12", "13"});
+//			tohyoManager.bet(betReq);
+//			
+//			betReq = createBetReq("3T", new String[] {"123", "124"});
+//			tohyoManager.bet(betReq);
+//			
+//			betReq = createBetReq("3F", new String[] {"123", "134", "145", "156"});
+//			tohyoManager.bet(betReq);
 			
 			tohyoManager.payoff();
 			Thread.sleep(500);
@@ -533,18 +590,5 @@ public class TohyoManager {
 			e.printStackTrace();
 		}
 	}
-
-	private static BetRequest createBetReq(String type, String[] kumiban) {
-		BetRequest betReq = new BetRequest();
-		//betReq.kachisiki = BoatUtil.typeToKachisiki(type);
-		betReq.jyoCd = "02";
-		betReq.raceNo = "12";
-		List<Bet> betList = new ArrayList<>();
-		for (int i = 0; i < kumiban.length; i++) {
-			betList.add(new Bet(type, kumiban[i], 1000, 1.5f, 0 ));
-		}
-		betReq.betList =betList;
-
-		return betReq;
-	}
+	
 }

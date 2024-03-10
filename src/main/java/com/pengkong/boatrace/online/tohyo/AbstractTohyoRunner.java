@@ -64,7 +64,7 @@ public abstract class AbstractTohyoRunner implements Runnable {
 					if (isOutOfTime(simeHour, simeMin, race.getStatus())) {
 						race = raceQueue.poll();
 						listener.notifyTohyoOutOfTime(race);
-						logger.warn("tohyo is out of time." + race);
+						logger.warn("OUT OF TIME." + race);
 						
 						continue;
 					}
@@ -78,11 +78,11 @@ public abstract class AbstractTohyoRunner implements Runnable {
 							
 							if (count > 0) {
 								// 投票成功
-								logger.info("tohyo is successful. " + race);
+								logger.info("TOHYO " + race);
 								listener.notifyTohyoSuccess(race);
 							} else {
 								// 投票スキップ
-								logger.info("tohyo is skipped. " + race);
+								logger.info("SKIP " + race);
 								listener.notifyTohyoSkipped(race);
 							}
 						} catch (Exception e) {
@@ -94,7 +94,7 @@ public abstract class AbstractTohyoRunner implements Runnable {
 					} else {
 						if (nextRace != race) {
 							nextRace = race;
-							logger.info("next race is => " + nextRace);
+							logger.info("next race => " + nextRace);
 						}
 						break;
 					}

@@ -53,24 +53,25 @@ public class Race2OlRacer {
 		rec.setYmd(race.raceInfo.ymd);
 		rec.setJyocd(race.setu.jyoCd);
 		rec.setRaceno(race.raceInfo.no);
-		rec.setEntry(entry);
-		rec.setSex(sex);
-		rec.setAge(age);
-		rec.setLevel(level);
-		rec.setWeight(weight);
-		rec.setBranch(branch);
-		rec.setFlying(flying);
-		rec.setLate(late);
-		rec.setAveragestart(avgstart);
-		rec.setNationwiningrate(nationwiningrate);
-		rec.setNation2winingrate(nation2winingrate);
-		rec.setNation3winingrate(nation3winingrate);
-		rec.setLocalwiningrate(localwiningrate);
-		rec.setLocal2winingrate(local2winingrate);
-		rec.setLocal3winingrate(local3winingrate);
-		rec.setMotorno(motorno);
-		rec.setMotor2winingrate(motor2winingrate);
-		rec.setMotor3winingrate(motor3winingrate);
+//  JSJ 20240213 エラーのためコメントアウト。
+//		rec.setEntry(entry);
+//		rec.setSex(sex);
+//		rec.setAge(age);
+//		rec.setLevel(level);
+//		rec.setWeight(weight);
+//		rec.setBranch(branch);
+//		rec.setFlying(flying);
+//		rec.setLate(late);
+//		rec.setAveragestart(avgstart);
+//		rec.setNationwiningrate(nationwiningrate);
+//		rec.setNation2winingrate(nation2winingrate);
+//		rec.setNation3winingrate(nation3winingrate);
+//		rec.setLocalwiningrate(localwiningrate);
+//		rec.setLocal2winingrate(local2winingrate);
+//		rec.setLocal3winingrate(local3winingrate);
+//		rec.setMotorno(motorno);
+//		rec.setMotor2winingrate(motor2winingrate);
+//		rec.setMotor3winingrate(motor3winingrate);
 		
 		return rec;
 	}

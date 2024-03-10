@@ -76,7 +76,7 @@ public class FileUtil {
 		return String.join(" ", listStr);
 	}
 	
-	public static void deleteFile(String filepath) {
+	public static void deleteFileIfExist(String filepath) {
 		File file = new File(filepath);
 		if (file.exists()) {
 			file.delete();

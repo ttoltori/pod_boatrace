@@ -38,11 +38,11 @@ public class BoatWebDownloader {
 		
 		// 当該日のレースファイルが存在すれば削除する
 		String filepathRace = prop.getString("DIRECTORY_CSV") + "race_" + yyyyMMdd + ".csv";
-		FileUtil.deleteFile(filepathRace);
+		FileUtil.deleteFileIfExist(filepathRace);
 
 		// 当該日のオッズファイルが存在すれば削除する。
 		String filepathOdds = prop.getString("DIRECTORY_ODDS") + "odds_" + yyyyMMdd + ".csv";
-		FileUtil.deleteFile(filepathOdds);
+		FileUtil.deleteFileIfExist(filepathOdds);
 
 		String urlDailySetuList = BoatTemplate.URL_DAILY_SETU_LIST.replace("{yyyyMMdd}", yyyyMMdd);
 		// 節一覧取得
@@ -79,6 +79,7 @@ public class BoatWebDownloader {
 					race.setu = setu;
 					String url = "";
 					try {
+						
 						// 20190526 結果オッズはもう不要なのでダウンロードしない.
 						// オッズ情報 
 						//OddsManager.getInstance().loadLines(new OddsDownloader().download(yyyyMMdd, jyoCd, raceNo));
@@ -144,27 +145,14 @@ public class BoatWebDownloader {
 	}
 
 	public static void main(String[] args) {
-//		args = new String[] {
-//		"20200510", 
-//		"20200511"
-//		};
+		String fromYmd = args[0];
+		String toYmd = args[1];
+		String propFile = args[2];
 		
 		try {
-			PropertyUtil.getInstance().addFile("C:/Dev/workspace/Oxygen/pod_boatrace_test/properties/race_result_rebuild.properties");
+			PropertyUtil.getInstance().addFile(propFile);
 			BoatWebDownloader boatWebDownloader = new BoatWebDownloader();
-			if (args.length == 0) {
-				// 当日
-				boatWebDownloader.execute();
-			} else if (args.length == 1) {
-				// 日付指定
-				boatWebDownloader.execute(args[0]);
-			} else if (args.length == 2) {
-				// 日付範囲指定
-				boatWebDownloader.execute(args[0], args[1]);
-			} else {
-				System.out.println("Usage: BoatWebDownloader [fromYmd] [toYmd]");
-				System.exit(1);
-			}
+			boatWebDownloader.execute(fromYmd, toYmd);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

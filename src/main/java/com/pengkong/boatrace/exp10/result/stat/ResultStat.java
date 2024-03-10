@@ -237,12 +237,12 @@ public class ResultStat {
 		Integer beforeOddsRank = result.getBetOddsrank();
 		Integer resultOddsRank = result.getResultOddsrank();
 
-		// 直前オッズの統計単位取得
-		if (beforeOdds != null
-				// 20221026 bork로 evaluation 대상으로 제한해본다.
-				&& (beforeOddsRank != null && beforeOddsRank > prop.getInteger("bork_max")) ) {
-			return;
-		}
+		// 直前オッズの統計単位取得 - ResultStatBuilder.add()でチェックするためここは削除する。20230904
+//		if (beforeOdds != null
+//				// 20221026 bork로 evaluation 대상으로 제한해본다.
+//				&& (beforeOddsRank != null && beforeOddsRank > prop.getInteger("bork_max")) ) {
+//			return;
+//		}
 		
 		// 直前オッズの統計単位取得
 		if (beforeOdds != null ) { // 直前オッズが存在すれば

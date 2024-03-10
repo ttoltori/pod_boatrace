@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
 import org.apache.ibatis.session.SqlSession;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -22,6 +23,7 @@ import com.pengkong.boatrace.mybatis.client.CustomMapper;
 import com.pengkong.boatrace.mybatis.client.MlClassificationMapper;
 import com.pengkong.boatrace.mybatis.client.OddsPredictMapper;
 import com.pengkong.boatrace.mybatis.entity.MlClassification;
+import com.pengkong.boatrace.mybatis.entity.MlClassificationExample;
 import com.pengkong.boatrace.mybatis.entity.OddsPredict;
 import com.pengkong.boatrace.server.db.dto.DBRecord;
 import com.pengkong.boatrace.util.BoatUtil;
@@ -60,16 +62,16 @@ public class MLClassificationGenerator {
 	RemoteClassifier rc;
 	/**
 	 * 実験番号リストに対して一括で実験を実行する
-	 * @param exNoList 実験番号一覧 例）1,2,3,5
+	 * @param modelNoList モデル番号一覧 例）99100,11609
 	 * @throws Exception
 	 */
-	public void execute(String exNoList) throws Exception {
+	protected void execute(String modelNoList) throws Exception {
 		// 実験番号mapを生成する
-		String[] exNos = exNoList.split(Delimeter.COMMA.getValue());
+		String[] modelNos = modelNoList.split(Delimeter.COMMA.getValue());
 		
-		HashMap<String, String> mapExNo = new HashMap<>();
-		for (String exNo : exNos) {
-			mapExNo.put(exNo, exNo);
+		HashMap<String, String> mapModelNo = new HashMap<>();
+		for (String modelNo : modelNos) {
+			mapModelNo.put(modelNo, modelNo);
 		}
 		
 		// propの巡回前にモデル情報をscanして置く(scan中にpropを一回巡回するため）!!!
@@ -81,11 +83,8 @@ public class MLClassificationGenerator {
 		try {
 			prop.reset("file_model_config");
 			while(prop.hasNext()) {
-				if (prop.getString("model_no").equals("99102")) {
-					System.out.println("debug");
-				}
 				prop.next();
-				if (!mapExNo.containsKey(prop.getString("model_no"))) 
+				if (!mapModelNo.containsKey(prop.getString("model_no"))) 
 					continue;
 				// 実験実行
 				executeExperiment(prop.getString("model_no"));
@@ -98,13 +97,15 @@ public class MLClassificationGenerator {
 
 	/**
 	 * モデル番号毎に実験実行 
-	 * @param exNo 実験番号 %04dフォーマット
+	 * @param modelNo モデル番号
 	 * @throws Exception
 	 */
-	private void executeExperiment(String exNo) throws Exception {
+	protected void executeExperiment(String modelNo) throws Exception {
 		SqlSession session = DatabaseUtil.open(prop.getString("target_db_resource"), false);
 		try {
+			// classification生成する期間。onlineの場合、overrideされる 
 			String[] modelPeriod = getModelPeriod();
+			
 			String modelStartYmd = modelPeriod[0];
 			String modelEndYmd = modelPeriod[1];
 			
@@ -131,17 +132,19 @@ public class MLClassificationGenerator {
 					continue;
 				}
 				
+				// 当該日付の既存classificationを削除
+				deleteDB(session, modelNo, ymd);
+				
 				// 해당날짜의 레이스 데이터 루프
 				for (DBRecord dbRec : listRec) {
-					MlClassificationMapper mapper = session.getMapper(MlClassificationMapper.class);
-					// classify
-					List<Classification> listClassification = rc.classify(mapper, dbRec);
+					// classify DBから取得する場合のためにsessionを引き渡す。
+					List<Classification> listClassification = rc.classify(session, dbRec);
 					
 					// db insert
-					insertDB(exNo, session, dbRec, listClassification);
+					insertDB(modelNo, session, dbRec, listClassification);
 				}
 				
-				logger.debug(exNo + " ml_(pork)_classification inserted. " + ymd + "/" + modelEndYmd);
+				logger.debug(modelNo + " ml_(pork)_classification inserted. " + ymd + "/" + modelEndYmd);
 				
 				// 하루 증가
 				currDate = currDate.plusDays(1);
@@ -151,6 +154,13 @@ public class MLClassificationGenerator {
 		} finally {
 			DatabaseUtil.close(session);		
 		}
+	}
+	
+	protected void deleteDB(SqlSession session, String modelNo, String ymd) throws Exception {
+		MlClassificationMapper mapper = session.getMapper(MlClassificationMapper.class);
+		MlClassificationExample exam = new MlClassificationExample();
+		exam.createCriteria().andModelnoEqualTo(modelNo).andYmdEqualTo(ymd);
+		mapper.deleteByExample(exam);
 	}
 
 	/** classification結果をDBにinsertする */
@@ -172,25 +182,33 @@ public class MLClassificationGenerator {
 
 			rec.setPrediction1(listClassification.get(0).prediction);
 			rec.setProbability1(listClassification.get(0).probability);
-			rec.setProbabilities1(listClassification.get(0).probabilities);
-			rec.setSkewness1(listClassification.get(0).skewness);
-			rec.setKurtosis1(listClassification.get(0).kurtosis);
 			
 			if (listClassification.size() > 1) {
 				rec.setPrediction2(listClassification.get(1).prediction);
 				rec.setProbability2(listClassification.get(1).probability);
-				rec.setProbabilities2(listClassification.get(1).probabilities);
-				rec.setSkewness2(listClassification.get(1).skewness);
-				rec.setKurtosis2(listClassification.get(1).kurtosis);
 			}
 
 			if (listClassification.size() > 2) {
 				rec.setPrediction3(listClassification.get(2).prediction);
 				rec.setProbability3(listClassification.get(2).probability);
-				rec.setProbabilities3(listClassification.get(2).probabilities);
-				rec.setSkewness3(listClassification.get(2).skewness);
-				rec.setKurtosis3(listClassification.get(2).kurtosis);
 			}
+			
+			DescriptiveStatistics desc = new DescriptiveStatistics();
+			for (int i = 0; i < listClassification.size(); i++) {
+				desc.addValue(listClassification.get(i).probability);
+			}
+			// 記述統計値を設定
+			rec.setMin(desc.getMin());
+			rec.setMax(desc.getMax());
+			rec.setMean(desc.getMean());
+			rec.setGeoMean(desc.getGeometricMean());
+			rec.setQuadMean(desc.getQuadraticMean());
+			rec.setStdDeviation(desc.getStandardDeviation());
+			rec.setVariance(desc.getVariance());
+			rec.setPopuVariance(desc.getPopulationVariance());
+			rec.setSkewness(desc.getSkewness());
+			rec.setKurtosis(desc.getKurtosis());
+			
 			mapper.insert(rec);
 			//mapper.insert(createInsertDto(exNo, dbRec, listClassification));	
 		}
@@ -227,7 +245,7 @@ public class MLClassificationGenerator {
 	 * @return
 	 * @throws Exception
 	 */
-	private List<DBRecord> loadDB(SqlSession session, String modelStartYmd, String modelEndYmd) throws Exception {
+	protected List<DBRecord> loadDB(SqlSession session, String modelStartYmd, String modelEndYmd) throws Exception {
 		// classification用sql取得
 		String sql = sqlTpl.get(prop.getString("classification_sql_id"));
 		
@@ -258,7 +276,7 @@ public class MLClassificationGenerator {
 	 * rank1,2,3のfeatureすべてのsql分を取得する
 	 * @return
 	 */
-	private String getFeaturesSql() throws Exception {
+	protected String getFeaturesSql() throws Exception {
 		List<String> listFeatureId = new ArrayList<>();
 		String[] featureIds;
 		// rank1,2,3のarff featureをすべて取得

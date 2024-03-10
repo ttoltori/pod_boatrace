@@ -79,6 +79,14 @@ public class ResultStatBuilder {
 			return result;
 		}
 		
+		// bork範囲外なら捨てる 20230904
+		int borkMin = prop.getInteger("bork_min");
+		int borkMax = prop.getInteger("bork_max");
+		if (result.getBetOddsrank() != null && 
+				(result.getBetOddsrank() > borkMax || result.getBetOddsrank() < borkMin)) {
+			return result;
+		}
+		
 		// bettype, prediction別
 		String key = statHelper.createKey(result.getStatBettype(), predictions); 
 		if (!mapTotalBetCnt.containsKey(key)) {

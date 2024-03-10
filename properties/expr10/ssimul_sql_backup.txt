@@ -1,0 +1,1667 @@
+
+copy (
+select
+  concat_ws('_', id_grade, id_bettype, id_kumiban, id_factor, id_factor2, id_condmin, id_limit, id_modelno, id_resultno, id_sqlid, id_termtype)
+from (
+	select
+	  t3.*
+	from 
+	  (select * from sim_vic where id_term = 'r1') t1,
+	  (select * from sim_vic where id_term = 'r2') t2,
+	  (select * from sim_vic where id_term = 'r3') t3
+	where t1.keycol = t2.keycol and t1.keycol = t3.keycol
+	  and t1.inca > 0 and t1.
+	  and t2.i04 > 0 
+	  and t3.i04 > 0
+) tt
+order by id_grade, id_bettype, id_kumiban, id_factor, id_factor2, id_condmin, id_limit, id_modelno, id_resultno, id_sqlid, id_termtype
+) to 'D:\simul_step1\VIC2_candidates\type1_1.0.tsv' csv delimiter E'\t'; 
+;
+
+
+	select
+	  count(t3.*)
+	from 
+	  (select * from sim_big where id_term = 'r1') t1,
+	  (select * from sim_big where id_term = 'r2') t2,
+	  (select * from sim_big where id_term = 'r3') t3
+	where t1.keycol = t2.keycol and t1.keycol = t3.keycol
+	  and t1.incrate > 1.0 
+	  and t2.incrate > 1.0 
+	  and t3.incrate > 1.0
+;
+
+select count(1) from sim_vic;
+
+SELECT keycol, id_grade, id_bettype, id_kumiban, id_factor, id_factor2, id_condmin, id_limit, id_modelno, id_resultno, id_sqlid, id_termtype, id_term, bc02, bc04, bc19, bc27, bc09, i02, i04, i19, i27, i09, evaluations_id, betcnt, hitcnt, betamt, hitamt, incamt, hitrate, incrate
+FROM public.sim_bork;
+
+
+select
+  id_factor, 
+  sum(bc02) sbc02, sum(bc04) sbc04, sum(bc19) sbc19, sum(bc27) sbc27, 
+  sum(i02) si02, sum(i04) si04, sum(i19) si19, sum(i27) si27, 
+  sum(betcnt) sbetcnt, sum(incamt) siamt,
+  (sum(hitamt)::float / sum(betamt)::float)::numeric(5,2) incomerate, 
+  (sum(hitcnt)::float / sum(betcnt)::float)::numeric(5,2) hitrate
+from sim_bork
+where id_bettype = '3T' and id_kumiban = '123'
+  and id_condmin = '1.0'
+  and id_limit = '30'
+  and id_modelno = '7'
+  and id_termtype = '7-3'
+  
+group by id_factor
+;
+
+
+resultno::int between 70045 and 70133;
+create table sim_bork as
+select
+  tb.*, te.betcnt, (te.hitamt-te.betamt) incamt, hitrate, incomerate
+from 
+(
+	select 
+	  -- (ids[1] || '_' || ids[2] || '_' || kumiban || '_' || ids[4] || '_' || ids[5] || '_' || ids[6] || '_' || ids[7] || '_' || ids[8] || '_' || ids[9]) keycol,
+	  cast(ids[1] as varchar(2)) id_grade , cast(ids[2] as varchar(2)) id_bettype, 
+	  cast(kumiban as varchar(3)) id_kumiban, cast(ids[4] as varchar(20)) id_factor, 
+	  cast(ids[5] as varchar(20)) id_factor2, cast(ids[6] as varchar(20)) id_condmin, 
+	  cast(ids[7] as varchar(5)) id_limit, cast(ids[8] as varchar(20)) id_modelno, 
+	  cast(ids[9] as varchar(5)) id_resultno, cast(ids[10] as varchar(5)) id_sqlid, 
+	  cast(ids[11] as varchar(6)) id_termtype, cast(ids[12] as varchar(6)) id_term,
+	  (betcnt[0] + betcnt[1] + betcnt[2]) bc02, 
+	  (betcnt[0] + betcnt[1] + betcnt[2] + betcnt[3] + betcnt[4]) bc04,
+	  (betcnt[1] + betcnt[2] + betcnt[3] + betcnt[4] + betcnt[5] + betcnt[6] + betcnt[7] + betcnt[8] + betcnt[9]) bc19,
+	  (betcnt[2] + betcnt[3] + betcnt[4] + betcnt[5] + betcnt[6] + betcnt[7]) bc27,
+	  (incamt[0] + incamt[1] + incamt[2]) i02, 
+	  (incamt[0] + incamt[1] + incamt[2] + incamt[3] + incamt[4]) i04,
+	  (incamt[1] + incamt[2] + incamt[3] + incamt[4] + incamt[5] + incamt[6] + incamt[7] + incamt[8] + incamt[9]) i19,
+	  (incamt[2] + incamt[3] + incamt[4] + incamt[5] + incamt[6] + incamt[7]) i27,
+	  evaluations_id
+	from 
+	(
+	  select  string_to_array(evaluations_id, '_') ids, 
+	  * from ml_bork_evaluation me where resultno::int between 70135 and 70166
+	) tmpbork
+) tb, 
+(
+	select 
+		*
+	from ml_evaluation where resultno::int between 70135 and 70166
+) te
+where tb.evaluations_id = te.evaluations_id
+;
+
+
+drop table sim_bork;
+-- ip_1T_1_prob1+wk123_i02-100_~1_11609_JSJ-S2_77_12_10163_104_7.37_11.2
+create table sim_bork as
+--insert into sim_bork
+--select * from
+--(
+select 
+  (ids[1] || '_' || ids[2] || '_' || kumiban || '_' || ids[4] || '_' || ids[5] || '_' || ids[6] || '_' || ids[7] || '_' || ids[8] || '_' || ids[9]) keycol,
+  cast(ids[1] as varchar(2)) id_grade , cast(ids[2] as varchar(2)) id_bettype, 
+  cast(kumiban as varchar(3)) id_kumiban, cast(ids[4] as varchar(20)) id_patternid, 
+  cast(ids[5] as varchar(20)) id_factor, cast(ids[6] as varchar(20)) id_factormin, 
+  cast(ids[7] as varchar(5)) id_modelno, cast(ids[8] as varchar(20)) id_sqlid, 
+  cast(ids[9] as varchar(5)) id_termtype, cast(ids[10] as varchar(5)) id_term, 
+  cast(ids[11] as varchar(6)) id_resultno,
+  betcnt[0] bc0, betcnt[1] bc1, betcnt[2] bc2, betcnt[3] bc3, betcnt[4] bc4, (betcnt[0] + betcnt[1] + betcnt[2]) bc02, (betcnt[0] + betcnt[1] + betcnt[2] + betcnt[3] + betcnt[4]) bc04,
+  term_cnt[0] tc0, term_cnt[1] tc1, term_cnt[2] tc2, term_cnt[3] tc3, term_cnt[4] tc4, (term_cnt[0] + term_cnt[1] + term_cnt[2]) tc02, (term_cnt[0] + term_cnt[1] + term_cnt[2] + term_cnt[3] + term_cnt[4]) tc04,
+  term_pluscnt[0] tpc0, term_pluscnt[1] tpc1, term_pluscnt[2] tpc2, term_pluscnt[3] tpc3, term_pluscnt[4] tpc4, (term_pluscnt[0] + term_pluscnt[1] + term_pluscnt[2]) tpc02, (term_pluscnt[0] + term_pluscnt[1] + term_pluscnt[2] + term_pluscnt[3] + term_pluscnt[4]) tpc04,
+  incamt[0] i0, incamt[1] i1, incamt[2] i2, incamt[3] i3, incamt[4] i4, 
+  (incamt[0] + incamt[1] + incamt[2]) i02, 
+  (incamt[0] + incamt[1] + incamt[2] + incamt[3] + incamt[4]) i04, 
+  (incamt[0] + incamt[1] + incamt[2] + incamt[3] + incamt[4] + incamt[5] + incamt[6] + incamt[7] + incamt[8] + incamt[9]) i09,
+  ( (incamt[0]*0.3) + (incamt[1]*0.15) + (incamt[2]*0.11) )::int ci02,
+  ( (incamt[0]* 0.3) + (incamt[1]*0.15) + (incamt[2]*0.11) + (incamt[3]*0.08) + (incamt[4]*0.07) )::int ci04, 
+  ( (incamt[0]* 0.3) + (incamt[1]*0.15) + (incamt[2]*0.11) + (incamt[3]*0.08) + (incamt[4]*0.07) +
+    (incamt[5]* 0.06) + (incamt[6]*0.05) + (incamt[7]*0.04) + (incamt[8]*0.04) + (incamt[9]*0.04)
+  )::int ci09, 
+  *  
+from 
+(
+  select  string_to_array(evaluations_id, '_') ids, 
+  * from ml_bork_evaluation me where result_type = '4'
+) tmp
+--) tmp2
+--where id_term = 'R2' 
+;
+
+drop index if exists indexes_grade_bork;
+drop index if exists indexes_factor_bork;
+drop index if exists indexes_term_bork;
+drop index if exists indexes_bettype_bork;
+drop index if exists indexes_keycol_bork;
+
+create index indexes_grade_bork on sim_bork (id_grade);
+create index indexes_factor_bork on sim_bork (id_factor);
+create index indexes_term_bork on sim_bork (id_term);
+create index indexes_bettype_bork on sim_bork (id_bettype);
+create index indexes_keycol_bork on sim_bork (keycol);
+
+drop table sim_eval;
+create table sim_eval as 
+select
+  (ids[1] || '_' || ids[2] || '_' || kumiban || '_' || ids[4] || '_' || ids[5] || '_' || ids[6] || '_' || ids[7] || '_' || ids[8] || '_' || ids[9]) keycol,
+  cast(ids[1] as varchar(2)) id_grade , cast(ids[2] as varchar(2)) id_bettype, 
+  cast(kumiban as varchar(3)) id_kumiban, cast(ids[4] as varchar(20)) id_patternid, 
+  cast(ids[5] as varchar(20)) id_factor, cast(ids[6] as varchar(20)) id_factormin, 
+  cast(ids[7] as varchar(5)) id_modelno, cast(ids[8] as varchar(20)) id_sqlid, 
+  cast(ids[9] as varchar(5)) id_termtype, cast(ids[10] as varchar(5)) id_term, 
+  cast(ids[11] as varchar(6)) id_resultno,
+  betcnt, hitcnt, betamt, hitamt, betrate, hitrate, incomerate
+from 
+(
+  select  string_to_array(evaluations_id, '_') ids, 
+  * from ml_evaluation me where result_type = '4'
+)tmp;
+
+drop index if exists indexes_grade_eval;
+drop index if exists indexes_factor_eval;
+drop index if exists indexes_term_eval;
+drop index if exists indexes_bettype_eval;
+drop index if exists indexes_keycol_eval;
+
+create index indexes_grade_eval on sim_bork (id_grade);
+create index indexes_factor_eval on sim_bork (id_factor);
+create index indexes_term_eval on sim_bork (id_term);
+create index indexes_bettype_eval on sim_bork (id_bettype);
+create index indexes_keycol_eval on sim_bork (keycol);
+
+
+select ranking_555_wk(394, 20, 'i02-0-555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_555_wk(395, 20, 'i02-0-555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['2N','3X'], null);
+select ranking_555_wk(396, 20, 'i02-0-555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['2T','2M'], null);
+select ranking_555_wk(397, 20, 'i02-0-555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['3F'], null);
+select ranking_555_wk(398, 20, 'i02-0-555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['2F'], null);
+select ranking_555_wk(399, 20, 'i02-0-555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['1T'], null);
+select ranking_555_wk(400, 20, 'i04-0-555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_555_wk(401, 20, 'i04-0-555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['2N','3X'], null);
+select ranking_555_wk(402, 20, 'i04-0-555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['2T','2M'], null);
+select ranking_555_wk(403, 20, 'i04-0-555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['3F'], null);
+select ranking_555_wk(404, 20, 'i04-0-555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['2F'], null);
+select ranking_555_wk(405, 20, 'i04-0-555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['1T'], null);
+select ranking_555_wk(406, 20, 'i14-0-555', 'sum(i1+i2+i3+i4)', '(i1+i2+i3+i4)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_555_wk(407, 20, 'i14-0-555', 'sum(i1+i2+i3+i4)', '(i1+i2+i3+i4)/100 >= 0', '1', array['2N','3X'], null);
+select ranking_555_wk(408, 20, 'i14-0-555', 'sum(i1+i2+i3+i4)', '(i1+i2+i3+i4)/100 >= 0', '1', array['2T','2M'], null);
+select ranking_555_wk(409, 20, 'i14-0-555', 'sum(i1+i2+i3+i4)', '(i1+i2+i3+i4)/100 >= 0', '1', array['3F'], null);
+select ranking_555_wk(410, 20, 'i14-0-555', 'sum(i1+i2+i3+i4)', '(i1+i2+i3+i4)/100 >= 0', '1', array['2F'], null);
+select ranking_555_wk(411, 20, 'i14-0-555', 'sum(i1+i2+i3+i4)', '(i1+i2+i3+i4)/100 >= 0', '1', array['1T'], null);
+select ranking_555_wk(412, 20, 'i27-0-555', 'sum(i2+i3+i4+i5+i6+i7)', '(i2+i3+i4+i5+i6+i7)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_555_wk(413, 20, 'i27-0-555', 'sum(i2+i3+i4+i5+i6+i7)', '(i2+i3+i4+i5+i6+i7)/100 >= 0', '1', array['2N','3X'], null);
+select ranking_555_wk(414, 20, 'i27-0-555', 'sum(i2+i3+i4+i5+i6+i7)', '(i2+i3+i4+i5+i6+i7)/100 >= 0', '1', array['2T','2M'], null);
+select ranking_555_wk(415, 20, 'i27-0-555', 'sum(i2+i3+i4+i5+i6+i7)', '(i2+i3+i4+i5+i6+i7)/100 >= 0', '1', array['3F'], null);
+select ranking_555_wk(416, 20, 'i27-0-555', 'sum(i2+i3+i4+i5+i6+i7)', '(i2+i3+i4+i5+i6+i7)/100 >= 0', '1', array['2F'], null);
+select ranking_555_wk(417, 20, 'i27-0-555', 'sum(i2+i3+i4+i5+i6+i7)', '(i2+i3+i4+i5+i6+i7)/100 >= 0', '1', array['1T'], null);
+select ranking_77_wk(418, 20, 'i02-0-77', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_77_wk(419, 20, 'i02-0-77', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['2N','3X'], null);
+select ranking_77_wk(420, 20, 'i02-0-77', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['2T','2M'], null);
+select ranking_77_wk(421, 20, 'i02-0-77', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['3F'], null);
+select ranking_77_wk(422, 20, 'i02-0-77', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['2F'], null);
+select ranking_77_wk(423, 20, 'i02-0-77', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['1T'], null);
+select ranking_77_wk(424, 20, 'i04-0-77', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_77_wk(425, 20, 'i04-0-77', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['2N','3X'], null);
+select ranking_77_wk(426, 20, 'i04-0-77', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['2T','2M'], null);
+select ranking_77_wk(427, 20, 'i04-0-77', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['3F'], null);
+select ranking_77_wk(428, 20, 'i04-0-77', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['2F'], null);
+select ranking_77_wk(429, 20, 'i04-0-77', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['1T'], null);
+select ranking_77_wk(430, 20, 'i14-0-77', 'sum(i1+i2+i3+i4)', '(i1+i2+i3+i4)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_77_wk(431, 20, 'i14-0-77', 'sum(i1+i2+i3+i4)', '(i1+i2+i3+i4)/100 >= 0', '1', array['2N','3X'], null);
+select ranking_77_wk(432, 20, 'i14-0-77', 'sum(i1+i2+i3+i4)', '(i1+i2+i3+i4)/100 >= 0', '1', array['2T','2M'], null);
+select ranking_77_wk(433, 20, 'i14-0-77', 'sum(i1+i2+i3+i4)', '(i1+i2+i3+i4)/100 >= 0', '1', array['3F'], null);
+select ranking_77_wk(434, 20, 'i14-0-77', 'sum(i1+i2+i3+i4)', '(i1+i2+i3+i4)/100 >= 0', '1', array['2F'], null);
+select ranking_77_wk(435, 20, 'i14-0-77', 'sum(i1+i2+i3+i4)', '(i1+i2+i3+i4)/100 >= 0', '1', array['1T'], null);
+select ranking_77_wk(436, 20, 'i27-0-77', 'sum(i2+i3+i4+i5+i6+i7)', '(i2+i3+i4+i5+i6+i7)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_77_wk(437, 20, 'i27-0-77', 'sum(i2+i3+i4+i5+i6+i7)', '(i2+i3+i4+i5+i6+i7)/100 >= 0', '1', array['2N','3X'], null);
+select ranking_77_wk(438, 20, 'i27-0-77', 'sum(i2+i3+i4+i5+i6+i7)', '(i2+i3+i4+i5+i6+i7)/100 >= 0', '1', array['2T','2M'], null);
+select ranking_77_wk(439, 20, 'i27-0-77', 'sum(i2+i3+i4+i5+i6+i7)', '(i2+i3+i4+i5+i6+i7)/100 >= 0', '1', array['3F'], null);
+select ranking_77_wk(440, 20, 'i27-0-77', 'sum(i2+i3+i4+i5+i6+i7)', '(i2+i3+i4+i5+i6+i7)/100 >= 0', '1', array['2F'], null);
+select ranking_77_wk(441, 20, 'i27-0-77', 'sum(i2+i3+i4+i5+i6+i7)', '(i2+i3+i4+i5+i6+i7)/100 >= 0', '1', array['1T'], null);
+
+
+delete from ml_evaluation where resultno::int between 70198 and 70198;
+delete from ml_bork_evaluation where resultno::int between 70198 and 70198;
+delete from ml_range_evaluation where resultno::int between 70198 and 70198;
+delete from ml_term_evaluation where resultno::int between 70198 and 70198;
+
+ml_simul_vic 70076
+ml_simul_vic 70077
+
+ml_simul_vic 70078
+ml_simul_vic 70079
+ml_simul_vic 70080
+ml_simul_vic 70081
+
+
+ml_simul_vic 70058
+ml_simul_vic 70062
+
+ml_simul_vic 70059
+ml_simul_vic 70063
+
+ml_simul_vic 70060
+ml_simul_vic 70064
+
+ml_simul_vic 70061
+ml_simul_vic 70065
+
+
+ml_simul_big 70037
+ml_simul_big 70041
+
+ml_simul_big 70038
+ml_simul_big 70042
+
+ml_simul_big 70039
+ml_simul_big 70043
+
+ml_simul_big 70040
+ml_simul_big 70044
+
+insert into $1
+select 
+  keycol, keycol2, result_type, bettype, kumiban, resultno, modelno, patternid, pattern,
+  (i0+i1+i2+i3+i4+i5+i6+i7+i8+i9) i09,
+  (i0+i1+i2) i02,
+  (i0+i1+i2+i3+i4) i04,
+  (i1+i2+i3+i4+i5+i6+i7+i8+i9) i19,
+  (i3+i4+i5+i6+i7+i8+i9) i39,
+  (i2+i3+i4+i5+i6+i7) i27,
+  (bc0+bc1+bc2+bc3+bc4+bc5+bc6+bc7+bc8+bc9) bc09,
+  (bc0+bc1+bc2) bc02,
+  (bc0+bc1+bc2+bc3+bc4) bc04,
+  (bc1+bc2+bc3+bc4+bc5+bc6+bc7+bc8+bc9) bc19,
+  (bc3+bc4+bc5+bc6+bc7+bc8+bc9) bc39,
+  (bc2+bc3+bc4+bc5+bc6+bc7) bc27,
+  (hc0+hc1+hc2+hc3+hc4+hc5+hc6+hc7+hc8+hc9) hc09,
+  (hc0+hc1+hc2) hc02,
+  (hc0+hc1+hc2+hc3+hc4) hc04,
+  (hc1+hc2+hc3+hc4+hc5+hc6+hc7+hc8+hc9) hc19,
+  (hc3+hc4+hc5+hc6+hc7+hc8+hc9) hc39,
+  (hc2+hc3+hc4+hc5+hc6+hc7) hc27,
+  betcnt, hitcnt, betamt, hitamt, incamt, betrate, hitrate, incrate, bal_pluscnt, evaluations_id
+from $2
+
+
+
+select ranking_777(145, 20, 'ri02-2_777', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= -2', '1', array['3T','3R','3P'], null);
+select ranking_777(146, 20, 'ri02-2_777', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= -2', '1', array['2N','3X'], null);
+select ranking_777(147, 20, 'ri02-2_777', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= -2', '1', array['2T','2M'], null);
+select ranking_777(148, 20, 'ri02-2_777', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= -2', '1', array['3F'], null);
+select ranking_777(149, 20, 'ri02-2_777', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= -2', '1', array['2F'], null);
+select ranking_777(150, 20, 'ri02-2_777', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= -2', '1', array['1T'], null);
+select ranking_777(151, 20, 'ri02-2_777', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= -2', '11', array['3T','3R','3P'], null);
+select ranking_777(152, 20, 'ri02-2_777', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= -2', '11', array['2N','3X'], null);
+select ranking_777(153, 20, 'ri02-2_777', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= -2', '11', array['2T','2M'], null);
+select ranking_777(154, 20, 'ri02-2_777', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= -2', '11', array['3F'], null);
+select ranking_777(155, 20, 'ri02-2_777', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= -2', '11', array['2F'], null);
+select ranking_777(156, 20, 'ri02-2_777', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= -2', '11', array['1T'], null);
+select ranking_777(157, 20, 'ri04-2_777', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= -2', '1', array['3T','3R','3P'], null);
+select ranking_777(158, 20, 'ri04-2_777', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= -2', '1', array['2N','3X'], null);
+select ranking_777(159, 20, 'ri04-2_777', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= -2', '1', array['2T','2M'], null);
+select ranking_777(160, 20, 'ri04-2_777', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= -2', '1', array['3F'], null);
+select ranking_777(161, 20, 'ri04-2_777', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= -2', '1', array['2F'], null);
+select ranking_777(162, 20, 'ri04-2_777', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= -2', '1', array['1T'], null);
+select ranking_777(163, 20, 'ri04-2_777', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= -2', '11', array['3T','3R','3P'], null);
+select ranking_777(164, 20, 'ri04-2_777', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= -2', '11', array['2N','3X'], null);
+select ranking_777(165, 20, 'ri04-2_777', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= -2', '11', array['2T','2M'], null);
+select ranking_777(166, 20, 'ri04-2_777', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= -2', '11', array['3F'], null);
+select ranking_777(167, 20, 'ri04-2_777', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= -2', '11', array['2F'], null);
+select ranking_777(168, 20, 'ri04-2_777', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= -2', '11', array['1T'], null);
+select ranking_5555(169, 20, 'ri02-2_5555', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= -2', '1', array['3T','3R','3P'], null);
+select ranking_5555(170, 20, 'ri02-2_5555', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= -2', '1', array['2N','3X'], null);
+select ranking_5555(171, 20, 'ri02-2_5555', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= -2', '1', array['2T','2M'], null);
+select ranking_5555(172, 20, 'ri02-2_5555', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= -2', '1', array['3F'], null);
+select ranking_5555(173, 20, 'ri02-2_5555', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= -2', '1', array['2F'], null);
+select ranking_5555(174, 20, 'ri02-2_5555', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= -2', '1', array['1T'], null);
+select ranking_5555(175, 20, 'ri02-2_5555', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= -2', '11', array['3T','3R','3P'], null);
+select ranking_5555(176, 20, 'ri02-2_5555', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= -2', '11', array['2N','3X'], null);
+select ranking_5555(177, 20, 'ri02-2_5555', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= -2', '11', array['2T','2M'], null);
+select ranking_5555(178, 20, 'ri02-2_5555', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= -2', '11', array['3F'], null);
+select ranking_5555(179, 20, 'ri02-2_5555', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= -2', '11', array['2F'], null);
+select ranking_5555(180, 20, 'ri02-2_5555', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= -2', '11', array['1T'], null);
+select ranking_5555(181, 20, 'ri04-2_5555', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= -2', '1', array['3T','3R','3P'], null);
+select ranking_5555(182, 20, 'ri04-2_5555', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= -2', '1', array['2N','3X'], null);
+select ranking_5555(183, 20, 'ri04-2_5555', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= -2', '1', array['2T','2M'], null);
+select ranking_5555(184, 20, 'ri04-2_5555', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= -2', '1', array['3F'], null);
+select ranking_5555(185, 20, 'ri04-2_5555', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= -2', '1', array['2F'], null);
+select ranking_5555(186, 20, 'ri04-2_5555', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= -2', '1', array['1T'], null);
+select ranking_5555(187, 20, 'ri04-2_5555', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= -2', '11', array['3T','3R','3P'], null);
+select ranking_5555(188, 20, 'ri04-2_5555', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= -2', '11', array['2N','3X'], null);
+select ranking_5555(189, 20, 'ri04-2_5555', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= -2', '11', array['2T','2M'], null);
+select ranking_5555(190, 20, 'ri04-2_5555', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= -2', '11', array['3F'], null);
+select ranking_5555(191, 20, 'ri04-2_5555', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= -2', '11', array['2F'], null);
+select ranking_5555(192, 20, 'ri04-2_5555', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= -2', '11', array['1T'], null);
+select ranking_777(193, 20, 'i02-2_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= -2', '1', array['3T','3R','3P'], null);
+select ranking_777(194, 20, 'i02-2_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= -2', '1', array['2N','3X'], null);
+select ranking_777(195, 20, 'i02-2_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= -2', '1', array['2T','2M'], null);
+select ranking_777(196, 20, 'i02-2_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= -2', '1', array['3F'], null);
+select ranking_777(197, 20, 'i02-2_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= -2', '1', array['2F'], null);
+select ranking_777(198, 20, 'i02-2_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= -2', '1', array['1T'], null);
+select ranking_777(199, 20, 'i02-2_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= -2', '11', array['3T','3R','3P'], null);
+select ranking_777(200, 20, 'i02-2_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= -2', '11', array['2N','3X'], null);
+select ranking_777(201, 20, 'i02-2_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= -2', '11', array['2T','2M'], null);
+select ranking_777(202, 20, 'i02-2_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= -2', '11', array['3F'], null);
+select ranking_777(203, 20, 'i02-2_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= -2', '11', array['2F'], null);
+select ranking_777(204, 20, 'i02-2_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= -2', '11', array['1T'], null);
+select ranking_777(205, 20, 'i04-2_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= -2', '1', array['3T','3R','3P'], null);
+select ranking_777(206, 20, 'i04-2_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= -2', '1', array['2N','3X'], null);
+select ranking_777(207, 20, 'i04-2_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= -2', '1', array['2T','2M'], null);
+select ranking_777(208, 20, 'i04-2_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= -2', '1', array['3F'], null);
+select ranking_777(209, 20, 'i04-2_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= -2', '1', array['2F'], null);
+select ranking_777(210, 20, 'i04-2_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= -2', '1', array['1T'], null);
+select ranking_777(211, 20, 'i04-2_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= -2', '11', array['3T','3R','3P'], null);
+select ranking_777(212, 20, 'i04-2_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= -2', '11', array['2N','3X'], null);
+select ranking_777(213, 20, 'i04-2_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= -2', '11', array['2T','2M'], null);
+select ranking_777(214, 20, 'i04-2_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= -2', '11', array['3F'], null);
+select ranking_777(215, 20, 'i04-2_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= -2', '11', array['2F'], null);
+select ranking_777(216, 20, 'i04-2_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= -2', '11', array['1T'], null);
+select ranking_5555(217, 20, 'i02-2_5555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= -2', '1', array['3T','3R','3P'], null);
+select ranking_5555(218, 20, 'i02-2_5555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= -2', '1', array['2N','3X'], null);
+select ranking_5555(219, 20, 'i02-2_5555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= -2', '1', array['2T','2M'], null);
+select ranking_5555(220, 20, 'i02-2_5555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= -2', '1', array['3F'], null);
+select ranking_5555(221, 20, 'i02-2_5555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= -2', '1', array['2F'], null);
+select ranking_5555(222, 20, 'i02-2_5555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= -2', '1', array['1T'], null);
+select ranking_5555(223, 20, 'i02-2_5555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= -2', '11', array['3T','3R','3P'], null);
+select ranking_5555(224, 20, 'i02-2_5555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= -2', '11', array['2N','3X'], null);
+select ranking_5555(225, 20, 'i02-2_5555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= -2', '11', array['2T','2M'], null);
+select ranking_5555(226, 20, 'i02-2_5555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= -2', '11', array['3F'], null);
+select ranking_5555(227, 20, 'i02-2_5555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= -2', '11', array['2F'], null);
+select ranking_5555(228, 20, 'i02-2_5555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= -2', '11', array['1T'], null);
+select ranking_5555(229, 20, 'i04-2_5555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= -2', '1', array['3T','3R','3P'], null);
+select ranking_5555(230, 20, 'i04-2_5555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= -2', '1', array['2N','3X'], null);
+select ranking_5555(231, 20, 'i04-2_5555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= -2', '1', array['2T','2M'], null);
+select ranking_5555(232, 20, 'i04-2_5555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= -2', '1', array['3F'], null);
+select ranking_5555(233, 20, 'i04-2_5555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= -2', '1', array['2F'], null);
+select ranking_5555(234, 20, 'i04-2_5555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= -2', '1', array['1T'], null);
+select ranking_5555(235, 20, 'i04-2_5555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= -2', '11', array['3T','3R','3P'], null);
+select ranking_5555(236, 20, 'i04-2_5555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= -2', '11', array['2N','3X'], null);
+select ranking_5555(237, 20, 'i04-2_5555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= -2', '11', array['2T','2M'], null);
+select ranking_5555(238, 20, 'i04-2_5555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= -2', '11', array['3F'], null);
+select ranking_5555(239, 20, 'i04-2_5555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= -2', '11', array['2F'], null);
+select ranking_5555(240, 20, 'i04-2_5555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= -2', '11', array['1T'], null);
+select ranking_777(241, 20, 'i09-2_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= -2', '1', array['3T','3R','3P'], null);
+select ranking_777(242, 20, 'i09-2_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= -2', '1', array['2N','3X'], null);
+select ranking_777(243, 20, 'i09-2_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= -2', '1', array['2T','2M'], null);
+select ranking_777(244, 20, 'i09-2_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= -2', '1', array['3F'], null);
+select ranking_777(245, 20, 'i09-2_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= -2', '1', array['2F'], null);
+select ranking_777(246, 20, 'i09-2_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= -2', '1', array['1T'], null);
+select ranking_777(247, 20, 'i09-2_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= -2', '11', array['3T','3R','3P'], null);
+select ranking_777(248, 20, 'i09-2_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= -2', '11', array['2N','3X'], null);
+select ranking_777(249, 20, 'i09-2_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= -2', '11', array['2T','2M'], null);
+select ranking_777(250, 20, 'i09-2_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= -2', '11', array['3F'], null);
+select ranking_777(251, 20, 'i09-2_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= -2', '11', array['2F'], null);
+select ranking_777(252, 20, 'i09-2_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= -2', '11', array['1T'], null);
+select ranking_5555(253, 20, 'i09-2_5555', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= -2', '1', array['3T','3R','3P'], null);
+select ranking_5555(254, 20, 'i09-2_5555', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= -2', '1', array['2N','3X'], null);
+select ranking_5555(255, 20, 'i09-2_5555', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= -2', '1', array['2T','2M'], null);
+select ranking_5555(256, 20, 'i09-2_5555', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= -2', '1', array['3F'], null);
+select ranking_5555(257, 20, 'i09-2_5555', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= -2', '1', array['2F'], null);
+select ranking_5555(258, 20, 'i09-2_5555', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= -2', '1', array['1T'], null);
+select ranking_5555(259, 20, 'i09-2_5555', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= -2', '11', array['3T','3R','3P'], null);
+select ranking_5555(260, 20, 'i09-2_5555', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= -2', '11', array['2N','3X'], null);
+select ranking_5555(261, 20, 'i09-2_5555', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= -2', '11', array['2T','2M'], null);
+select ranking_5555(262, 20, 'i09-2_5555', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= -2', '11', array['3F'], null);
+select ranking_5555(263, 20, 'i09-2_5555', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= -2', '11', array['2F'], null);
+select ranking_5555(264, 20, 'i09-2_5555', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= -2', '11', array['1T'], null);
+select ranking_777(265, 20, 'ri09-2_777', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= -2', '1', array['3T','3R','3P'], null);
+select ranking_777(266, 20, 'ri09-2_777', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= -2', '1', array['2N','3X'], null);
+select ranking_777(267, 20, 'ri09-2_777', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= -2', '1', array['2T','2M'], null);
+select ranking_777(268, 20, 'ri09-2_777', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= -2', '1', array['3F'], null);
+select ranking_777(269, 20, 'ri09-2_777', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= -2', '1', array['2F'], null);
+select ranking_777(270, 20, 'ri09-2_777', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= -2', '1', array['1T'], null);
+select ranking_777(271, 20, 'ri09-2_777', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= -2', '11', array['3T','3R','3P'], null);
+select ranking_777(272, 20, 'ri09-2_777', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= -2', '11', array['2N','3X'], null);
+select ranking_777(273, 20, 'ri09-2_777', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= -2', '11', array['2T','2M'], null);
+select ranking_777(274, 20, 'ri09-2_777', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= -2', '11', array['3F'], null);
+select ranking_777(275, 20, 'ri09-2_777', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= -2', '11', array['2F'], null);
+select ranking_777(276, 20, 'ri09-2_777', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= -2', '11', array['1T'], null);
+select ranking_5555(277, 20, 'ri09-2_5555', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= -2', '1', array['3T','3R','3P'], null);
+select ranking_5555(278, 20, 'ri09-2_5555', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= -2', '1', array['2N','3X'], null);
+select ranking_5555(279, 20, 'ri09-2_5555', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= -2', '1', array['2T','2M'], null);
+select ranking_5555(280, 20, 'ri09-2_5555', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= -2', '1', array['3F'], null);
+select ranking_5555(281, 20, 'ri09-2_5555', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= -2', '1', array['2F'], null);
+select ranking_5555(282, 20, 'ri09-2_5555', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= -2', '1', array['1T'], null);
+select ranking_5555(283, 20, 'ri09-2_5555', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= -2', '11', array['3T','3R','3P'], null);
+select ranking_5555(284, 20, 'ri09-2_5555', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= -2', '11', array['2N','3X'], null);
+select ranking_5555(285, 20, 'ri09-2_5555', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= -2', '11', array['2T','2M'], null);
+select ranking_5555(286, 20, 'ri09-2_5555', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= -2', '11', array['3F'], null);
+select ranking_5555(287, 20, 'ri09-2_5555', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= -2', '11', array['2F'], null);
+select ranking_5555(288, 20, 'ri09-2_5555', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= -2', '11', array['1T'], null);
+
+
+select ranking_777(1, 20, 'ri02_777', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_777(2, 20, 'ri02_777', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= 0', '1', array['2N','3X'], null);
+select ranking_777(3, 20, 'ri02_777', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= 0', '1', array['2T','2M'], null);
+select ranking_777(4, 20, 'ri02_777', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= 0', '1', array['3F'], null);
+select ranking_777(5, 20, 'ri02_777', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= 0', '1', array['2F'], null);
+select ranking_777(6, 20, 'ri02_777', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= 0', '1', array['1T'], null);
+select ranking_777(7, 20, 'ri02_777', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= 0', '11', array['3T','3R','3P'], null);
+select ranking_777(8, 20, 'ri02_777', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= 0', '11', array['2N','3X'], null);
+select ranking_777(9, 20, 'ri02_777', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= 0', '11', array['2T','2M'], null);
+select ranking_777(10, 20, 'ri02_777', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= 0', '11', array['3F'], null);
+select ranking_777(11, 20, 'ri02_777', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= 0', '11', array['2F'], null);
+select ranking_777(12, 20, 'ri02_777', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= 0', '11', array['1T'], null);
+
+select ranking_777(13, 20, 'ri04_777', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_777(14, 20, 'ri04_777', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= 0', '1', array['2N','3X'], null);
+select ranking_777(15, 20, 'ri04_777', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= 0', '1', array['2T','2M'], null);
+select ranking_777(16, 20, 'ri04_777', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= 0', '1', array['3F'], null);
+select ranking_777(17, 20, 'ri04_777', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= 0', '1', array['2F'], null);
+select ranking_777(18, 20, 'ri04_777', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= 0', '1', array['1T'], null);
+select ranking_777(19, 20, 'ri04_777', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= 0', '11', array['3T','3R','3P'], null);
+select ranking_777(20, 20, 'ri04_777', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= 0', '11', array['2N','3X'], null);
+select ranking_777(21, 20, 'ri04_777', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= 0', '11', array['2T','2M'], null);
+select ranking_777(22, 20, 'ri04_777', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= 0', '11', array['3F'], null);
+select ranking_777(23, 20, 'ri04_777', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= 0', '11', array['2F'], null);
+select ranking_777(24, 20, 'ri04_777', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= 0', '11', array['1T'], null);
+
+select ranking_5555(25, 20, 'ri02_5555', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_5555(26, 20, 'ri02_5555', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= 0', '1', array['2N','3X'], null);
+select ranking_5555(27, 20, 'ri02_5555', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= 0', '1', array['2T','2M'], null);
+select ranking_5555(28, 20, 'ri02_5555', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= 0', '1', array['3F'], null);
+select ranking_5555(29, 20, 'ri02_5555', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= 0', '1', array['2F'], null);
+select ranking_5555(30, 20, 'ri02_5555', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= 0', '1', array['1T'], null);
+select ranking_5555(31, 20, 'ri02_5555', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= 0', '11', array['3T','3R','3P'], null);
+select ranking_5555(32, 20, 'ri02_5555', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= 0', '11', array['2N','3X'], null);
+select ranking_5555(33, 20, 'ri02_5555', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= 0', '11', array['2T','2M'], null);
+select ranking_5555(34, 20, 'ri02_5555', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= 0', '11', array['3F'], null);
+select ranking_5555(35, 20, 'ri02_5555', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= 0', '11', array['2F'], null);
+select ranking_5555(36, 20, 'ri02_5555', 'sum(i0*5+i1*3+i2)', '(i0*5+i1*3+i2)/100 >= 0', '11', array['1T'], null);
+
+select ranking_5555(37, 20, 'ri04_5555', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_5555(38, 20, 'ri04_5555', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= 0', '1', array['2N','3X'], null);
+select ranking_5555(39, 20, 'ri04_5555', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= 0', '1', array['2T','2M'], null);
+select ranking_5555(40, 20, 'ri04_5555', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= 0', '1', array['3F'], null);
+select ranking_5555(41, 20, 'ri04_5555', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= 0', '1', array['2F'], null);
+select ranking_5555(42, 20, 'ri04_5555', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= 0', '1', array['1T'], null);
+select ranking_5555(43, 20, 'ri04_5555', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= 0', '11', array['3T','3R','3P'], null);
+select ranking_5555(44, 20, 'ri04_5555', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= 0', '11', array['2N','3X'], null);
+select ranking_5555(45, 20, 'ri04_5555', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= 0', '11', array['2T','2M'], null);
+select ranking_5555(46, 20, 'ri04_5555', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= 0', '11', array['3F'], null);
+select ranking_5555(47, 20, 'ri04_5555', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= 0', '11', array['2F'], null);
+select ranking_5555(48, 20, 'ri04_5555', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', '(i0*5+i1*4+i2*3+i3*2+i4)/100 >= 0', '11', array['1T'], null);
+------
+
+select ranking_777(49, 20, 'i02_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_777(50, 20, 'i02_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['2N','3X'], null);
+select ranking_777(51, 20, 'i02_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['2T','2M'], null);
+select ranking_777(52, 20, 'i02_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['3F'], null);
+select ranking_777(53, 20, 'i02_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['2F'], null);
+select ranking_777(54, 20, 'i02_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['1T'], null);
+select ranking_777(55, 20, 'i02_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '11', array['3T','3R','3P'], null);
+select ranking_777(56, 20, 'i02_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '11', array['2N','3X'], null);
+select ranking_777(57, 20, 'i02_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '11', array['2T','2M'], null);
+select ranking_777(58, 20, 'i02_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '11', array['3F'], null);
+select ranking_777(59, 20, 'i02_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '11', array['2F'], null);
+select ranking_777(60, 20, 'i02_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '11', array['1T'], null);
+
+select ranking_777(61, 20, 'i04_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_777(62, 20, 'i04_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['2N','3X'], null);
+select ranking_777(63, 20, 'i04_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['2T','2M'], null);
+select ranking_777(64, 20, 'i04_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['3F'], null);
+select ranking_777(65, 20, 'i04_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['2F'], null);
+select ranking_777(66, 20, 'i04_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['1T'], null);
+select ranking_777(67, 20, 'i04_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '11', array['3T','3R','3P'], null);
+select ranking_777(68, 20, 'i04_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '11', array['2N','3X'], null);
+select ranking_777(69, 20, 'i04_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '11', array['2T','2M'], null);
+select ranking_777(70, 20, 'i04_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '11', array['3F'], null);
+select ranking_777(71, 20, 'i04_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '11', array['2F'], null);
+select ranking_777(72, 20, 'i04_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '11', array['1T'], null);
+
+select ranking_5555(73, 20, 'i02_5555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_5555(74, 20, 'i02_5555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['2N','3X'], null);
+select ranking_5555(75, 20, 'i02_5555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['2T','2M'], null);
+select ranking_5555(76, 20, 'i02_5555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['3F'], null);
+select ranking_5555(77, 20, 'i02_5555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['2F'], null);
+select ranking_5555(78, 20, 'i02_5555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['1T'], null);
+select ranking_5555(79, 20, 'i02_5555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '11', array['3T','3R','3P'], null);
+select ranking_5555(80, 20, 'i02_5555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '11', array['2N','3X'], null);
+select ranking_5555(81, 20, 'i02_5555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '11', array['2T','2M'], null);
+select ranking_5555(82, 20, 'i02_5555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '11', array['3F'], null);
+select ranking_5555(83, 20, 'i02_5555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '11', array['2F'], null);
+select ranking_5555(84, 20, 'i02_5555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '11', array['1T'], null);
+
+select ranking_5555(85, 20, 'i04_5555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_5555(86, 20, 'i04_5555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['2N','3X'], null);
+select ranking_5555(87, 20, 'i04_5555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['2T','2M'], null);
+select ranking_5555(88, 20, 'i04_5555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['3F'], null);
+select ranking_5555(89, 20, 'i04_5555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['2F'], null);
+select ranking_5555(90, 20, 'i04_5555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['1T'], null);
+select ranking_5555(91, 20, 'i04_5555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '11', array['3T','3R','3P'], null);
+select ranking_5555(92, 20, 'i04_5555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '11', array['2N','3X'], null);
+select ranking_5555(93, 20, 'i04_5555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '11', array['2T','2M'], null);
+select ranking_5555(94, 20, 'i04_5555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '11', array['3F'], null);
+select ranking_5555(95, 20, 'i04_5555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '11', array['2F'], null);
+select ranking_5555(96, 20, 'i04_5555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '11', array['1T'], null);
+---
+select ranking_777(97, 20, 'i09_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_777(98, 20, 'i09_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['2N','3X'], null);
+select ranking_777(99, 20, 'i09_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['2T','2M'], null);
+select ranking_777(100, 20, 'i09_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['3F'], null);
+select ranking_777(101, 20, 'i09_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['2F'], null);
+select ranking_777(102, 20, 'i09_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['1T'], null);
+select ranking_777(103, 20, 'i09_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '11', array['3T','3R','3P'], null);
+select ranking_777(104, 20, 'i09_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '11', array['2N','3X'], null);
+select ranking_777(105, 20, 'i09_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '11', array['2T','2M'], null);
+select ranking_777(106, 20, 'i09_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '11', array['3F'], null);
+select ranking_777(107, 20, 'i09_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '11', array['2F'], null);
+select ranking_777(108, 20, 'i09_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '11', array['1T'], null);
+
+select ranking_5555(109, 20, 'i09_5555', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_5555(110, 20, 'i09_5555', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['2N','3X'], null);
+select ranking_5555(111, 20, 'i09_5555', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['2T','2M'], null);
+select ranking_5555(112, 20, 'i09_5555', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['3F'], null);
+select ranking_5555(113, 20, 'i09_5555', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['2F'], null);
+select ranking_5555(114, 20, 'i09_5555', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['1T'], null);
+select ranking_5555(115, 20, 'i09_5555', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '11', array['3T','3R','3P'], null);
+select ranking_5555(116, 20, 'i09_5555', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '11', array['2N','3X'], null);
+select ranking_5555(117, 20, 'i09_5555', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '11', array['2T','2M'], null);
+select ranking_5555(118, 20, 'i09_5555', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '11', array['3F'], null);
+select ranking_5555(119, 20, 'i09_5555', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '11', array['2F'], null);
+select ranking_5555(120, 20, 'i09_5555', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '11', array['1T'], null);
+
+select ranking_777(121, 20, 'ri09_777', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_777(122, 20, 'ri09_777', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= 0', '1', array['2N','3X'], null);
+select ranking_777(123, 20, 'ri09_777', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= 0', '1', array['2T','2M'], null);
+select ranking_777(124, 20, 'ri09_777', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= 0', '1', array['3F'], null);
+select ranking_777(125, 20, 'ri09_777', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= 0', '1', array['2F'], null);
+select ranking_777(126, 20, 'ri09_777', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= 0', '1', array['1T'], null);
+select ranking_777(127, 20, 'ri09_777', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= 0', '11', array['3T','3R','3P'], null);
+select ranking_777(128, 20, 'ri09_777', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= 0', '11', array['2N','3X'], null);
+select ranking_777(129, 20, 'ri09_777', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= 0', '11', array['2T','2M'], null);
+select ranking_777(130, 20, 'ri09_777', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= 0', '11', array['3F'], null);
+select ranking_777(131, 20, 'ri09_777', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= 0', '11', array['2F'], null);
+select ranking_777(132, 20, 'ri09_777', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= 0', '11', array['1T'], null);
+
+select ranking_5555(133, 20, 'ri09_5555', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_5555(134, 20, 'ri09_5555', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= 0', '1', array['2N','3X'], null);
+select ranking_5555(135, 20, 'ri09_5555', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= 0', '1', array['2T','2M'], null);
+select ranking_5555(136, 20, 'ri09_5555', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= 0', '1', array['3F'], null);
+select ranking_5555(137, 20, 'ri09_5555', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= 0', '1', array['2F'], null);
+select ranking_5555(138, 20, 'ri09_5555', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= 0', '1', array['1T'], null);
+select ranking_5555(139, 20, 'ri09_5555', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= 0', '11', array['3T','3R','3P'], null);
+select ranking_5555(140, 20, 'ri09_5555', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= 0', '11', array['2N','3X'], null);
+select ranking_5555(141, 20, 'ri09_5555', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= 0', '11', array['2T','2M'], null);
+select ranking_5555(142, 20, 'ri09_5555', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= 0', '11', array['3F'], null);
+select ranking_5555(143, 20, 'ri09_5555', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= 0', '11', array['2F'], null);
+select ranking_5555(144, 20, 'ri09_5555', 'sum(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)', '(i0*10+i1*9+i2*8+i3*7+i4*6+i5*5+i6*4+i7*3+i8*2+i9)/100 >= 0', '11', array['1T'], null);
+
+
+
+
+select ranking_777(1, 20, 'i02_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_777(2, 20, 'i02_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['2N','3X'], null);
+select ranking_777(3, 20, 'i02_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['2T','2M'], null);
+select ranking_777(4, 20, 'i02_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['3F'], null);
+select ranking_777(5, 20, 'i02_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['2F'], null);
+select ranking_777(6, 20, 'i02_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['1T'], null);
+select ranking_777(7, 20, 'i02_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '11', array['3T','3R','3P'], null);
+select ranking_777(8, 20, 'i02_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '11', array['2N','3X'], null);
+select ranking_777(9, 20, 'i02_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '11', array['2T','2M'], null);
+select ranking_777(10, 20, 'i02_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '11', array['3F'], null);
+select ranking_777(11, 20, 'i02_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '11', array['2F'], null);
+select ranking_777(12, 20, 'i02_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '11', array['1T'], null);
+
+select ranking_777(13, 20, 'i04_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_777(14, 20, 'i04_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['2N','3X'], null);
+select ranking_777(15, 20, 'i04_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['2T','2M'], null);
+select ranking_777(16, 20, 'i04_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['3F'], null);
+select ranking_777(17, 20, 'i04_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['2F'], null);
+select ranking_777(18, 20, 'i04_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['1T'], null);
+select ranking_777(19, 20, 'i04_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '11', array['3T','3R','3P'], null);
+select ranking_777(20, 20, 'i04_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '11', array['2N','3X'], null);
+select ranking_777(21, 20, 'i04_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '11', array['2T','2M'], null);
+select ranking_777(22, 20, 'i04_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '11', array['3F'], null);
+select ranking_777(23, 20, 'i04_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '11', array['2F'], null);
+select ranking_777(24, 20, 'i04_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '11', array['1T'], null);
+
+select ranking_777(25, 20, 'i09_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_777(26, 20, 'i09_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['2N','3X'], null);
+select ranking_777(27, 20, 'i09_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['2T','2M'], null);
+select ranking_777(28, 20, 'i09_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['3F'], null);
+select ranking_777(29, 20, 'i09_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['2F'], null);
+select ranking_777(30, 20, 'i09_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['1T'], null);
+select ranking_777(31, 20, 'i09_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '11', array['3T','3R','3P'], null);
+select ranking_777(32, 20, 'i09_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '11', array['2N','3X'], null);
+select ranking_777(33, 20, 'i09_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '11', array['2T','2M'], null);
+select ranking_777(34, 20, 'i09_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '11', array['3F'], null);
+select ranking_777(35, 20, 'i09_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '11', array['2F'], null);
+select ranking_777(36, 20, 'i09_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '11', array['1T'], null);
+
+select ranking_777(37, 20, 'i0209_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2)/100 >= 0 and (i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_777(38, 20, 'i0209_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2)/100 >= 0 and (i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['2N','3X'], null);
+select ranking_777(39, 20, 'i0209_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2)/100 >= 0 and (i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['2T','2M'], null);
+select ranking_777(40, 20, 'i0209_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2)/100 >= 0 and (i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['3F'], null);
+select ranking_777(41, 20, 'i0209_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2)/100 >= 0 and (i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['2F'], null);
+select ranking_777(42, 20, 'i0209_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2)/100 >= 0 and (i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['1T'], null);
+select ranking_777(43, 20, 'i0209_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2)/100 >= 0 and (i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '11', array['3T','3R','3P'], null);
+select ranking_777(44, 20, 'i0209_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2)/100 >= 0 and (i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '11', array['2N','3X'], null);
+select ranking_777(45, 20, 'i0209_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2)/100 >= 0 and (i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '11', array['2T','2M'], null);
+select ranking_777(46, 20, 'i0209_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2)/100 >= 0 and (i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '11', array['3F'], null);
+select ranking_777(47, 20, 'i0209_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2)/100 >= 0 and (i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '11', array['2F'], null);
+select ranking_777(48, 20, 'i0209_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2)/100 >= 0 and (i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '11', array['1T'], null);
+
+select
+ *
+from (
+	select 
+	  factor, ranking, keycol2, sum(i0) i0, sum(i0+i1+i2) i02, sum(i0+i1+i2+i3+i4) i04, sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9) i09, sum(incamt) iall, 
+	  sum(bc0+bc1+bc2+bc3+bc4) bc04, sum(bc0+bc1+bc2+bc3+bc4+bc5+bc6+bc7+bc8+bc9) bc09, sum(betcnt) bcall
+	from ptn_ranking pr 
+	where factor like '%test' and factor like '%i02_%' and kumiban = '123'
+	group by factor, ranking, keycol2
+	order by factor, ranking, keycol2
+) tmp
+where i09 > 0
+order by factor
+;
+
+select 
+  factor, ranking, keycol2, sum(i0) i0, sum(i0+i1+i2) i02, sum(i0+i1+i2+i3+i4) i04, sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9) i09, sum(incamt) iall, 
+  sum(bc0+bc1+bc2+bc3+bc4) bc04, sum(bc0+bc1+bc2+bc3+bc4+bc5+bc6+bc7+bc8+bc9) bc09, sum(betcnt) bcall
+from ptn_ranking pr 
+where factor like '%test'
+group by factor, ranking, keycol2
+order by factor, ranking, keycol2
+;
+
+select 
+  factor, sum(i0)::int i0, sum(i0+i1+i2)::int i02, sum(i0+i1+i2+i3+i4)::int i04, sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)::int i09, sum(incamt)::int iall, 
+  sum(bc0+bc1+bc2)::int bc02, sum(bc0+bc1+bc2+bc3+bc4)::int bc04, sum(bc0+bc1+bc2+bc3+bc4+bc5+bc6+bc7+bc8+bc9)::int bc09, sum(betcnt)::int bcall
+from ptn_ranking pr 
+where factor like '%test' and factor like '%i02_%'
+  and ranking <= 10
+group by factor
+order by factor
+;
+
+select
+  factor, percentile_cont(0.5) within group (order by (incamt))
+from ptn_ranking pr 
+where factor like '%test' and kumiban = '123'
+group by factor
+order by factor
+;
+
+select ranking_test(1, 20, 'i0204_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2)/100 >= 0 and (i0+i1+i2+i3+i4)/100 >= 0', '1', array['3T','3R','3P'], null, array['stat777_1','stat777_2','stat777_3']);
+select ranking_test(1, 20, 'i0209_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2)/100 >= 0 and (i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['3T','3R','3P'], null, array['stat777_1','stat777_2','stat777_3']);
+select ranking_test(1, 20, 'i0409_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4)/100 >= 0 and (i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['3T','3R','3P'], null, array['stat777_1','stat777_2','stat777_3']);
+select ranking_test(1, 20, 'i02inc_777', 'sum(incamt)', '(i0+i1+i2)/100 >= 0 and (incamt)/100 >= 0', '1', array['3T','3R','3P'], null, array['stat777_1','stat777_2','stat777_3']);
+select ranking_test2(1, 20, 'i0209_5555', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2)/100 >= 0 and (i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['3T','3R','3P'], null, array['stat5555_1','stat5555_2','stat5555_3','stat5555_4']);
+select ranking_test(1, 20, 'i009_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0)/100 >= 0 and (i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['3T','3R','3P'], null, array['stat777_1','stat777_2','stat777_3']);
+
+
+select ranking_test(1, 20, 'i02_777', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 1', '1', array['3T','3R','3P'], null, array['stat777_1','stat777_2','stat777_3']);
+select ranking_test(1, 20, 'i02_666', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 1', '1', array['3T','3R','3P'], null, array['stat666_1','stat666_2','stat666_3']);
+select ranking_test(1, 20, 'i02_884', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 1', '1', array['3T','3R','3P'], null, array['stat884_1','stat884_2','stat884_3']);
+select ranking_test2(1, 20, 'i02_5555', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 1', '1', array['3T','3R','3P'], null, array['stat5555_1','stat5555_2','stat5555_3','stat5555_4']);
+
+select ranking_test(1, 20, 'i04_777', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 1', '1', array['3T','3R','3P'], null, array['stat777_1','stat777_2','stat777_3']);
+select ranking_test(1, 20, 'i04_666', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 1', '1', array['3T','3R','3P'], null, array['stat666_1','stat666_2','stat666_3']);
+select ranking_test(1, 20, 'i04_884', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 1', '1', array['3T','3R','3P'], null, array['stat884_1','stat884_2','stat884_3']);
+select ranking_test2(1, 20, 'i04_5555', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 1', '1', array['3T','3R','3P'], null, array['stat5555_1','stat5555_2','stat5555_3','stat5555_4']);
+
+select ranking_test(1, 20, 'i09_777', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 1', '1', array['3T','3R','3P'], null, array['stat777_1','stat777_2','stat777_3']);
+select ranking_test(1, 20, 'i09_666', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 1', '1', array['3T','3R','3P'], null, array['stat666_1','stat666_2','stat666_3']);
+select ranking_test(1, 20, 'i09_884', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 1', '1', array['3T','3R','3P'], null, array['stat884_1','stat884_2','stat884_3']);
+select ranking_test2(1, 20, 'i09_5555', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 1', '1', array['3T','3R','3P'], null, array['stat5555_1','stat5555_2','stat5555_3','stat5555_4']);
+
+select ranking_test(1, 20, 'inc_777', 'sum(incamt)', '(incamt)/100 >= 1', '1', array['3T','3R','3P'], null, array['stat777_1','stat777_2','stat777_3']);
+select ranking_test(1, 20, 'inc_666', 'sum(incamt)', '(incamt)/100 >= 1', '1', array['3T','3R','3P'], null, array['stat666_1','stat666_2','stat666_3']);
+select ranking_test(1, 20, 'inc_884', 'sum(incamt)', '(incamt)/100 >= 1', '1', array['3T','3R','3P'], null, array['stat884_1','stat884_2','stat884_3']);
+select ranking_test2(1, 20, 'inc_5555', 'sum(incamt)', '(incamt)/100 >= 1', '1', array['3T','3R','3P'], null, array['stat5555_1','stat5555_2','stat5555_3','stat5555_4']);
+
+truncate ptn_ranking;
+
+select ranking_777(1, 20, '777_i02', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['3T','3R','3P'], '123');
+select ranking_777(2, 20, '777_i04', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['3T','3R','3P'], '123');
+select ranking_777(3, 20, '777_i09', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['3T','3R','3P'], '123');
+select ranking_777(4, 20, '777_iam', 'sum(incamt)', '(incamt)/100 >= 0', '1', array['3T','3R','3P'], '123');
+select ranking_666(5, 20, '666_i02', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['3T','3R','3P'], '123');
+select ranking_666(6, 20, '666_i04', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['3T','3R','3P'], '123');
+select ranking_666(7, 20, '666_i09', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['3T','3R','3P'], '123');
+select ranking_666(8, 20, '666_iam', 'sum(incamt)', '(incamt)/100 >= 0', '1', array['3T','3R','3P'], '123');
+
+select ranking_777(9, 20, '777_i02', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_777(10, 20, '777_i04', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_777(11, 20, '777_i09', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_777(12, 20, '777_iam', 'sum(incamt)', '(incamt)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_666(13, 20, '666_i02', 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_666(14, 20, '666_i04', 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_666(15, 20, '666_i09', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', '(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)/100 >= 0', '1', array['3T','3R','3P'], null);
+select ranking_666(16, 20, '666_iam', 'sum(incamt)', '(incamt)/100 >= 0', '1', array['3T','3R','3P'], null);
+
+select 
+  pr.ranking, '' factor, st.*
+from ptn_ranking pr, stat_test st 
+where pr.factor = ''
+  and pr.keycol = st.keycol 
+
+
+		    select
+		      *
+		    from 
+		    (
+				select
+				  row_number() over (partition by kumiban order by (srfactor) desc) as ranking, keycol2, kumiban, srfactor
+				from
+				(
+					select
+					  *
+					from (
+						select
+						  keycol2, kumiban, ( sum(i0+i1+i2) ) srfactor 
+					 	from 
+						(
+							select
+							  s1.keycol
+							from
+							    (select keycol from stat777_1 where ((i0+i1+i2)/100 >= 0) and result_type = '1' and bettype in ('3T','3R','3P') and kumiban = '123' ) s1
+							  , (select keycol from stat777_2 where ((i0+i1+i2)/100 >= 0) and result_type = '1' and bettype in ('3T','3R','3P') and kumiban = '123' ) s2
+							where s1.keycol = s2.keycol 
+						) t123,
+						stat777_3 sr
+						where t123.keycol = sr.keycol
+						group by keycol2, kumiban
+					) tmp2
+				) tmp
+			) tr
+			where ranking <= 20
+;
+
+
+select s1a_generate_ranking('s1a', 1, 'sum(i0+incamt)', '(i0+incamt)/100 >= 0', 20, '1', array['3T','3R','3P']);
+select s1a_generate_ranking('s1a', 2, 'sum(i0+i1+i2+incamt)', '(i0+i1+i2+incamt)/100 >= 0', 20, '1', array['3T','3R','3P']);
+select s1a_generate_ranking('s1a', 3, 'sum(i0+i1+i2+i3+i4+incamt)', '(i0+i1+i2+i3+i4+incamt)/100 >= 0', 20, '1', array['3T','3R','3P']);
+select s1a_generate_ranking('s1a', 4, 'sum(i0+incamt)', '(i0+incamt)/100 >= 0', 20, '1', array['2N','3X']);
+select s1a_generate_ranking('s1a', 5, 'sum(i0+i1+i2+incamt)', '(i0+i1+i2+incamt)/100 >= 0', 20, '1', array['2N','3X']);
+select s1a_generate_ranking('s1a', 6, 'sum(i0+i1+i2+i3+i4+incamt)', '(i0+i1+i2+i3+i4+incamt)/100 >= 0', 20, '1', array['2N','3X']);
+select s1a_generate_ranking('s1a', 7, 'sum(i0+incamt)', '(i0+incamt)/100 >= 0', 20, '1', array['2T','2M']);
+select s1a_generate_ranking('s1a', 8, 'sum(i0+i1+i2+incamt)', '(i0+i1+i2+incamt)/100 >= 0', 20, '1', array['2T','2M']);
+select s1a_generate_ranking('s1a', 9, 'sum(i0+i1+i2+i3+i4+incamt)', '(i0+i1+i2+i3+i4+incamt)/100 >= 0', 20, '1', array['2T','2M']);
+select s1a_generate_ranking('s1a', 10, 'sum(i0+incamt)', '(i0+incamt)/100 >= 0', 20, '1', array['3F']);
+select s1a_generate_ranking('s1a', 11, 'sum(i0+i1+i2+incamt)', '(i0+i1+i2+incamt)/100 >= 0', 20, '1', array['3F']);
+select s1a_generate_ranking('s1a', 12, 'sum(i0+i1+i2+i3+i4+incamt)', '(i0+i1+i2+i3+i4+incamt)/100 >= 0', 20, '1', array['3F']);
+select s1a_generate_ranking('s1a', 13, 'sum(i0+incamt)', '(i0+incamt)/100 >= 0', 20, '1', array['2F']);
+select s1a_generate_ranking('s1a', 14, 'sum(i0+i1+i2+incamt)', '(i0+i1+i2+incamt)/100 >= 0', 20, '1', array['2F']);
+select s1a_generate_ranking('s1a', 15, 'sum(i0+i1+i2+i3+i4+incamt)', '(i0+i1+i2+i3+i4+incamt)/100 >= 0', 20, '1', array['2F']);
+select s1a_generate_ranking('s1a', 16, 'sum(i0+incamt)', '(i0+incamt)/100 >= 0', 20, '1', array['1T']);
+select s1a_generate_ranking('s1a', 17, 'sum(i0+i1+i2+incamt)', '(i0+i1+i2+incamt)/100 >= 0', 20, '1', array['1T']);
+select s1a_generate_ranking('s1a', 18, 'sum(i0+i1+i2+i3+i4+incamt)', '(i0+i1+i2+i3+i4+incamt)/100 >= 0', 20, '1', array['1T']);
+select s1a_generate_ranking('s1a', 19, 'sum(i0+incamt)', '(i0+incamt)/100 >= 0', 20, '11', array['3T','3R','3P']);
+select s1a_generate_ranking('s1a', 20, 'sum(i0+i1+i2+incamt)', '(i0+i1+i2+incamt)/100 >= 0', 20, '11', array['3T','3R','3P']);
+select s1a_generate_ranking('s1a', 21, 'sum(i0+i1+i2+i3+i4+incamt)', '(i0+i1+i2+i3+i4+incamt)/100 >= 0', 20, '11', array['3T','3R','3P']);
+select s1a_generate_ranking('s1a', 22, 'sum(i0+incamt)', '(i0+incamt)/100 >= 0', 20, '11', array['2N','3X']);
+select s1a_generate_ranking('s1a', 23, 'sum(i0+i1+i2+incamt)', '(i0+i1+i2+incamt)/100 >= 0', 20, '11', array['2N','3X']);
+select s1a_generate_ranking('s1a', 24, 'sum(i0+i1+i2+i3+i4+incamt)', '(i0+i1+i2+i3+i4+incamt)/100 >= 0', 20, '11', array['2N','3X']);
+select s1a_generate_ranking('s1a', 25, 'sum(i0+incamt)', '(i0+incamt)/100 >= 0', 20, '11', array['2T','2M']);
+select s1a_generate_ranking('s1a', 26, 'sum(i0+i1+i2+incamt)', '(i0+i1+i2+incamt)/100 >= 0', 20, '11', array['2T','2M']);
+select s1a_generate_ranking('s1a', 27, 'sum(i0+i1+i2+i3+i4+incamt)', '(i0+i1+i2+i3+i4+incamt)/100 >= 0', 20, '11', array['2T','2M']);
+select s1a_generate_ranking('s1a', 28, 'sum(i0+incamt)', '(i0+incamt)/100 >= 0', 20, '11', array['3F']);
+select s1a_generate_ranking('s1a', 29, 'sum(i0+i1+i2+incamt)', '(i0+i1+i2+incamt)/100 >= 0', 20, '11', array['3F']);
+select s1a_generate_ranking('s1a', 30, 'sum(i0+i1+i2+i3+i4+incamt)', '(i0+i1+i2+i3+i4+incamt)/100 >= 0', 20, '11', array['3F']);
+select s1a_generate_ranking('s1a', 31, 'sum(i0+incamt)', '(i0+incamt)/100 >= 0', 20, '11', array['2F']);
+select s1a_generate_ranking('s1a', 32, 'sum(i0+i1+i2+incamt)', '(i0+i1+i2+incamt)/100 >= 0', 20, '11', array['2F']);
+select s1a_generate_ranking('s1a', 33, 'sum(i0+i1+i2+i3+i4+incamt)', '(i0+i1+i2+i3+i4+incamt)/100 >= 0', 20, '11', array['2F']);
+select s1a_generate_ranking('s1a', 34, 'sum(i0+incamt)', '(i0+incamt)/100 >= 0', 20, '11', array['1T']);
+select s1a_generate_ranking('s1a', 35, 'sum(i0+i1+i2+incamt)', '(i0+i1+i2+incamt)/100 >= 0', 20, '11', array['1T']);
+select s1a_generate_ranking('s1a', 36, 'sum(i0+i1+i2+i3+i4+incamt)', '(i0+i1+i2+i3+i4+incamt)/100 >= 0', 20, '11', array['1T']);
+
+select s1a_generate_ranking('s1a', 37, 'sum(i0)', '(i0)/100 >= 0', 20, '1', array['3T','3R','3P']);
+select s1a_generate_ranking('s1a', 38, 'sum((i0+i1+i2))', '(i0+i1+i2)/100 >= 0', 20, '1', array['3T','3R','3P']);
+select s1a_generate_ranking('s1a', 39, 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', 20, '1', array['3T','3R','3P']);
+select s1a_generate_ranking('s1a', 40, 'sum(incamt)', 'incamt/100 >= 0', 20, '1', array['3T','3R','3P']);
+select s1a_generate_ranking('s1a', 41, 'sum(i0)', '(i0)/100 >= 0', 20, '1', array['2N','3X']);
+select s1a_generate_ranking('s1a', 42, 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', 20, '1', array['2N','3X']);
+select s1a_generate_ranking('s1a', 43, 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', 20, '1', array['2N','3X']);
+select s1a_generate_ranking('s1a', 44, 'sum(incamt)', 'incamt/100 >= 0', 20, '1', array['2N','3X']);
+select s1a_generate_ranking('s1a', 45, 'sum(i0)', '(i0)/100 >= 0', 20, '1', array['2T','2M']);
+select s1a_generate_ranking('s1a', 46, 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', 20, '1', array['2T','2M']);
+select s1a_generate_ranking('s1a', 47, 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', 20, '1', array['2T','2M']);
+select s1a_generate_ranking('s1a', 48, 'sum(incamt)', 'incamt/100 >= 0', 20, '1', array['2T','2M']);
+select s1a_generate_ranking('s1a', 49, 'sum(i0)', '(i0)/100 >= 0', 20, '1', array['3F']);
+select s1a_generate_ranking('s1a', 50, 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', 20, '1', array['3F']);
+select s1a_generate_ranking('s1a', 51, 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', 20, '1', array['3F']);
+select s1a_generate_ranking('s1a', 52, 'sum(incamt)', 'incamt/100 >= 0', 20, '1', array['3F']);
+select s1a_generate_ranking('s1a', 53, 'sum(i0)', '(i0)/100 >= 0', 20, '1', array['2F']);
+select s1a_generate_ranking('s1a', 54, 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', 20, '1', array['2F']);
+select s1a_generate_ranking('s1a', 55, 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', 20, '1', array['2F']);
+select s1a_generate_ranking('s1a', 56, 'sum(incamt)', 'incamt/100 >= 0', 20, '1', array['2F']);
+select s1a_generate_ranking('s1a', 57, 'sum(i0)', '(i0)/100 >= 0', 20, '1', array['1T']);
+select s1a_generate_ranking('s1a', 58, 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', 20, '1', array['1T']);
+select s1a_generate_ranking('s1a', 59, 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', 20, '1', array['1T']);
+select s1a_generate_ranking('s1a', 60, 'sum(incamt)', 'incamt/100 >= 0', 20, '1', array['1T']);
+
+select s1a_generate_ranking('s1a', 61, 'sum(i0)', '(i0)/100 >= 0', 20, '11', array['3T','3R','3P']);
+select s1a_generate_ranking('s1a', 62, 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', 20, '11', array['3T','3R','3P']);
+select s1a_generate_ranking('s1a', 63, 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', 20, '11', array['3T','3R','3P']);
+select s1a_generate_ranking('s1a', 64, 'sum(incamt)', 'incamt/100 >= 0', 20, '11', array['3T','3R','3P']);
+select s1a_generate_ranking('s1a', 65, 'sum(i0)', '(i0)/100 >= 0', 20, '11', array['2N','3X']);
+select s1a_generate_ranking('s1a', 66, 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', 20, '11', array['2N','3X']);
+select s1a_generate_ranking('s1a', 67, 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', 20, '11', array['2N','3X']);
+select s1a_generate_ranking('s1a', 68, 'sum(incamt)', 'incamt/100 >= 0', 20, '11', array['2N','3X']);
+select s1a_generate_ranking('s1a', 69, 'sum(i0)', '(i0)/100 >= 0', 20, '11', array['2T','2M']);
+select s1a_generate_ranking('s1a', 70, 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', 20, '11', array['2T','2M']);
+select s1a_generate_ranking('s1a', 71, 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', 20, '11', array['2T','2M']);
+select s1a_generate_ranking('s1a', 72, 'sum(incamt)', 'incamt/100 >= 0', 20, '11', array['2T','2M']);
+select s1a_generate_ranking('s1a', 73, 'sum(i0)', '(i0)/100 >= 0', 20, '11', array['3F']);
+select s1a_generate_ranking('s1a', 74, 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', 20, '11', array['3F']);
+select s1a_generate_ranking('s1a', 75, 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', 20, '11', array['3F']);
+select s1a_generate_ranking('s1a', 76, 'sum(incamt)', 'incamt/100 >= 0', 20, '11', array['3F']);
+select s1a_generate_ranking('s1a', 77, 'sum(i0)', '(i0)/100 >= 0', 20, '11', array['2F']);
+select s1a_generate_ranking('s1a', 78, 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', 20, '11', array['2F']);
+select s1a_generate_ranking('s1a', 79, 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', 20, '11', array['2F']);
+select s1a_generate_ranking('s1a', 80, 'sum(incamt)', 'incamt/100 >= 0', 20, '11', array['2F']);
+select s1a_generate_ranking('s1a', 81, 'sum(i0)', '(i0)/100 >= 0', 20, '11', array['1T']);
+select s1a_generate_ranking('s1a', 82, 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', 20, '11', array['1T']);
+select s1a_generate_ranking('s1a', 83, 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', 20, '11', array['1T']);
+select s1a_generate_ranking('s1a', 84, 'sum(incamt)', 'incamt/100 >= 0', 20, '11', array['1T']);
+
+
+select s3a_generate_ranking('s3a', 1, 'sum(i0+incamt)', '(i0+incamt)/100 >= 0', 20, '1', array['3T','3R','3P']);
+select s3a_generate_ranking('s3a', 2, 'sum(i0+i1+i2+incamt)', '(i0+i1+i2+incamt)/100 >= 0', 20, '1', array['3T','3R','3P']);
+select s3a_generate_ranking('s3a', 3, 'sum(i0+i1+i2+i3+i4+incamt)', '(i0+i1+i2+i3+i4+incamt)/100 >= 0', 20, '1', array['3T','3R','3P']);
+select s3a_generate_ranking('s3a', 4, 'sum(i0+incamt)', '(i0+incamt)/100 >= 0', 20, '1', array['2N','3X']);
+select s3a_generate_ranking('s3a', 5, 'sum(i0+i1+i2+incamt)', '(i0+i1+i2+incamt)/100 >= 0', 20, '1', array['2N','3X']);
+select s3a_generate_ranking('s3a', 6, 'sum(i0+i1+i2+i3+i4+incamt)', '(i0+i1+i2+i3+i4+incamt)/100 >= 0', 20, '1', array['2N','3X']);
+select s3a_generate_ranking('s3a', 7, 'sum(i0+incamt)', '(i0+incamt)/100 >= 0', 20, '1', array['2T','2M']);
+select s3a_generate_ranking('s3a', 8, 'sum(i0+i1+i2+incamt)', '(i0+i1+i2+incamt)/100 >= 0', 20, '1', array['2T','2M']);
+select s3a_generate_ranking('s3a', 9, 'sum(i0+i1+i2+i3+i4+incamt)', '(i0+i1+i2+i3+i4+incamt)/100 >= 0', 20, '1', array['2T','2M']);
+select s3a_generate_ranking('s3a', 10, 'sum(i0+incamt)', '(i0+incamt)/100 >= 0', 20, '1', array['3F']);
+select s3a_generate_ranking('s3a', 11, 'sum(i0+i1+i2+incamt)', '(i0+i1+i2+incamt)/100 >= 0', 20, '1', array['3F']);
+select s3a_generate_ranking('s3a', 12, 'sum(i0+i1+i2+i3+i4+incamt)', '(i0+i1+i2+i3+i4+incamt)/100 >= 0', 20, '1', array['3F']);
+select s3a_generate_ranking('s3a', 13, 'sum(i0+incamt)', '(i0+incamt)/100 >= 0', 20, '1', array['2F']);
+select s3a_generate_ranking('s3a', 14, 'sum(i0+i1+i2+incamt)', '(i0+i1+i2+incamt)/100 >= 0', 20, '1', array['2F']);
+select s3a_generate_ranking('s3a', 15, 'sum(i0+i1+i2+i3+i4+incamt)', '(i0+i1+i2+i3+i4+incamt)/100 >= 0', 20, '1', array['2F']);
+select s3a_generate_ranking('s3a', 16, 'sum(i0+incamt)', '(i0+incamt)/100 >= 0', 20, '1', array['1T']);
+select s3a_generate_ranking('s3a', 17, 'sum(i0+i1+i2+incamt)', '(i0+i1+i2+incamt)/100 >= 0', 20, '1', array['1T']);
+select s3a_generate_ranking('s3a', 18, 'sum(i0+i1+i2+i3+i4+incamt)', '(i0+i1+i2+i3+i4+incamt)/100 >= 0', 20, '1', array['1T']);
+
+select s3a_generate_ranking('s3a', 19, 'sum(i0+incamt)', '(i0+incamt)/100 >= 0', 20, '11', array['3T','3R','3P']);
+select s3a_generate_ranking('s3a', 20, 'sum(i0+i1+i2+incamt)', '(i0+i1+i2+incamt)/100 >= 0', 20, '11', array['3T','3R','3P']);
+select s3a_generate_ranking('s3a', 21, 'sum(i0+i1+i2+i3+i4+incamt)', '(i0+i1+i2+i3+i4+incamt)/100 >= 0', 20, '11', array['3T','3R','3P']);
+select s3a_generate_ranking('s3a', 22, 'sum(i0+incamt)', '(i0+incamt)/100 >= 0', 20, '11', array['2N','3X']);
+select s3a_generate_ranking('s3a', 23, 'sum(i0+i1+i2+incamt)', '(i0+i1+i2+incamt)/100 >= 0', 20, '11', array['2N','3X']);
+select s3a_generate_ranking('s3a', 24, 'sum(i0+i1+i2+i3+i4+incamt)', '(i0+i1+i2+i3+i4+incamt)/100 >= 0', 20, '11', array['2N','3X']);
+select s3a_generate_ranking('s3a', 25, 'sum(i0+incamt)', '(i0+incamt)/100 >= 0', 20, '11', array['2T','2M']);
+select s3a_generate_ranking('s3a', 26, 'sum(i0+i1+i2+incamt)', '(i0+i1+i2+incamt)/100 >= 0', 20, '11', array['2T','2M']);
+select s3a_generate_ranking('s3a', 27, 'sum(i0+i1+i2+i3+i4+incamt)', '(i0+i1+i2+i3+i4+incamt)/100 >= 0', 20, '11', array['2T','2M']);
+select s3a_generate_ranking('s3a', 28, 'sum(i0+incamt)', '(i0+incamt)/100 >= 0', 20, '11', array['3F']);
+select s3a_generate_ranking('s3a', 29, 'sum(i0+i1+i2+incamt)', '(i0+i1+i2+incamt)/100 >= 0', 20, '11', array['3F']);
+select s3a_generate_ranking('s3a', 30, 'sum(i0+i1+i2+i3+i4+incamt)', '(i0+i1+i2+i3+i4+incamt)/100 >= 0', 20, '11', array['3F']);
+select s3a_generate_ranking('s3a', 31, 'sum(i0+incamt)', '(i0+incamt)/100 >= 0', 20, '11', array['2F']);
+select s3a_generate_ranking('s3a', 32, 'sum(i0+i1+i2+incamt)', '(i0+i1+i2+incamt)/100 >= 0', 20, '11', array['2F']);
+select s3a_generate_ranking('s3a', 33, 'sum(i0+i1+i2+i3+i4+incamt)', '(i0+i1+i2+i3+i4+incamt)/100 >= 0', 20, '11', array['2F']);
+select s3a_generate_ranking('s3a', 34, 'sum(i0+incamt)', '(i0+incamt)/100 >= 0', 20, '11', array['1T']);
+select s3a_generate_ranking('s3a', 35, 'sum(i0+i1+i2+incamt)', '(i0+i1+i2+incamt)/100 >= 0', 20, '11', array['1T']);
+select s3a_generate_ranking('s3a', 36, 'sum(i0+i1+i2+i3+i4+incamt)', '(i0+i1+i2+i3+i4+incamt)/100 >= 0', 20, '11', array['1T']);
+
+select s3a_generate_ranking('s3a', 37, 'sum(i0)', '(i0)/100 >= 0', 20, '1', array['3T','3R','3P']);
+select s3a_generate_ranking('s3a', 38, 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', 20, '1', array['3T','3R','3P']);
+select s3a_generate_ranking('s3a', 39, 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', 20, '1', array['3T','3R','3P']);
+select s3a_generate_ranking('s3a', 40, 'sum(incamt)', 'incamt/100 >= 0', 20, '1', array['3T','3R','3P']);
+select s3a_generate_ranking('s3a', 41, 'sum(i0)', '(i0)/100 >= 0', 20, '1', array['2N','3X']);
+select s3a_generate_ranking('s3a', 42, 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', 20, '1', array['2N','3X']);
+select s3a_generate_ranking('s3a', 43, 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', 20, '1', array['2N','3X']);
+select s3a_generate_ranking('s3a', 44, 'sum(incamt)', 'incamt/100 >= 0', 20, '1', array['2N','3X']);
+select s3a_generate_ranking('s3a', 45, 'sum(i0)', '(i0)/100 >= 0', 20, '1', array['2T','2M']);
+select s3a_generate_ranking('s3a', 46, 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', 20, '1', array['2T','2M']);
+select s3a_generate_ranking('s3a', 47, 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', 20, '1', array['2T','2M']);
+select s3a_generate_ranking('s3a', 48, 'sum(incamt)', 'incamt/100 >= 0', 20, '1', array['2T','2M']);
+select s3a_generate_ranking('s3a', 49, 'sum(i0)', '(i0)/100 >= 0', 20, '1', array['3F']);
+select s3a_generate_ranking('s3a', 50, 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', 20, '1', array['3F']);
+select s3a_generate_ranking('s3a', 51, 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', 20, '1', array['3F']);
+select s3a_generate_ranking('s3a', 52, 'sum(incamt)', 'incamt/100 >= 0', 20, '1', array['3F']);
+select s3a_generate_ranking('s3a', 53, 'sum(i0)', '(i0)/100 >= 0', 20, '1', array['2F']);
+select s3a_generate_ranking('s3a', 54, 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', 20, '1', array['2F']);
+select s3a_generate_ranking('s3a', 55, 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', 20, '1', array['2F']);
+select s3a_generate_ranking('s3a', 56, 'sum(incamt)', 'incamt/100 >= 0', 20, '1', array['2F']);
+select s3a_generate_ranking('s3a', 57, 'sum(i0)', '(i0)/100 >= 0', 20, '1', array['1T']);
+select s3a_generate_ranking('s3a', 58, 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', 20, '1', array['1T']);
+select s3a_generate_ranking('s3a', 59, 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', 20, '1', array['1T']);
+select s3a_generate_ranking('s3a', 60, 'sum(incamt)', 'incamt/100 >= 0', 20, '1', array['1T']);
+
+select s3a_generate_ranking('s3a', 61, 'sum(i0)', '(i0)/100 >= 0', 20, '11', array['3T','3R','3P']);
+select s3a_generate_ranking('s3a', 62, 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', 20, '11', array['3T','3R','3P']);
+select s3a_generate_ranking('s3a', 63, 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', 20, '11', array['3T','3R','3P']);
+select s3a_generate_ranking('s3a', 64, 'sum(incamt)', 'incamt/100 >= 0', 20, '11', array['3T','3R','3P']);
+select s3a_generate_ranking('s3a', 65, 'sum(i0)', '(i0)/100 >= 0', 20, '11', array['2N','3X']);
+select s3a_generate_ranking('s3a', 66, 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', 20, '11', array['2N','3X']);
+select s3a_generate_ranking('s3a', 67, 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', 20, '11', array['2N','3X']);
+select s3a_generate_ranking('s3a', 68, 'sum(incamt)', 'incamt/100 >= 0', 20, '11', array['2N','3X']);
+select s3a_generate_ranking('s3a', 69, 'sum(i0)', '(i0)/100 >= 0', 20, '11', array['2T','2M']);
+select s3a_generate_ranking('s3a', 70, 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', 20, '11', array['2T','2M']);
+select s3a_generate_ranking('s3a', 71, 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', 20, '11', array['2T','2M']);
+select s3a_generate_ranking('s3a', 72, 'sum(incamt)', 'incamt/100 >= 0', 20, '11', array['2T','2M']);
+select s3a_generate_ranking('s3a', 73, 'sum(i0)', '(i0)/100 >= 0', 20, '11', array['3F']);
+select s3a_generate_ranking('s3a', 74, 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', 20, '11', array['3F']);
+select s3a_generate_ranking('s3a', 75, 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', 20, '11', array['3F']);
+select s3a_generate_ranking('s3a', 76, 'sum(incamt)', 'incamt/100 >= 0', 20, '11', array['3F']);
+select s3a_generate_ranking('s3a', 77, 'sum(i0)', '(i0)/100 >= 0', 20, '11', array['2F']);
+select s3a_generate_ranking('s3a', 78, 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', 20, '11', array['2F']);
+select s3a_generate_ranking('s3a', 79, 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', 20, '11', array['2F']);
+select s3a_generate_ranking('s3a', 80, 'sum(incamt)', 'incamt/100 >= 0', 20, '11', array['2F']);
+select s3a_generate_ranking('s3a', 81, 'sum(i0)', '(i0)/100 >= 0', 20, '11', array['1T']);
+select s3a_generate_ranking('s3a', 82, 'sum(i0+i1+i2)', '(i0+i1+i2)/100 >= 0', 20, '11', array['1T']);
+select s3a_generate_ranking('s3a', 83, 'sum(i0+i1+i2+i3+i4)', '(i0+i1+i2+i3+i4)/100 >= 0', 20, '11', array['1T']);
+select s3a_generate_ranking('s3a', 84, 'sum(incamt)', 'incamt/100 >= 0', 20, '11', array['1T']);
+
+
+truncate ptn_ranking;
+truncate ml_evaluation;
+truncate ml_bork_evaluation;
+truncate ml_range_evaluation;
+truncate ml_term_evaluation;
+
+
+--select b1_generate_ranking('b1_3trp_123_1', 'sum(incamt)', 'incrate > 1.0', 20, '1', array['3T','3R','3P'], '123');
+--select b1_generate_ranking('b1_3trp_123_2', 'sum(incamt)', 'incrate > 0.9', 20, '1', array['3T','3R','3P'], '123');
+--
+--select s2_generate_ranking('s2_3trp_123_1', 'sum(i0+i1+i2+i3+i4)', 'i0+i1+i2+i3+i4 > 0', 20, '1', array['3T','3R','3P'], '123');
+--select s2_generate_ranking('s2_3trp_123_2', 'sum(i0+i1+i2+i3+i4)', 'incrate > 1.0', 20, '1', array['3T','3R','3P'], '123');
+--
+--select s3_generate_ranking('s3_3trp_123_1', 'sum(i0+i1+i2+i3+i4)', 'i0+i1+i2+i3+i4 > 0', 20, '1', array['3T','3R','3P'], '123');
+--select s3_generate_ranking('s3_3trp_123_2', 'sum(i0+i1+i2+i3+i4)', 'incrate > 1.0', 20, '1', array['3T','3R','3P'], '123');
+--select s3_generate_ranking('s3_3trp_123_3', 'sum(incamt)', 'i0+i1+i2+i3+i4 > 0', 20, '1', array['3T','3R','3P'], '123');
+--select s3_generate_ranking('s3_3trp_123_4', 'sum(incamt)', 'incamt > 0', 20, '1', array['3T','3R','3P'], '123');
+--select s3_generate_ranking('s3_3trp_123_5', 'sum(i0+i1+i2+i3+i4)', 'i0>0 and i1>0 and i2>0 and i3>0 and i4>0', 20, '1', array['3T','3R','3P'], '123');
+--select s3_generate_ranking('s3_3trp_123_6', 'sum(i0)', 'i0>0', 20, '1', array['3T','3R','3P'], '123');
+--select s3_generate_ranking('s3_3trp_123_7', 'sum(i0+i1)', 'i0>0 and i0+i1>0', 20, '1', array['3T','3R','3P'], '123');
+--select s3_generate_ranking('s3_3trp_123_8', 'sum(i0+i1+i2)', 'i0>0 and i0+i1>0 and i0+i1+i2>0', 20, '1', array['3T','3R','3P'], '123');
+--select s3_generate_ranking('s3_3trp_123_9_bork1-30', 'sum(incamt)', 'incamt > 0', 20, '1', array['3T','3R','3P'], '123');
+--select s3_generate_ranking('s3_3trp_123_10', 'sum(incamt)', 'incamt > 0 and patternid=''wk12+jyo+race''', 20, '1', array['3T','3R','3P'], '123');
+--select s4_generate_ranking('s4_3trp_123_1', 'sum(i0+i1+i2+i3+i4)', 'i0+i1+i2+i3+i4 > 0', 20, '1', array['3T','3R','3P'], '123');
+--select s4_generate_ranking('s5_3trp_123_1', 'sum(i0+i1+i2+i3+i4)', 'i0+i1+i2+i3+i4 > 0', 20, '1', array['3T','3R','3P'], '123');
+--select s4_generate_ranking('s5_3trp_123_2', 'sum(i0+i1+i2+i3+i4)', 'i0+i1+i2+i3+i4 > -1000', 20, '1', array['3T','3R','3P'], '123');
+--select s4_generate_ranking('s4_3trp_123_2', 'sum(i0+i1+i2+i3+i4+incamt)', 'i0+i1+i2+i3+i4+incamt > 0', 20, '1', array['3T','3R','3P'], '123');
+--select s4_generate_ranking('s5_3trp_123_3', 'sum(i0+i1+i2+i3+i4+incamt)', 'i0+i1+i2+i3+i4+incamt > 0', 20, '1', array['3T','3R','3P'], '123');
+--select s3_generate_ranking('s3_3trp_123_11', 'sum(i0+i1+i2+i3+i4+incamt)', 'i0+i1+i2+i3+i4+incamt > 0', 20, '1', array['3T','3R','3P'], '123');
+
+
+
+--select generate_ranking('s1_3t3r3p_1', 'sum(i0+i1+i2+i3+i4+incamt)', 'i0+i1+i2+i3+i4+incamt', 0, 10, '1', array['3T','3R','3P']); 
+--select generate_ranking('s1_3t3r3p_2', 'sum(i0+i1+i2+i3+i4)', 'i0+i1+i2+i3+i4', 0, 10, '1', array['3T','3R','3P']); 
+--select generate_ranking('s1_3t3r3p_3', 'sum(i0*5+i1*4+i2*3+i3*2+i4+incamt)', 'i0*5+i1*4+i2*3+i3*2+i4+incamt', 0, 10, '1', array['3T','3R','3P']); 
+--select generate_ranking('s1_3t3r3p_4', 'sum(i0*5+i1*4+i2*3+i3*2+i4)', 'i0*5+i1*4+i2*3+i3*2+i4', 0, 10, '1', array['3T','3R','3P']); 
+--select generate_ranking('s1_3t3r3p_5', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9+incamt)', 'i0+i1+i2+i3+i4+i5+i6+i7+i8+i9+incamt', 0, 10, '1', array['3T','3R','3P']); 
+--select generate_ranking('s1_3t3r3p_6', 'sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)', 'i0+i1+i2+i3+i4+i5+i6+i7+i8+i9', 0, 10, '1', array['3T','3R','3P']); 
+--select generate_ranking('s1_3t3r3p_7', 'sum(i0*5+i1*4+i2*3+i3*2+i4+i5+i6+i7+i8+i9+incamt)', 'i0*5+i1*4+i2*3+i3*2+i4+i5+i6+i7+i8+i9+incamt', 0, 10, '1', array['3T','3R','3P']); 
+--select generate_ranking('s1_3t3r3p_8', 'sum(i0*5+i1*4+i2*3+i3*2+i4+i5+i6+i7+i8+i9)', 'i0*5+i1*4+i2*3+i3*2+i4+i5+i6+i7+i8+i9', 0, 10, '1', array['3T','3R','3P']); 
+--
+--select generate_ranking('s1_3t3r3p_9', 'sum(i0+i1+i2)', 'i0+i1+i2', 100, 10, '1', array['3T','3R','3P']); 
+--select generate_ranking('s1_3t3r3p_10', 'sum(incamt)', 'i0+i1+i2', 100, 10, '1', array['3T','3R','3P']); 
+--select generate_ranking('s1_3t3r3p_11', 'sum(i0+i1+i2)', 'incamt', 100, 10, '1', array['3T','3R','3P']); 
+--select generate_ranking('s1_3t3r3p_12', 'sum(i0+i1+i2)', 'incrate', 1.2, 10, '1', array['3T','3R','3P']); 
+--
+--select generate_ranking('s1_3t3r3p_13', 'sum(i0)/(case when sum(bc0) = 0 then 9999999999 else sum(bc0) end)', 'i0/(case when bc0 = 0 then 9999999999 else bc0 end)', 0, 10, '1', array['3T','3R','3P']); 
+--select generate_ranking('s1_3t3r3p_14', 'sum(i1+i2+i3+i4+i5)', 'i1+i2+i3+i4+i5', 0, 10, '1', array['3T','3R','3P']); 
+--
+--
+--select s2_generate_ranking('s2_3trp_123_1', 'sum(i0+i1+i2+i3+i4)', 'i0+i1+i2+i3+i4', 0, 20, '1', array['3T','3R','3P'], '123'); 
+--select s2_generate_ranking('s2_3trp_123_1', 'sum(i0+i1+i2+i3+i4)', 'i0+i1+i2+i3+i4', 0, 20, '1', array['3T','3R','3P'], '123'); 
+
+
+
+drop table if exists stat_2020;
+CREATE TABLE stat_2020 (
+    keycol varchar(200) NULL,
+    keycol2 varchar(200) NULL,
+	result_type varchar(2) NULL,
+	bettype varchar(3) NULL,
+	kumiban varchar(3) NULL,
+	resultno varchar(5) NULL,
+	modelno varchar(5) NULL,
+	patternid varchar(20) NULL,
+	pattern varchar(200) NULL,
+	betcnt int NULL,
+	hitcnt int NULL,
+	betamt int NULL,
+	hitamt int NULL,
+	incamt int NULL,
+	betrate double precision NULL,
+	hitrate double precision NULL,
+	incrate double precision NULL,
+	bal_pluscnt int NULL,
+	evaluations_id varchar(255)
+);
+
+drop index if exists indexes_keycol_bork_2020;
+create index indexes_keycol_bork_2020 on stat_2020 (keycol);
+drop index if exists indexes_keycolptnid_bork_2020;
+create index indexes_keycolptnid_bork_2020 on stat_2020 (keycol2);
+drop index if exists indexes_stat_2020;
+create index indexes_stat_2020 on stat_2020 (result_type, bettype, kumiban, modelno, patternid, pattern);
+drop index if exists indexes_stat_2020_evaluationsid;
+create index indexes_stat_2020_evaluationsid on stat_2020 (evaluations_id);
+
+truncate stat777_1;
+insert into stat777_1
+  select
+    (me.result_type || '_' || me.bettype || '_' || me.kumiban || '_' || me.modelno || '_' || me.patternid || '_' || me.pattern) keycol, 
+    (me.result_type || '_' || me.bettype || '_' || me.kumiban || '_' || me.modelno || '_' || me.patternid) keycol2, 
+    me.result_type, me.bettype, me.kumiban, me.resultno, me.modelno, me.patternid, me.pattern, 
+    bk.incamt[0] i0, bk.incamt[1] i1, bk.incamt[2] i2, bk.incamt[3] i3, bk.incamt[4] i4, 
+    bk.incamt[5] i5, bk.incamt[6] i6, bk.incamt[7] i7, bk.incamt[8] i8, bk.incamt[9] i9, 
+    bk.betcnt[0] bc0, bk.betcnt[1] bc1, bk.betcnt[2] bc2, bk.betcnt[3] bc3, bk.betcnt[4] bc4, 
+    bk.betcnt[5] bc5, bk.betcnt[6] bc6, bk.betcnt[7] bc7, bk.betcnt[8] bc8, bk.betcnt[9] bc9, 
+    bk.hitcnt[0] hc0, bk.hitcnt[1] hc1, bk.hitcnt[2] hc2, bk.hitcnt[3] hc3, bk.hitcnt[4] hc4, 
+    bk.hitcnt[5] hc5, bk.hitcnt[6] hc6, bk.hitcnt[7] hc7, bk.hitcnt[8] hc8, bk.hitcnt[9] hc9, 
+    me.betcnt, me.hitcnt, me.betamt, me.hitamt, (me.hitamt - me.betamt) incamt, me.betrate, me.hitrate, me.incomerate, me.bal_pluscnt, me.evaluations_id
+  from ml_evaluation me, ml_bork_evaluation bk
+  where  
+    me.result_type = bk.result_type and me.bettype = bk.bettype and me.kumiban = bk.kumiban and me.modelno = bk.modelno and me.patternid  = bk.patternid and me.pattern = bk.pattern and me.evaluations_id = bk.evaluations_id
+    and me.evaluations_id = '77_1'
+;
+
+
+truncate stat_2020;
+insert into stat_2020
+  select
+    (me.result_type || '_' || me.bettype || '_' || me.kumiban || '_' || me.modelno || '_' || me.patternid || '_' || me.pattern) keycol, 
+    (me.result_type || '_' || me.bettype || '_' || me.kumiban || '_' || me.modelno || '_' || me.patternid) keycol2, 
+    me.result_type, me.bettype, me.kumiban, me.resultno, me.modelno, me.patternid, me.pattern, 
+    me.betcnt, me.hitcnt, me.betamt, me.hitamt, (me.hitamt - me.betamt) incamt, me.betrate, me.hitrate, me.incomerate, me.bal_pluscnt, me.evaluations_id
+  from ml_evaluation me
+  where me.evaluations_id = '2020'
+;
+
+create table ml_bork_evaluation_2018_2020 as select * from ml_bork_evaluation;
+create table ml_range_evaluation_2018_2020 as select * from ml_range_evaluation;
+create table ml_term_evaluation_2018_2020 as select * from ml_term_evaluation;
+create table ml_evaluation_2018_2020 as select * from ml_evaluation;
+
+drop table ml_bork_evaluation_2018_2020;
+truncate ptn_ranking;
+truncate ml_bork_evaluation;
+truncate ml_range_evaluation;
+truncate ml_term_evaluation;
+truncate ml_evaluation;
+
+-------------------------------------------------
+create table ml_bork_evaluation_2018_2020 as select * from ml_bork_evaluation;
+create table ml_range_evaluation_2018_2020 as select * from ml_range_evaluation;
+create table ml_term_evaluation_2018_2020 as select * from ml_term_evaluation;
+create table ml_evaluation_2018_2020 as select * from ml_evaluation;
+
+truncate ml_bork_evaluation;
+truncate ml_range_evaluation;
+truncate ml_term_evaluation;
+truncate ml_evaluation;
+
+
+
+
+create table ml_bork_evaluation_12 as select * from ml_bork_evaluation where evaluations_id = '12_1';
+create table ml_range_evaluation_12 as select * from ml_range_evaluation where evaluations_id = '12_1';
+create table ml_term_evaluation_12 as select * from ml_term_evaluation where evaluations_id = '12_1';
+create table ml_evaluation_12 as select * from ml_evaluation where evaluations_id = '12_1';
+
+truncate ml_bork_evaluation;
+truncate ml_range_evaluation;
+truncate ml_term_evaluation;
+truncate ml_evaluation;
+
+----------------------------------------------
+insert into ptn_ranking
+select
+  ranking, 's3_2', sr.*
+from
+(
+    select
+      *
+    from 
+    (
+		select
+		  row_number() over (partition by kumiban order by (srfactor) desc) as ranking, keycol2, kumiban, srfactor, isum, incamt, betcnt
+		from
+		(
+			select
+			  *
+			from (
+				select
+				  keycol2, kumiban, sum(i0+i1+i2+i3+i4 + incamt) srfactor, sum(i0+i1+i2+i3+i4) isum, sum(incamt) incamt, sum(betcnt) betcnt 
+				from 
+				(
+					select
+					  s1.keycol
+					from
+					    (select keycol from stat_bork1 where (i0+i1+i2+i3+i4) > 0 and result_type = '1' and bettype in ('3T','3R','3P') ) s1
+					  , (select keycol from stat_bork2 where (i0+i1+i2+i3+i4) > 0 and result_type = '1' and bettype in ('3T','3R','3P') ) s2
+					where s1.keycol = s2.keycol 
+				) t123,
+				stat6_4 sr
+				where t123.keycol = sr.keycol
+				group by keycol2, kumiban
+			) tmp2
+			--where isum > 0 and incamt > 0
+		) tmp
+	) tr
+	where ranking <= 10
+) pidr,
+(
+	select
+	  s.* 
+	from 
+	(
+		select
+		  s1.keycol
+		from
+		    (select keycol from stat_bork1 where (i0+i1+i2+i3+i4) > 0 and result_type = '1' and bettype in ('3T','3R','3P') ) s1
+		  , (select keycol from stat_bork2 where (i0+i1+i2+i3+i4) > 0 and result_type = '1' and bettype in ('3T','3R','3P') ) s2
+		where s1.keycol = s2.keycol 
+	) t123,	stat6_4 s
+	where t123.keycol = s.keycol
+) sr
+where sr.keycol2 = pidr.keycol2
+order by ranking
+;
+
+
+
+select
+  row_number() over (partition by kumiban order by (srfactor) desc) as ranking, keycol2, kumiban, srfactor
+from
+(
+	select
+	  keycol2, kumiban, sum(i0+i1+i2+i3+i4 + incamt) srfactor
+	from 
+	(
+		select
+		  s1.keycol
+		from
+		    (select keycol from stat_bork1 where (i0+i1+i2+i3+i4) > 0 and result_type = '1' and bettype in ('3T','3R','3P') and kumiban = '123') s1
+		  , (select keycol from stat_bork2 where (i0+i1+i2+i3+i4) > 0 and result_type = '1' and bettype in ('3T','3R','3P') and kumiban = '123') s2
+	--	    (select keycol from stat_bork1 where ((i0*5+i1*4+i2*3+i3*2+i4)) > 1000 and result_type = '1' and bettype in ('3T','3R','3P') and kumiban = '123') s1
+	--	  , (select keycol from stat_bork2 where ((i0*5+i1*4+i2*3+i3*2+i4)) > 1000 and result_type = '1' and bettype in ('3T','3R','3P') and kumiban = '123') s2
+	--	    (select keycol from stat6_1 where ((i0*5+i1*4+i2*3+i3*2+i4)) > 0 and (incamt <> 0) and result_type = '1' and bettype in ('3T') and kumiban = '123') s1
+	--	  , (select keycol from stat6_2 where ((i0*5+i1*4+i2*3+i3*2+i4)) > 0 and (incamt <> 0) and result_type = '1' and bettype in ('3T') and kumiban = '123') s2
+	--	  , (select keycol from stat6_3 where ((i0*5+i1*4+i2*3+i3*2+i4)) > 0 and (incamt <> 0) and result_type = '1' and bettype in ('3T') and kumiban = '123') s3
+	--	  , (select keycol from stat6_4 where (incamt) > 0 and result_type = '1' and bettype in ('3T','3R','3P') and kumiban = '123') s4
+		where s1.keycol = s2.keycol 
+	--	  and s2.keycol = s3.keycol
+	--	  and s3.keycol = s4.keycol
+	) t123,
+	stat6_4 sr
+	where t123.keycol = sr.keycol
+	group by keycol2, kumiban
+) tr
+order by ranking
+;
+
+
+
+----------------------------------------------
+select 
+  factor, 
+  ranking, keycol2, 
+  sum(i0+i1+i2+i3+i4) i04, sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9) i09,  sum(incamt) incamt,
+  sum(bc0+bc1+bc2+bc3+bc4) bc04, sum(bc0+bc1+bc2+bc3+bc4+bc5+bc6+bc7+bc8+bc9) bc09, sum(betcnt) betcnt,
+  ( sum(i0+i1+i2+i3+i4)::float / sum(bc0+bc1+bc2+bc3+bc4)::float )::numeric(5,2) binc04,
+  ( sum(i0+i1+i2+i3+i4+i5+i6+i7+i8+i9)::float / sum(bc0+bc1+bc2+bc3+bc4+bc5+bc6+bc7+bc8+bc9)::float)::numeric(5,2) binc09,
+  ( sum(incamt)::float / sum(betcnt)::float )::numeric(5,2) binc,
+  ( sum(hc0+hc1+hc2+hc3+hc4)::float / sum(bc0+bc1+bc2+bc3+bc4)::float )::numeric(5,2) hitrate04,
+  ( sum(hc0+hc1+hc2+hc3+hc4+hc5+hc6+hc7+hc8+hc9)::float / sum(bc0+bc1+bc2+bc3+bc4+bc5+bc6+bc7+bc8+bc9)::float )::numeric(5,2) hitrate09,
+  ( sum(hitcnt)::float / sum(betcnt)::float )::numeric(5,2) hitrate
+from ptn_ranking pr 
+where kumiban = '126'
+group by factor, ranking, keycol2, kumiban
+order by factor, kumiban
+;
+
+
+insert into ptn_ranking 
+select 
+  t_rank.ranking, '3T3R3P_ip_s2r3', sb3.*
+from
+(
+	select
+	  *
+	from 
+	(
+		select
+		  row_number() over (partition by kumiban order by (srfactor) desc) as ranking, keycol2, kumiban, srfactor
+		from
+		(
+			select 
+			  sb1.keycol2, sb1.kumiban,
+			  sum( (sb1.i0*5 + sb1.i1*4 + sb1.i2*3 + sb1.i3*2 + sb1.i4) + (sb2.i0*5 + sb2.i1*4 + sb2.i2*3 + sb2.i3*2 + sb2.i4) ) srfactor
+			from stat_bork1 sb1, stat_bork2 sb2
+			where sb1.result_type = '1' and sb1.bettype in ('3T','3R','3P')
+			  and sb1.keycol = sb2.keycol
+			group by sb1.keycol2, sb1.kumiban
+		) tmp
+	) tmp2
+	where ranking <= 5
+) t_rank,
+(
+	select 
+	  sb1.keycol
+	from stat_bork1 sb1, stat_bork2 sb2
+	where sb1.result_type = '1' and sb1.bettype in ('3T','3R','3P')
+	  and sb1.keycol = sb2.keycol
+	  and (sb1.i0*5 + sb1.i1*4 + sb1.i2*3 + sb1.i3*2 + sb1.i4) > 0
+	  and (sb1.i0*5 + sb1.i1*4 + sb1.i2*3 + sb1.i3*2 + sb1.i4) > 0
+) t_12,
+stat_bork3 sb3
+where 
+  sb3.keycol = t_12.keycol and sb3.keycol2 = t_rank.keycol2
+order by sb3.kumiban, ranking
+;
+
+
+	select
+	  *
+	from 
+	(
+		select
+		  row_number() over (partition by kumiban order by (srfactor) desc) as ranking, keycol2, kumiban, srfactor
+		from
+		(
+			select 
+			  sb1.keycol2, sb1.kumiban,
+			  sum( (sb1.i0*5 + sb1.i1*4 + sb1.i2*3 + sb1.i3*2 + sb1.i4) + (sb2.i0*5 + sb2.i1*4 + sb2.i2*3 + sb2.i3*2 + sb2.i4) ) srfactor
+			from stat_bork1 sb1, stat_bork2 sb2
+			where sb1.result_type = '1' and sb1.bettype in ('3T','3R','3P')
+			  and sb1.keycol = sb2.keycol
+			group by sb1.keycol2, sb1.kumiban
+		) tmp
+	) tmp2
+	where ranking <= 5
+;
+
+
+-- stat_bork1,2,3,4 작성
+truncate stat_bork4;
+insert into stat_bork4
+  select
+    (me.result_type || '_' || me.bettype || '_' || me.kumiban || '_' || me.modelno || '_' || me.patternid || '_' || me.pattern) keycol, 
+    (me.result_type || '_' || me.bettype || '_' || me.kumiban || '_' || me.modelno || '_' || me.patternid) keycol2, 
+    me.result_type, me.bettype, me.kumiban, me.resultno, me.modelno, me.patternid, me.pattern, 
+    bk.incamt[0] i0, bk.incamt[1] i1, bk.incamt[2] i2, bk.incamt[3] i3, bk.incamt[4] i4, 
+    bk.incamt[5] i5, bk.incamt[6] i6, bk.incamt[7] i7, bk.incamt[8] i8, bk.incamt[9] i9, 
+    bk.betcnt[0] bc0, bk.betcnt[1] bc1, bk.betcnt[2] bc2, bk.betcnt[3] bc3, bk.betcnt[4] bc4, 
+    bk.betcnt[5] bc5, bk.betcnt[6] bc6, bk.betcnt[7] bc7, bk.betcnt[8] bc8, bk.betcnt[9] bc9, 
+    bk.hitcnt[0] hc0, bk.hitcnt[1] hc1, bk.hitcnt[2] hc2, bk.hitcnt[3] hc3, bk.hitcnt[4] hc4, 
+    bk.hitcnt[5] hc5, bk.hitcnt[6] hc6, bk.hitcnt[7] hc7, bk.hitcnt[8] hc8, bk.hitcnt[9] hc9, 
+    me.betcnt, me.hitcnt, me.betamt, me.hitamt, (me.hitamt - me.betamt) incamt, me.betrate, me.hitrate, me.incomerate, me.bal_pluscnt, me.evaluations_id
+  from ml_evaluation me, ml_bork_evaluation bk
+  where  
+    me.result_type = bk.result_type and me.bettype = bk.bettype and me.kumiban = bk.kumiban and me.modelno = bk.modelno and me.patternid  = bk.patternid and me.pattern = bk.pattern and me.evaluations_id = bk.evaluations_id
+    and me.evaluations_id = '22_4'
+;
+
+
+----------------------------------------------
+select 
+  factor, ranking, keycol2, result_type, bettype, kumiban, modelno, patternid, 
+  sum(i0*5+i1*4+i2*3+i3*2+i4) si04, 
+  sum(bc0+bc1+bc2+bc3+bc4) sbc04,  
+  -- sum(i0*5+i1*4+i2*3+i3*2+i4) / sum(bc0+bc1+bc2+bc3+bc4) sbr,
+  sum(i0) i0, sum(i1) i1, sum(i2) i2, sum(i3) i3, sum(i4) i4, sum(i5) i5, sum(i6) i6, sum(i7) i7, sum(i8) i8, sum(i9) i9, 
+  sum(bc0) bc0, sum(bc1) bc1, sum(bc2) bc2, sum(bc3) bc3, sum(bc4) bc4, sum(bc5) bc5, sum(bc6) bc6, sum(bc7) bc7, sum(bc8) bc8, sum(bc9) bc9,
+  sum(betcnt) betcnt, sum(hitcnt) hitcnt, sum(betamt) betamt, sum(hitamt) hitamt, sum(incamt) incamt,
+  avg(betrate) betrate, avg(hitrate) hitrate, avg(incrate) incrate, sum(bal_pluscnt) bal_pluscnt
+from ptn_ranking pr 
+where kumiban = '123'
+group by factor, ranking, keycol2, result_type, bettype, kumiban, modelno, patternid
+order by factor, kumiban
+;
+
+
+insert into ptn_ranking 
+select 
+  t_rank.ranking, '3T3R3P_ip_s2r2', sb3.*
+from
+(
+	select
+	  *
+	from 
+	(
+		select
+		  row_number() over (partition by kumiban order by (srfactor) desc) as ranking, keycol2, kumiban
+		from
+		(
+			select 
+			  sb1.keycol2, sb1.kumiban,
+			  sum( sb1.incamt+sb2.incamt ) srfactor
+			from stat_bork1 sb1, stat_bork2 sb2
+			where sb1.result_type = '1' and sb1.bettype in ('3T','3R','3P')
+			  and sb1.keycol = sb2.keycol
+			  and (sb1.incamt) > 0
+			  and (sb2.incamt) > 0
+			group by sb1.keycol2, sb1.kumiban
+		) tmp
+	) tmp2
+	where ranking <= 5
+) t_rank,
+(
+	select 
+	  sb1.keycol
+	from stat_bork1 sb1, stat_bork2 sb2
+	where sb1.result_type = '1' and sb1.bettype in ('3T','3R','3P')
+	  and sb1.keycol = sb2.keycol
+	  and (sb1.incamt) > 0
+	  and (sb2.incamt) > 0
+) t_12,
+stat_bork3 sb3
+where 
+  sb3.keycol = t_12.keycol and sb3.keycol2 = t_rank.keycol2
+order by sb3.kumiban, ranking
+;
+
+-- stat_bork1,2,3,4 작성
+truncate stat_bork4;
+insert into stat_bork4
+  select
+    (me.result_type || '_' || me.bettype || '_' || me.kumiban || '_' || me.modelno || '_' || me.patternid || '_' || me.pattern) keycol, 
+    (me.result_type || '_' || me.bettype || '_' || me.kumiban || '_' || me.modelno || '_' || me.patternid) keycol2, 
+    me.result_type, me.bettype, me.kumiban, me.resultno, me.modelno, me.patternid, me.pattern, 
+    bk.incamt[0] i0, bk.incamt[1] i1, bk.incamt[2] i2, bk.incamt[3] i3, bk.incamt[4] i4, 
+    bk.incamt[5] i5, bk.incamt[6] i6, bk.incamt[7] i7, bk.incamt[8] i8, bk.incamt[9] i9, 
+    bk.betcnt[0] bc0, bk.betcnt[1] bc1, bk.betcnt[2] bc2, bk.betcnt[3] bc3, bk.betcnt[4] bc4, 
+    bk.betcnt[5] bc5, bk.betcnt[6] bc6, bk.betcnt[7] bc7, bk.betcnt[8] bc8, bk.betcnt[9] bc9, 
+    bk.hitcnt[0] hc0, bk.hitcnt[1] hc1, bk.hitcnt[2] hc2, bk.hitcnt[3] hc3, bk.hitcnt[4] hc4, 
+    bk.hitcnt[5] hc5, bk.hitcnt[6] hc6, bk.hitcnt[7] hc7, bk.hitcnt[8] hc8, bk.hitcnt[9] hc9, 
+    me.betcnt, me.hitcnt, me.betamt, me.hitamt, (me.hitamt - me.betamt) incamt, me.betrate, me.hitrate, me.incomerate, me.bal_pluscnt, me.evaluations_id
+  from ml_evaluation me, ml_bork_evaluation bk
+  where  
+    me.result_type = bk.result_type and me.bettype = bk.bettype and me.kumiban = bk.kumiban and me.modelno = bk.modelno and me.patternid  = bk.patternid and me.pattern = bk.pattern and me.evaluations_id = bk.evaluations_id
+    and me.evaluations_id = '22_4'
+;
+
+----------------------------------------------
+66_1,2각각의 top10을 선정해서 교집합, 합집합으로 top3로 66_3을 예측
+
+
+
+
+select
+  keycol2, result_type, bettype, kumiban, modelno, patternid, sum(i0*5+i1*4+i2*3+i3*2+i4) si04, sum(bc0+bc1+bc2+bc3+bc4) sbc04,  sum(i0*5+i1*4+i2*3+i3*2+i4) / sum(bc0+bc1+bc2+bc3+bc4) sbr,
+  sum(i0) i0, sum(i1) i1, sum(i2) i2, sum(i3) i3, sum(i4) i4, sum(i5) i5, sum(i6) i6, sum(i7) i7, sum(i8) i8, sum(i9) i9, 
+  sum(bc0) bc0, sum(bc1) bc1, sum(bc2) bc2, sum(bc3) bc3, sum(bc4) bc4, sum(bc5) bc5, sum(bc6) bc6, sum(bc7) bc7, sum(bc8) bc8, sum(bc9) bc9,
+  sum(betcnt) betcnt, sum(hitcnt) hitcnt, sum(betamt) betamt, sum(hitamt) hitamt, sum(incamt) incamt,
+  avg(betrate) betrate, avg(hitrate) hitrate, avg(incrate) incrate, sum(bal_pluscnt) bal_pluscnt,
+  't3_all_plus_wk' evaluations_id
+from (
+	select
+	  sb.*
+	from stat_bork3 sb, 
+	  (select * from ptn_bork pb where evaluations_id = 't1_all_plus_wk') p1,
+	  (select * from ptn_bork pb where evaluations_id = 't2_all_plus_wk') p2,
+	  (
+		select
+		  p1.keycol2
+		from
+		  (select keycol2 from ptnid_ranking pr where evaluations_id = 't1_all_plus_wk') pr1,
+		  (select keycol2 from ptnid_ranking pr where evaluations_id = 't2_all_plus_wk') pr2
+		where pr1.keycol2 = pr2.keycol2
+	  ) ranked
+	where sb.keycol2 = ranked.keycol2
+	  and (sb.keycol = p1.keycol or sb.keycol = p2.keycol)
+) tmp
+group by keycol2, result_type, bettype, kumiban, modelno, patternid
+;
+
+
+select * from 
+
+
+
+insert into ptnid_ranking 
+select
+  ranking, keycol2, result_type, bettype, kumiban, modelno, patternid, i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, bc0, bc1, bc2, bc3, bc4, bc5, bc6, bc7, bc8, bc9, betcnt, hitcnt, betamt, hitamt, incamt, betrate, hitrate, incrate, bal_pluscnt
+  , evaluations_id
+from 
+(
+	select
+	  row_number() over (partition by kumiban order by (si04/sbc04) desc) as ranking, *
+	from (  
+		select
+		  keycol2, result_type, bettype, kumiban, modelno, patternid, sum(i0*5+i1*4+i2*3+i3*2+i4) si04, sum(bc0+bc1+bc2+bc3+bc4) sbc04,
+		  sum(i0) i0, sum(i1) i1, sum(i2) i2, sum(i3) i3, sum(i4) i4, sum(i5) i5, sum(i6) i6, sum(i7) i7, sum(i8) i8, sum(i9) i9, 
+		  sum(bc0) bc0, sum(bc1) bc1, sum(bc2) bc2, sum(bc3) bc3, sum(bc4) bc4, sum(bc5) bc5, sum(bc6) bc6, sum(bc7) bc7, sum(bc8) bc8, sum(bc9) bc9,
+		  sum(betcnt) betcnt, sum(hitcnt) hitcnt, sum(betamt) betamt, sum(hitamt) hitamt, sum(incamt) incamt,
+		  avg(betrate) betrate, avg(hitrate) hitrate, avg(incrate) incrate, sum(bal_pluscnt) bal_pluscnt,
+		  't2_all_plus_wk' evaluations_id
+		from ptn_bork
+		where result_type = '1' and bettype in ('3T','3R','3P') and kumiban = '123'
+		  and evaluations_id = 't2_all_plus_wk'
+		group by keycol2, result_type, bettype, kumiban, modelno, patternid
+	) tmp
+) tmp2
+where ranking <= 10
+;
+
+-- 黒字のpatternをすべて吸い上げる
+insert into ptn_bork 
+select 
+  keycol, keycol2, result_type, bettype, kumiban, resultno, modelno, patternid, pattern, i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, bc0, bc1, bc2, bc3, bc4, bc5, bc6, bc7, bc8, bc9, betcnt, hitcnt, betamt, hitamt, incamt, betrate, hitrate, incrate, bal_pluscnt
+  , 't1_all_plus_wk' evaluations_id
+from stat_bork1
+where result_type = '1' and bettype in ('3T','3R','3P') and kumiban = '123' 
+  and (i0*5 + i1*4 + i2*3 + i3*2 + i4) > 0 and patternid like '%wk%'
+;
+
+
+truncate ptnid_ranking;
+truncate ptnid_bork;
+truncate ptn_bork;
+
+
+----------------------------------------------
+66_1,2,3 3개의 교집합에서 랭킹 매기고 탑3개로 sb4를 예측한 것.
+
+select
+  keycol2, result_type, bettype, kumiban, modelno, patternid, sum(i0+i1+i2+i3+i4) i04,
+  sum(i0) i0, sum(i1) i1, sum(i2) i2, sum(i3) i3, sum(i4) i4, sum(i5) i5, sum(i6) i6, sum(i7) i7, sum(i8) i8, sum(i9) i9, 
+  sum(bc0) bc0, sum(bc1) bc1, sum(bc2) bc2, sum(bc3) bc3, sum(bc4) bc4, sum(bc5) bc5, sum(bc6) bc6, sum(bc7) bc7, sum(bc8) bc8, sum(bc9) bc9,
+  sum(betcnt) betcnt, sum(hitcnt) hitcnt, sum(betamt) betamt, sum(hitamt) hitamt, sum(incamt) incamt,
+  avg(betrate) betrate, avg(hitrate) hitrate, avg(incrate) incrate, sum(bal_pluscnt) bal_pluscnt
+  ,'result_123_s1_over3_3' 
+from ptn_bork
+where evaluations_id = '123_s1_over3_3'
+group by keycol2, result_type, bettype, kumiban, modelno, patternid
+;
+
+select * from ptnid_ranking pr where evaluations_id = '123_s1_over3_3';
+
+delete from ptn_bork where evaluations_id = 'result_rankinc_over2_3';
+insert into ptn_bork
+select 
+  sb4.keycol, sb4.keycol2, sb4.result_type, sb4.bettype, sb4.kumiban, sb4.resultno, sb4.modelno, sb4.patternid, sb4.pattern, sb4.i0, sb4.i1, sb4.i2, sb4.i3, sb4.i4, sb4.i5, sb4.i6, sb4.i7, sb4.i8, sb4.i9, sb4.bc0, sb4.bc1, sb4.bc2, sb4.bc3, sb4.bc4, sb4.bc5, sb4.bc6, sb4.bc7, sb4.bc8, sb4.bc9, sb4.betcnt, sb4.hitcnt, sb4.betamt, sb4.hitamt, sb4.incamt, sb4.betrate, sb4.hitrate, sb4.incrate, sb4.bal_pluscnt
+  , '123_s1_over3_3'
+from stat_bork4 sb4, ptn_bork pb, ptnid_ranking pr
+where pb.evaluations_id = 'over3' and pr.evaluations_id = '123_s1_over3_3'
+  and sb4.keycol = pb.keycol and sb4.keycol2 = pr.keycol2
+;
+
+insert into ptnid_ranking
+select
+  ranking, keycol2, result_type, bettype, kumiban, modelno, patternid, i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, bc0, bc1, bc2, bc3, bc4, bc5, bc6, bc7, bc8, bc9, betcnt, hitcnt, betamt, hitamt, incamt, betrate, hitrate, incrate, bal_pluscnt
+  , '123_s1_over3_3'
+from (
+	select
+	 (row_number() over (partition by kumiban order by (i0+i1+i2+i3+i4) desc)) as ranking, *
+	from ptnid_bork pb 
+	where evaluations_id = 'over3'
+) tr
+where ranking <= 3
+;
+
+
+insert into ptnid_bork
+select
+  keycol2, result_type, bettype, kumiban, modelno, patternid, 
+  sum(i0) i0, sum(i1) i1, sum(i2) i2, sum(i3) i3, sum(i4) i4, sum(i5) i5, sum(i6) i6, sum(i7) i7, sum(i8) i8, sum(i9) i9, 
+  sum(bc0) bc0, sum(bc1) bc1, sum(bc2) bc2, sum(bc3) bc3, sum(bc4) bc4, sum(bc5) bc5, sum(bc6) bc6, sum(bc7) bc7, sum(bc8) bc8, sum(bc9) bc9,
+  sum(betcnt) betcnt, sum(hitcnt) hitcnt, sum(betamt) betamt, sum(hitamt) hitamt, sum(incamt) incamt,
+  avg(betrate) betrate, avg(hitrate) hitrate, avg(incrate) incrate, sum(bal_pluscnt) bal_pluscnt
+  ,'over3' 
+from ptn_bork
+where evaluations_id = 'over3'
+group by keycol2, result_type, bettype, kumiban, modelno, patternid
+order by keycol2, result_type, bettype, kumiban, modelno, patternid
+;
+
+
+-- over3, over2 ２回実行
+insert into ptn_bork
+select
+  pb.keycol, pb.keycol2, pb.result_type, pb.bettype, pb.kumiban, pb.resultno, pb.modelno, pb.patternid, pb.pattern, pb.i0, pb.i1, pb.i2, pb.i3, pb.i4, pb.i5, pb.i6, pb.i7, pb.i8, pb.i9, pb.bc0, pb.bc1, pb.bc2, pb.bc3, pb.bc4, pb.bc5, pb.bc6, pb.bc7, pb.bc8, pb.bc9, pb.betcnt, pb.hitcnt, pb.betamt, pb.hitamt, pb.incamt, pb.betrate, pb.hitrate, pb.incrate, pb.bal_pluscnt
+  ,'over3'
+from 
+ptn_bork pb, 
+(
+	select
+	  keycol, count(1) cnt
+	from ptn_bork pb 
+	group by keycol
+) tmp
+where pb.keycol = tmp.keycol and tmp.cnt >= 3
+  and pb.evaluations_id = '123_s1_t3' -- t1,t2,t3のkeycol重複をなくす
+;
+
+-- stat_bork1,2,3 3回実行
+insert into ptn_bork 
+select 
+  keycol, keycol2, result_type, bettype, kumiban, resultno, modelno, patternid, pattern, i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, bc0, bc1, bc2, bc3, bc4, bc5, bc6, bc7, bc8, bc9, betcnt, hitcnt, betamt, hitamt, incamt, betrate, hitrate, incrate, bal_pluscnt
+  , '123_s1_t3'
+from stat_bork3
+where result_type = '1' and bettype in ('3T','3R','3P') and kumiban = '123'
+  and (i0+i1+i2+i3+i4) > 0
+;
+
+truncate ptnid_ranking;
+truncate ptnid_bork;
+truncate ptn_bork;
+
+
+----------------------------------------------
+
+delete from ptnid_bork where evaluations_id = 's1_t4_123_si04';
+insert into ptnid_bork
+select
+  *
+from(
+	select
+	  keycol2, result_type, bettype, kumiban, modelno, patternid, 
+	  sum(i0) i0, sum(i1) i1, sum(i2) i2, sum(i3) i3, sum(i4) i4, sum(i5) i5, sum(i6) i6, sum(i7) i7, sum(i8) i8, sum(i9) i9, 
+	  sum(bc0) bc0, sum(bc1) bc1, sum(bc2) bc2, sum(bc3) bc3, sum(bc4) bc4, sum(bc5) bc5, sum(bc6) bc6, sum(bc7) bc7, sum(bc8) bc8, sum(bc9) bc9,
+	  sum(betcnt) betcnt, sum(hitcnt) hitcnt, sum(betamt) betamt, sum(hitamt) hitamt, sum(incamt) incamt,
+	  avg(betrate) betrate, avg(hitrate) hitrate, avg(incrate) incrate, sum(bal_pluscnt) bal_pluscnt
+	  ,'s1_t4_123_si04' 
+	from ptn_bork
+	where evaluations_id = 's1_t4_123_si04'
+	group by keycol2, result_type, bettype, kumiban, modelno, patternid
+) tmp
+where (i0 > 0 and (i0+i1) > 0 and (i0+i1+i2) > 0 and (i0+i1+i2+i3) > 0 and (i0+i1+i2+i3+i4) > 0)
+;
+
+
+insert into ptn_bork
+select
+  sb4.keycol, sb4.keycol2, sb4.result_type, sb4.bettype, sb4.kumiban, sb4.resultno, sb4.modelno, sb4.patternid, sb4.pattern, sb4.i0, sb4.i1, sb4.i2, sb4.i3, sb4.i4, sb4.i5, sb4.i6, sb4.i7, sb4.i8, sb4.i9, sb4.bc0, sb4.bc1, sb4.bc2, sb4.bc3, sb4.bc4, sb4.bc5, sb4.bc6, sb4.bc7, sb4.bc8, sb4.bc9, sb4.betcnt, sb4.hitcnt, sb4.betamt, sb4.hitamt, sb4.incamt, sb4.betrate, sb4.hitrate, sb4.incrate, sb4.bal_pluscnt
+  , 's1_t4_123_si04'
+from stat_bork4 sb4, ptn_bork pb3, ptnid_bork pib3
+where sb4.keycol = pb3.keycol and sb4.keycol2 = pib3.keycol2
+  and pb3.evaluations_id = 's1_t3_123_si04'
+  and pib3.evaluations_id = 's1_t3_123_si04'
+;
+
+delete from ptnid_bork where evaluations_id = 's1_t3_123_si04';
+insert into ptnid_bork
+select
+  *
+from(
+	select
+	  keycol2, result_type, bettype, kumiban, modelno, patternid, 
+	  sum(i0) i0, sum(i1) i1, sum(i2) i2, sum(i3) i3, sum(i4) i4, sum(i5) i5, sum(i6) i6, sum(i7) i7, sum(i8) i8, sum(i9) i9, 
+	  sum(bc0) bc0, sum(bc1) bc1, sum(bc2) bc2, sum(bc3) bc3, sum(bc4) bc4, sum(bc5) bc5, sum(bc6) bc6, sum(bc7) bc7, sum(bc8) bc8, sum(bc9) bc9,
+	  sum(betcnt) betcnt, sum(hitcnt) hitcnt, sum(betamt) betamt, sum(hitamt) hitamt, sum(incamt) incamt,
+	  avg(betrate) betrate, avg(hitrate) hitrate, avg(incrate) incrate, sum(bal_pluscnt) bal_pluscnt
+	  ,'s1_t3_123_si04' 
+	from ptn_bork
+	where evaluations_id = 's1_t3_123_si04'
+	group by keycol2, result_type, bettype, kumiban, modelno, patternid
+) tmp
+where (i0 > 0 and (i0+i1) > 0 and (i0+i1+i2) > 0 and (i0+i1+i2+i3) > 0 and (i0+i1+i2+i3+i4) > 0)
+;
+
+delete from ptn_bork where evaluations_id = 's1_t3_123_si04';
+insert into ptn_bork
+select
+  sb3.keycol, sb3.keycol2, sb3.result_type, sb3.bettype, sb3.kumiban, sb3.resultno, sb3.modelno, sb3.patternid, sb3.pattern, sb3.i0, sb3.i1, sb3.i2, sb3.i3, sb3.i4, sb3.i5, sb3.i6, sb3.i7, sb3.i8, sb3.i9, sb3.bc0, sb3.bc1, sb3.bc2, sb3.bc3, sb3.bc4, sb3.bc5, sb3.bc6, sb3.bc7, sb3.bc8, sb3.bc9, sb3.betcnt, sb3.hitcnt, sb3.betamt, sb3.hitamt, sb3.incamt, sb3.betrate, sb3.hitrate, sb3.incrate, sb3.bal_pluscnt
+  , 's1_t3_123_si04'
+from stat_bork3 sb3, ptn_bork pb2, ptnid_bork pib2
+where sb3.keycol = pb2.keycol and sb3.keycol2 = pib2.keycol2
+  and pb2.evaluations_id = 's1_t2_123_si04'
+  and pib2.evaluations_id = 's1_t2_123_si04'
+;
+
+delete from ptnid_bork where evaluations_id = 's1_t2_123_si04';
+insert into ptnid_bork
+select
+  *
+from(
+	select
+	  keycol2, result_type, bettype, kumiban, modelno, patternid, 
+	  sum(i0) i0, sum(i1) i1, sum(i2) i2, sum(i3) i3, sum(i4) i4, sum(i5) i5, sum(i6) i6, sum(i7) i7, sum(i8) i8, sum(i9) i9, 
+	  sum(bc0) bc0, sum(bc1) bc1, sum(bc2) bc2, sum(bc3) bc3, sum(bc4) bc4, sum(bc5) bc5, sum(bc6) bc6, sum(bc7) bc7, sum(bc8) bc8, sum(bc9) bc9,
+	  sum(betcnt) betcnt, sum(hitcnt) hitcnt, sum(betamt) betamt, sum(hitamt) hitamt, sum(incamt) incamt,
+	  avg(betrate) betrate, avg(hitrate) hitrate, avg(incrate) incrate, sum(bal_pluscnt) bal_pluscnt
+	  ,'s1_t2_123_si04' 
+	from ptn_bork
+	where evaluations_id = 's1_t2_123_si04'
+	group by keycol2, result_type, bettype, kumiban, modelno, patternid
+) tmp
+where (i0 > 0 and (i0+i1) > 0 and (i0+i1+i2) > 0 and (i0+i1+i2+i3) > 0 and (i0+i1+i2+i3+i4) > 0)
+;
+
+
+delete from ptn_bork where evaluations_id = 's1_t2_123_si04';
+insert into ptn_bork
+select
+  sb2.keycol, sb2.keycol2, sb2.result_type, sb2.bettype, sb2.kumiban, sb2.resultno, sb2.modelno, sb2.patternid, sb2.pattern, sb2.i0, sb2.i1, sb2.i2, sb2.i3, sb2.i4, sb2.i5, sb2.i6, sb2.i7, sb2.i8, sb2.i9, sb2.bc0, sb2.bc1, sb2.bc2, sb2.bc3, sb2.bc4, sb2.bc5, sb2.bc6, sb2.bc7, sb2.bc8, sb2.bc9, sb2.betcnt, sb2.hitcnt, sb2.betamt, sb2.hitamt, sb2.incamt, sb2.betrate, sb2.hitrate, sb2.incrate, sb2.bal_pluscnt
+  , 's1_t2_123_si04'
+from stat_bork2 sb2, ptn_bork pb1
+where sb2.keycol = pb1.keycol
+  and pb1.evaluations_id = 's1_t1_123_si04'
+--  and (sb2.i0 > 0 and (sb2.i0+sb2.i1) > 0 and (sb2.i0+sb2.i1+sb2.i2) > 0 and (sb2.i0+sb2.i1+sb2.i2+sb2.i3) > 0 and (sb2.i0+sb2.i1+sb2.i2+sb2.i3+sb2.i4) > 0) 
+;
+
+truncate ptnid_bork;
+insert into ptnid_bork
+select
+  keycol2, result_type, bettype, kumiban, modelno, patternid, 
+  sum(i0) i0, sum(i1) i1, sum(i2) i2, sum(i3) i3, sum(i4) i4, sum(i5) i5, sum(i6) i6, sum(i7) i7, sum(i8) i8, sum(i9) i9, 
+  sum(bc0) bc0, sum(bc1) bc1, sum(bc2) bc2, sum(bc3) bc3, sum(bc4) bc4, sum(bc5) bc5, sum(bc6) bc6, sum(bc7) bc7, sum(bc8) bc8, sum(bc9) bc9,
+  sum(betcnt) betcnt, sum(hitcnt) hitcnt, sum(betamt) betamt, sum(hitamt) hitamt, sum(incamt) incamt,
+  avg(betrate) betrate, avg(hitrate) hitrate, avg(incrate) incrate, sum(bal_pluscnt) bal_pluscnt
+  ,'s1_t1_123_si04' 
+from ptn_bork
+where evaluations_id = 's1_t1_123_si04'
+group by keycol2, result_type, bettype, kumiban, modelno, patternid
+;
+  
+  
+truncate ptn_bork;
+insert into ptn_bork
+select 
+  keycol, keycol2, result_type, bettype, kumiban, resultno, modelno, patternid, pattern, i0, i1, i2, i3, i4, i5, i6, i7, i8, i9, bc0, bc1, bc2, bc3, bc4, bc5, bc6, bc7, bc8, bc9, betcnt, hitcnt, betamt, hitamt, incamt, betrate, hitrate, incrate, bal_pluscnt
+  , 's1_t1_123_si04'
+from stat_bork1 
+where
+  (i0 > 0 and (i0+i1) > 0 and (i0+i1+i2) > 0 and (i0+i1+i2+i3) > 0 and (i0+i1+i2+i3+i4) > 0) and
+  result_type = '1' and bettype in ('3T','3R','3P') and kumiban = '123'
+;
+
+
+select count(1) from stat_bork4 
+where
+  (i0 > 0 and (i0+i1) > 0 and (i0+i1+i2) > 0 and (i0+i1+i2+i3) > 0 and (i0+i1+i2+i3+i4) > 0) and
+--  (i0+i1+i2+i3+i4) > 0 and  
+  result_type = '1' and bettype in ('3T','3R','3P') and kumiban = '123'
+;

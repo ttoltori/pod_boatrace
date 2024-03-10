@@ -52,18 +52,20 @@ model_no	model_start_ymd	model_end_ymd	class_rank1	class_rank2	class_rank3	algor
 11607	20210602	20220601	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_12	fs_12	fs_12	arff_11	clf_11	yes	1825	30
 # 選手傾向 only																
 11608	20210602	20220601	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_13	fs_13	fs_13	arff_11	clf_11	yes	1825	30
-# 選手傾向 + nw + en、削除：slope全体, motor, sex, age, late, avgst																
-11609	20221028	20230531	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_14	fs_14	fs_14	arff_11	clf_11	yes	1825	30
 13609	20180601	20180601	r123-all	x	x	cf_lgbm-1_py	x	x	fs_14	x	x	arff_11	clf_11	yes	1825	30
 # 11609結果 + probabilities + bodds 																
 31609	20220602	20230420	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_15	fs_15	fs_15	arff_3_31609	clf_3_31609	no	365	30
 # 13609結果  + bodds 																
 33609	20220602	20230420	r123-all	x	x	cf_lgbm-1_py	x	x	fs_16	x	x	arff_3_33609	clf_3_33609	no	365	30
-# 11609結果 + probabilities																
-21609	20230103	20230531	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_17	fs_17	fs_17	arff_2_21609	clf_2_21609	yes	1095	30
 # 11609結果 + bodds																
 31610	20220602	20230420	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_18	fs_18	fs_18	arff_3_31609	clf_3_31609	no	365	30
 #default
-99100	20220901	20230531	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	arff_1	clf_1	yes	1825	30
+99100	20211130	20211231	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	arff_1	clf_1	yes	1825	30
+# 選手傾向 + nw + en、削除：slope全体, motor, sex, age, late, avgst																
+11609	20210602	20210602	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_14	fs_14	fs_14	arff_11	clf_11	yes	1825	30
 # 99100을 probabilities로 2차학습																
-79101	20220901	20230531	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	classifyr123	classifyr123	classifyr123	arff_2_79101	clf_2_79101	yes	1095	30
+79101	20231101	20231115	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	classifyr123	classifyr123	classifyr123	arff_2_79101	clf_2_79101	yes	1095	30
+# 11609結果 + probabilities 2차학습																
+21609	20231101	20231115	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_17	fs_17	fs_17	arff_2_21609	clf_2_21609	yes	1095	30
+# CatboostRanker
+89100	20210602	20231101	rk-1	x	x	rk_catb-1_py	x	x	rk_1	x	x	arff_rk_1	clf_rk_1	yes	1825	30

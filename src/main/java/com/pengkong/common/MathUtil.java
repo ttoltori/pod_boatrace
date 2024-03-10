@@ -288,9 +288,17 @@ public class MathUtil {
         throw new IllegalStateException();
 	}
 	
+    public static double convertToPercentile(double value, double min, double max, double percentile) {
+        if (value < min || value > max) {
+            throw new IllegalArgumentException("Value is not within the specified range");
+        }
+        double range = max - min;
+        return     MathUtil.scale( ((value - min) / range) * percentile , 0)  ;
+    }
+	
 	public static void main(String[] args) {
 		try {
-		    
+			System.out.println( MathUtil.convertToPercentile(0.1, -3, 3, 20 ));
 			System.out.println((double)21 / 100.0);
 			System.out.println((double)33 / 100.0);
 			

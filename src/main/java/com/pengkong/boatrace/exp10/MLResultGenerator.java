@@ -179,6 +179,7 @@ public class MLResultGenerator {
 		boolean isSaveResult = prop.getString("save_result").equals("yes");
 		// 統計とグラフをDBに保存する・しない
 		boolean isSaveStat = prop.getString("save_stat").equals("yes");
+		boolean isDeleteSavedStat = prop.getString("delete_saved_stat").equals("yes");
 		boolean isSaveGraph = prop.getString("save_graph").equals("yes");
 		int termSplit = prop.getInteger("term_split");
 		
@@ -246,33 +247,32 @@ public class MLResultGenerator {
 
 			// 既存実験番号削除
 			// 2023/7/27 simulation時はevaluations_id単位の削除が必要でここでの一括削除はダメ。 レコード単位削除は性能悪いため、削除は受動でやることとする。
-//			if (isSaveStat) {
-//				String evaluationsId = prop.getString("evaluations_id");
-//				MlEvaluationExample exam;
-//				exam = new MlEvaluationExample();
-//				exam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
-//				mapperEval.deleteByExample(exam);
-//				
-//				MlRangeEvaluationExample rangeExam = new MlRangeEvaluationExample();
-//				rangeExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
-//				mapperRangeEval.deleteByExample(rangeExam);
-//				
-//				MlBorkEvaluationExample borkExam = new MlBorkEvaluationExample();
-//				borkExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
-//				mapperBorkEval.deleteByExample(borkExam);
-//
-////				MlRorkEvaluationExample rorkExam = new MlRorkEvaluationExample();
-////				rorkExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
-////				mapperRorkEval.deleteByExample(rorkExam);
-//				
-////				MlPrEvaluationExample prExam = new MlPrEvaluationExample();
-////				prExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
-////				mapperPrEval.deleteByExample(prExam);
-//				
-//				MlTermEvaluationExample termExam = new MlTermEvaluationExample();
-//				termExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
-//				mapperTermEval.deleteByExample(termExam);
-//			}
+			if (isSaveStat && isDeleteSavedStat) {
+				MlEvaluationExample exam;
+				exam = new MlEvaluationExample();
+				exam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type"));
+				mapperEval.deleteByExample(exam);
+				
+				MlRangeEvaluationExample rangeExam = new MlRangeEvaluationExample();
+				rangeExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type"));
+				mapperRangeEval.deleteByExample(rangeExam);
+				
+				MlBorkEvaluationExample borkExam = new MlBorkEvaluationExample();
+				borkExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type"));
+				mapperBorkEval.deleteByExample(borkExam);
+
+				MlTermEvaluationExample termExam = new MlTermEvaluationExample();
+				termExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type"));
+				mapperTermEval.deleteByExample(termExam);
+				
+//				MlRorkEvaluationExample rorkExam = new MlRorkEvaluationExample();
+//				rorkExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
+//				mapperRorkEval.deleteByExample(rorkExam);
+				
+//				MlPrEvaluationExample prExam = new MlPrEvaluationExample();
+//				prExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
+//				mapperPrEval.deleteByExample(prExam);
+			}
 			
 			if (isSaveGraph || isSaveStat) {
 				// 実験結果の統計データをDBに保存する
@@ -285,9 +285,9 @@ public class MLResultGenerator {
 					MlEvaluationCreator evaluationCreator = new MlEvaluationCreator(stat);
 					MlRangeEvaluationCreator rangeEvalCreator = new MlRangeEvaluationCreator(stat);
 					MlBorkEvaluationCreator borkEvaluationCreator = new MlBorkEvaluationCreator(stat);
+					MlTermEvaluationCreator termEvaluationCreator = new MlTermEvaluationCreator(stat);
 //					MlRorkEvaluationCreator rorkEvaluationCreator = new MlRorkEvaluationCreator(stat);
 //					MlPrEvaluationCreator prEvaluationCreator = new MlPrEvaluationCreator(stat);
-					MlTermEvaluationCreator termEvaluationCreator = new MlTermEvaluationCreator(stat);
 					
 					// グラフ出力時必須
 					MlEvaluation rec = evaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum);
@@ -295,9 +295,10 @@ public class MLResultGenerator {
 					
 					// オプション
 					MlBorkEvaluation borkRec = borkEvaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"));
+					MlTermEvaluation termRec = termEvaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum); 
+
 //					MlRorkEvaluation rorkRec = rorkEvaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum);
 //					MlPrEvaluation prRec = prEvaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum); 
-					MlTermEvaluation termRec = termEvaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum); 
 					
 					if (rec == null) { // balance分割数よりbetcntが少ない
 						continue;
@@ -307,11 +308,11 @@ public class MLResultGenerator {
 						// insert
 						mapperEval.insert(rec);
 						mapperRangeEval.insert(rangeRec);
-						
 						mapperBorkEval.insert(borkRec);
+						
+						mapperTermEval.insert(termRec);
 //						mapperRorkEval.insert(rorkRec);
 //						mapperPrEval.insert(prRec);
-						mapperTermEval.insert(termRec);
 					}
 				}
 			}
@@ -441,10 +442,8 @@ public class MLResultGenerator {
 	*/	
 		return true;
 	}
-	
-	
 	public static void main(String[] args) {
-//		String propertyFilepath = "C:/Dev/workspace/Oxygen/pod_boatrace/properties/expr10/expr10.properties";
+//		String propertyFilepath = "C:/Dev/github/pod_boatrace/properties/expr10/expr10.properties";
 //		String exNoList = "1";
 		String propertyFilepath = args[0];
 		String exNoList = args[1];

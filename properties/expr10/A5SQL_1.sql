@@ -1,4 +1,119 @@
-﻿select * from ml_evaluation where resultno = '11344';
+﻿truncate ml_result;
+truncate ml_evaluation;
+
+select max(ymd) from ml_classification mc ; 
+
+select count(1) from ml_result;
+
+select
+  race.grade, t8.bettype, t8.predict_rank123,
+  count(t8.ymd) betcnt,
+  (sum(t8.hity)::float / count(t8.ymd)::float)::numeric(5,2) hitrate,
+  (sum( (case  when t8.hity = 1 then t8.result_amt else 0 end ) ) - sum(t8.betamt)) incamt,
+  (sum( (case  when t8.hity = 1 then t8.result_amt else 0 end ) )::float / sum(t8.betamt)::float)::numeric(5,2) incrate
+from
+(
+	select
+	  *
+	from  ml_result mr 
+	where pattern = 'nopattern' and modelno = '89100'
+) t8,
+(
+	select
+	  *
+	from  ml_result mr 
+	where pattern = 'nopattern' and modelno = '99100'
+)t9,
+rec_race race
+where t8.ymd = t9.ymd and t8.jyocd = t9.jyocd and t8.raceno = t9.raceno
+  and t8.bettype = t9.bettype and t8.predict_rank123 = t9.predict_rank123
+  and t8.ymd = race.ymd and t8.jyocd = race.jyocd and t8.raceno = race.raceno
+  and race.grade = 'ip'
+group by race.grade, t8.bettype, t8.predict_rank123
+  
+select 
+  bettype, bet_kumiban, modelno,   count(1) betcnt,  
+  (sum(hity)::float / count(1)::float)::numeric(5,2) hitrate,
+  (sum( (case  when hity = 1 then result_amt else 0 end ) ) - sum(betamt)) incamt,
+  (sum( (case  when hity = 1 then result_amt else 0 end ) )::float / sum(betamt)::float)::numeric(5,2) incrate
+from ml_result
+where pattern = 'nopattern'
+group by bettype,bet_kumiban, modelno
+;
+
+drop table if exists rec_racer;
+create table rec_racer (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+entry smallint,
+sex varchar(2),
+age smallint,
+level varchar(2),
+weight numeric(3,1),
+branch varchar(4),
+exhibit numeric(5,2),
+startexhibit numeric(5,2),
+flying smallint,
+late smallint,
+averagestart numeric(5,2),
+avgtime numeric(5,2),
+nationwiningrate numeric(5,2),
+nation2winingrate numeric(5,2),
+nation3winingrate numeric(5,2),
+localwiningrate numeric(5,2),
+local2winingrate numeric(5,2),
+local3winingrate numeric(5,2),
+motorno smallint,
+motor2winingrate numeric(5,2),
+motor3winingrate numeric(5,2),
+boatno smallint,
+boat2winingrate numeric(5,2),
+boat3winingrate numeric(5,2),
+waku smallint,
+rank smallint,
+startresult numeric(5,2),
+grade varchar(2),
+racetype varchar(4)
+);
+drop index if exists indexes_rec_racer;
+create index indexes_rec_racer on rec_racer (ymd, jyocd, raceno, entry);
+
+
+drop table if exists ol_racer2;
+create table ol_racer2 (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+runcnt int[],                          -- 出走回数
+runcnt_slope double precision[],                    -- 出走回数傾向
+cond double precision[],               -- コンディション指数
+cond_slope double precision[],         -- コンディション指数傾向
+n1point double precision[],            -- 能力指数
+n1point_slope double precision[],      -- 能力指数傾向
+n2point double precision[],            -- 2連帯能力指数
+n2point_slope double precision[],      -- 2連帯能力指数傾向
+n3point double precision[],            -- 3連帯能力指数
+n3point_slope double precision[],      -- 3連帯能力指数傾向
+n1point_waku double precision[],       -- 当該枠選手の枠能力指数
+n1point_waku_slope double precision[], -- 当該枠選手の枠能力指数傾向
+n2point_waku double precision[],       -- 当該枠選手の2連帯枠能力指数
+n2point_waku_slope double precision[], -- 当該枠選手の2連帯枠能力指数傾向
+n3point_waku double precision[],       -- 当該枠選手の3連帯枠能力指数
+n3point_waku_slope double precision[], -- 当該枠選手の3連帯枠能力指数傾向
+avgstart_waku double precision[],      -- 当該枠選手の枠平均スタート
+avgstart_waku_slope double precision[] -- 当該枠選手の枠平均スタート傾向
+);
+create index indexes_ol_racer2 on ol_racer2 (ymd, jyocd, raceno);
+
+select max(ymd) from ol_race;
+select count(1) from ol_race where ymd = '20231107';
+
+
+
+select distinct evaluations_id from ml_evaluation_bk2 meb ;
+
+select * from ml_evaluation where resultno = '11344';
 
 select 
   modelno, min(ymd), max(ymd)

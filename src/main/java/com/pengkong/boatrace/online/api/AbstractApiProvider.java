@@ -3,10 +3,16 @@ package com.pengkong.boatrace.online.api;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.jsoup.Jsoup;
+import org.jsoup.Connection.Method;
+import org.jsoup.Connection.Response;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
+import com.pengkong.boatrace.online.api.pc.PcUrl;
 import com.pengkong.boatrace.online.api.session.HeartBeatRunnerInterface;
 import com.pengkong.boatrace.online.api.session.Session;
 import com.pengkong.boatrace.online.api.session.User;
@@ -42,6 +48,23 @@ public abstract class AbstractApiProvider {
 		executorService.shutdown();
 	}
 
+	protected String getRecaptchaToken() throws ApiException {
+		try {
+			// google recaptcha anchor
+			Response res = Jsoup.connect(PcUrl.URL_RECAPTCHA_ANCHOR).userAgent(PcUrl.BROWSER_USER_AGENT).validateTLSCertificates(false)
+					.method(Method.GET).execute();
+			Document doc = res.parse();
+			
+			Element input = doc.getElementById("recaptcha-token");
+			String attr = input.attr("value");
+			
+			return attr;
+		} catch (Exception e) {
+			logger.error("google recaptcha failed.", e);
+			throw new ApiException(e);
+		}
+	}
+	
 	protected void stopHeartbeat() {
 		runner.stop();
 	}

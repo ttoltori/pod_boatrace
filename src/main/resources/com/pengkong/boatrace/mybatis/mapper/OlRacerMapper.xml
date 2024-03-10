@@ -9,29 +9,33 @@
     <result column="ymd" jdbcType="VARCHAR" property="ymd" />
     <result column="jyocd" jdbcType="VARCHAR" property="jyocd" />
     <result column="raceno" jdbcType="INTEGER" property="raceno" />
-    <result column="entry" jdbcType="ARRAY" property="entry" typeHandler="com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler" />
-    <result column="sex" jdbcType="ARRAY" property="sex" typeHandler="com.pengkong.boatrace.mybatis.typehandle.StringArrayTypeHandler" />
-    <result column="age" jdbcType="ARRAY" property="age" typeHandler="com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler" />
-    <result column="level" jdbcType="ARRAY" property="level" typeHandler="com.pengkong.boatrace.mybatis.typehandle.StringArrayTypeHandler" />
-    <result column="weight" jdbcType="ARRAY" property="weight" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler" />
-    <result column="branch" jdbcType="ARRAY" property="branch" typeHandler="com.pengkong.boatrace.mybatis.typehandle.StringArrayTypeHandler" />
-    <result column="exhibit" jdbcType="ARRAY" property="exhibit" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler" />
-    <result column="startexhibit" jdbcType="ARRAY" property="startexhibit" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler" />
-    <result column="flying" jdbcType="ARRAY" property="flying" typeHandler="com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler" />
-    <result column="late" jdbcType="ARRAY" property="late" typeHandler="com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler" />
-    <result column="averagestart" jdbcType="ARRAY" property="averagestart" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler" />
-    <result column="avgtime" jdbcType="ARRAY" property="avgtime" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler" />
-    <result column="nationwiningrate" jdbcType="ARRAY" property="nationwiningrate" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler" />
-    <result column="nation2winingrate" jdbcType="ARRAY" property="nation2winingrate" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler" />
-    <result column="nation3winingrate" jdbcType="ARRAY" property="nation3winingrate" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler" />
-    <result column="localwiningrate" jdbcType="ARRAY" property="localwiningrate" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler" />
-    <result column="local2winingrate" jdbcType="ARRAY" property="local2winingrate" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler" />
-    <result column="local3winingrate" jdbcType="ARRAY" property="local3winingrate" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler" />
-    <result column="motorno" jdbcType="ARRAY" property="motorno" typeHandler="com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler" />
-    <result column="motor2winingrate" jdbcType="ARRAY" property="motor2winingrate" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler" />
-    <result column="motor3winingrate" jdbcType="ARRAY" property="motor3winingrate" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler" />
-    <result column="waku" jdbcType="ARRAY" property="waku" typeHandler="com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler" />
-    <result column="rank" jdbcType="ARRAY" property="rank" typeHandler="com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler" />
+    <result column="entry" jdbcType="INTEGER" property="entry" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="level" jdbcType="VARCHAR" property="level" />
+    <result column="weight" jdbcType="DOUBLE" property="weight" />
+    <result column="branch" jdbcType="VARCHAR" property="branch" />
+    <result column="exhibit" jdbcType="DOUBLE" property="exhibit" />
+    <result column="startexhibit" jdbcType="DOUBLE" property="startexhibit" />
+    <result column="flying" jdbcType="INTEGER" property="flying" />
+    <result column="late" jdbcType="INTEGER" property="late" />
+    <result column="averagestart" jdbcType="DOUBLE" property="averagestart" />
+    <result column="avgtime" jdbcType="DOUBLE" property="avgtime" />
+    <result column="nationwiningrate" jdbcType="DOUBLE" property="nationwiningrate" />
+    <result column="nation2winingrate" jdbcType="DOUBLE" property="nation2winingrate" />
+    <result column="nation3winingrate" jdbcType="DOUBLE" property="nation3winingrate" />
+    <result column="localwiningrate" jdbcType="DOUBLE" property="localwiningrate" />
+    <result column="local2winingrate" jdbcType="DOUBLE" property="local2winingrate" />
+    <result column="local3winingrate" jdbcType="DOUBLE" property="local3winingrate" />
+    <result column="motorno" jdbcType="INTEGER" property="motorno" />
+    <result column="motor2winingrate" jdbcType="DOUBLE" property="motor2winingrate" />
+    <result column="motor3winingrate" jdbcType="DOUBLE" property="motor3winingrate" />
+    <result column="boatno" jdbcType="INTEGER" property="boatno" />
+    <result column="boat2winingrate" jdbcType="DOUBLE" property="boat2winingrate" />
+    <result column="boat3winingrate" jdbcType="DOUBLE" property="boat3winingrate" />
+    <result column="waku" jdbcType="INTEGER" property="waku" />
+    <result column="grade" jdbcType="VARCHAR" property="grade" />
+    <result column="racetype" jdbcType="VARCHAR" property="racetype" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -74,7 +78,7 @@
     ymd, jyocd, raceno, entry, sex, age, level, weight, branch, exhibit, startexhibit, 
     flying, late, averagestart, avgtime, nationwiningrate, nation2winingrate, nation3winingrate, 
     localwiningrate, local2winingrate, local3winingrate, motorno, motor2winingrate, motor3winingrate, 
-    waku, rank
+    boatno, boat2winingrate, boat3winingrate, waku, grade, racetype
   </sql>
   <select id="selectByExample" parameterType="com.pengkong.boatrace.mybatis.entity.OlRacerExample" resultMap="BaseResultMap">
     <!--
@@ -117,32 +121,19 @@
       averagestart, avgtime, nationwiningrate, 
       nation2winingrate, nation3winingrate, localwiningrate, 
       local2winingrate, local3winingrate, motorno, 
-      motor2winingrate, motor3winingrate, waku, 
-      rank)
+      motor2winingrate, motor3winingrate, boatno, 
+      boat2winingrate, boat3winingrate, waku, 
+      grade, racetype)
     values (#{ymd,jdbcType=VARCHAR}, #{jyocd,jdbcType=VARCHAR}, #{raceno,jdbcType=INTEGER}, 
-      #{entry,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler},  
-      #{sex,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.StringArrayTypeHandler}, 
-      #{age,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler}, 
-      #{level,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.StringArrayTypeHandler}, 
-      #{weight,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler}, 
-      #{branch,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.StringArrayTypeHandler}, 
-      #{exhibit,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler}, 
-      #{startexhibit,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler}, 
-      #{flying,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler},  
-      #{late,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler},  
-      #{averagestart,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler}, 
-      #{avgtime,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler}, 
-      #{nationwiningrate,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler}, 
-      #{nation2winingrate,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler}, 
-      #{nation3winingrate,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler}, 
-      #{localwiningrate,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler}, 
-      #{local2winingrate,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler}, 
-      #{local3winingrate,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler}, 
-      #{motorno,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler}, 
-      #{motor2winingrate,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler}, 
-      #{motor3winingrate,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler}, 
-      #{waku,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler}, 
-      #{rank,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler})
+      #{entry,jdbcType=INTEGER}, #{sex,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, #{level,jdbcType=VARCHAR}, 
+      #{weight,jdbcType=DOUBLE}, #{branch,jdbcType=VARCHAR}, #{exhibit,jdbcType=DOUBLE}, 
+      #{startexhibit,jdbcType=DOUBLE}, #{flying,jdbcType=INTEGER}, #{late,jdbcType=INTEGER}, 
+      #{averagestart,jdbcType=DOUBLE}, #{avgtime,jdbcType=DOUBLE}, #{nationwiningrate,jdbcType=DOUBLE}, 
+      #{nation2winingrate,jdbcType=DOUBLE}, #{nation3winingrate,jdbcType=DOUBLE}, #{localwiningrate,jdbcType=DOUBLE}, 
+      #{local2winingrate,jdbcType=DOUBLE}, #{local3winingrate,jdbcType=DOUBLE}, #{motorno,jdbcType=INTEGER}, 
+      #{motor2winingrate,jdbcType=DOUBLE}, #{motor3winingrate,jdbcType=DOUBLE}, #{boatno,jdbcType=INTEGER}, 
+      #{boat2winingrate,jdbcType=DOUBLE}, #{boat3winingrate,jdbcType=DOUBLE}, #{waku,jdbcType=INTEGER}, 
+      #{grade,jdbcType=VARCHAR}, #{racetype,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.pengkong.boatrace.mybatis.entity.OlRacer">
     <!--
@@ -223,11 +214,23 @@
       <if test="motor3winingrate != null">
         motor3winingrate,
       </if>
+      <if test="boatno != null">
+        boatno,
+      </if>
+      <if test="boat2winingrate != null">
+        boat2winingrate,
+      </if>
+      <if test="boat3winingrate != null">
+        boat3winingrate,
+      </if>
       <if test="waku != null">
         waku,
       </if>
-      <if test="rank != null">
-        rank,
+      <if test="grade != null">
+        grade,
+      </if>
+      <if test="racetype != null">
+        racetype,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -241,73 +244,85 @@
         #{raceno,jdbcType=INTEGER},
       </if>
       <if test="entry != null">
-        #{entry,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler},
+        #{entry,jdbcType=INTEGER},
       </if>
       <if test="sex != null">
-        #{sex,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.StringArrayTypeHandler},
+        #{sex,jdbcType=VARCHAR},
       </if>
       <if test="age != null">
-        #{age,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler},
+        #{age,jdbcType=INTEGER},
       </if>
       <if test="level != null">
-        #{level,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.StringArrayTypeHandler},
+        #{level,jdbcType=VARCHAR},
       </if>
       <if test="weight != null">
-        #{weight,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler},
+        #{weight,jdbcType=DOUBLE},
       </if>
       <if test="branch != null">
-        #{branch,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.StringArrayTypeHandler},
+        #{branch,jdbcType=VARCHAR},
       </if>
       <if test="exhibit != null">
-        #{exhibit,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler},
+        #{exhibit,jdbcType=DOUBLE},
       </if>
       <if test="startexhibit != null">
-        #{startexhibit,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler},
+        #{startexhibit,jdbcType=DOUBLE},
       </if>
       <if test="flying != null">
-        #{flying,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler},
+        #{flying,jdbcType=INTEGER},
       </if>
       <if test="late != null">
-        #{late,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler},
+        #{late,jdbcType=INTEGER},
       </if>
       <if test="averagestart != null">
-        #{averagestart,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler},
+        #{averagestart,jdbcType=DOUBLE},
       </if>
       <if test="avgtime != null">
-        #{avgtime,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler},
+        #{avgtime,jdbcType=DOUBLE},
       </if>
       <if test="nationwiningrate != null">
-        #{nationwiningrate,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler},
+        #{nationwiningrate,jdbcType=DOUBLE},
       </if>
       <if test="nation2winingrate != null">
-        #{nation2winingrate,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler},
+        #{nation2winingrate,jdbcType=DOUBLE},
       </if>
       <if test="nation3winingrate != null">
-        #{nation3winingrate,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler},
+        #{nation3winingrate,jdbcType=DOUBLE},
       </if>
       <if test="localwiningrate != null">
-        #{localwiningrate,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler},
+        #{localwiningrate,jdbcType=DOUBLE},
       </if>
       <if test="local2winingrate != null">
-        #{local2winingrate,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler},
+        #{local2winingrate,jdbcType=DOUBLE},
       </if>
       <if test="local3winingrate != null">
-        #{local3winingrate,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler},
+        #{local3winingrate,jdbcType=DOUBLE},
       </if>
       <if test="motorno != null">
-        #{motorno,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler},
+        #{motorno,jdbcType=INTEGER},
       </if>
       <if test="motor2winingrate != null">
-        #{motor2winingrate,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler},
+        #{motor2winingrate,jdbcType=DOUBLE},
       </if>
       <if test="motor3winingrate != null">
-        #{motor3winingrate,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler},
+        #{motor3winingrate,jdbcType=DOUBLE},
+      </if>
+      <if test="boatno != null">
+        #{boatno,jdbcType=INTEGER},
+      </if>
+      <if test="boat2winingrate != null">
+        #{boat2winingrate,jdbcType=DOUBLE},
+      </if>
+      <if test="boat3winingrate != null">
+        #{boat3winingrate,jdbcType=DOUBLE},
       </if>
       <if test="waku != null">
-        #{waku,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler},
+        #{waku,jdbcType=INTEGER},
       </if>
-      <if test="rank != null">
-        #{rank,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler},
+      <if test="grade != null">
+        #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="racetype != null">
+        #{racetype,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>

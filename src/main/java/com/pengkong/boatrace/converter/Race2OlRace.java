@@ -4,6 +4,7 @@ import com.pengkong.boatrace.model.Race;
 import com.pengkong.boatrace.model.RaceInfo;
 import com.pengkong.boatrace.model.RaceInfo2;
 import com.pengkong.boatrace.mybatis.entity.OlRace;
+import com.pengkong.boatrace.online.enums.RaceStatus;
 import com.pengkong.boatrace.util.BoatUtil;
 import com.pengkong.common.StringUtil;
 
@@ -28,7 +29,11 @@ public class Race2OlRace {
 		rec.setFemalecount(ri2.femaleCount);
 		rec.setComPredict( race.computerBetting.predict.replaceAll("-", "") );
 		rec.setComConfidence(race.computerBetting.confidence);
-		rec.setStatus(0);
+		if (race.raceInfo.isPastRace) { // 発売終了
+			rec.setStatus(RaceStatus.TOHYO_TIMEOUT.getValue());
+		} else {
+			rec.setStatus(RaceStatus.BEFORE_SIME.getValue());
+		}
 		
 		return rec;
 	}

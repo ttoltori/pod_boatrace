@@ -1,4 +1,10 @@
 nopattern	('nopattern')
+jyo	race.jyocd
+turn	race.turn
+race	race.raceno::text
+grade	race.grade
+rtype	race.racetype::text
+alcnt	race.alevelcount::text
 jyo+turn	race.jyocd || '-' || race.turn
 jyo+race	race.jyocd || '-' || race.raceno::text
 jyo+rtype	race.jyocd || '-' || race.racetype
@@ -11,6 +17,7 @@ race+alcnt	race.raceno::text || '-' || race.alevelcount
 rtype+alcnt	race.racetype::text || '-' || race.alevelcount
 prob12	substring(probability1::text from 1 for 3) || '-' || substring(probability2::text from 1 for 3)
 prob123	substring(probability1::text from 1 for 3) || '-' || substring(probability2::text from 1 for 3) || '-' || substring(probability3::text from 1 for 3)
+wk1	substring(wakulevellist from 1 for 2)
 wk12	substring(wakulevellist from 1 for 5)
 wk123	substring(wakulevellist from 1 for 8)
 wk1234	substring(wakulevellist from 1 for 11)

@@ -55,10 +55,12 @@ public class MlBorkEvaluationCreator
 		int[] termcnt = new int[arrMax];
 		int[] termPluscnt = new int[arrMax];
 		
+		int idx = 0; 
 		for (Double i = min; i <= max; i++) {
-			int idx = i.intValue() - 1;
+			//int idx = i.intValue() - 1;
 			RangeStatUnit unit = stat.mapBorkStatUnit.get(i);
 			if (unit == null) {
+				idx++;
 				continue;
 			}
 			betcnt[idx] = unit.betCnt;
@@ -75,12 +77,14 @@ public class MlBorkEvaluationCreator
 			// 各bork毎の期間単位黒数数を求める
 			List<BorkTermUnit> list = stat.mapBorkTerm.get(String.valueOf(i.intValue()));
 			if (list == null) {
+				idx++;
 				continue;
 			}
 			
 			int borkTermMax = prop.getInteger("bork_term_max");
 			List<BorkTermUnit>[] arrTerm = MathUtil.splitList(list, borkTermMax);
 			if (arrTerm.length < borkTermMax) {
+				idx++;
 				continue;
 			}
 			
@@ -92,6 +96,8 @@ public class MlBorkEvaluationCreator
 			}
 			termcnt[idx] = borkTermMax;
 			termPluscnt[idx] = plusCnt;
+
+			idx++;
 		}
 		
 		dto.setBetcnt(betcnt);

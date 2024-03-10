@@ -50,6 +50,7 @@ public class RmiOnlineOddsServer extends UnicastRemoteObject implements RmiOnlin
 		}
 		
 		server.start();
+		logger.info("online odds server started. rmiurl=" + rmiUrl + ", port=" + port);
 	}
 
 	@Override

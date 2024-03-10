@@ -193,9 +193,10 @@ public class ModelInfoManager {
 		
 		StringBuilder sb2 = new StringBuilder();
 		String[] featureIds = fsTpl.getFeatureIds(featureSetId);
-		for (Feature fe : featureTemplate.getFeatureList(featureIds)) {
-			sb2.append(BoatConst.featureTypeMap.get(fe.arffType));
-			sb2.append(",");
+		List<Feature> featureList  = featureTemplate.getFeatureList(featureIds);
+		for (Feature fe : featureList) {
+				sb2.append(BoatConst.featureTypeMap.get(fe.arffType));
+				sb2.append(",");
 		}
 		sb.append(sb2.substring(0, sb2.length()-1));
 		

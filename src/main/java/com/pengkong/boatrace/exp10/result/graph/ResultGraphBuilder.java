@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.pengkong.boatrace.common.BoatConst;
+import com.pengkong.boatrace.common.enums.Delimeter;
 import com.pengkong.boatrace.exp10.enums.ResultType;
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
 import com.pengkong.boatrace.exp10.result.graph.chart.BeforeOddsRangePerformance;
@@ -23,7 +24,6 @@ import com.pengkong.boatrace.exp10.result.graph.chart.bubble.BestBoddsRankProbBu
 import com.pengkong.boatrace.exp10.result.graph.chart.bubble.BestBoddsRankRoddsRankBubble;
 import com.pengkong.boatrace.exp10.result.graph.chart.bubble.BestRoddsRankProbBetcntBubble;
 import com.pengkong.boatrace.exp10.result.graph.chart.bubble.BestRoddsRankProbBubble;
-import com.pengkong.boatrace.exp10.result.graph.chart.bubble.BoddsProbabilityBetcntBubble;
 import com.pengkong.boatrace.exp10.result.graph.chart.bubble.BoddsProbabilityBubble;
 import com.pengkong.boatrace.exp10.result.graph.chart.bubble.BoddsRankBoddsBubble;
 import com.pengkong.boatrace.exp10.result.graph.chart.bubble.BoddsRankProbabilityBetcntBubble;
@@ -104,7 +104,8 @@ public class ResultGraphBuilder {
 				//dirExResult = dirAllResult + resultType + "/" + prop.getString("used_model_no") + "/" + stat.statBettype + "/" + stat.kumiban  + "/";
 				//dirExResult = dirAllResult + resultType + "/" + stat.statBettype + "/" + stat.kumiban  + "/";
 				//dirExResult = dirAllResult + resultType + "/" + prop.getString("pattern_id") + "/" + stat.statBettype + "/" + stat.kumiban  + "/";
-				dirExResult = dirAllResult + resultType + "/" + stat.statBettype + "/" + stat.kumiban  + "/";
+				//dirExResult = dirAllResult + resultType + "/" + stat.statBettype + "/" + stat.kumiban  + "/";
+				dirExResult = dirAllResult + resultType + "/" + stat.statBettype + "/" + prop.getString("used_model_no")  + "/";
 				
 				String filePathCommon = dirExResult + String.join("_", 
 						prop.getString("result_type"),
@@ -138,13 +139,23 @@ public class ResultGraphBuilder {
 				//dirExResult = dirAllResult  + prop.getString("grade_type") + "/" + stat.statBettype + "/" + stat.kumiban + "/";
 				//dirExResult = dirAllResult  + "31xxx" + "/" + prop.getString("grade_type") + "/" + stat.statBettype + "/" + stat.kumiban + "/";
 				
-				dirExResult = dirAllResult + prop.getString("grade_type") + "/" + prop.getString("stat_type") + "/" + stat.kumiban + "/";
-				//dirExResult = dirAllResult  + prop.getString("grade_type") + "/" + stat.statBettype + "/" + stat.kumiban + "/";
+				//dirExResult = dirAllResult + prop.getString("groups") + "/" + prop.getString("grade_type") + "/" +  prop.getString("bettype") + "/" + stat.kumiban + "/" ;
+				
+				dirExResult = dirAllResult + prop.getString("grade_type") + "/"  +  prop.getString("stat_bettype") + "/" + stat.kumiban + "/"; 
+						//String.join("-", prop.getString("factor"), prop.getString("cond_range")) + "/";
+						//String.join("-", prop.getString("factor"), prop.getString("cond_range"), prop.getString("limit"),prop.getString("models"),prop.getString("group_sql_id")) + "/";
+				// VIC dirExResult = dirAllResult + prop.getString("grade_type") + "/" +  prop.getString("bettype") + "/" + stat.kumiban + "/" + String.join("-", prop.getString("factor_no"), prop.getString("factor")) + "/";
+				//dirExResult = dirAllResult + prop.getString("grade_type") + "/" + stat.statBettype + "/" + stat.kumiban + "/" + prop.getString("group_sql_id") + "/";
 
 				//simulation時に複数のResultStatのbettype, kumibanを代入する
 				prop.evalIdBettype = stat.statBettype;
 				prop.evalIdKumiban = stat.kumiban;
 				String evaluationsId = prop.getString("evaluations_id");
+				
+				// tsvファイルの複数のシミュレーションをまとめて実行するための条件として
+				// pattern_type=literal, pattern_fields=ptid
+				evaluationsId = evaluationsId.replace("{patternid}", stat.pattern);
+				
 				
 				// 統計単位がkumibanでかつ全組番のsimulationの場合組番文字列を書き換える 2023/1/24
 //				if (!stat.kumiban.equals("")  && evaluationsId.contains("1234-*-*")) {
@@ -157,19 +168,21 @@ public class ResultGraphBuilder {
 							String.valueOf(stat.getDailyIncome()), String.valueOf(stat.getDailyHitrate()), String.valueOf(stat.getDailyBetcnt()) );
 							//evaluationsId + "_" + String.valueOf(stat.getIncome()) + "_" + String.valueOf(stat.getDailyBetcnt());
 				} else {
-					filePathCommon = dirExResult + String.join("_", prop.getString("rank"), evaluationsId,  
+					filePathCommon = dirExResult + String.join("_", evaluationsId,  
 							String.valueOf(stat.getDailyIncome()), String.valueOf(stat.getDailyHitrate()), String.valueOf(stat.getDailyBetcnt()) );
 							//evaluationsId + "_" + String.valueOf(stat.getIncome()) + "_" + String.valueOf(stat.getDailyBetcnt());
 				}
 				
 				filePath = filePathCommon + ".png";
 			} else   { // simul_last 最終確認
-				dirExResult = dirAllResult + prop.getString("result_no") + "/";
+				dirExResult = dirAllResult 
+						+ String.join(Delimeter.UNDERBAR.getValue(), prop.getString("result_no"), prop.getString("group_no"), prop.getString("sql_type"), prop.getString("stat_unit"))
+						+ "/" + prop.getString("grade_type") + "/";
 				String filePathCommon = dirExResult + String.join("_",
-						prop.getString("result_no"),
-						prop.getString("result_type"), prop.getString("term"), 
+						prop.getString("result_no"), prop.getString("result_type"), prop.getString("result_start_ymd") + "~" + prop.getString("result_end_ymd"),
 						stat.statBettype,
-						stat.kumiban 
+						stat.kumiban,
+						String.valueOf(stat.getDailyIncome()), String.valueOf(stat.getDailyHitrate()), String.valueOf(stat.getDailyBetcnt())
 						);
 				filePath = filePathCommon + ".png";
 				

@@ -44,6 +44,11 @@ public class SetuListPageParser {
 			// 場が発売終了ならスキップ
 			if (setuRow.child(1).text().contains("発売終了")) {
 				logger.debug(setuRow.child(0).child(0).child(0).attr("alt").replace(">", "") + " 発売終了");
+				// 20231112 trend情報更新のために発売終了したレースでも取得する。
+				// レースステータスをTOHYO_TIMEOUT(4)で設定してol_raceに保存される
+				Setu setu = parseSetu(setuRow, yyyyMMdd, isToday);
+				setuList.add(setu);
+				
 				continue;
 			}
 			

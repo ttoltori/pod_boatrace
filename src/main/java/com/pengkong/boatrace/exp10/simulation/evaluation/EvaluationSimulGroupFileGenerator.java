@@ -62,9 +62,11 @@ public class EvaluationSimulGroupFileGenerator {
 			sb.append(rec.getString("bonus_borkbor")); sb.append("\n");
 		}
 		
-		String filepath = prop.getString("dir_groups_output_step1") + evaluationsId + ".tsv";
+		String dir = prop.getString("dir_groups_output_step1");
+		FileUtil.createDirIfNotExist(dir);
+		String filepath = dir + evaluationsId + ".tsv";
+
 		filepath = filepath.replaceAll("\\*", "@");
-		
 		FileUtil.writeFile(filepath, sb.toString());
 	}
 
@@ -112,8 +114,17 @@ public class EvaluationSimulGroupFileGenerator {
 			sb.append(rec.getString("bonus_bork")); sb.append("\t");
 			sb.append(rec.getString("bonus_borkbor")); sb.append("\n");
 		}
+
+		String dir;
+		if (prop.getString("simulation_step").equals("1")) {
+			dir = prop.getString("dir_groups_output_step1");	
+		} else {
+			dir = prop.getString("dir_groups_output_step2");	
+		}
 		
-		String filepath = prop.getString("dir_groups_output_step1") + evaluationsId + ".tsv";
+		FileUtil.createDirIfNotExist(dir);
+		String filepath = dir + evaluationsId + ".tsv";
+
 		filepath = filepath.replaceAll("\\*", "@");
 		FileUtil.writeFile(filepath, sb.toString());
 	}

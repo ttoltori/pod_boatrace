@@ -15,3 +15,4 @@ cf_lgbm-6_py	python C:/Dev/workspace/Oxygen/py_boatrace/boatrace/classification/
 cf_lgbm-0.01_py	python C:/Dev/workspace/Oxygen/py_boatrace/boatrace/classification/lgbm/BoatLGBMClassifierTrainer.py boosting_type=gbdt,learning_rate=0.01 {csv_filepath} {model_filepath} {feature_name_list} {feature_type_list}
 cf_lgbm-0.02_py	python C:/Dev/workspace/Oxygen/py_boatrace/boatrace/classification/lgbm/BoatLGBMClassifierTrainer.py boosting_type=gbdt,learning_rate=0.02 {csv_filepath} {model_filepath} {feature_name_list} {feature_type_list}
 cf_lgbm-0.05_py	python C:/Dev/workspace/Oxygen/py_boatrace/boatrace/classification/lgbm/BoatLGBMClassifierTrainer.py boosting_type=gbdt,learning_rate=0.05 {csv_filepath} {model_filepath} {feature_name_list} {feature_type_list}
+rk_catb-1_py	python C:/Dev/github/py_boatrace/boatrace/classification/catboost/BoatCatboostRankerTrainer.py params {csv_filepath} {model_filepath} {feature_name_list} {feature_type_list}

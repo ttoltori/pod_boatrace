@@ -26,7 +26,7 @@ public class PcApiProvider extends AbstractApiProvider {
 	
 	MLPropertyUtil prop = MLPropertyUtil.getInstance();
 	
-	PcApiHelper helper;
+	PcApiHelper helper = new PcApiHelper();
 	/**
 	 * ログイン
 	 * 
@@ -39,8 +39,8 @@ public class PcApiProvider extends AbstractApiProvider {
 		
 		try {
 			// ログインページ表示
-			//res = Jsoup.connect(URL_BASE).userAgent(BROWSER_USER_AGENT).validateTLSCertificates(false)
-			res = Jsoup.connect(PcUrl.URL_BASE).userAgent(PcUrl.BROWSER_USER_AGENT)
+			res = Jsoup.connect(PcUrl.URL_BASE).userAgent(PcUrl.BROWSER_USER_AGENT).validateTLSCertificates(false)
+			//res = Jsoup.connect(PcUrl.URL_BASE).userAgent(PcUrl.BROWSER_USER_AGENT)
 					.method(Method.GET).execute();
 			doc = res.parse();
 		} catch (Exception e) {
@@ -51,7 +51,10 @@ public class PcApiProvider extends AbstractApiProvider {
 		String centerNo = helper.getCenterNoFromMeta(doc);
 		String csrf = helper.getCsrfFromMeta(doc);
 		String r = helper.getRFromLoginForm(doc);
-
+		
+		// reCAPTCHA
+		String rctoken = getRecaptchaToken();
+		
 		// ユーザー生成
 		User user = createUser();
 		
@@ -59,10 +62,10 @@ public class PcApiProvider extends AbstractApiProvider {
 		String loginUrl = PcUrl.getLoginUrl(centerNo, r);
 		
 		try {
-			//res = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT).validateTLSCertificates(false)
-			res = Jsoup.connect(loginUrl).userAgent(PcUrl.BROWSER_USER_AGENT)
+			res = Jsoup.connect(loginUrl).userAgent(PcUrl.BROWSER_USER_AGENT).validateTLSCertificates(false)
+			//res = Jsoup.connect(loginUrl).userAgent(PcUrl.BROWSER_USER_AGENT)
 					.data("dummyA", "", "dummyB", "", "memberNo", user.getMemberNo(), "pin", user.getPin(), "authPassword",
-							user.getAuthPassword(), "operationKbn", "", "screenFrom", "A604", "token", "", "_csrf", csrf)
+							user.getAuthPassword(), "operationKbn", "", "screenFrom", "A604", "token", "", "_csrf", csrf, "rctoken", rctoken)
 					.cookie("JSESSIONID", jsessionId).method(Method.POST).followRedirects(true).execute();
 			doc = res.parse();
 		} catch (Exception e) {
@@ -73,9 +76,9 @@ public class PcApiProvider extends AbstractApiProvider {
 		session = new Session(
 				user,
 				res.cookies().get("JSESSIONID"),
-				helper.getCenterNoFromMeta(doc),
 				helper.getCsrfFromMeta(doc),
-				helper.getTokenFromInputTag(doc)
+				helper.getTokenFromInputTag(doc),
+				helper.getCenterNoFromMeta(doc)
 				);
 
 		// HeartBeat開始
@@ -94,8 +97,8 @@ public class PcApiProvider extends AbstractApiProvider {
 		String url = PcUrl.getLogoutUrl(session.getCenterNo());
 		
 		try {
-			//Jsoup.connect(url).userAgent(BROWSER_USER_AGENT).validateTLSCertificates(false)
-			Jsoup.connect(url).userAgent(PcUrl.BROWSER_USER_AGENT)
+			Jsoup.connect(url).userAgent(PcUrl.BROWSER_USER_AGENT).validateTLSCertificates(false)
+			//Jsoup.connect(url).userAgent(PcUrl.BROWSER_USER_AGENT)
 					.header("Accept", "application/json, text/javascript, */*; q=0.01").header("X-CSRF-TOKEN", session.getCsrf())
 					.header("X-Requested-With", "XMLHttpRequest")
 					.data("screenFrom", "B610", "token", session.getToken())
@@ -123,13 +126,12 @@ public class PcApiProvider extends AbstractApiProvider {
 		String resJson = null;
 		
 		try {
-			//String resJson = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT).validateTLSCertificates(false)
-			resJson = Jsoup.connect(url).userAgent(PcUrl.BROWSER_USER_AGENT)
+			resJson = Jsoup.connect(url).userAgent(PcUrl.BROWSER_USER_AGENT).validateTLSCertificates(false)
+			//resJson = Jsoup.connect(url).userAgent(PcUrl.BROWSER_USER_AGENT)
 					.header("Accept", "application/json, text/javascript, */*; q=0.01")
 					.header("X-CSRF-TOKEN", session.getCsrf()).header("X-Requested-With", "XMLHttpRequest")
 					.cookie("JSESSIONID", session.getJsessionId())
 					.data("screenFrom", "B610", "token", session.getToken())
-					.cookie("JSESSIONID", session.getJsessionId())
 					.ignoreContentType(true)
 					.method(Method.POST).execute().body();
 			
@@ -138,7 +140,7 @@ public class PcApiProvider extends AbstractApiProvider {
 		} catch (Exception e) {
 			throw new ApiException(e);
 		}
-		logger.info("balance update is successful:" + session.getUser().getMemberNo());
+		logger.info("balance : " + session.getBalance().purchasableBetAmount);
 	}
 
 	/**
@@ -151,15 +153,18 @@ public class PcApiProvider extends AbstractApiProvider {
 		Gson gson = new Gson();
 		String resJson = null;
 		
+		// reCAPTCHA
+		String rctoken = getRecaptchaToken();
+		
 		try {
 			int amount = money / 1000; // 100円単位
-			//String resJson = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT).validateTLSCertificates(false)
-			resJson = Jsoup.connect(url).userAgent(PcUrl.BROWSER_USER_AGENT)
+			resJson = Jsoup.connect(url).userAgent(PcUrl.BROWSER_USER_AGENT).validateTLSCertificates(false)
+			//resJson = Jsoup.connect(url).userAgent(PcUrl.BROWSER_USER_AGENT)
 					.header("Accept", "application/json, text/javascript, */*; q=0.01")
 					.header("X-CSRF-TOKEN", session.getCsrf()).header("X-Requested-With", "XMLHttpRequest")
 					.cookie("JSESSIONID", session.getJsessionId())
 					.data("chargeInstructAmt", String.valueOf(amount), "betPassword", user.getBetPassword(), "screenFrom", "B610",
-							"token", session.getToken())
+							"token", session.getToken(), "rctoken", rctoken)
 					.cookie("JSESSIONID", session.getJsessionId()).ignoreContentType(true).method(Method.POST).execute().body();
 			Deposit deposit = gson.fromJson(resJson, Deposit.class);
 			session.update(deposit);
@@ -174,13 +179,17 @@ public class PcApiProvider extends AbstractApiProvider {
 	public void bet(BetRequest betReq) throws ApiException {
 		Connection.Response res;
 		Document doc;
-		
 		try {
+			logger.info("betting start." + betReq.toString());
+			
+			String rctoken = getRecaptchaToken();
+			
 			// 投票確認
 			String url = PcUrl.getBetlistConfirmUrl(session.getCenterNo());
-			//Connection conn = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT).validateTLSCertificates(false)
-			Connection conn = Jsoup.connect(url).userAgent(PcUrl.BROWSER_USER_AGENT)
+			Connection conn = Jsoup.connect(url).userAgent(PcUrl.BROWSER_USER_AGENT).validateTLSCertificates(false)
+			//Connection conn = Jsoup.connect(url).userAgent(PcUrl.BROWSER_USER_AGENT)
 					.data("token", session.getToken(),
+					"rctoken", rctoken,
 					"_csrf", session.getCsrf(), 
 					"betWay", "1", 
 					"jyoCode", betReq.getJyoCd(), 
@@ -219,19 +228,23 @@ public class PcApiProvider extends AbstractApiProvider {
 					helper.getTokenFromInputTag(doc));
 
 			// 0.5秒待機
-			Thread.sleep(500);
+			Thread.sleep(1000);
+
+			// reCAPTCHA
+			rctoken = getRecaptchaToken();
 
 			// 投票要求
 			User user = session.getUser();
 			url = PcUrl.getBetCompleteUrl(session.getCenterNo());
-			//res = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT).validateTLSCertificates(false)
-			res = Jsoup.connect(url).userAgent(PcUrl.BROWSER_USER_AGENT)
+			res = Jsoup.connect(url).userAgent(PcUrl.BROWSER_USER_AGENT).validateTLSCertificates(false)
+			//res = Jsoup.connect(url).userAgent(PcUrl.BROWSER_USER_AGENT)
 					.data("dummyA", "", 
 							"dummyB", "", 
 							"betAmount", String.valueOf(betReq.getBetAmount()), 
 							"betPassword", user.getBetPassword(), 
 							"operationKbn", "", 
 							"token", session.getToken(), 
+							"rctoken", rctoken, 
 							"_csrf", session.getCsrf(), 
 							"screenFrom", "D628", 
 							"betWay", "1", 
@@ -261,8 +274,7 @@ public class PcApiProvider extends AbstractApiProvider {
 			throw new ApiException(e);
 		}
 
-		logger.info("betting is successful:" + betReq.toString());
-		logger.info("投票要求:" + betReq.toString());
+		logger.info("betting is successful");
 	}
 	
 	/**
@@ -275,8 +287,8 @@ public class PcApiProvider extends AbstractApiProvider {
 		String resJson = null;
 		PayOff payOff = null;
 		try {
-			//String resJson = Jsoup.connect(url).userAgent(BROWSER_USER_AGENT).validateTLSCertificates(false)
-			resJson = Jsoup.connect(url).userAgent(PcUrl.BROWSER_USER_AGENT)
+			resJson = Jsoup.connect(url).userAgent(PcUrl.BROWSER_USER_AGENT).validateTLSCertificates(false)
+			//resJson = Jsoup.connect(url).userAgent(PcUrl.BROWSER_USER_AGENT)
 					.header("Accept", "application/json, text/javascript, */*; q=0.01").header("X-CSRF-TOKEN", session.getCsrf())
 					.header("X-Requested-With", "XMLHttpRequest").cookie("JSESSIONID", session.getJsessionId())
 					.data("betPassword", user.getBetPassword(), "screenFrom", "B636", 

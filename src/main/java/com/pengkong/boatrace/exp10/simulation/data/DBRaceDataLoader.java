@@ -54,7 +54,6 @@ public class DBRaceDataLoader extends AbstractRaceDataLoader {
 		SqlSession session = DatabaseUtil.open(prop.getString("target_db_resource"), false);
 		try {
 			CustomMapper customMapper = session.getMapper(CustomMapper.class);
-			
 			sql = sql.replace("{fromYmd}", fromYmd);
 			sql = sql.replace("{toYmd}", toYmd);
 			

@@ -30,9 +30,9 @@ public class HeartBeatRunner implements HeartBeatRunnerInterface {
 	public void run() {
 		try {
 			while (isRunning) {
-				apiProvider.updateBalance();
-				
 				Thread.sleep(intervalMinutes * 60 * 1000);
+
+				apiProvider.updateBalance();
 			}
 		} catch (Exception e) {
 			logger.error("heartbeat failed!",e);

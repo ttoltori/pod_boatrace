@@ -55,7 +55,7 @@ public class OnlineTohyoServer implements TohyoRunnerListener, TohyoResultRunner
 		try {
 			// ログイン
 			apiProvider.login();
-			Thread.sleep(3000);
+			Thread.sleep(5000);
 
 			// 必要時入金
 			depositIfNeeded();
@@ -109,14 +109,16 @@ public class OnlineTohyoServer implements TohyoRunnerListener, TohyoResultRunner
 
 		Thread.sleep(3000);
 
-		if (apiProvider.getSession().getBalance().purchasableBetAmount <= 0) {
-			int startBalance = prop.getInteger("start_balance");
-
+		int startBalance = prop.getInteger("start_balance");
+		//if (apiProvider.getSession().getBalance().purchasableBetAmount < startBalance) {
+		if (apiProvider.getSession().getBalance().purchasableBetAmount < 3000) {
 			// 入金要求
 			apiProvider.deposit(startBalance);
 
 			// 入金処理待機
 			Thread.sleep(prop.getInteger("wait_deposit") * 1000);
+		} else {
+			logger.info("deposit skip. balance:" + apiProvider.getSession().getBalance().purchasableBetAmount);
 		}
 	}
 

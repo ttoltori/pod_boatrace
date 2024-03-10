@@ -1,3 +1,88 @@
+drop table if exists rec_racer2;
+create table rec_racer2 (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+waku int,
+runcnt int,                          -- 出走回数
+runcnt_slope double precision,       -- 出走回数傾向
+cond double precision,               -- コンディション指数
+cond_slope double precision,         -- コンディション指数傾向
+n1point double precision,            -- 能力指数
+n1point_slope double precision,      -- 能力指数傾向
+n2point double precision,            -- 2連帯能力指数
+n2point_slope double precision,      -- 2連帯能力指数傾向
+n3point double precision,            -- 3連帯能力指数
+n3point_slope double precision,      -- 3連帯能力指数傾向
+n1point_waku double precision,       -- 当該枠選手の枠能力指数
+n1point_waku_slope double precision, -- 当該枠選手の枠能力指数傾向
+n2point_waku double precision,       -- 当該枠選手の2連帯枠能力指数
+n2point_waku_slope double precision, -- 当該枠選手の2連帯枠能力指数傾向
+n3point_waku double precision,       -- 当該枠選手の3連帯枠能力指数
+n3point_waku_slope double precision, -- 当該枠選手の3連帯枠能力指数傾向
+avgstart_waku double precision,      -- 当該枠選手の枠平均スタート
+avgstart_waku_slope double precision -- 当該枠選手の枠平均スタート傾向
+);
+create index indexes_rec_racer2 on rec_racer2 (ymd, jyocd, raceno);
+
+
+CREATE TABLE %s (
+    keycol varchar(200) NULL,
+    keycol2 varchar(200) NULL,
+	result_type varchar(2) NULL,
+	bettype varchar(3) NULL,
+	kumiban varchar(3) NULL,
+	resultno varchar(5) NULL,
+	modelno varchar(5) NULL,
+	patternid varchar(20) NULL,
+	pattern varchar(200) NULL,
+	i09 int NULL,
+	i02 int NULL,
+	i04 int NULL,
+	i19 int NULL,
+	i39 int NULL,
+	i27 int NULL,
+	bc09 int NULL,
+	bc02 int NULL,
+	bc04 int NULL,
+	bc19 int NULL,
+	bc39 int NULL,
+	bc27 int NULL,
+	hc09 int NULL,
+	hc02 int NULL,
+	hc04 int NULL,
+	hc19 int NULL,
+	hc39 int NULL,
+	hc27 int NULL,
+	betcnt int NULL,
+	hitcnt int NULL,
+	betamt int NULL,
+	hitamt int NULL,
+	incamt int NULL,
+	betrate double precision NULL,
+	hitrate double precision NULL,
+	incrate double precision NULL,
+	bal_pluscnt int NULL,
+	evaluations_id varchar(255)
+
+
+-- 枠１，２のコンディションをntileした数値でパタンとして使う。（使用していないが維持する）
+-- ntile4で4分割して実験結果が良くなかった。
+drop table if exists rec_race_trend;
+CREATE TABLE rec_race_trend (
+  ymd varchar(8),
+  jyocd varchar(2),
+  raceno smallint,
+  cond1 int, 
+  n1point1 int,
+  n1pointwaku1 int,
+  cond2 int, 
+  n1point2 int,
+  n1pointwaku2 int
+);
+create index indexes_rec_race_trend on rec_race_trend (ymd, jyocd, raceno);
+
+
 drop table if exists rec_racer_trend;
 CREATE TABLE rec_racer_trend (
   ymd varchar(8),
@@ -56,8 +141,18 @@ create index indexes_rec_bodds on rec_bodds (ymd, jyocd, raceno);
 
 
 
-drop table if exists stat_bork;
-CREATE TABLE stat_bork (
+drop index if exists indexes_stat_bork;
+create index indexes_stat_bork on stat_bork (result_type, bettype, kumiban, modelno, patternid, pattern);
+drop index if exists indexes_stat_bork_evaluationsid;
+create index indexes_stat_bork_evaluationsid on stat_bork (evaluations_id);
+
+-- 패턴id기준으로 랭킹안에 든 패턴들. 
+drop table if exists ptn_ranking;
+CREATE TABLE ptn_ranking (
+    ranking int NULL,
+    factor varchar(40) NULL,
+    keycol varchar(200) NULL,
+    keycol2 varchar(200) NULL,
 	result_type varchar(2) NULL,
 	bettype varchar(3) NULL,
 	kumiban varchar(3) NULL,
@@ -75,26 +170,26 @@ CREATE TABLE stat_bork (
 	i7 int NULL,
 	i8 int NULL,
 	i9 int NULL,
-	tc0 int NULL,
-	tc1 int NULL,
-	tc2 int NULL,
-	tc3 int NULL,
-	tc4 int NULL,
-	tc5 int NULL,
-	tc6 int NULL,
-	tc7 int NULL,
-	tc8 int NULL,
-	tc9 int NULL,
-	tpc0 int NULL,
-	tpc1 int NULL,
-	tpc2 int NULL,
-	tpc3 int NULL,
-	tpc4 int NULL,
-	tpc5 int NULL,
-	tpc6 int NULL,
-	tpc7 int NULL,
-	tpc8 int NULL,
-	tpc9 int NULL,
+	bc0 int NULL,
+	bc1 int NULL,
+	bc2 int NULL,
+	bc3 int NULL,
+	bc4 int NULL,
+	bc5 int NULL,
+	bc6 int NULL,
+	bc7 int NULL,
+	bc8 int NULL,
+	bc9 int NULL,
+	hc0 int NULL,
+	hc1 int NULL,
+	hc2 int NULL,
+	hc3 int NULL,
+	hc4 int NULL,
+	hc5 int NULL,
+	hc6 int NULL,
+	hc7 int NULL,
+	hc8 int NULL,
+	hc9 int NULL,
 	betcnt int NULL,
 	hitcnt int NULL,
 	betamt int NULL,
@@ -107,10 +202,256 @@ CREATE TABLE stat_bork (
 	evaluations_id varchar(255)
 );
 
-drop index if exists indexes_stat_bork;
-create index indexes_stat_bork on stat_bork (result_type, bettype, kumiban, modelno, patternid, pattern);
-drop index if exists indexes_stat_bork_evaluationsid;
-create index indexes_stat_bork_evaluationsid on stat_bork (evaluations_id);
+drop index if exists indexes_keyco_ptn_ranking;
+create index indexes_keycol_ptn_ranking on ptn_ranking (keycol);
+drop index if exists indexes_keyco2_ptn_ranking;
+create index indexes_keycol2_ptn_ranking on ptn_ranking (keycol2);
+
+
+-- 패턴id기준으로 랭킹매긴 결과
+-- Deprecated
+drop table if exists ptnid_ranking;
+CREATE TABLE ptnid_ranking (
+    ranking int NULL,
+    keycol2 varchar(200) NULL,
+	result_type varchar(2) NULL,
+	bettype varchar(3) NULL,
+	kumiban varchar(3) NULL,
+	modelno varchar(5) NULL,
+	patternid varchar(20) NULL,
+	i0 int NULL,
+	i1 int NULL,
+	i2 int NULL,
+	i3 int NULL,
+	i4 int NULL,
+	i5 int NULL,
+	i6 int NULL,
+	i7 int NULL,
+	i8 int NULL,
+	i9 int NULL,
+	bc0 int NULL,
+	bc1 int NULL,
+	bc2 int NULL,
+	bc3 int NULL,
+	bc4 int NULL,
+	bc5 int NULL,
+	bc6 int NULL,
+	bc7 int NULL,
+	bc8 int NULL,
+	bc9 int NULL,
+	betcnt int NULL,
+	hitcnt int NULL,
+	betamt int NULL,
+	hitamt int NULL,
+	incamt int NULL,
+	betrate double precision NULL,
+	hitrate double precision NULL,
+	incrate double precision NULL,
+	bal_pluscnt int NULL,
+	evaluations_id varchar(255)
+);
+
+drop index if exists indexes_keyco2_ptnid_ranking;
+create index indexes_keycol2_ptnid_ranking on ptnid_ranking (keycol2);
+drop index if exists indexes_ptnid_ranking_evaluationsid;
+create index indexes_ptnid_ranking_evaluationsid on ptnid_ranking (evaluations_id);
+
+
+-- ptn_bork1をptnidでgroupingした結果
+-- Deprecated
+drop table if exists ptnid_bork;
+CREATE TABLE ptnid_bork (
+    keycol2 varchar(200) NULL,
+	result_type varchar(2) NULL,
+	bettype varchar(3) NULL,
+	kumiban varchar(3) NULL,
+	modelno varchar(5) NULL,
+	patternid varchar(20) NULL,
+	i0 int NULL,
+	i1 int NULL,
+	i2 int NULL,
+	i3 int NULL,
+	i4 int NULL,
+	i5 int NULL,
+	i6 int NULL,
+	i7 int NULL,
+	i8 int NULL,
+	i9 int NULL,
+	bc0 int NULL,
+	bc1 int NULL,
+	bc2 int NULL,
+	bc3 int NULL,
+	bc4 int NULL,
+	bc5 int NULL,
+	bc6 int NULL,
+	bc7 int NULL,
+	bc8 int NULL,
+	bc9 int NULL,
+	betcnt int NULL,
+	hitcnt int NULL,
+	betamt int NULL,
+	hitamt int NULL,
+	incamt int NULL,
+	betrate double precision NULL,
+	hitrate double precision NULL,
+	incrate double precision NULL,
+	bal_pluscnt int NULL,
+	evaluations_id varchar(255)
+);
+
+drop index if exists indexes_keyco2_ptnid_bork;
+create index indexes_keycol2_ptnid_bork on ptnid_bork (keycol2);
+drop index if exists indexes_ptnid_bork_evaluationsid;
+create index indexes_ptnid_bork_evaluationsid on ptnid_bork (evaluations_id);
+
+
+-- stat_borkを一次フィルタリングした結果. カラムはstat_bork1と同一。evaluationsidにsimulした条件IDを記載
+-- Deprecated
+drop table if exists ptn_bork;
+CREATE TABLE ptn_bork (
+    keycol varchar(200) NULL,
+    keycol2 varchar(200) NULL,
+	result_type varchar(2) NULL,
+	bettype varchar(3) NULL,
+	kumiban varchar(3) NULL,
+	resultno varchar(5) NULL,
+	modelno varchar(5) NULL,
+	patternid varchar(20) NULL,
+	pattern varchar(200) NULL,
+	i0 int NULL,
+	i1 int NULL,
+	i2 int NULL,
+	i3 int NULL,
+	i4 int NULL,
+	i5 int NULL,
+	i6 int NULL,
+	i7 int NULL,
+	i8 int NULL,
+	i9 int NULL,
+	bc0 int NULL,
+	bc1 int NULL,
+	bc2 int NULL,
+	bc3 int NULL,
+	bc4 int NULL,
+	bc5 int NULL,
+	bc6 int NULL,
+	bc7 int NULL,
+	bc8 int NULL,
+	bc9 int NULL,
+	betcnt int NULL,
+	hitcnt int NULL,
+	betamt int NULL,
+	hitamt int NULL,
+	incamt int NULL,
+	betrate double precision NULL,
+	hitrate double precision NULL,
+	incrate double precision NULL,
+	bal_pluscnt int NULL,
+	evaluations_id varchar(255) -- simulationしたsql条件のID 例）s1_si04
+);
+
+drop index if exists indexes_keycol_bork;
+create index indexes_keycol_bork on ptn_bork (keycol);
+drop index if exists indexes_keycol2_bork;
+create index indexes_keycol2_bork on ptn_bork (keycol2);
+drop index if exists indexes_evaluationsid_bork;
+create index indexes_evaluationsid_bork on ptn_bork (evaluations_id);
+
+
+drop table if exists stat_2018;
+CREATE TABLE stat_2018 (
+    keycol varchar(200) NULL,
+    keycol2 varchar(200) NULL,
+	result_type varchar(2) NULL,
+	bettype varchar(3) NULL,
+	kumiban varchar(3) NULL,
+	resultno varchar(5) NULL,
+	modelno varchar(5) NULL,
+	patternid varchar(20) NULL,
+	pattern varchar(200) NULL,
+	betcnt int NULL,
+	hitcnt int NULL,
+	betamt int NULL,
+	hitamt int NULL,
+	incamt int NULL,
+	betrate double precision NULL,
+	hitrate double precision NULL,
+	incrate double precision NULL,
+	bal_pluscnt int NULL,
+	evaluations_id varchar(255)
+);
+
+drop index if exists indexes_keycol_bork_2018;
+create index indexes_keycol_bork_2018 on stat_2018 (keycol);
+drop index if exists indexes_keycolptnid_bork_2018;
+create index indexes_keycolptnid_bork_2018 on stat_2018 (keycol2);
+drop index if exists indexes_stat_2018;
+create index indexes_stat_2018 on stat_2018 (result_type, bettype, kumiban, modelno, patternid, pattern);
+drop index if exists indexes_stat_2018_evaluationsid;
+create index indexes_stat_2018_evaluationsid on stat_2018 (evaluations_id);
+
+-- stat_borkを1,2,3,4へ分割
+drop table if exists stat8_7;
+CREATE TABLE stat8_7 (
+    keycol varchar(200) NULL,
+    keycol2 varchar(200) NULL,
+	result_type varchar(2) NULL,
+	bettype varchar(3) NULL,
+	kumiban varchar(3) NULL,
+	resultno varchar(5) NULL,
+	modelno varchar(5) NULL,
+	patternid varchar(20) NULL,
+	pattern varchar(200) NULL,
+	i0 int NULL,
+	i1 int NULL,
+	i2 int NULL,
+	i3 int NULL,
+	i4 int NULL,
+	i5 int NULL,
+	i6 int NULL,
+	i7 int NULL,
+	i8 int NULL,
+	i9 int NULL,
+	bc0 int NULL,
+	bc1 int NULL,
+	bc2 int NULL,
+	bc3 int NULL,
+	bc4 int NULL,
+	bc5 int NULL,
+	bc6 int NULL,
+	bc7 int NULL,
+	bc8 int NULL,
+	bc9 int NULL,
+	hc0 int NULL,
+	hc1 int NULL,
+	hc2 int NULL,
+	hc3 int NULL,
+	hc4 int NULL,
+	hc5 int NULL,
+	hc6 int NULL,
+	hc7 int NULL,
+	hc8 int NULL,
+	hc9 int NULL,
+	betcnt int NULL,
+	hitcnt int NULL,
+	betamt int NULL,
+	hitamt int NULL,
+	incamt int NULL,
+	betrate double precision NULL,
+	hitrate double precision NULL,
+	incrate double precision NULL,
+	bal_pluscnt int NULL,
+	evaluations_id varchar(255)
+);
+
+drop index if exists indexes_keycol_bork8_7;
+create index indexes_keycol_bork8_7 on stat8_7 (keycol);
+drop index if exists indexes_keycolptnid_bork8_7;
+create index indexes_keycolptnid_bork8_7 on stat8_7 (keycol2);
+drop index if exists indexes_stat8_7;
+create index indexes_stat8_7 on stat8_7 (result_type, bettype, kumiban, modelno, patternid, pattern);
+drop index if exists indexes_stat8_7_evaluationsid;
+create index indexes_stat8_7_evaluationsid on stat8_7 (evaluations_id);
 
 drop table if exists ml_eval_pipe;
 create table ml_eval_pipe (
@@ -694,109 +1035,6 @@ sim_prob varchar(10)
 drop index if exists indexes_st_raneg_evaluation;
 create index indexes_st_range_evaluation on st_range_evaluation (resultno, modelno, patternid, pattern, bettype, kumiban, result_type,
 evaluations_id, sim_termtype, sim_term, sim_bettype, sim_factor, sim_limit, sim_incr, sim_group, sim_model, sim_grade, sim_prob);
-
---------------
-drop table if exists ol_race;
-create table ol_race (
-ymd varchar(8),
-jyocd varchar(2),
-raceno int,
-sime varchar(4),
-grade varchar(2),
-timezone varchar(2),
-turn varchar(2),
-fixedentrance varchar(6),
-racetype varchar(20),
-wakulevellist varchar(20),
-alevelcount int,
-femalecount int,
-com_predict varchar(4),
-com_confidence int,
-status int  -- 0:締切前 1:締切後 2:投票完了 
-);
-create index indexes_ol_race on ol_race (ymd, jyocd, raceno);
-
-
-drop table if exists ol_racer;
-create table ol_racer (
-ymd varchar(8),
-jyocd varchar(2),
-raceno int,
-entry int[],
-sex varchar(2)[],
-age int[],
-level varchar(2)[],
-weight double precision[],
-branch varchar(4)[],
-exhibit double precision[],            -- 直前情報のため未使用
-startexhibit double precision[],       -- 直前情報のため未使用
-flying int[],
-late int[],
-averagestart double precision[],
-avgtime double precision[],            -- 直前情報のため未使用
-nationwiningrate double precision[],
-nation2winingrate double precision[],
-nation3winingrate double precision[],
-localwiningrate double precision[],
-local2winingrate double precision[],
-local3winingrate double precision[],
-motorno int[],
-motor2winingrate double precision[],
-motor3winingrate double precision[],
-waku int[],                            -- 不要のため未使用
-rank int[]                             -- 不要のため未使用
-);
-create index indexes_ol_racer on ol_racer (ymd, jyocd, raceno);
-
--- 未使用
-drop table if exists ol_classification;
-create table ol_classification (
-modelno varchar(5),
-ymd varchar(8),
-jyocd varchar(2),
-raceno int,
-sime varchar(4),
-prediction1 varchar(3),
-probability1 double precision,
-probabilities1 double precision[], 
-prediction2 varchar(3),
-probability2 double precision,
-probabilities2 double precision[], 
-prediction3 varchar(3),
-probability3 double precision,
-probabilities3 double precision[] 
-);
-drop index if exists indexes_ol_classification;
-create index indexes_ol_classification on ol_classification (ymd, jyocd, raceno, sime);
-
--- 未使用
-drop table if exists ol_result;
-create table ol_result (
-ymd varchar(8),
-jyocd varchar(2),
-raceno int,
-sime varchar(4),
-predict_rank123 varchar(4),
-result_rank123 varchar(4),
-bettype varchar(2),
-bet_kumiban varchar(4),
-bet_odds double precision,
-bet_oddsrank int,
-result_kumiban varchar(4),
-result_odds double precision,
-result_oddsrank int,
-result_amt int,
-hity int,
-hitn int,
-betamt int,
-hitamt int,
-probability double precision,  -- MLから算出した予想的中確率
-evaluation varchar(50),        -- modelno_patternid_pattern
-custom varchar(10),
-status int                     -- 0: 投票完了 1:投票失敗 2:結果正常
-);
-drop index if exists indexes_ol_result;
-create index indexes_ol_result on ol_result (resultno, ymd, jyocd, raceno, sime);
 
 
 
@@ -1519,8 +1757,8 @@ ymd varchar(8),
 jyocd varchar(2),
 raceno smallint,
 sime varchar(4),
-predict_rank123 varchar(4),
-result_rank123 varchar(4),
+predict_rank123 varchar(6),
+result_rank123 varchar(6),
 bettype varchar(2),
 stat_bettype varchar(2),                -- 追加 2022/3/17
 bet_kumiban varchar(4),
@@ -1611,23 +1849,39 @@ raceno smallint,
 sime varchar(4),
 pattern varchar(20),
 prediction1 varchar(3),
--- kumiban1 varchar(1),
 probability1 double precision,
-probabilities1 double precision[], 
-skewness1 double precision,
-kurtosis1 double precision,
 prediction2 varchar(3),
--- kumiban2 varchar(1),
 probability2 double precision,
-probabilities2 double precision[], 
-skewness2 double precision,
-kurtosis2 double precision,
 prediction3 varchar(3),
--- kumiban3 varchar(1),
 probability3 double precision,
-probabilities3 double precision[], 
-skewness3 double precision,
-kurtosis3 double precision
+prediction4 varchar(3),
+probability4 double precision,
+prediction5 varchar(3),
+probability5 double precision,
+prediction6 varchar(3),
+probability6 double precision,
+mean double precision, -- 산술평균
+geo_mean double precision, -- 기하평균
+quad_mean double precision, -- 제곱평균제곱근
+min double precision, -- 최소
+max double precision, -- 최대
+std_deviation double precision, -- 평균편차
+variance double precision, -- 분산
+popu_variance double precision, -- 모분산
+skewness double precision, -- 왜도
+kurtosis double precision -- 첨도
+-- probabilities1 double precision[], 
+-- probabilities2 double precision[], 
+-- probabilities3 double precision[], 
+-- kumiban1 varchar(1),
+-- skewness1 double precision,
+-- kurtosis1 double precision,
+-- kumiban2 varchar(1),
+-- skewness2 double precision,
+-- kurtosis2 double precision,
+-- kumiban3 varchar(1),
+-- skewness3 double precision,
+-- kurtosis3 double precision
 -- probability_sum double precision,
 -- probability_mul double precision,
 -- skewness123 double precision,
@@ -1853,10 +2107,11 @@ motor3winingrate numeric(5,2),
 boatno smallint,
 boat2winingrate numeric(5,2),
 boat3winingrate numeric(5,2),
-waku smallint,N1p
+waku smallint,
 rank smallint,
 startresult numeric(5,2),
-grade varchar(2)
+grade varchar(2),
+racetype varchar(4)
 );
 drop index if exists indexes_rec_racer;
 create index indexes_rec_racer on rec_racer (ymd, jyocd, raceno, entry);

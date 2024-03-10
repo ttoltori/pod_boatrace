@@ -30,6 +30,8 @@ public abstract class AbstractPatternWrapper {
 			return rtype();
 		case "alcnt":
 			return alcnt();
+		case "jyo+race":
+			return String.join("-", jyo(), race());
 		case "jyo+turn":
 			return String.join("-", jyo(), turn());
 		case "jyo+grade":

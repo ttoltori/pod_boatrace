@@ -56,9 +56,9 @@ class RemoteCommunicationTest {
 		
 		
 		Mockito.mockStatic(MLPropertyUtil.class).when(MLPropertyUtil::getInstance).thenReturn(prop);
-		when(prop.getProperties("websocket_url_")).thenReturn(List.of(
-				new Prop("websocket_url_weka","ws://localhost:8090"),
-				new Prop("websocket_url_python","ws://localhost:8091")));
+//		when(prop.getProperties("websocket_url_")).thenReturn(List.of(
+//				new Prop("websocket_url_weka","ws://localhost:8090"),
+//				new Prop("websocket_url_python","ws://localhost:8091")));
 		
 		when( socketFactory.create("ws://localhost:8090") ).thenReturn(clientWk);
 		when( socketFactory.create("ws://localhost:8091") ).thenReturn(clientPy);

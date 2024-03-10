@@ -27,6 +27,9 @@ import com.pengkong.boatrace.mybatis.entity.RecRacerTrend;
 import com.pengkong.boatrace.mybatis.entity.RecRacerTrendExample;
 import com.pengkong.boatrace.util.BoatUtil;
 
+@Deprecated
+// com.pengkong.boatrace.online.batch.RecRacerArray2Generator
+// online処理の一部として処理する
 public class RecRacerArray2Generator {
 	Logger logger = LoggerFactory.getLogger(RecRacerArray2Generator.class);
 
@@ -77,6 +80,9 @@ public class RecRacerArray2Generator {
 				
 				for (RecRaceWaku recWaku : wakuRecords) {
 					try {
+						if (recWaku.getJyocd().equals("16") && recWaku.getRaceno() == 2) {
+							System.out.print("debug");
+						}
 						List<RacerWakuTrend> trends = new ArrayList<>();
 						trends.add(wakuTrendProvider.getRacerWakuTrend(recWaku.getEntry1(), 0));
 						trends.add(wakuTrendProvider.getRacerWakuTrend(recWaku.getEntry2(), 1));

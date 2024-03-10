@@ -108,15 +108,20 @@ public class FeatureTemplate {
 	
 	
 	Feature createFeature(String line) {
-		String[] token = line.split("\t");
-		Feature feature = new Feature();
-		feature.id = token[0];
-		feature.arffName = token[1];
-		feature.arffType = token[2];
-		feature.sqlForModel = token[3];
-		feature.sqlForInstance = token[4];
-		
-		return feature;
+		try {
+			String[] token = line.split("\t");
+			Feature feature = new Feature();
+			feature.id = token[0];
+			feature.arffName = token[1];
+			feature.arffType = token[2];
+			feature.sqlForModel = token[3];
+			feature.sqlForInstance = token[4];
+			return feature;
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+
 	}
 	
 	public static void main(String[] args) {

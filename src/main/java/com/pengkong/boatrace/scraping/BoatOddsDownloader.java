@@ -34,7 +34,7 @@ public class BoatOddsDownloader {
 		// 当該日のオッズファイルが存在すれば削除する。
 		String filepathOdds = prop.getString("DIRECTORY_ODDS") + "odds_" + yyyyMMdd + ".csv";
 		
-		FileUtil.deleteFile(filepathOdds);
+		FileUtil.deleteFileIfExist(filepathOdds);
 
 		String urlDailySetuList = BoatTemplate.URL_DAILY_SETU_LIST.replace("{yyyyMMdd}", yyyyMMdd);
 		// 節一覧取得

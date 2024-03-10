@@ -59,8 +59,8 @@ public class ArffCreator {
 		}
 		logger.info("arff file saved. " + arffFilepath);
 		
-		FileUtil.deleteFile(headerFilepath);
-		FileUtil.deleteFile(bodyFilepath);
+		FileUtil.deleteFileIfExist(headerFilepath);
+		FileUtil.deleteFileIfExist(bodyFilepath);
 		logger.info("temporary files are deleted.");
 	}
 	

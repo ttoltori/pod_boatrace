@@ -21,6 +21,46 @@
     <result column="balance" jdbcType="ARRAY" property="balance" typeHandler="com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler" />
     <result column="bal_slope" jdbcType="ARRAY" property="balSlope" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler" />
   </resultMap>
+  
+  <!-- DailyRaceUpdaterで実行する。 -->
+  <insert id="insertRecRacerArr" parameterType="hashmap">
+    <![CDATA[
+		insert into rec_racer_arr
+		select 
+		  ymd, jyocd, raceno, 
+		  array_agg(entry),
+		  array_agg(sex),
+		  array_agg(age),
+		  array_agg(level),
+		  array_agg(weight),
+		  array_agg(branch),
+		  array_agg(exhibit),
+		  array_agg(startexhibit),
+		  array_agg(flying),
+		  array_agg(late),
+		  array_agg(averagestart),
+		  array_agg(avgtime),
+		  array_agg(nationwiningrate),
+		  array_agg(nation2winingrate),
+		  array_agg(nation3winingrate),
+		  array_agg(localwiningrate),
+		  array_agg(local2winingrate),
+		  array_agg(local3winingrate),
+		  array_agg(motorno),
+		  array_agg(motor2winingrate),
+		  array_agg(motor3winingrate),
+		  array_agg(waku),
+		  array_agg(rank),
+		  array_agg(startresult)
+		from (
+		  select * from rec_racer 
+		   where ymd >= #{fromYmd} and ymd <= #{toYmd}
+		   order by ymd, jyocd, raceno, waku 
+		) tmp
+		group by ymd, jyocd, raceno
+    ]]>
+  </insert>
+  
   <select id="selectSql" parameterType="hashmap" resultType="com.pengkong.boatrace.server.db.dto.DBRecord" resultMap="ResultArrayMap">
     <![CDATA[
 	  	${sql}

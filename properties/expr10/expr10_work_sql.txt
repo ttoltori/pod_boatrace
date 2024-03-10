@@ -1,3 +1,42 @@
+https://ib.mbrace.or.jp/tohyo-ap-pctohyo-web/auth/login?cid=apA43&r=7783630672281868599
+
+curl -L -X POST -b "JSESSIONID=D81E83DC7F9D7C4192F5F340EF423721" -F 'memberNo=06180938' -F 'pin=5076' -F 'authPassword=9jRC7H' -F 'operationKbn=' -F 'screenFrom=A604' -F 'token=' -F '_csrf=c1ac1cbe-0ae1-4b9f-b4d3-b99067c57883' https://ib.mbrace.or.jp/tohyo-ap-pctohyo-web/auth/login?cid=apA43&r=7783630672281868599
+
+curl -L -X POST -b "JSESSIONID=D81E83DC7F9D7C4192F5F340EF423721" -H "Content-Type: application/x-www-form-urlencoded" -d 'memberNo=06180938&pin=5076&authPassword=9jRC7H&operationKbn=&screenFrom=A604&token=&_csrf=c1ac1cbe-0ae1-4b9f-b4d3-b99067c57883' https://ib.mbrace.or.jp/tohyo-ap-pctohyo-web/auth/login?cid=apA43&r=7783630672281868599 > result.txt
+
+
+curl -L -X POST -d 'memberNo=06180938&pin=5076&authPassword=9jRC7H&operationKbn=&screenFrom=A604&token=&_csrf=c1ac1cbe-0ae1-4b9f-b4d3-b99067c57883' https://ib.mbrace.or.jp/tohyo-ap-pctohyo-web/auth/login?cid=apA43&r=7783630672281868599 > result.txt
+
+create table bak.bak_rec_race as select * from rec_race;
+create table bak.bak_rec_racer as select * from rec_racer;
+create table bak.bak_rec_race_waku as select * from rec_race_waku;
+create table bak.bak_rec_race_waku2 as select * from rec_race_waku2;
+create table bak.bak_rec_racer_arr as select * from rec_racer_arr;
+create table bak.bak_rec_racer_trend as select * from rec_racer_trend;
+create table bak.bak_rec_racer_arr2 as select * from rec_racer_arr2;
+
+RaceFileUploader in:csv, out:rec_race, rec_racer, rec_race_waku, rec_race_waku2
+受動SQL in:rec_racer out:rec_racer_arr
+RecRacerTrendGenerator  in: rec_racer  out:rec_racer_trend
+
+
+
+7:25 BoatraceMLserver C:\Dev\workspace\Oxygen\pod_boatrace_online\batch\ml_server_online_py.bat
+7:30 BoatraceBatch C:\Dev\workspace\Oxygen\pod_boatrace_online\batch\start_ol_batch.bat
+7:40 BoatraceOddsServer C:\Dev\workspace\Oxygen\pod_boatrace_online\bin\ol_odds_server.bat
+8:00 BoatTohyoServer C:\Dev\workspace\Oxygen\pod_boatrace_online\bin\ol_tohyo_server.bat
+
+
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20231023 20231027
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20231010 20231014
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20231015 20231019
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20231020 20231022
+
+
 delete from ml_evaluation where resultno::int = 10011 and bettype in ('2G', '3G', '3P', '3X',);
 delete from ml_bork_evaluation where resultno::int = 10011 and bettype in ('2G', '3G', '3P', '3X',);
 delete from ml_range_evaluation where resultno::int = 10011 and bettype in ('2G', '3G', '3P', '3X',);
@@ -18,7 +57,7 @@ ml_result 758-852
 
 --connect
 chcp 932
-psql -h localhost -U postgres -d boatml -p 55432
+psql -h localhost -U postgres -d boatml3 -p 55432
 
 
 set client_encoding='SJIS';
@@ -38,6 +77,10 @@ Teams のダウンロード | Web に参加
 電話会議 ID: 461 638 162#
 電話番号を調べる | PIN のリセット
 詳細情報ヘルプ | 会議のオプション
+C:\Dev\workspace\Oxygen\pod_boatrace.zip
+C:\Dev\workspace\Oxygen\py_boatrace.zip
+
+
 
 
 --------- model, result config update  -----------
@@ -80,13 +123,168 @@ to 'C:\Dev\export\ml_classification.20220427_2.tsv' csv delimiter E'\t' header;
 
 
 ---------- import from laptop-----------
-copy ml_classification from 'D:\Dev\export\ml_classification.20220206_1.tsv' csv delimiter E'\t' header;
+copy ml_classification from 'C:\jsj\!japan_backup\Backup\DB\' csv delimiter E'\t' header;
 
 copy ml_classification from 'D:\Dev\export\ml_classification.20220427_2.tsv' csv delimiter E'\t' header;
 
 insert into ml_classification select * from ml_classification_bk1 where modelno::int in (99069,99072);
 
 !!!노트북에서 ml_classify할때 referential은 model_release, ml_classification도 동기화해두어야 한다.
+
+
+========================================================================
+2024/03/05
+  select ymd, jyocd, raceno, generate_series(1, array_length(runcnt, 1)) AS waku,
+    unnest(runcnt)
+  from rec_racer_arr2;
+  
+insert into rec_racer 
+  select ymd, jyocd, raceno, generate_series(1, array_length(runcnt, 1)) AS waku,
+    unnest(runcnt), unnest(runcnt_slope), unnest(cond), unnest(cond_slope), 
+    unnest(n1point), unnest(n1point_slope), unnest(n2point), unnest(n2point_slope), unnest(n3point), unnest(n3point_slope), 
+    unnest(n1point_waku), unnest(n1point_waku_slope), unnest(n2point_waku), unnest(n2point_waku_slope), unnest(n3point_waku), unnest(n3point_waku_slope), 
+    unnest(avgstart_waku), unnest(avgstart_waku_slope)
+;
+
+========================================================================
+2024/02/27
+MLRankingClassificationGenerator
+
+========================================================================
+2024/02/26
+99100 en1,nw1,n2w1,n3w1,lw1,l2w1,l3w1,m2w1,sex1,lv1,age1,weit1,fly1,late1,avgst1
+11609 en1,rcnt1,cond1,n1p1,n2p1,n3p1,n1pw1,n2pw1,n3pw1,avgw1,nw1,n2w1,n3w1,lw1,l2w1,l3w1,lv1,weit1,fly1
+79101 classifyr123 pd1,r1prob1,r2prob1,r3prob1
+21609 fs_17        pd1,r1prob1,r2prob1,r3prob1
+
+89100 rk_1 mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,raceid,en,sex,age,lv,weight,branch,exhibit,waku,fly,late,avgst,avgtime,nw,n2w,n3w,lw,l2w,l3w,mtno,m2w,m3w,btno,b2w,b3w
+
+99100 en_nw_ext_25 mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,en1,nw1,n2w1,n3w1,lw1,l2w1,l3w1,m2w1,sex1,lv1,age1,weit1,fly1,late1,avgst1
+11609 fs_14        mm,jyo,race,turn,grade,raty,femcnt,alvt,fixent,en1,rcnt1,cond1,n1p1,n2p1,n3p1,n1pw1,n2pw1,n3pw1,avgw1,nw1,n2w1,n3w1,lw1,l2w1,l3w1,lv1,weit1,fly1
+79101 classifyr123 pd1,r1prob1,r2prob1,r3prob1
+21609 fs_17        pd1,r1prob1,r2prob1,r3prob1
+
+
+
+========================================================================
+2024/02/20
+copy ml_classification from 'C:\jsj\!japan_backup\Backup\DB\ml_classification.tsv' csv delimiter E'\t' header;
+
+loss_function=YetiRank,learning_rate=0.05,iterations=200,depth=7,use_best_model=True D:/Dev/experiment/expr10/arff/89100_rank1.csv D:/Dev/experiment/expr10/model_release/89100/1/nopattern/89101_test_rank1.model raceid,jyo,race,turn,grade,raty,fixent,en,sex,age,lv,weight,branch,exhibit,waku,class int64,category,category,category,category,category,category,category,category,float,category,float,category,float,int,int
+
+========================================================================
+2024/02/15
+202006020000 202102280000
+
+
+2024/02/14
+# argv: {params} {csv_file_path} {model_file_path} {feature_name_list} {feature_type_list}
+# ex: boosting_type=gbdt,learning_rate=0.1 D:/Dev/experiment/expr10/arff/9997_rank1.csv D:/Dev/experiment/expr10/evaluation/model_release/9997/1/nopattern/9997_nopattern_yyyymmdd_rank1.model nw1,nw2,nw3,nw4,nw5,nw6,class float,float,float,float,float,float,category
+
+loss_function=YetiRank,learning_rate=0.05,iterations=200,depth=7,use_best_model=True D:/Dev/experiment/expr10/arff/89100_rank1.csv model_file_path raceid,jyo,race,turn,grade,raty,fixent,en,sex,age,lv,weight,branch,exhibit,class float,category,category,category,category,category,category,category,category,float,category,float,category,float,category
+
+2024/02/13
+C:/Dev/github/pod_boatrace/properties/expr10/expr10.properties 89100
+
+2024/02/12
+
+
+select 
+  concat_ws('_', ymd, jyocd, lpad(raceno, 2, '0'))
+from rec_race race, rec_racer racer
+where race.ymd = racer.ymd and race.jyocd = racer.jyocd and race.raceno = racer.raceno 
+  and sanrentanno <> '不成立' 
+  and race.ymd >= '20210101' and race.ymd <= '20211231' 
+  and (true) 
+order by race.ymd, race.sime
+
+
+========================================================================
+2023/08/28
+create table ml_evaluation_4 as select * from ml_evaluation;
+create table ml_bork_evaluation_4 as select * from ml_bork_evaluation;
+create table ml_range_evaluation_4 as select * from ml_range_evaluation;
+create table ml_term_evaluation_4 as select * from ml_term_evaluation;
+
+truncate ml_evaluation;
+truncate ml_bork_evaluation;
+truncate ml_range_evaluation;
+truncate ml_term_evaluation;
+
+
+2023/08/22
+drop table stat_bork;
+drop table sim_bork;
+drop table sim_eval;
+drop table ptnid_ranking;
+drop table ptn_bork;
+drop table ptnid_bork;
+
+
+stat_bork1,2,3,4에서 wk포함 패턴 이외 제거하기.
+delete from stat_bork1 where patternid not like '%wk%';
+
+
+
+2023/08/9
+
+delete from ml_evaluation where evaluations_id in ('66_3', '66_4');
+delete from ml_bork_evaluation where evaluations_id in ('66_3', '66_4');
+delete from ml_range_evaluation where evaluations_id in ('66_3', '66_4');
+delete from ml_term_evaluation where evaluations_id in ('66_3', '66_4');
+
+
+insert into stat_bork1 
+select 
+  (result_type || '_' || bettype || '_' || kumiban || '_' || modelno || '_' || patternid || '_' || pattern) keycol, 
+  (result_type || '_' || bettype || '_' || kumiban || '_' || modelno || '_' || patternid) keycol_ptnid, * 
+from stat_bork where evaluations_id = '66_1';
+
+insert into stat_bork2
+select 
+  (result_type || '_' || bettype || '_' || kumiban || '_' || modelno || '_' || patternid || '_' || pattern) keycol, 
+  (result_type || '_' || bettype || '_' || kumiban || '_' || modelno || '_' || patternid) keycol_ptnid, * 
+from stat_bork where evaluations_id = '66_2';
+
+insert into stat_bork3
+select 
+  (result_type || '_' || bettype || '_' || kumiban || '_' || modelno || '_' || patternid || '_' || pattern) keycol, 
+  (result_type || '_' || bettype || '_' || kumiban || '_' || modelno || '_' || patternid) keycol_ptnid, * 
+from stat_bork where evaluations_id = '66_3';
+
+insert into stat_bork4
+select 
+  (result_type || '_' || bettype || '_' || kumiban || '_' || modelno || '_' || patternid || '_' || pattern) keycol, 
+  (result_type || '_' || bettype || '_' || kumiban || '_' || modelno || '_' || patternid) keycol_ptnid, * 
+from stat_bork where evaluations_id = '66_4';
+
+truncate stat_bork1;
+truncate stat_bork2;
+truncate stat_bork3;
+truncate stat_bork4;
+
+drop index if exists indexes_keycolptnid_bork1;
+create index indexes_keycolptnid_bork1 on stat_bork1 (keycol);
+drop index if exists indexes_keycolptnid_bork2;
+create index indexes_keycolptnid_bork2 on stat_bork2 (keycol);
+drop index if exists indexes_keycolptnid_bork3;
+create index indexes_keycolptnid_bork3 on stat_bork3 (keycol);
+drop index if exists indexes_keycolptnid_bork4;
+create index indexes_keycolptnid_bork4 on stat_bork4 (keycol);
+
+
+select 
+  modelno, patternid, bettype, count(1) cnt,
+  ( sum((case when i0 > 0 then bc0 else 0 end))::float / sum(bc0)::float )::numeric(5,2) spbc_rate0, 
+  ( sum((case when i1 > 0 then bc1 else 0 end))::float / sum(bc1)::float )::numeric(5,2) spbc_rate1, 
+  ( sum((case when i2 > 0 then bc2 else 0 end))::float / sum(bc2)::float )::numeric(5,2) spbc_rate2, 
+  ( sum((case when i3 > 0 then bc3 else 0 end))::float / sum(bc3)::float )::numeric(5,2) spbc_rate3, 
+  ( sum((case when i4 > 0 then bc4 else 0 end))::float / sum(bc4)::float )::numeric(5,2) spbc_rate4
+from stat_bork1 sb 
+where result_type = '1' and bettype in ('3T', '3R', '3P') and kumiban = '123'
+group by modelno, patternid, bettype
+order by spbc_rate0 desc
+;
 
 
 ========================================================================
@@ -2045,18 +2243,38 @@ group by sanrentanodds order by sanrentanodds;
 조규찬
 
 ----------------------------------------------------------------------------------------------
-데이터 없데이트 수순
+DB데이터 업데이트 수순
+7. 使用しない
+truncate rec_race_trend;
+insert into rec_race_trend
+select ymd, jyocd, raceno, 
+    ntile(4) over (order by cond[0] desc) cond1,
+    ntile(4) over (order by n1point[0] desc) n1point1,
+    ntile(4) over (order by n1point_waku[0] desc) n1pointwaku1,
+    ntile(4) over (order by cond[1] desc) cond2,
+    ntile(4) over (order by n1point[1] desc) n1point2,
+    ntile(4) over (order by n1point_waku[1] desc) n1pointwaku2
+from rec_racer_arr2
+order by ymd, jyocd, raceno;
 
-drop table rec_race_trend;
-create table rec_race_trend as~~~
+6.
+insert into rec_racer2 
+  select ymd, jyocd, raceno, generate_series(1, array_length(runcnt, 1)) AS waku,
+    unnest(runcnt), unnest(runcnt_slope), unnest(cond), unnest(cond_slope), 
+    unnest(n1point), unnest(n1point_slope), unnest(n2point), unnest(n2point_slope), unnest(n3point), unnest(n3point_slope), 
+    unnest(n1point_waku), unnest(n1point_waku_slope), unnest(n2point_waku), unnest(n2point_waku_slope), unnest(n3point_waku), unnest(n3point_waku_slope), 
+    unnest(avgstart_waku), unnest(avgstart_waku_slope)
+  from rec_racer_arr2
+  where ymd >= '20090101' and ymd <= '20231125'
+;
 
 5.
 java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
-  com.pengkong.boatrace.exp10.racer.util.RecRacerArray2Generator 20230601 202230723 180
+  com.pengkong.boatrace.exp10.racer.util.RecRacerArray2Generator 20090101 20231125 180
 
 4.
 java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
-  com.pengkong.boatrace.exp10.racer.util.RecRacerTrendGenerator 20230601 202230723 180
+  com.pengkong.boatrace.exp10.racer.util.RecRacerTrendGenerator 20090101 20231125 180
 
 3.
 insert into rec_racer_arr
@@ -2088,18 +2306,18 @@ select
   array_agg(startresult)
 from (
   select * from rec_racer 
-   where ymd >= '20230601' and ymd <= '20230723'
+   where ymd >= '20090101' and ymd <= '20231125'
    order by ymd, jyocd, raceno, waku 
 ) tmp
 group by ymd, jyocd, raceno;
 
 2.
 java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*;. ^
-  com.pengkong.boatrace.util.RaceFileUploader 20230601 202230723 C:/Dev/workspace/Oxygen/pod_boatrace_test/properties/race_result_rebuild.properties
+  com.pengkong.boatrace.util.RaceFileUploader 20090101 20231125 C:/boatrace/offline/properties/offline.properties
 
 1.
 java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
-  com.pengkong.boatrace.scraping.BoatWebDownloader 20230707 202230723
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20231101 20231108 C:/boatrace/offline/properties/offline.properties
 
 -- javaに反映済み
 update rec_race set racetype = 
@@ -2123,3 +2341,5 @@ update rec_race set fixedentrance =
 	  end )
 where ymd >= '20230421' and ymd <= '20230531';
 
+sb password
+!ak3873AK!

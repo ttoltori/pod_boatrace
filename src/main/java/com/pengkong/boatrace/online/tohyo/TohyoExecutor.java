@@ -10,9 +10,10 @@ import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
 import com.pengkong.boatrace.mybatis.entity.MlResult;
 import com.pengkong.boatrace.mybatis.entity.OlRace;
 import com.pengkong.boatrace.online.api.AbstractApiProvider;
-import com.pengkong.boatrace.online.dao.MlResultDAO;
+import com.pengkong.boatrace.online.dao.OlResultDAO;
 import com.pengkong.boatrace.online.exception.ApiException;
 import com.pengkong.boatrace.online.exception.SimulatiorException;
+import com.pengkong.boatrace.online.helper.DtoHelper;
 import com.pengkong.boatrace.online.result.OnlineSimulationGenerator;
 import com.pengkong.boatrace.online.tohyo.bet.Bet;
 import com.pengkong.boatrace.online.tohyo.bet.BetRequest;
@@ -52,6 +53,11 @@ public class TohyoExecutor {
 			throw new SimulatiorException(e);
 		}
 		
+		if (results.size() == 0) {
+			// 投票なし
+			return 0;
+		}
+		
 		// 投票実施
 		BetRequest betReq = convert(race, results);
 		try {
@@ -63,9 +69,9 @@ public class TohyoExecutor {
 		// DB insert
 		SqlSession session = DatabaseUtil.open(prop.getString("target_db_resource"), false);
 		try {
-			MlResultDAO dao = new MlResultDAO(session);
+			OlResultDAO dao = new OlResultDAO(session);
 			for (MlResult result : results) {
-				dao.insert(result);
+				dao.insert(DtoHelper.copyMlResult2OlResult(result));
 			}
 			session.commit();
 			

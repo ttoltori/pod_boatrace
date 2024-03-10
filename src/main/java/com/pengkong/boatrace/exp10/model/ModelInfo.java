@@ -46,9 +46,9 @@ public class ModelInfo {
 	}
 
 	/** true=python, false=weka*/
-	public boolean isPython() {
-		return algorithmId.endsWith("_py");
-	}
+//	public boolean isPython() {
+//		return algorithmId.endsWith("_py");
+//	}
 
 	public String toString(){
 		return String.join("_", modelNo, rankNo, pattern, String.valueOf(ymd));

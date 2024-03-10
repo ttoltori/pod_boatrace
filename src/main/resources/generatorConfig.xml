@@ -12,12 +12,12 @@
       http://mybatis.github.io/generator/configreference/commentGenerator.html
     -->
     <commentGenerator>
-        <property name="suppressDate" value="true" />
+        <property name="suppressDate" value="true"   />
     </commentGenerator>
 
     <!-- JDBCの設定 -->
     <jdbcConnection driverClass="org.postgresql.Driver"
-                        connectionURL="jdbc:postgresql://localhost:55432/boatml3" userId="postgres"
+                        connectionURL="jdbc:postgresql://localhost:55432/boatml" userId="postgres"
                         password="postgres" />
 
     <!--
@@ -85,10 +85,10 @@
           MapperでPKを指定したクエリ(selectByPrimaryKey等)のパラメータがデフォルトでPrimary Keyエンティティになります。
     <table schema="public" tableName="odds_trend"
      -->
-    <table schema="public" tableName="ml_bork_evaluation"
-            enableInsert="true"
-            enableSelectByExample="false"
+    <table schema="public" tableName="ml_classification"
             enableDeleteByExample="true"
+            enableInsert="true"
+            enableSelectByExample="true"
             enableUpdateByExample="false"
             enableCountByExample="false"
             enableSelectByPrimaryKey="false"

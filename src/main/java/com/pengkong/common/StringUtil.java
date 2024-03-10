@@ -199,6 +199,12 @@ public class StringUtil {
 		for (Integer idx : dels) test.remove(idx);
 		
 		MlEvaluation dto = new MlEvaluation();
+		StringBuilder sb = new StringBuilder();
+		sb.append("1234567890");
+		
+		System.out.println(sb.substring(0, sb.length()-1));
+		
+		
 		System.out.println("asaa/100".replace("/", "v"));
 		System.out.println(StringUtil.quote("1"));
 		System.out.println(StringUtil.quote("1", "2", "3"));

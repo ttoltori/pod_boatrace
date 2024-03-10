@@ -52,7 +52,7 @@ public class ResultStatBuilderSplit {
 	 * @return
 	 */
 	public MlResult add(MlResult result) throws Exception {
-		String prediction = ResultHelper.getPrediction(result);
+		String prediction = ResultHelper.getPredictions(result);
 		int termIdx = termIndexer.getIndex(result.getYmd());
 		
 		// bettype, prediction別

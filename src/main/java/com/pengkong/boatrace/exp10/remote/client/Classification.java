@@ -11,13 +11,4 @@ public class Classification {
 	
 	/** classification:最大確率値,  regression:結果値 */
 	public double probability;
-	
-	/** classification:クラス毎の確率値,  regressionは未使用 */
-	public double[] probabilities;
-	
-	/** regressionは未使用 */
-	public double skewness;
-	
-	/** regressionは未使用 */
-	public double kurtosis;
 }

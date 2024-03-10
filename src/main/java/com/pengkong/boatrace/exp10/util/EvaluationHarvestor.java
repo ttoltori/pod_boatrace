@@ -17,7 +17,9 @@ import com.pengkong.common.StringUtil;
 
 public class EvaluationHarvestor {
 	Logger logger = LoggerFactory.getLogger(EvaluationHarvestor.class);
-	
+
+
+	@Deprecated
 	void execute(String graphDirIn, String evalDirIn, String evalDirOut, String evalId) throws Exception {
 		String evalFilepath = evalDirOut + "/" + evalId + ".tsv";
 		// 出力ディレクトリ作成
@@ -37,7 +39,7 @@ public class EvaluationHarvestor {
 				logger.error("Evaluation does not exist for graph. " + evalKey);
 				continue;
 			}
-			FileUtil.appendFileByLine(evalFilepath, EvaluationHelper.toTsv(eval));
+// ERROR			FileUtil.appendFileByLine(evalFilepath, EvaluationHelper.toTsv(eval));
 		}
 	}
 

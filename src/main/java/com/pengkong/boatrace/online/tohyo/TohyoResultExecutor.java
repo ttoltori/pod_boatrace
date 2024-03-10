@@ -13,8 +13,8 @@ import com.pengkong.boatrace.exp10.result.ResultHelper;
 import com.pengkong.boatrace.model.Race;
 import com.pengkong.boatrace.model.RaceResult;
 import com.pengkong.boatrace.model.Waku;
-import com.pengkong.boatrace.mybatis.entity.MlResult;
-import com.pengkong.boatrace.online.dao.MlResultDAO;
+import com.pengkong.boatrace.mybatis.entity.OlResult;
+import com.pengkong.boatrace.online.dao.OlResultDAO;
 import com.pengkong.boatrace.scraping.parser.RaceResultPageParser;
 import com.pengkong.boatrace.util.DatabaseUtil;
 
@@ -37,7 +37,7 @@ public class TohyoResultExecutor {
 	 * @return 処理した件数
 	 * @throws Exception
 	 */
-	public int execute(List<MlResult> results) throws Exception {
+	public int execute(List<OlResult> results) throws Exception {
 		String yyyyMMdd = results.get(0).getYmd();
 		String jyoCd = results.get(0).getJyocd();
 		String raceNo = results.get(0).getRaceno().toString();
@@ -53,9 +53,9 @@ public class TohyoResultExecutor {
 		
 		SqlSession session = DatabaseUtil.open(prop.getString("target_db_resource"), false);
 		try {
-			MlResultDAO dao = new MlResultDAO(session);
+			OlResultDAO dao = new OlResultDAO(session);
 			
-			for (MlResult result : results) {
+			for (OlResult result : results) {
 				result.setResultRank123(rr.sanrentanNo);
 				result.setResultKumiban(getResultKumiban(rr, result.getBettype()));
 				
@@ -67,7 +67,7 @@ public class TohyoResultExecutor {
 				result.setRaceOddsrank(getResultRank(rr, result.getBettype()));
 				
 				// レース結果
-				result = ResultHelper.calculateIncome(result);
+				result = ResultHelper.calculateIncomeOl(result);
 
 				dao.update(result);
 			}

@@ -1,6 +1,7 @@
 package com.pengkong.boatrace.util.tmp;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 
 import com.pengkong.boatrace.common.enums.Delimeter;
@@ -50,11 +51,31 @@ public class RenameFiles {
         }
     }
 
+    public void executeStep2(String dir) throws Exception {
+        List<File> files = Arrays.asList(FileUtil.listFilesByExtension(dir, "tsv"));
+        for (File file : files) {
+            String targetPath = null;
+            // ex)  30002_ip_3R_123_i02_hitrate_1.1_30_1_BIG5-777_2020_0.05~0.06=1_x_x
+            // 30002 ip 3R 123 i02 hitrate 1.1 30 1 BIG5-777 2020 0.05~0.06=1 x x
+            String namePart = file.getName().replace(".tsv", "");
+        	String[] token = namePart.split(Delimeter.UNDERBAR.getValue());
+        	
+        	String newNamepart = String.join(Delimeter.UNDERBAR.getValue() ,
+        			token[1], token[2], token[3], token[8], token[0], token[4], 
+        			token[5], token[6], token[7], token[9], token[10], token[11], token[12], token[13]
+        			);
+        	targetPath = file.getParent() + "/" + newNamepart + ".tsv";
+
+            file.renameTo(new File(targetPath));
+            System.out.println(targetPath);
+        }
+    }
+    
     public static void main(String[] args) {
-        String dir = "D:/Dev/experiment/expr10/simulation_step1/simul_JSJ";
+        String dir = "c:/boatrace/online/groups";
         //String dir = "D:/Dev/experiment/expr10/tmp";
         try {
-            new RenameFiles().executeJsj(dir);
+            new RenameFiles().executeStep2(dir);
         } catch (Exception e) {
             e.printStackTrace();
         }

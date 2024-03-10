@@ -1,0 +1,215 @@
+--------------
+online用テーブル
+numeric -> double precision
+smallint -> int
+--------------
+drop table if exists ol_race;
+create table ol_race (
+ymd varchar(8),
+jyocd varchar(2),
+raceno int,
+sime varchar(4),
+grade varchar(2),
+timezone varchar(2),
+turn varchar(2),
+fixedentrance varchar(6),
+racetype varchar(20),
+wakulevellist varchar(20),
+alevelcount int,
+femalecount int,
+com_predict varchar(4),
+com_confidence int,
+status int  -- 0:締切前 1:締切後 2:投票完了 
+);
+create index indexes_ol_race on ol_race (ymd, jyocd, raceno);
+
+
+drop table if exists ol_racer;
+create table ol_racer (
+ymd varchar(8),
+jyocd varchar(2),
+raceno int,
+entry int,
+sex varchar(2),
+age int,
+level varchar(2),
+weight double precision,
+branch varchar(4),
+exhibit double precision,
+startexhibit double precision,
+flying int,
+late int,
+averagestart double precision,
+avgtime double precision,
+nationwiningrate double precision,
+nation2winingrate double precision,
+nation3winingrate double precision,
+localwiningrate double precision,
+local2winingrate double precision,
+local3winingrate double precision,
+motorno int,
+motor2winingrate double precision,
+motor3winingrate double precision,
+boatno int,
+boat2winingrate double precision,
+boat3winingrate double precision,
+waku int,
+grade varchar(2),
+racetype varchar(4)
+-- 未使用 rank smallint,
+-- 未使用 startresult double precision, 
+);
+create index indexes_ol_racer on ol_racer (ymd, jyocd, raceno, entry);
+
+
+drop table if exists ol_racer_arr;
+create table ol_racer_arr (
+ymd varchar(8),
+jyocd varchar(2),
+raceno int,
+entry int[],
+sex varchar(2)[],
+age int[],
+level varchar(2)[],
+weight double precision[],
+branch varchar(4)[],
+flying int[],
+late int[],
+averagestart double precision[],
+nationwiningrate double precision[],
+nation2winingrate double precision[],
+nation3winingrate double precision[],
+localwiningrate double precision[],
+local2winingrate double precision[],
+local3winingrate double precision[],
+motorno int[],
+motor2winingrate double precision[],
+motor3winingrate double precision[]
+-- 未使用 exhibit double precision[],
+-- 未使用 startexhibit double precision[],
+-- 未使用 avgtime double precision[],
+-- 未使用 waku int[],
+-- 未使用 rank int[]
+);
+create index indexes_ol_racer_arr on ol_racer_arr (ymd, jyocd, raceno);
+
+drop table if exists ol_race_waku;
+create table ol_race_waku (
+ymd varchar(8),
+jyocd varchar(2),
+raceno int,
+entry1 int,
+entry2 int,
+entry3 int,
+entry4 int,
+entry5 int,
+entry6 int,
+motorno1 int,
+motorno2 int,
+motorno3 int,
+motorno4 int,
+motorno5 int,
+motorno6 int,
+avgtime1 double precision,
+avgtime2 double precision,
+avgtime3 double precision,
+avgtime4 double precision,
+avgtime5 double precision,
+avgtime6 double precision,
+avgst1 double precision,
+avgst2 double precision,
+avgst3 double precision,
+avgst4 double precision,
+avgst5 double precision,
+avgst6 double precision,
+setuavgst1 double precision,
+setuavgst2 double precision,
+setuavgst3 double precision,
+setuavgst4 double precision,
+setuavgst5 double precision,
+setuavgst6 double precision,
+setuavgwin1 int,
+setuavgwin2 int,
+setuavgwin3 int,
+setuavgwin4 int,
+setuavgwin5 int,
+setuavgwin6 int,
+flcount1 int,
+flcount2 int,
+flcount3 int,
+flcount4 int,
+flcount5 int,
+flcount6 int,
+tilt1 double precision,
+tilt2 double precision,
+tilt3 double precision,
+tilt4 double precision,
+tilt5 double precision,
+tilt6 double precision,
+homeyn1 int,
+homeyn2 int,
+homeyn3 int,
+homeyn4 int,
+homeyn5 int,
+homeyn6 int
+);
+create index indexes_ol_race_waku on ol_race_waku (ymd, jyocd, raceno);
+
+drop table if exists ol_classification;
+create table ol_classification (
+modelno varchar(5),
+ymd varchar(8),
+jyocd varchar(2),
+raceno int,
+sime varchar(4),
+prediction1 varchar(3),
+probability1 double precision,
+probabilities1 double precision[], 
+prediction2 varchar(3),
+probability2 double precision,
+probabilities2 double precision[], 
+prediction3 varchar(3),
+probability3 double precision,
+probabilities3 double precision[] 
+);
+create index indexes_ol_classification on ol_classification (ymd, jyocd, raceno, sime);
+
+drop table if exists ol_result;
+create table ol_result (
+ymd varchar(8),
+jyocd varchar(2),
+raceno int,
+sime varchar(4),
+predict_rank123 varchar(4),
+result_rank123 varchar(4),
+bettype varchar(2),
+bet_kumiban varchar(4),
+bet_odds double precision,
+bet_oddsrank int,
+result_kumiban varchar(4),
+result_odds double precision,
+result_oddsrank int,
+result_amt int,
+hity int,
+hitn int,
+betamt int,
+hitamt int,
+probability double precision,
+custom varchar(10),
+race_odds double precision,
+race_oddsrank int
+-- 未使用 evaluation varchar(100),
+-- 未使用 status int                     -- 0: 投票完了 1:投票失敗 2:結果正常
+-- 未使用 resultno varchar(5),
+-- 未使用 modelno varchar(5),
+-- 未使用 patternid varchar(20),
+-- 未使用 pattern varchar(200),
+-- 未使用 stat_bettype varchar(2),
+-- 未使用 result_type varchar(10),
+-- 未使用 hitrate_transition double precision,
+-- 未使用 incomerate_transition double precision,
+-- 未使用 balance int,
+-- 未使用 race_odds double precision,
+-- 未使用 race_oddsrank int
+);
+create index indexes_ol_result on ol_result (ymd, jyocd, raceno, sime);

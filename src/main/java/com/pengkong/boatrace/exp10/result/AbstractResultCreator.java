@@ -64,6 +64,10 @@ public abstract class AbstractResultCreator {
     protected abstract List<MlResult> get2Aresult(String[] predictions, DBRecord rec) throws Exception;
     protected abstract List<MlResult> get2Gresult(String[] predictions, DBRecord rec) throws Exception;
     protected abstract List<MlResult> get3Gresult(String[] predictions, DBRecord rec) throws Exception;
+    protected abstract List<MlResult> get3Bresult(String[] predictions, DBRecord rec) throws Exception;
+    protected abstract List<MlResult> get3Cresult(String[] predictions, DBRecord rec) throws Exception;
+    protected abstract List<MlResult> get3Dresult(String[] predictions, DBRecord rec) throws Exception;
+    protected abstract List<MlResult> get3Eresult(String[] predictions, DBRecord rec) throws Exception;
 
 	void initialize() {
 		mapBetType = new TreeMap<>();
@@ -85,6 +89,10 @@ public abstract class AbstractResultCreator {
         mapBetType.put(BetType._2A, "nirentan"); // ２連単
         mapBetType.put(BetType._2G, "nirenhuku"); // ２連複 12,13 2点 (통계단위 3자리)
         mapBetType.put(BetType._3G, "sanrenhuku"); // ３連複 1-2-3456 4点 (통계단위 2자리)
+        mapBetType.put(BetType._3B, "sanrentan"); // 3連単 123,132 2点 (통계단위 3자리)
+        mapBetType.put(BetType._3C, "sanrentan"); // 3連単 123,124 2点 (통계단위 4자리)
+        mapBetType.put(BetType._3D, "sanrentan"); // 3連単 123,124,213,214 4点 (통계단위 4자리)
+        mapBetType.put(BetType._3E, "sanrentan"); // 3連単 123,124,132,134,142,143 6点 (통계단위 4자리)
 		
 		preExecute();
 	}
@@ -132,9 +140,9 @@ public abstract class AbstractResultCreator {
 				continue;
 			}
 			
-			if (!ResultHelper.isValidPredictionsRange(betTypeStr, predictions, tokenKumiban)) {
-				continue;
-			}
+//			if (!ResultHelper.isValidPredictionsRange(betTypeStr, predictions, tokenKumiban)) {
+//				continue;
+//			}
 			
 			// 1T
 			if (BetType._1T.getValue().equals(betTypeStr)) {
@@ -203,6 +211,18 @@ public abstract class AbstractResultCreator {
             }
             if (BetType._3G.getValue().equals(betTypeStr)) {
                 result.addAll(get3Gresult(predictions, dbRec));
+            }
+            if (BetType._3B.getValue().equals(betTypeStr)) {
+                result.addAll(get3Bresult(predictions, dbRec));
+            }
+            if (BetType._3C.getValue().equals(betTypeStr)) {
+                result.addAll(get3Cresult(predictions, dbRec));
+            }
+            if (BetType._3D.getValue().equals(betTypeStr)) {
+                result.addAll(get3Dresult(predictions, dbRec));
+            }
+            if (BetType._3E.getValue().equals(betTypeStr)) {
+                result.addAll(get3Eresult(predictions, dbRec));
             }
 		}
 		
@@ -334,7 +354,11 @@ public abstract class AbstractResultCreator {
 		result.setSime(rec.getString("sime"));
 		result.setPatternid(rec.getString("patternid"));
 		result.setPattern(rec.getString("pattern"));
-		result.setPredictRank123(rec.getString("prediction1", "") + rec.getString("prediction2", "") + rec.getString("prediction3", ""));
+		if (rec.getString("prediction6") == null) {
+			result.setPredictRank123(rec.getString("prediction1", "") + rec.getString("prediction2", "") + rec.getString("prediction3", ""));
+		} else { // ranking알고리즘은 6개의 prediction이 존재한다.
+			result.setPredictRank123(rec.getString("prediction1", "") + rec.getString("prediction2", "") + rec.getString("prediction3", "") + rec.getString("prediction4", ""));
+		}
 		
 		return result;
 	}

@@ -25,9 +25,9 @@
     <result column="betamt" jdbcType="INTEGER" property="betamt" />
     <result column="hitamt" jdbcType="INTEGER" property="hitamt" />
     <result column="probability" jdbcType="DOUBLE" property="probability" />
-    <result column="evaluation" jdbcType="VARCHAR" property="evaluation" />
     <result column="custom" jdbcType="VARCHAR" property="custom" />
-    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="race_odds" jdbcType="DOUBLE" property="raceOdds" />
+    <result column="race_oddsrank" jdbcType="INTEGER" property="raceOddsrank" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -102,7 +102,7 @@
     -->
     ymd, jyocd, raceno, sime, predict_rank123, result_rank123, bettype, bet_kumiban, 
     bet_odds, bet_oddsrank, result_kumiban, result_odds, result_oddsrank, result_amt, 
-    hity, hitn, betamt, hitamt, probability, evaluation, custom, status
+    hity, hitn, betamt, hitamt, probability, custom, race_odds, race_oddsrank
   </sql>
   <select id="selectByExample" parameterType="com.pengkong.boatrace.mybatis.entity.OlResultExample" resultMap="BaseResultMap">
     <!--
@@ -144,16 +144,16 @@
       bet_oddsrank, result_kumiban, result_odds, 
       result_oddsrank, result_amt, hity, 
       hitn, betamt, hitamt, 
-      probability, evaluation, custom, 
-      status)
+      probability, custom, race_odds, 
+      race_oddsrank)
     values (#{ymd,jdbcType=VARCHAR}, #{jyocd,jdbcType=VARCHAR}, #{raceno,jdbcType=INTEGER}, 
       #{sime,jdbcType=VARCHAR}, #{predictRank123,jdbcType=VARCHAR}, #{resultRank123,jdbcType=VARCHAR}, 
       #{bettype,jdbcType=VARCHAR}, #{betKumiban,jdbcType=VARCHAR}, #{betOdds,jdbcType=DOUBLE}, 
       #{betOddsrank,jdbcType=INTEGER}, #{resultKumiban,jdbcType=VARCHAR}, #{resultOdds,jdbcType=DOUBLE}, 
       #{resultOddsrank,jdbcType=INTEGER}, #{resultAmt,jdbcType=INTEGER}, #{hity,jdbcType=INTEGER}, 
       #{hitn,jdbcType=INTEGER}, #{betamt,jdbcType=INTEGER}, #{hitamt,jdbcType=INTEGER}, 
-      #{probability,jdbcType=DOUBLE}, #{evaluation,jdbcType=VARCHAR}, #{custom,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER})
+      #{probability,jdbcType=DOUBLE}, #{custom,jdbcType=VARCHAR}, #{raceOdds,jdbcType=DOUBLE}, 
+      #{raceOddsrank,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.pengkong.boatrace.mybatis.entity.OlResult">
     <!--
@@ -219,14 +219,14 @@
       <if test="probability != null">
         probability,
       </if>
-      <if test="evaluation != null">
-        evaluation,
-      </if>
       <if test="custom != null">
         custom,
       </if>
-      <if test="status != null">
-        status,
+      <if test="raceOdds != null">
+        race_odds,
+      </if>
+      <if test="raceOddsrank != null">
+        race_oddsrank,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -287,14 +287,14 @@
       <if test="probability != null">
         #{probability,jdbcType=DOUBLE},
       </if>
-      <if test="evaluation != null">
-        #{evaluation,jdbcType=VARCHAR},
-      </if>
       <if test="custom != null">
         #{custom,jdbcType=VARCHAR},
       </if>
-      <if test="status != null">
-        #{status,jdbcType=INTEGER},
+      <if test="raceOdds != null">
+        #{raceOdds,jdbcType=DOUBLE},
+      </if>
+      <if test="raceOddsrank != null">
+        #{raceOddsrank,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -362,14 +362,14 @@
       <if test="record.probability != null">
         probability = #{record.probability,jdbcType=DOUBLE},
       </if>
-      <if test="record.evaluation != null">
-        evaluation = #{record.evaluation,jdbcType=VARCHAR},
-      </if>
       <if test="record.custom != null">
         custom = #{record.custom,jdbcType=VARCHAR},
       </if>
-      <if test="record.status != null">
-        status = #{record.status,jdbcType=INTEGER},
+      <if test="record.raceOdds != null">
+        race_odds = #{record.raceOdds,jdbcType=DOUBLE},
+      </if>
+      <if test="record.raceOddsrank != null">
+        race_oddsrank = #{record.raceOddsrank,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null">
@@ -401,9 +401,9 @@
       betamt = #{record.betamt,jdbcType=INTEGER},
       hitamt = #{record.hitamt,jdbcType=INTEGER},
       probability = #{record.probability,jdbcType=DOUBLE},
-      evaluation = #{record.evaluation,jdbcType=VARCHAR},
       custom = #{record.custom,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=INTEGER}
+      race_odds = #{record.raceOdds,jdbcType=DOUBLE},
+      race_oddsrank = #{record.raceOddsrank,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>

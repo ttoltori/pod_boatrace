@@ -110,7 +110,7 @@
       #{probabilities2,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler}, 
       #{prediction3,jdbcType=VARCHAR}, 
       #{probability3,jdbcType=DOUBLE}, 
-      #{probabilities3,jdbcType=ARRAY, typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler}})
+      #{probabilities3,jdbcType=ARRAY, typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler})
   </insert>
   <insert id="insertSelective" parameterType="com.pengkong.boatrace.mybatis.entity.OlClassification">
     <!--

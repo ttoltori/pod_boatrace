@@ -33,15 +33,15 @@ public class EvaluationHelper {
 		eval.put("grades", rec.getStringForced("grades"));
 		eval.put("bettype", rec.getStringForced("bettype"));
 		eval.put("kumiban", rec.getStringForced("kumiban"));
-		eval.put("resultno", rec.getStringForced("resultno"));
+//		eval.put("resultno", rec.getStringForced("resultno"));
 		eval.put("modelno", rec.getStringForced("modelno"));
 		eval.put("patternid", rec.getStringForced("patternid"));
 		eval.put("pattern", rec.getStringForced("pattern"));
-		eval.put("incamt", rec.getStringForced("incamt"));
-		eval.put("betcnt", rec.getStringForced("betcnt"));
-		eval.put("incrate", rec.getStringForced("incrate"));
-		eval.put("hitrate", rec.getStringForced("hitrate"));
-		eval.put("bal_pluscnt", rec.getStringForced("bal_pluscnt"));
+//		eval.put("incamt", rec.getStringForced("incamt"));
+//		eval.put("betcnt", rec.getStringForced("betcnt"));
+//		eval.put("incrate", rec.getStringForced("incrate"));
+//		eval.put("hitrate", rec.getStringForced("hitrate"));
+//		eval.put("bal_pluscnt", rec.getStringForced("bal_pluscnt"));
 		eval.put("range_selector", rec.getStringForced("range_selector"));
 		eval.put("bonus_pr", rec.getStringForced("bonus_pr"));
 		eval.put("bonus_bor", rec.getStringForced("bonus_bor"));
@@ -66,6 +66,22 @@ public class EvaluationHelper {
 			mapIdEval.addItem(eval.get("patternid"), eval);
 		}
 		return mapIdEval;
+	}
+	
+	/** 共通情報部なしのtsvファイルからevaluationをロードする。 */
+	public static List<Evaluation> readTsvFile(File file) throws Exception{
+		List<Evaluation> result = new ArrayList<>();
+		
+		List<String> listLine = FileUtil.readFileByLineArr(file);
+		String[] titles = listLine.get(0).split(Delimeter.TAB.getValue());
+		
+		for (int i = 1; i < listLine.size(); i++) {
+			String[] contents = listLine.get(i).split(Delimeter.TAB.getValue());
+			
+			result.add(createEvaluation(titles, contents, null, null, null, null, null));
+		}
+		
+		return result;
 	}
 	
 	public static List<Evaluation> readFile(String filepath) throws Exception {
@@ -143,83 +159,6 @@ public class EvaluationHelper {
 		}
 
 		return result;
-	}
-
-	public static void printTitle() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(StringUtil.leftPad("bettype", 8, " "));
-		sb.append(StringUtil.leftPad("kumiban", 8, " "));
-		sb.append(StringUtil.leftPad("result", 8, " "));
-		sb.append(StringUtil.leftPad("modelno", 8, " "));
-		sb.append(StringUtil.leftPad("patternid", 20, " "));
-		sb.append(StringUtil.leftPad("pattern", 15, " "));
-		sb.append(StringUtil.leftPad("betcnt", 8, " "));
-		sb.append(StringUtil.leftPad("pr_betcnt", 10, " "));
-		sb.append(StringUtil.leftPad("bor_betcnt", 12, " "));
-		sb.append(StringUtil.leftPad("bork_betcnt", 12, " "));
-		sb.append(StringUtil.leftPad("incamt", 8, " "));
-		sb.append(StringUtil.leftPad("hitrate", 8, " "));
-		sb.append(StringUtil.leftPad("incrate", 8, " "));
-		sb.append(StringUtil.leftPad("betrate", 8, " "));
-		sb.append(StringUtil.leftPad("pr_betrate", 12, " "));
-		sb.append(StringUtil.leftPad("bor_betrate", 12, " "));
-		sb.append(StringUtil.leftPad("bork_betrate", 13, " "));
-		sb.append(StringUtil.leftPad("pr_min", 8, " "));
-		sb.append(StringUtil.leftPad("pr_max", 8, " "));
-		sb.append(StringUtil.leftPad("bor_min", 8, " "));
-		sb.append(StringUtil.leftPad("bor_max", 8, " "));
-		sb.append(StringUtil.leftPad("bork_min", 10, " "));
-		sb.append(StringUtil.leftPad("bork_max", 10, " "));
-//		sb.append( StringUtil.leftPad("slope1", 8, " ") );
-//		sb.append( StringUtil.leftPad("slope2", 8, " ") );
-//		sb.append( StringUtil.leftPad("slope3", 8, " ") );
-
-		System.out.println(sb.toString());
-	}
-
-	public static void print(Evaluation eval) {
-		StringBuilder sb = new StringBuilder();
-		sb.append(StringUtil.leftPad(eval.get("bettype"), 8, " "));
-		sb.append(StringUtil.leftPad(eval.get("kumiban"), 8, " "));
-		sb.append(StringUtil.leftPad(eval.get("resultno"), 8, " "));
-		sb.append(StringUtil.leftPad(eval.get("modelno"), 8, " "));
-		sb.append(StringUtil.leftPad(eval.get("patternid"), 20, " "));
-		sb.append(StringUtil.leftPad(eval.get("pattern"), 15, " "));
-		sb.append(StringUtil.leftPad(eval.get("betcnt"), 8, " "));
-		sb.append(StringUtil.leftPad(eval.get("pr_betcnt"), 10, " "));
-		sb.append(StringUtil.leftPad(eval.get("bor_betcnt"), 12, " "));
-		sb.append(StringUtil.leftPad(eval.get("bork_betcnt"), 12, " "));
-		sb.append(StringUtil.leftPad(eval.get("incamt"), 8, " "));
-		sb.append(StringUtil.leftPad(eval.get("hitrate"), 8, " "));
-		sb.append(StringUtil.leftPad(eval.get("incomerate"), 8, " "));
-		sb.append(StringUtil.leftPad(eval.get("betrate"), 8, " "));
-		sb.append(StringUtil.leftPad(eval.get("pr_betrate"), 12, " "));
-		sb.append(StringUtil.leftPad(eval.get("bor_betrate"), 12, " "));
-		sb.append(StringUtil.leftPad(eval.get("bork_betrate"), 13, " "));
-		sb.append(StringUtil.leftPad(eval.get("pr_bestmin"), 8, " "));
-		sb.append(StringUtil.leftPad(eval.get("pr_bestmax"), 8, " "));
-		sb.append(StringUtil.leftPad(eval.get("bor_bestmin"), 8, " "));
-		sb.append(StringUtil.leftPad(eval.get("bor_bestmax"), 8, " "));
-		sb.append(StringUtil.leftPad(eval.get("bork_bestmin"), 10, " "));
-		sb.append(StringUtil.leftPad(eval.get("bork_bestmax"), 10, " "));
-//		sb.append( StringUtil.leftPad(eval.get("bal1_slope"), 8, " ") );
-//		sb.append( StringUtil.leftPad(eval.get("bal2_slope"), 8, " ") );
-//		sb.append( StringUtil.leftPad(eval.get("bal3_slope"), 8, " ") );
-
-		System.out.println(sb.toString());
-	}
-
-	/** Evaluationをtsv形式で取得する */
-	@Deprecated
-	public static String toTsv(Evaluation eval) {
-		return String.join("\t", eval.get("bettype"), eval.get("kumiban"), eval.get("resultno"), eval.get("modelno"),
-				eval.get("patternid"), eval.get("pattern"), eval.get("hodds_stable"), eval.get("betcnt"),
-				eval.get("betrate"), eval.get("hitcnt"), eval.get("hitamt"), eval.get("incamt"), eval.get("betrate"),
-				eval.get("hitrate"), eval.get("incomerate"), eval.get("balance"), eval.get("balance_1"),
-				eval.get("balance_2"), eval.get("bal_slope"), eval.get("bal_slope_1"), eval.get("bal_slope_2"),
-				eval.get("pt_precision"), eval.get("pt_recall"), eval.get("pt_fmeasure"), eval.get("inc_mean"),
-				eval.get("inc_stddev"), eval.get("hitodds_mean"), eval.get("hitodds_stddev"), eval.get("inc_max"),
-				eval.get("hitodds_max"));
 	}
 
 	/**

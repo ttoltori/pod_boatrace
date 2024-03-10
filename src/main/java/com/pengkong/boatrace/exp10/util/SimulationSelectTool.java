@@ -123,7 +123,7 @@ public class SimulationSelectTool {
 		if (target.exists()) {
 			//target.renameTo(new File(targetFilepath + ".bak"));
 			//logger.warn("pre-existed file renamed to " + targetFilepath + ".bak");
-			FileUtil.deleteFile(targetFilepath);
+			FileUtil.deleteFileIfExist(targetFilepath);
 			logger.warn("pre-existed file deleted" + targetFilepath );
 		}
 		

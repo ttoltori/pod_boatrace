@@ -292,4 +292,50 @@ public class RCDefault extends AbstractResultCreator {
 
 		return result;
 	}
+
+	@Override
+	// 3連単 123,132 2点 (통계단위 3자리)
+	protected List<MlResult> get3Bresult(String[] predictions, DBRecord rec) throws Exception {
+		List<MlResult> result = new ArrayList<>();
+		result.add(createDefault(BetType._3B, BetType._3T, String.join("", predictions[0], predictions[1], predictions[2]), rec));
+		result.add(createDefault(BetType._3B, BetType._3T, String.join("", predictions[0], predictions[2], predictions[1]), rec));
+
+		return result;
+	}
+	
+	@Override
+	// 3連単 123,124 2点 (통계단위 4자리)
+	protected List<MlResult> get3Cresult(String[] predictions, DBRecord rec) throws Exception {
+		List<MlResult> result = new ArrayList<>();
+		result.add(createDefault(BetType._3C, BetType._3T, String.join("", predictions[0], predictions[1], predictions[2]), rec));
+		result.add(createDefault(BetType._3C, BetType._3T, String.join("", predictions[0], predictions[1], predictions[3]), rec));
+
+		return result;
+	}
+
+	@Override
+	// 3連単 123,124,213,214 4点 (통계단위 4자리)
+	protected List<MlResult> get3Dresult(String[] predictions, DBRecord rec) throws Exception {
+		List<MlResult> result = new ArrayList<>();
+		result.add(createDefault(BetType._3D, BetType._3T, String.join("", predictions[0], predictions[1], predictions[2]), rec));
+		result.add(createDefault(BetType._3D, BetType._3T, String.join("", predictions[0], predictions[1], predictions[3]), rec));
+		result.add(createDefault(BetType._3D, BetType._3T, String.join("", predictions[1], predictions[0], predictions[2]), rec));
+		result.add(createDefault(BetType._3D, BetType._3T, String.join("", predictions[1], predictions[0], predictions[3]), rec));
+
+		return result;
+	}
+
+	@Override
+	// 3連単 123,124,132,134,142,143 6点 (통계단위 4자리)
+	protected List<MlResult> get3Eresult(String[] predictions, DBRecord rec) throws Exception {
+		List<MlResult> result = new ArrayList<>();
+		result.add(createDefault(BetType._3E, BetType._3T, String.join("", predictions[0], predictions[1], predictions[2]), rec));
+		result.add(createDefault(BetType._3E, BetType._3T, String.join("", predictions[0], predictions[1], predictions[3]), rec));
+		result.add(createDefault(BetType._3E, BetType._3T, String.join("", predictions[0], predictions[2], predictions[1]), rec));
+		result.add(createDefault(BetType._3E, BetType._3T, String.join("", predictions[0], predictions[2], predictions[3]), rec));
+		result.add(createDefault(BetType._3E, BetType._3T, String.join("", predictions[0], predictions[3], predictions[1]), rec));
+		result.add(createDefault(BetType._3E, BetType._3T, String.join("", predictions[0], predictions[3], predictions[2]), rec));
+
+		return result;
+	}
 }

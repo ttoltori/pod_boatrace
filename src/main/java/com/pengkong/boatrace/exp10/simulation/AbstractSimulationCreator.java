@@ -11,7 +11,6 @@ import com.pengkong.boatrace.exp10.enums.RangeValidationType;
 import com.pengkong.boatrace.exp10.odds.Odds;
 import com.pengkong.boatrace.exp10.odds.provider.AbstractOddsProvider;
 import com.pengkong.boatrace.exp10.odds.provider.BeforeOddsProvider;
-import com.pengkong.boatrace.exp10.odds.provider.OddsProviderInterface;
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
 import com.pengkong.boatrace.exp10.result.AbstractResultCreator;
 import com.pengkong.boatrace.exp10.simulation.adjustment.BonusProvider;
@@ -32,7 +31,6 @@ import com.pengkong.boatrace.server.db.dto.DBRecord;
 import com.pengkong.common.StringUtil;
 import com.pengkong.common.collection.HashMapList;
 
-import lombok.Getter;
 import lombok.Setter;
 
 public abstract class AbstractSimulationCreator {
@@ -361,9 +359,6 @@ public abstract class AbstractSimulationCreator {
 		rec.put("probability1", clf.getProbability1());
 		rec.put("probability2", clf.getProbability2());
 		rec.put("probability3", clf.getProbability3());
-		rec.put("probabilities1", clf.getProbabilities1());
-		rec.put("probabilities2", clf.getProbabilities2());
-		rec.put("probabilities3", clf.getProbabilities3());
 
 		return rec;
 	}

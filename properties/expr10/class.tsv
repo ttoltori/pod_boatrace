@@ -62,3 +62,4 @@ r123-1x	true	123,124,125,126,132,134,135,136,142,143,145,146,152,153,154,156,162
 r1-2x	true	2,x	(case when substring(sanrentanno from 1 for 1) = '2' then '2' else 'x' end) classes
 r2-2345	true	2,3,4,5,x	(case when substring(sanrentanno from 2 for 1) in ('2', '3', '4', '5')  then substring(sanrentanno from 2 for 1) else 'x' end) classes
 r3-3456	true	3,4,5,6,x	(case when substring(sanrentanno from 3 for 1) in ('3', '4', '5', '6')  then substring(sanrentanno from 3 for 1) else 'x' end) classes
+rk-1	true	x	(rank::text) classes

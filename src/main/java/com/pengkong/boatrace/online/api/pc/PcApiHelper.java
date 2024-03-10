@@ -6,7 +6,7 @@ import org.jsoup.select.Elements;
 
 public class PcApiHelper {
 
-	String getCenterNoFromMeta(Document doc) {
+	public String getCenterNoFromMeta(Document doc) {
 		Elements metaTags = doc.getElementsByTag("meta");
 		for (Element metaTag : metaTags) {
 			if (metaTag.attr("name").equals("centerNo")) {
@@ -16,7 +16,7 @@ public class PcApiHelper {
 		return null;
 	}
 
-	String getCsrfFromMeta(Document doc) {
+	public String getCsrfFromMeta(Document doc) {
 		Elements metaTags = doc.getElementsByTag("meta");
 		for (Element metaTag : metaTags) {
 			if (metaTag.attr("name").equals("_csrf_token")) {
@@ -26,14 +26,14 @@ public class PcApiHelper {
 		return null;
 	}
 	
-	String getRFromLoginForm(Document doc) {
+	public String getRFromLoginForm(Document doc) {
 		Element loginForm = doc.getElementById("loginForm");
 		String attr = loginForm.attr("action");
 		String[] token = attr.split("=");
 		return token[token.length - 1];
 	}
 
-	String getTokenFromInputTag(Document doc) {
+	public String getTokenFromInputTag(Document doc) {
 		return doc.getElementsByAttributeValue("name", "token").get(0).attr("value");
 	}
 	

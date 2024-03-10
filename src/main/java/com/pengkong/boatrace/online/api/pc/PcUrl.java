@@ -5,7 +5,7 @@ import com.pengkong.common.StringUtil;
 public class PcUrl {
 	public static final String BROWSER_USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36";
 	public static final String URL_BASE = "https://ib.mbrace.or.jp/";
-	//public static final String URL_BASE = "https://debug10.brtb.jp/";
+	//public static final String URL_BASE = "https://d-pc.test.brtb.jp/";
 	public static final String URL_PCTOHYO_BASE = URL_BASE + "tohyo-ap-pctohyo-web/";
 	public static final String URL_PCTOHYO_SERVICE_BASE = URL_PCTOHYO_BASE + "service/";
 	public static final String URL_LOGIN_REQUEST = URL_PCTOHYO_BASE + "auth/login";
@@ -16,6 +16,7 @@ public class PcUrl {
 	public static final String URL_LOGOUT_REQUEST = URL_PCTOHYO_BASE + "logout";
 	public static final String URL_PAYOFF_REQUEST = URL_PCTOHYO_SERVICE_BASE + "amo/accountcomp";
 	public static final String URL_ODDS_REQUEST = URL_PCTOHYO_SERVICE_BASE + "bet/betinfo/oddsupdate/today";
+	public static final String URL_RECAPTCHA_ANCHOR = "https://www.google.com/recaptcha/enterprise/anchor?ar=1&k=6LfGKGMfAAAAAIfOJqse31B3PEoEnaZ-_6bOQc_a&co=aHR0cHM6Ly9kLXBjLnRlc3QuYnJ0Yi5qcDo0NDM.&hl=en&v=fGZmEzpfeSeqDJiApS_XZ4Y2&size=invisible";
 
 	public static String getLoginUrl(String centerNo, String r) {
 		return URL_LOGIN_REQUEST + "?cid=" + centerNo + "&r=" + r;

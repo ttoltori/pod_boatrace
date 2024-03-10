@@ -1,4 +1,26 @@
-﻿select distinct ymd 
+﻿select
+  max(ymd)
+from 
+(
+	select * from rec_racer where boat3winingrate = -1
+) tmp
+;
+
+select 
+  concat_ws('_', race.ymd, race.jyocd, lpad(race.raceno::text, 2, '0')) raceid,
+  
+from rec_race race, rec_racer racer
+where race.ymd = racer.ymd and race.jyocd = racer.jyocd and race.raceno = racer.raceno 
+  and sanrentanno <> '不成立' 
+  and race.ymd >= '20210101' and race.ymd <= '20211231' 
+  and (true) 
+order by race.ymd, race.sime
+;
+
+select distinct id_sqlid from sim_bork sb; 
+
+
+select distinct ymd 
 from (
   select ymd, jyocd, raceno, count(1) cnt
   from rec_race 

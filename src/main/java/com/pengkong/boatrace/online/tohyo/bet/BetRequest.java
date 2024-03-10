@@ -20,7 +20,12 @@ public class BetRequest {
 	public BetRequest(String jyoCd, String raceNo) {
 		super();
 		this.jyoCd = jyoCd;
-		this.raceNo = raceNo;
+		// 20231122 betconfでエラーとなったためTohyoManagerでテストした結果raceNoが２桁である必要があるよう。
+		if (raceNo.length() == 1) {
+			this.raceNo = "0" + raceNo;
+		} else {
+			this.raceNo = raceNo;
+		}
 		betList = new ArrayList<>();
 	}
 

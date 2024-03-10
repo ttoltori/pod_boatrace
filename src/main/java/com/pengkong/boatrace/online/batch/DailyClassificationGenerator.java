@@ -49,18 +49,15 @@ public class DailyClassificationGenerator extends MLClassificationGenerator {
 
 		rec.setPrediction1(listClassification.get(0).prediction);
 		rec.setProbability1(listClassification.get(0).probability);
-		rec.setProbabilities1(listClassification.get(0).probabilities);
 		
 		if (listClassification.size() > 1) {
 			rec.setPrediction2(listClassification.get(1).prediction);
 			rec.setProbability2(listClassification.get(1).probability);
-			rec.setProbabilities2(listClassification.get(1).probabilities);
 		}
 
 		if (listClassification.size() > 2) {
 			rec.setPrediction3(listClassification.get(2).prediction);
 			rec.setProbability3(listClassification.get(2).probability);
-			rec.setProbabilities3(listClassification.get(2).probabilities);
 		}
 
 		return rec;

@@ -1,3 +1,60 @@
+<class 'list'>: [array([0.90680226, 0.03404193, 0.02965421, 0.01292336, 0.0083054 ,
+       0.00827284])]
+ndarray: [-1.93467736  0.84535501  0.42605207 -0.84004138  1.36145065  0.31563   ]
+
+    # @param param_list_str ex)  boosting_type=gbdt,learning_rate=0.1...
+    # @param csv_filepath ex)  D:/Dev/experiment/expr10/arff/9997_rank1.csv
+    # @param model_filepath ex)  D:/Dev/experiment/expr10/evaluation/model_release/9997/1/nopattern/9997_nopattern_yyyymmdd_rank1.model
+    # @param feature_name_list_str ex)  nw1,nw2,nw3,nw4,nw5,nw6,class
+    # @param feature_type_list_str ex)  float,float,float,float,float,float,category
+
+mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,raceid,en,sex,age,lv,weight,branch,exhibit,waku,fly,late,avgst,avgtime,nw,n2w,n3w,lw,l2w,l3w,mtno,m2w,btno,b2w::category,category,category,category,category,category,int,int,category,category,int64,category,category,int,category,float,category,float,category,int,int,float,float,float,float,float,float,float,float,int,float,int,float
+
+params D:/Dev/experiment/expr10/arff/89100_rank1.csv D:/Dev/experiment/expr10/model_release/89100/1/nopattern/89100_nopattern_20210601_rank1.model mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,raceid,en,sex,age,lv,weight,branch,exhibit,waku,fly,late,avgst,avgtime,nw,n2w,n3w,lw,l2w,l3w,mtno,m2w,btno,b2w,class category,category,category,category,category,category,int,int,category,category,int64,category,category,int,category,float,category,float,category,int,int,float,float,float,float,float,float,float,float,int,float,int,float,int
+
+
+
+model properties
+rk_cate_1  89100_rank1=rk-1::rk_catb-1_py::mm,jyo,race,turn,grade,raty,time,fixent,raceid,en,sex,lv,branch,waku::category,category,category,category,category,category,category,category,int64,category,category,category,category,category
+rk_1 89100_rank1=rk-1::rk_catb-1_py::mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,raceid,en,sex,age,lv,weight,branch,exhibit,waku,fly,late,avgst,avgtime,nw,n2w,n3w,lw,l2w,l3w,mtno,m2w,btno,b2w::category,category,category,category,category,category,int,int,category,category,int64,category,category,int,category,float,category,float,category,int,int,float,float,float,float,float,float,float,float,int,float,int,float
+
+89100_rank1=rk-1::rk_catb-1_py::waku,nw,m2w,avgtime,en,sex,lw,exhibit,n3w,lv,fly,raty,femcnt::category,float,float,float,category,category,float,float,float,category,int,category,int
+
+
+0        waku     0.011881
+1          nw     0.005498
+2         m2w     0.000622
+3     avgtime     0.000477
+4          en     0.000448
+5         sex     0.000164
+6          lw     0.000119
+7     exhibit     0.000090
+8         n3w     0.000080
+9          lv     0.000073
+10        fly     0.000042
+11       raty     0.000024
+12     femcnt     0.000007
+13         mm     0.000000
+14        jyo     0.000000
+15       race     0.000000
+16       turn     0.000000
+17      grade     0.000000
+18       time     0.000000
+19     fixent     0.000000
+20     raceid     0.000000
+21        age     0.000000
+22     weight     0.000000
+23     branch     0.000000
+24       late     0.000000
+25      avgst     0.000000
+26        l2w     0.000000
+27        l3w     0.000000
+28       mtno     0.000000
+29       btno     0.000000
+30        b2w     0.000000
+31       alvt    -0.000017
+32        n2w    -0.000031
+
 ml_simul_jsj 10001
 ml_simul_jsj 10002
 ml_simul_jsj 10003

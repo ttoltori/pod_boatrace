@@ -1,6 +1,5 @@
 package com.pengkong.boatrace.exp10.odds.provider;
 
-import com.pengkong.boatrace.common.enums.Delimeter;
 import com.pengkong.boatrace.exp10.odds.Odds;
 import com.pengkong.boatrace.exp10.odds.loader.AbstractOddsFileLoader;
 import com.pengkong.boatrace.exp10.odds.loader.OddsMonitorFileLoader;
@@ -44,17 +43,5 @@ public class BeforeOddsProvider extends AbstractOddsProvider {
 	@Override
 	protected String createOddsFilepath(String ymd) {
 		return prop.getString("DIRECTORY_ODDSMONITOR") + "odds_" + ymd + ".csv";
-	}
-
-	@Override
-	protected String[] createBettypes() {
-		String betTypes = prop.getString("bettype");
-		// 例）1T,3T,2T
-		betTypes = betTypes.replace("3M", "3T");
-		betTypes = betTypes.replace("2M", "2T");
-		betTypes = betTypes.replace("3N", "2T");
-		betTypes = betTypes.replace("2N", "3T");
-
-		return betTypes.split(Delimeter.COMMA.getValue());
 	}
 }

@@ -61,10 +61,10 @@ public class MLPropertyUtil extends PropertyUtil {
 		//simulation時に複数のResultStatのbettype, kumibanを代入する
 		if (key.equals("evaluations_id")) {
 			String evalId = super.getString(key);
-			if (evalId.contains("{bettype}")) {
+			if (evalId.contains("{bettype}") && this.evalIdBettype != null) {
 				evalId = evalId.replace("{bettype}", this.evalIdBettype);
 			}
-			if (evalId.contains("{kumiban}")) {
+			if (evalId.contains("{kumiban}") && this.evalIdKumiban != null) {
 				evalId = evalId.replace("{kumiban}", this.evalIdKumiban);
 			}
 			

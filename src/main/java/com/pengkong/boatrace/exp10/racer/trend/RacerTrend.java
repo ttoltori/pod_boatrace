@@ -53,7 +53,7 @@ public class RacerTrend {
 		
 		RecRacerTrend trend = new RecRacerTrend();
 		trend.setYmd(currentYmd);
-		trend.setEntry(entry);
+		trend.setEntry(entry.shortValue());
 		trend.setRuncnt(0);
 		
 		// 記録を時間順にリスト化する

@@ -27,6 +27,7 @@
 -- BEGIN fact_hitr
 -- BEGIN fact_inca
 
+
 BEGIN arff_1
   select 'nopattern' pattern, 
   race.ymd, sanrentanprize::double precision, 
@@ -389,12 +390,13 @@ BEGIN result_partial_select
     tansyono, nirentanno, nirenhukuno, sanrentanno, sanrenhukuno, 
     tansyoprize, nirentanprize, nirenhukuprize, sanrentanprize, sanrenhukuprize,
     tansyopopular, nirentanpopular, nirenhukupopular, sanrentanpopular, sanrenhukupopular,
-    prediction1, prediction2, prediction3, probability1, probability2, probability3,
+    prediction1, prediction2, prediction3, prediction4, prediction5, prediction6, 
+    probability1, probability2, probability3, probability4, probability5, probability6, 
+    popu_variance,
     fixedentrance, timezone, com_predict
-  from rec_race race, ml_classification cls, rec_racer_arr arr, rec_race_trend rrt
+  from rec_race race, ml_classification cls, rec_racer_arr arr
   where race.ymd = cls.ymd and race.jyocd = cls.jyocd and race.raceno = cls.raceno 
     and race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno 
-    and race.ymd = rrt.ymd and race.jyocd = rrt.jyocd and race.raceno = rrt.raceno 
     and sanrentanno <> '不成立' 
     and grade in ({grade_condition}) 
     and modelno = '{used_model_no}'
@@ -418,9 +420,8 @@ BEGIN simulation_partial_select
     tansyopopular, nirentanpopular, nirenhukupopular, sanrentanpopular, sanrenhukupopular,
     alevelcount, com_confidence, com_predict, grade, turn, racetype, wakulevellist, arr.nationwiningrate::double precision[],
     fixedentrance, timezone
-  from rec_race race, rec_racer_arr arr, rec_race_trend rrt
+  from rec_race race, rec_racer_arr arr
   where race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno 
-    and race.ymd = rrt.ymd and race.jyocd = rrt.jyocd and race.raceno = rrt.raceno 
     and sanrentanno <> '不成立' 
     and grade in ({grade_condition}) 
     and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
@@ -1621,4 +1622,434 @@ BEGIN STA-S1-test
 	  and (t1.factor) >= {factor_min}
 	  and (t2.factor) >= {factor_min}
 	order by grades, bettype, kumiban, modelno, patternid, pattern
+END
+
+-- simul_TSV에서 추출한 것에 대해 개별 확인한다.`
+BEGIN TSV-test-77
+	select 
+	  '~' sel, 
+	  (case when t3.result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+	  t3.bettype, t3.kumiban, t3.modelno, t3.patternid, t3.pattern, 
+	  t3.betcnt, t3.incamt, t3.hitrate, t3.incrate,
+	  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+	from 
+	  ( select keycol, ({factor}) factor from stat7_1 ) t1, 
+	  ( select keycol, ({factor}) factor from stat7_2 ) t2, 
+	  stat7_3 t3
+	where 
+	      t1.keycol = t2.keycol and t1.keycol = t3.keycol
+	  and (t1.factor) >= {factor_min}
+	  and (t2.factor) >= {factor_min}
+	  and t1.result_type = '{result_type}' and t1.bettype = '{bettype}' and t1.kumiban = '{kumiban}' 
+	  and t1.modelno = '{modelno}' and t1.patternid = '{simul_patternid}'
+END
+
+BEGIN BIG-1
+select 
+  *
+from (
+	select
+	  row_number() over (partition by kumiban order by ({factor}) desc, ({factor2}) desc  ) as ranking,
+	  '~' sel, 
+	  (case when result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades,
+	  bettype, kumiban, resultno, modelno, patternid, pattern, ({factor})::double precision factor, 
+	  incamt, betcnt, incrate, hitrate::double precision, bal_pluscnt, 
+	  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+	from stat{table_no}
+	where bettype = '{bettype}' 
+	  <optional> and kumiban = '{kumiban}' </optional>
+	  and result_type = '{result_type}' 
+	  and modelno in ({models})
+	  and {cond_field} between {cond_min} and {cond_max}
+	  and ( {custom} )
+) tblForReorder
+where ranking <= {limit}
+END
+
+BEGIN BIG-2-77
+select 
+  '~' sel, 
+  (case when result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+  bettype, kumiban, modelno, patternid, pattern, 
+  betcnt, incamt, hitrate, incrate,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from (
+	select
+	  row_number() over (partition by s1.kumiban order by ((s1.{factor}+s2.{factor})) desc, (s1.{factor2}+s2.{factor2}) desc  ) as ranking,
+	  s2.*
+	from ss777_1 s1, ss777_2 s2
+	where s1.keycol = s2.keycol
+	  and (     s1.{cond_field} between {cond_min} and {cond_max} 
+	        and s2.{cond_field} between {cond_min} and {cond_max} 
+	      )
+	  and s1.bettype = '{bettype}' 
+		  <optional> and s1.kumiban = '{kumiban}' </optional>
+  	  and s1.result_type = '{result_type}' 
+	  and s1.modelno = '{modelno}' 
+	  and s1.patternid like '{custom}' 
+) tblForReorder
+where ranking <= {limit}
+END
+
+BEGIN BIG-3-555
+select 
+  '~' sel, 
+  (case when result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+  bettype, kumiban, modelno, patternid, pattern, 
+  betcnt, incamt, hitrate, incrate,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from (
+	select
+	  row_number() over (partition by s1.kumiban order by ((s1.{factor}+s2.{factor}+s3.{factor})) desc, (s1.{factor2}+s2.{factor2}+s3.{factor2}) desc  ) as ranking,
+	  s3.*
+	from ss5555_1 s1, ss5555_2 s2, ss5555_3 s3
+	where s1.keycol = s2.keycol and s1.keycol = s3.keycol 
+	  and (     s1.{cond_field} between {cond_min} and {cond_max} 
+	        and s2.{cond_field} between {cond_min} and {cond_max} 
+	        and s3.{cond_field} between {cond_min} and {cond_max} 
+	      )
+	  and s1.bettype = '{bettype}' 
+		  <optional> and s1.kumiban = '{kumiban}' </optional>
+  	  and s1.result_type = '{result_type}' 
+	  and s1.modelno = '{modelno}' 
+	  and s1.patternid like '{custom}' 
+) tblForReorder
+where ranking <= {limit}
+END
+
+BEGIN BIG-4-555
+select 
+  '~' sel, 
+  (case when result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+  bettype, kumiban, modelno, patternid, pattern, 
+  betcnt, incamt, hitrate, incrate,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from (
+	select
+	  row_number() over (partition by s1.kumiban order by ((s1.{factor}+s2.{factor}+s3.{factor}+s4.{factor})) desc, (s1.{factor2}+s2.{factor2}+s3.{factor2}+s4.{factor2}) desc ) as ranking,
+	  s4.*
+	from ss5555_1 s1, ss5555_2 s2, ss5555_3 s3, ss5555_4 s4
+	where s1.keycol = s2.keycol and s1.keycol = s3.keycol and s1.keycol = s4.keycol 
+	  and (     s1.{cond_field} between {cond_min} and {cond_max} 
+	        and s2.{cond_field} between {cond_min} and {cond_max} 
+	        and s3.{cond_field} between {cond_min} and {cond_max} 
+	        and s4.{cond_field} between {cond_min} and {cond_max} 
+	      )
+	  and s1.bettype = '{bettype}' 
+		  <optional> and s1.kumiban = '{kumiban}' </optional>
+  	  and s1.result_type = '{result_type}' 
+	  and s1.modelno = '{modelno}' 
+	  and s1.patternid like '{custom}' 
+) tblForReorder
+where ranking <= {limit}
+END
+
+BEGIN VIC-1-77
+select 
+  '~' sel, 
+  (case when result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+  bettype, kumiban, modelno, patternid, pattern, 
+  betcnt, incamt, hitrate, incrate,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from (
+	select
+	  row_number() over (partition by s1.kumiban order by ( ((s1.{factor}+s2.{factor})/2)/{factor_unit} ) desc, ( (s1.{factor2}+s2.{factor2})/2 ) desc ) as ranking,
+	  s2.*
+	from ss777_1 s1, ss777_2 s2
+	where s1.keycol = s2.keycol 
+	  and (     s1.{cond_field} between {cond_min} and {cond_max} 
+	        and s2.{cond_field} between {cond_min} and {cond_max} 
+	      )
+	  and s1.bettype = '{bettype}' 
+		  <optional> and s1.kumiban = '{kumiban}' </optional>
+  	  and s1.result_type = '{result_type}' 
+	  and s1.modelno = '{modelno}' 
+	  and s1.patternid like '{custom}' 
+) tblForReorder
+where ranking <= {limit}
+END
+
+BEGIN VIC-2-777
+select 
+  '~' sel, 
+  (case when result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+  bettype, kumiban, modelno, patternid, pattern, 
+  betcnt, incamt, hitrate, incrate,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from (
+	select
+	  row_number() over (partition by s1.kumiban order by ( ((s1.{factor}+s2.{factor}+s3.{factor})/3)/{factor_unit} ) desc, ( (s1.{factor2}+s2.{factor2}+s3.{factor2})/3 ) desc ) as ranking,
+	  s3.*
+	from ss777_1 s1, ss777_2 s2, ss777_3 s3
+	where s1.keycol = s2.keycol and s1.keycol = s3.keycol 
+	  and (     s1.{cond_field} between {cond_min} and {cond_max} 
+	        and s2.{cond_field} between {cond_min} and {cond_max} 
+	        and s3.{cond_field} between {cond_min} and {cond_max} 
+	      )
+	  and s1.bettype = '{bettype}' 
+		  <optional> and s1.kumiban = '{kumiban}' </optional>
+  	  and s1.result_type = '{result_type}' 
+	  and s1.modelno = '{modelno}' 
+	  and s1.patternid like '{custom}' 
+) tblForReorder
+where ranking <= {limit}
+END
+
+BEGIN VIC-3-555
+select 
+  '~' sel, 
+  (case when result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+  bettype, kumiban, modelno, patternid, pattern, 
+  betcnt, incamt, hitrate, incrate,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from (
+	select
+	  row_number() over (partition by s1.kumiban order by ( ((s1.{factor}+s2.{factor}+s3.{factor})/3)/{factor_unit} ) desc, ( (s1.{factor2}+s2.{factor2}+s3.{factor2})/3 ) desc ) as ranking,
+	  s3.*
+	from ss5555_1 s1, ss5555_2 s2, ss5555_3 s3
+	where s1.keycol = s2.keycol and s1.keycol = s3.keycol 
+	  and (     s1.{cond_field} between {cond_min} and {cond_max} 
+	        and s2.{cond_field} between {cond_min} and {cond_max} 
+	        and s3.{cond_field} between {cond_min} and {cond_max} 
+	      )
+	  and s1.bettype = '{bettype}' 
+		  <optional> and s1.kumiban = '{kumiban}' </optional>
+  	  and s1.result_type = '{result_type}' 
+	  and s1.modelno = '{modelno}' 
+	  and s1.patternid like '{custom}' 
+) tblForReorder
+where ranking <= {limit}
+END
+
+- VIC-4-555を名前変えた。
+BEGIN VIC-4-5555
+select 
+  '~' sel, 
+  (case when result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+  bettype, kumiban, modelno, patternid, pattern, 
+  betcnt, incamt, hitrate, incrate,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from (
+	select
+	  row_number() over (partition by s1.kumiban order by ( ((s1.{factor}+s2.{factor}+s3.{factor}+s4.{factor})/4)/{factor_unit} ) desc, ( (s1.{factor2}+s2.{factor2}+s3.{factor2}+s4.{factor2})/4 ) desc ) as ranking,
+	  s4.*
+	from ss5555_1 s1, ss5555_2 s2, ss5555_3 s3, ss5555_4 s4
+	where s1.keycol = s2.keycol and s1.keycol = s3.keycol and s1.keycol = s4.keycol 
+	  and (     s1.{cond_field} between {cond_min} and {cond_max} 
+	        and s2.{cond_field} between {cond_min} and {cond_max} 
+	        and s3.{cond_field} between {cond_min} and {cond_max} 
+	        and s4.{cond_field} between {cond_min} and {cond_max} 
+	      )
+	  and s1.bettype = '{bettype}' 
+		  <optional> and s1.kumiban = '{kumiban}' </optional>
+  	  and s1.result_type = '{result_type}' 
+	  and s1.modelno = '{modelno}' 
+	  and s1.patternid like '{custom}' 
+) tblForReorder
+where ranking <= {limit}
+END
+
+
+BEGIN VIC2-5555
+select 
+  '~' sel, 
+  (case when result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+  bettype, kumiban, modelno, patternid, pattern, 
+  betcnt, incamt, hitrate, incrate,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from (
+	select
+	  row_number() over (partition by s4.kumiban order by ( s4.{factor} ) desc, ( s4.{factor2} ) desc ) as ranking,
+	  s4.*
+	from ss5555_1 s1, ss5555_2 s2, ss5555_3 s3, ss5555_4 s4
+	where s1.keycol = s2.keycol and s1.keycol = s3.keycol and s1.keycol = s4.keycol 
+	  and (     s1.{cond_field} between {cond_min} and {cond_max} 
+	        and s2.{cond_field} between {cond_min} and {cond_max} 
+	        and s3.{cond_field} between {cond_min} and {cond_max} 
+	      )
+	  and s1.bettype = '{bettype}' 
+		  <optional> and s1.kumiban = '{kumiban}' </optional>
+  	  and s1.result_type = '{result_type}' 
+	  and s1.modelno = '{modelno}' 
+	  and s1.patternid like '{custom}' 
+) tblForReorder
+where ranking <= {limit}
+END
+
+BEGIN VIC2-777
+select 
+  '~' sel, 
+  (case when result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+  bettype, kumiban, modelno, patternid, pattern, 
+  betcnt, incamt, hitrate, incrate,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from (
+	select
+	  row_number() over (partition by s3.kumiban order by ( s3.{factor} ) desc, ( s3.{factor2} ) desc ) as ranking,
+	  s3.*
+	from ss777_1 s1, ss777_2 s2, ss777_3 s3
+	where s1.keycol = s2.keycol and s1.keycol = s3.keycol 
+	  and (     s1.{cond_field} between {cond_min} and {cond_max} 
+	        and s2.{cond_field} between {cond_min} and {cond_max} 
+	      )
+	  and s1.bettype = '{bettype}' 
+		  <optional> and s1.kumiban = '{kumiban}' </optional>
+  	  and s1.result_type = '{result_type}' 
+	  and s1.modelno = '{modelno}' 
+	  and s1.patternid like '{custom}' 
+) tblForReorder
+where ranking <= {limit}
+END
+
+BEGIN VIC2-555
+select 
+  '~' sel, 
+  (case when result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+  bettype, kumiban, modelno, patternid, pattern, 
+  betcnt, incamt, hitrate, incrate,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from (
+	select
+	  row_number() over (partition by s3.kumiban order by ( s3.{factor} ) desc, ( s3.{factor2} ) desc ) as ranking,
+	  s3.*
+	from ss5555_1 s1, ss5555_2 s2, ss5555_3 s3
+	where s1.keycol = s2.keycol and s1.keycol = s3.keycol 
+	  and (     s1.{cond_field} between {cond_min} and {cond_max} 
+	        and s2.{cond_field} between {cond_min} and {cond_max} 
+	      )
+	  and s1.bettype = '{bettype}' 
+		  <optional> and s1.kumiban = '{kumiban}' </optional>
+  	  and s1.result_type = '{result_type}' 
+	  and s1.modelno = '{modelno}' 
+	  and s1.patternid like '{custom}' 
+) tblForReorder
+where ranking <= {limit}
+END
+
+BEGIN VIC2-77
+select 
+  '~' sel, 
+  (case when result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+  bettype, kumiban, modelno, patternid, pattern, 
+  betcnt, incamt, hitrate, incrate,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from (
+	select
+	  row_number() over (partition by s2.kumiban order by ( s2.{factor} ) desc, ( s2.{factor2} ) desc ) as ranking,
+	  s2.*
+	from ss777_1 s1, ss777_2 s2
+	where s1.keycol = s2.keycol
+	  and (     s1.{cond_field} between {cond_min} and {cond_max} 
+	      )
+	  and s1.bettype = '{bettype}' 
+		  <optional> and s1.kumiban = '{kumiban}' </optional>
+  	  and s1.result_type = '{result_type}' 
+	  and s1.modelno = '{modelno}' 
+	  and s1.patternid like '{custom}' 
+) tblForReorder
+where ranking <= {limit}
+END
+
+BEGIN BIG5-5555
+select 
+  '~' sel, 
+  (case when result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+  bettype, kumiban, modelno, patternid, pattern, 
+  betcnt, incamt, hitrate, incrate,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from (
+	select
+	  row_number() over (partition by s1.kumiban order by ((s1.{factor}+s2.{factor}+s3.{factor}+s4.{factor})) desc, (s1.{factor2}+s2.{factor2}+s3.{factor2}+s4.{factor2}) desc ) as ranking,
+	  s4.*
+	from ss5555_1 s1, ss5555_2 s2, ss5555_3 s3, ss5555_4 s4
+	where s1.keycol = s2.keycol and s1.keycol = s3.keycol and s1.keycol = s4.keycol 
+	  and (     s1.{cond_field} between {cond_min} and {cond_max} 
+	        and s2.{cond_field} between {cond_min} and {cond_max} 
+	        and s3.{cond_field} between {cond_min} and {cond_max} 
+	        and s4.{cond_field} between {cond_min} and {cond_max} 
+	      )
+	  and s1.bettype = '{bettype}' 
+		  <optional> and s1.kumiban = '{kumiban}' </optional>
+  	  and s1.result_type = '{result_type}' 
+	  and s1.modelno = '{modelno}' 
+	  and s1.patternid like '{custom}' 
+) tblForReorder
+where ranking <= {limit}
+END
+
+BEGIN BIG5-777
+select 
+  '~' sel, 
+  (case when result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+  bettype, kumiban, modelno, patternid, pattern, 
+  betcnt, incamt, hitrate, incrate,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from (
+	select
+	  row_number() over (partition by s1.kumiban order by ((s1.{factor}+s2.{factor}+s3.{factor})) desc, (s1.{factor2}+s2.{factor2}+s3.{factor2}) desc ) as ranking,
+	  s3.*
+	from ss777_1 s1, ss777_2 s2, ss777_3 s3
+	where s1.keycol = s2.keycol and s1.keycol = s3.keycol 
+	  and (     s1.{cond_field} between {cond_min} and {cond_max} 
+	        and s2.{cond_field} between {cond_min} and {cond_max} 
+	        and s3.{cond_field} between {cond_min} and {cond_max} 
+	      )
+	  and s1.bettype = '{bettype}' 
+		  <optional> and s1.kumiban = '{kumiban}' </optional>
+  	  and s1.result_type = '{result_type}' 
+	  and s1.modelno = '{modelno}' 
+	  and s1.patternid like '{custom}' 
+) tblForReorder
+where ranking <= {limit}
+END
+
+BEGIN BIG5-555
+select 
+  '~' sel, 
+  (case when result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+  bettype, kumiban, modelno, patternid, pattern, 
+  betcnt, incamt, hitrate, incrate,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from (
+	select
+	  row_number() over (partition by s1.kumiban order by ((s1.{factor}+s2.{factor}+s3.{factor})) desc, (s1.{factor2}+s2.{factor2}+s3.{factor2}) desc  ) as ranking,
+	  s3.*
+	from ss5555_1 s1, ss5555_2 s2, ss5555_3 s3
+	where s1.keycol = s2.keycol and s1.keycol = s3.keycol 
+	  and (     s1.{cond_field} between {cond_min} and {cond_max} 
+	        and s2.{cond_field} between {cond_min} and {cond_max} 
+	        and s3.{cond_field} between {cond_min} and {cond_max} 
+	      )
+	  and s1.bettype = '{bettype}' 
+		  <optional> and s1.kumiban = '{kumiban}' </optional>
+  	  and s1.result_type = '{result_type}' 
+	  and s1.modelno = '{modelno}' 
+	  and s1.patternid like '{custom}' 
+) tblForReorder
+where ranking <= {limit}
+END
+
+BEGIN BIG5-77
+select 
+  '~' sel, 
+  (case when result_type = '1' then 'ip,G3' else 'SG,G1,G2' end) grades, 
+  bettype, kumiban, modelno, patternid, pattern, 
+  betcnt, incamt, hitrate, incrate,
+  'x' bonus_pr,  'x' bonus_bor,  'x' bonus_bork, 'x' range_selector, 'x' bonus_borkbor
+from (
+	select
+	  row_number() over (partition by s1.kumiban order by ((s1.{factor}+s2.{factor})) desc, (s1.{factor2}+s2.{factor2}) desc  ) as ranking,
+	  s2.*
+	from ss777_1 s1, ss777_2 s2
+	where s1.keycol = s2.keycol  
+	  and (     s1.{cond_field} between {cond_min} and {cond_max} 
+	        and s2.{cond_field} between {cond_min} and {cond_max} 
+	      )
+	  and s1.bettype = '{bettype}' 
+		  <optional> and s1.kumiban = '{kumiban}' </optional>
+  	  and s1.result_type = '{result_type}' 
+	  and s1.modelno = '{modelno}' 
+	  and s1.patternid like '{custom}' 
+) tblForReorder
+where ranking <= {limit}
 END
