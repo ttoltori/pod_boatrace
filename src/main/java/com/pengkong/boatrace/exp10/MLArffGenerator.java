@@ -59,8 +59,9 @@ public class MLArffGenerator extends MLModelGeneratorBase {
 		MLArffCreator arff = new MLArffCreator();
 		
 		YmdBeforeRangeDbList listRange = new YmdBeforeRangeDbList();
+		int rankMax = prop.getInteger("rankcnt");
 		// 랭크 1,2,3 루프
-		for (int rankNo = 1; rankNo <= 3; rankNo++) {
+		for (int rankNo = 1; rankNo <= rankMax; rankNo++) {
 			// 他モデルを流用するまたはモデルは不要
 			if (isReferentialModel(rankNo) || isRankNotExist(rankNo)) {
 				continue;

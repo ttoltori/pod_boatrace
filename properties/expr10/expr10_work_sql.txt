@@ -63,7 +63,7 @@ psql -h localhost -U postgres -d boatml3 -p 55432
 set client_encoding='SJIS';
 
 chcp 932
-cd C:\Dev\workspace\Oxygen\pod_boatrace_test\experiment\expr10
+cd C:\Dev\github\pod_boatrace_test\experiment\expr10
 
 
 Microsoft Teams ミーティング
@@ -131,6 +131,14 @@ insert into ml_classification select * from ml_classification_bk1 where modelno:
 
 !!!노트북에서 ml_classify할때 referential은 model_release, ml_classification도 동기화해두어야 한다.
 
+
+========================================================================
+2024/03/13
+🤔트렌드의 slope컬럼들에 NaN, NULL들이 그대로 arff에 출력되었던고 그래도 학습이 되어버렸던 것 같다. NVL및 NULL수정후 모델 재생성 필요 (89100,99101
+
+========================================================================
+2024/03/12
+params 
 
 ========================================================================
 2024/03/05

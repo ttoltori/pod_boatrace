@@ -1,7 +1,43 @@
-﻿truncate ml_result;
+﻿select 
+  resultno, bettype, 
+  (sum(betcnt)::float)::numeric(15,2) betcnt,
+  (sum(hitamt) - sum(betamt)) incamt,
+  (sum(hitcnt)::float / sum(betcnt)::float)::numeric(7,2) hitrate,
+  (sum(hitamt)::float / sum(betamt)::float)::numeric(7,2) incrate
+from ml_evaluation me 
+where resultno::int in (1,3,5,7)
+group by resultno, bettype 
+order by bettype, resultno::int
+;
+
+
+select modelno, min(skewness), max(skewness) from ml_classification mc group by modelno;
+select min(probability1) min1, min(probability2) min2, min(probability3) min3, min(probability4) min4, select max(probability1) max1, max(probability2) max2, max(probability3) max3, max(probability4) max4 from ml_classification where modelno='89100';
+
+
+select distinct resultno from ml_evaluation me;
+
+SELECT 
+    value,
+    (value - min_value) * 20.0 / (max_value - min_value) AS percentage
+FROM 
+    (SELECT 
+        probability1 value,
+        MIN(probability1) over() AS min_value,
+        MAX(probability1) over() AS max_value
+    FROM 
+        ml_classification where modelno = '89100') AS subquery;
+
+select min(probability1) over () from ml_classification mc;
+       
+select min(probability1), max(probability1) from ml_classification where  
+
+update ml_classification set memo = '89100 6개월단위 model', modelno='xxxxx' where modelno = '89100';
+
+truncate ml_result;
 truncate ml_evaluation;
 
-select max(ymd) from ml_classification mc ; 
+select modelno, min(ymd), max(ymd) from ml_classification mc group by modelno; 
 
 select count(1) from ml_result;
 

@@ -356,12 +356,12 @@ rcntsp3	rcntsp3	float	runcnt_slope[2]::text rcntsp3	runcnt_slope[2] rcntsp3
 rcntsp4	rcntsp4	float	runcnt_slope[3]::text rcntsp4	runcnt_slope[3] rcntsp4
 rcntsp5	rcntsp5	float	runcnt_slope[4]::text rcntsp5	runcnt_slope[4] rcntsp5
 rcntsp6	rcntsp6	float	runcnt_slope[5]::text rcntsp6	runcnt_slope[5] rcntsp6
-cond1	cond1	int	cond[0]::text cond1	cond[0] cond1
-cond2	cond2	int	cond[1]::text cond2	cond[1] cond2
-cond3	cond3	int	cond[2]::text cond3	cond[2] cond3
-cond4	cond4	int	cond[3]::text cond4	cond[3] cond4
-cond5	cond5	int	cond[4]::text cond5	cond[4] cond5
-cond6	cond6	int	cond[5]::text cond6	cond[5] cond6
+cond1	cond1	float	cond[0]::text cond1	cond[0] cond1
+cond2	cond2	float	cond[1]::text cond2	cond[1] cond2
+cond3	cond3	float	cond[2]::text cond3	cond[2] cond3
+cond4	cond4	float	cond[3]::text cond4	cond[3] cond4
+cond5	cond5	float	cond[4]::text cond5	cond[4] cond5
+cond6	cond6	float	cond[5]::text cond6	cond[5] cond6
 condsp1	condsp1	float	cond_slope[0]::text condsp1	cond_slope[0] condsp1
 condsp2	condsp2	float	cond_slope[1]::text condsp2	cond_slope[1] condsp2
 condsp3	condsp3	float	cond_slope[2]::text condsp3	cond_slope[2] condsp3
@@ -461,7 +461,7 @@ lv	lv	category	level lv	level lv
 weight	weight	float	weight::text weight	cast(weight as double precision) weight
 branch	branch	category	branch branch	branch branch
 exhibit	exhibit	float	exhibit::text exhibit	cast(exhibit as double precision) exhibit
-waku	waku	category	waku::text waku	waku waku
+waku	waku	category	racer.waku::text waku	racer.waku waku
 fly	fly	int	flying::text fly	flying fly
 late	late	int	late::text late	late late
 avgst	avgst	float	averagestart::text avgst	cast(averagestart as double precision) avgst
@@ -478,3 +478,21 @@ m3w	m3w	float	motor3winingrate::text m3w	cast(motor3winingrate as double precisi
 btno	btno	int	boatno::text btno	boatno btno
 b2w	b2w	float	boat2winingrate::text b2w	cast(boat2winingrate as double precision) b2w
 b3w	b3w	float	boat3winingrate::text b3w	cast(boat3winingrate as double precision) b3w
+rcnt	rcnt	int	runcnt::text rcnt	runcnt rcnt
+rcntsp	rcntsp	float	runcnt_slope::text rcntsp	runcnt_slope rcntsp
+cond	cond	float	cond::text cond	cond cond
+condsp	condsp	float	cond_slope::text condsp	cond_slope condsp
+n1p	n1p	float	n1point::text n1p	n1point n1p
+n1psp	n1psp	float	n1point_slope::text n1psp	n1point_slope n1psp
+n2p	n2p	float	n2point::text n2p	n2point n2p
+n2psp	n2psp	float	n2point_slope::text n2psp	n2point_slope n2psp
+n3p	n3p	float	n3point::text n3p	n3point n3p
+n3psp	n3psp	float	n3point_slope::text n3psp	n3point_slope n3psp
+n1pw	n1pw	float	n1point_waku::text n1pw	n1point_waku n1pw
+n1pwsp	n1pwsp	float	n1point_waku_slope::text n1pwsp	n1point_waku_slope n1pwsp
+n2pw	n2pw	float	n2point_waku::text n2pw	n2point_waku n2pw
+n2pwsp	n2pwsp	float	n2point_waku_slope::text n2pwsp	n2point_waku_slope n2pwsp
+n3pw	n3pw	float	n3point_waku::text n3pw	n3point_waku n3pw
+n3pwsp	n3pwsp	float	n3point_waku_slope::text n3pwsp	n3point_waku_slope n3pwsp
+avgw	avgw	float	avgstart_waku::text avgw	avgstart_waku avgw
+avgwsp	avgwsp	float	avgstart_waku_slope::text avgwsp	avgstart_waku_slope avgwsp

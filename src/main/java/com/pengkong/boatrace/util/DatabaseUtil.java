@@ -2,7 +2,8 @@ package com.pengkong.boatrace.util;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ConcurrentLinkedDeque;
 
 import org.apache.ibatis.io.Resources;
@@ -10,8 +11,12 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-public class DatabaseUtil {
+import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
+import com.pengkong.boatrace.mybatis.client.CustomMapper;
+import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
+import com.pengkong.boatrace.server.db.dto.DBRecord;
 
+public class DatabaseUtil {
 	private static SqlSession session;
 	private static boolean isAutoCommit;
 	private static boolean isOpened = false;
@@ -94,6 +99,25 @@ public class DatabaseUtil {
 		}
 		
 		return session;
+	}
+	
+	
+	public static List<DBRecord> select(String sql) throws Exception {
+		SqlSession session = DatabaseUtil.open(MLPropertyUtil.getInstance().getString("target_db_resource"), false);
+		try {
+			CustomMapper customMapper = session.getMapper(CustomMapper.class);
+			HashMap<String, String> mapParam = new HashMap<>();
+			mapParam.put("sql", sql);
+			
+			// 디비 데이터 일람 취득
+			List<DBRecord> results = customMapper.selectSql(mapParam);
+			if (results.size() <= 0) {
+				throw new Exception("db has no data. sql=" + sql);
+			}
+			return results; 
+		} finally {
+			DatabaseUtil.close(session);
+		}
 	}
 	
 	@Deprecated

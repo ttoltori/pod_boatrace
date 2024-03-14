@@ -1,16 +1,37 @@
 package com.pengkong.boatrace.exp10.simulation.probability.calculator;
 
+import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
 import com.pengkong.boatrace.server.db.dto.DBRecord;
+import com.pengkong.boatrace.util.DatabaseUtil;
 import com.pengkong.common.MathUtil;
 
 public class ProbabilityCalculatorReleavance123 extends AbstractProbabilityCalculator {
-	protected double min1 = -2.3;
-	protected double max1 = 1;
-	protected double min12 = -3.6;
-	protected double max12 = 2.2;
-	protected double min123 = -4.6;
-	protected double max123 = 3.4;
-						
+	protected Double min1;
+	protected Double max1;
+	protected Double min12;
+	protected Double max12;
+	protected Double min123;
+	protected Double max123;
+	
+	
+	public ProbabilityCalculatorReleavance123() {
+		super();
+		String sql = "select min(probability1) min1, min(probability2) min2, min(probability3) min3, min(probability4) min4, " +
+				" max(probability1) max1, max(probability2) max2, max(probability3) max3, max(probability4) max4 " + 
+				"from ml_classification where modelno='" + MLPropertyUtil.getInstance().getString("used_model_no") + "'";
+		try {
+			DBRecord rec = DatabaseUtil.select(sql).get(0);
+			min1 = rec.getDouble("min1");
+			max1 = rec.getDouble("max1");
+			min12 = rec.getDouble("min1") + rec.getDouble("min2");
+			max12 = rec.getDouble("max1") + rec.getDouble("max2");
+			min123 = rec.getDouble("min1") + rec.getDouble("min2") + rec.getDouble("min3");
+			max123 = rec.getDouble("max1") + rec.getDouble("max2") + rec.getDouble("max3");
+		} catch (Exception e) {
+			logger.error("ProbabilityCalculatorReleavance123 initialize failed.", e);
+		} 
+	}
+
 	@Override
 	Double getProbability1T(DBRecord rec) {
 		return MathUtil.convertToPercentile(rec.getDouble("probability1"), min1, max1, 20);

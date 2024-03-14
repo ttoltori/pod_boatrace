@@ -392,7 +392,7 @@ BEGIN result_partial_select
     tansyopopular, nirentanpopular, nirenhukupopular, sanrentanpopular, sanrenhukupopular,
     prediction1, prediction2, prediction3, prediction4, prediction5, prediction6, 
     probability1, probability2, probability3, probability4, probability5, probability6, 
-    popu_variance,
+    popu_variance, skewness,
     fixedentrance, timezone, com_predict
   from rec_race race, ml_classification cls, rec_racer_arr arr
   where race.ymd = cls.ymd and race.jyocd = cls.jyocd and race.raceno = cls.raceno 

@@ -67,5 +67,9 @@ model_no	model_start_ymd	model_end_ymd	class_rank1	class_rank2	class_rank3	algor
 79101	20231101	20231115	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	classifyr123	classifyr123	classifyr123	arff_2_79101	clf_2_79101	yes	1095	30
 # 11609結果 + probabilities 2차학습																
 21609	20231101	20231115	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_17	fs_17	fs_17	arff_2_21609	clf_2_21609	yes	1095	30
-# CatboostRanker
-89100	20210602	20231101	rk-1	x	x	rk_catb-1_py	x	x	rk_1	x	x	arff_rk_1	clf_rk_1	yes	1825	30
+#CatboostRanker 공식피쳐																
+89100	20210603	20210602	rk-1	x	x	rk_catb-1_py	x	x	rk_1	x	x	arff_rk_1	clf_rk_1	yes	1825	30
+#CatboostRanker 공식피쳐 + 트렌드피쳐																
+89101	20210602	20230630	rk-1	x	x	rk_catb-1_py	x	x	rk_2	x	x	arff_rk_2	clf_rk_2	yes	1825	183
+#LGBMClasssifier 공식피쳐 + 트렌드피쳐																
+99101	20210602	20230630	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_19	fs_19	fs_19	arff_11	clf_11	yes	1825	183

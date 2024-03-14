@@ -30,9 +30,9 @@ public class BeforeOddsCachedProvider extends BeforeOddsProvider {
 	/** 1日分のオッズを取得する */ 
 	public Map<String, Odds> getDaily(String ymd) throws Exception {
 		// 메모리부족으로 일시적 대처
-		if (ymd.equals("20220101") || ymd.equals("20220701") || ymd.equals("20230101")) {
-			cache = new HashedMap<>();
-		}
+//		if (ymd.equals("20220101") || ymd.equals("20220701") || ymd.equals("20230101")) {
+//			cache = new HashedMap<>();
+//		}
 		
 		// 当該日付のオッズをまだロードしていなければロードしてmapに追加する
 		Map<String, Odds> dailyOddsMap = cache.get(ymd);

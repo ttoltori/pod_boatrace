@@ -51,3 +51,30 @@ BEGIN clf_rk_1
     and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
   order by race.ymd, race.jyocd, race.raceno, racer.waku
 END
+BEGIN arff_rk_2
+  select 'nopattern' pattern, race.ymd, 
+    {features}, 
+    {class_features} 
+  from rec_race race, rec_racer racer, rec_racer2 racer2
+  where race.ymd = racer.ymd and race.jyocd = racer.jyocd and race.raceno = racer.raceno 
+    and racer.ymd = racer2.ymd and racer.jyocd = racer2.jyocd and racer.raceno = racer2.raceno and racer.waku = racer2.waku
+    and sanrentanno <> '不成立' 
+    and race.grade in ({grade_condition}) 
+    and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
+    and ({class_condition}) 
+  order by race.ymd, race.jyocd, race.raceno, racer.waku
+END
+
+-- classification data sql
+-- {class_condition}は使わない
+BEGIN clf_rk_2
+  select 'nopattern' pattern, race.ymd,  race.sime, 
+  {features} 
+  from rec_race race, rec_racer racer, rec_racer2 racer2
+  where race.ymd = racer.ymd and race.jyocd = racer.jyocd and race.raceno = racer.raceno 
+    and racer.ymd = racer2.ymd and racer.jyocd = racer2.jyocd and racer.raceno = racer2.raceno and racer.waku = racer2.waku
+    and sanrentanno <> '不成立' 
+    and race.grade in ({grade_condition}) 
+    and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
+  order by race.ymd, race.jyocd, race.raceno, racer.waku
+END

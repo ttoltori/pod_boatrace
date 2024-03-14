@@ -1869,7 +1869,8 @@ std_deviation double precision, -- 평균편차
 variance double precision, -- 분산
 popu_variance double precision, -- 모분산
 skewness double precision, -- 왜도
-kurtosis double precision -- 첨도
+kurtosis double precision, -- 첨도
+memo varchar(256) -- 메모
 -- probabilities1 double precision[], 
 -- probabilities2 double precision[], 
 -- probabilities3 double precision[], 

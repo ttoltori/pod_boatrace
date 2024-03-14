@@ -4,6 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.pengkong.boatrace.exp10.MLClassificationGenerator;
 import com.pengkong.boatrace.server.db.dto.DBRecord;
 
 /**
@@ -12,6 +16,8 @@ import com.pengkong.boatrace.server.db.dto.DBRecord;
  *
  */
 public abstract class AbstractProbabilityCalculator {
+	Logger logger = LoggerFactory.getLogger(AbstractProbabilityCalculator.class);
+	
 	Map<String, Function<DBRecord, Double>> mapMethod;
 
 	public AbstractProbabilityCalculator() {

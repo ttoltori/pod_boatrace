@@ -188,6 +188,25 @@ public class MathUtil {
 		return (1.0 / sum);
 	}
 	
+	public static Double min(Double...values) {
+		Double min = values[0];
+		for (Double value : values) {
+			if (value < min) {
+				min = value;
+			}
+		}
+		return min;
+	}
+	
+	public static Double max(Double...values) {
+		Double max = values[0];
+		for (Double value : values) {
+			if (value > max) {
+				max = value;
+			}
+		}
+		return max;
+	}
 	
 	/**
 	 * 記述統計データを配列で取得する
@@ -298,6 +317,8 @@ public class MathUtil {
 	
 	public static void main(String[] args) {
 		try {
+			System.out.println( MathUtil.min(0.1, -3.0, 3.0, 20.0 ));
+			System.out.println( MathUtil.max(0.1, -3.0, 3.0, 20.0 ));
 			System.out.println( MathUtil.convertToPercentile(0.1, -3, 3, 20 ));
 			System.out.println((double)21 / 100.0);
 			System.out.println((double)33 / 100.0);

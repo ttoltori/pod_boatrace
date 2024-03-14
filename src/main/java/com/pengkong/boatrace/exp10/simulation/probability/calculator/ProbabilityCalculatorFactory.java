@@ -18,6 +18,12 @@ public class ProbabilityCalculatorFactory {
 			return new ProbabilityCalculatorVariance();
 		} else if (id.equals("releavance123")) {
 			return new ProbabilityCalculatorReleavance123();
+		} else if (id.equals("releavance1")) {
+			return new ProbabilityCalculatorReleavance1();
+		} else if (id.equals("releavance_sum")) {
+			return new ProbabilityCalculatorReleavanceSum();
+		} else if (id.equals("skewness")) {
+			return new ProbabilityCalculatorSkewness();
 		}
 		
 		return null;
