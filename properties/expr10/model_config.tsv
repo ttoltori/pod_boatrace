@@ -1,75 +1,18 @@
-model_no	model_start_ymd	model_end_ymd	class_rank1	class_rank2	class_rank3	algorithm_rank1	algorithm_rank2	algorithm_rank3	features_rank1	features_rank2	features_rank3	arff_sql_id	classification_sql_id	data_use_range	model_data_days	model_interval_days
-# 최초모델 학습률 디폴트 0.1																
-99080	20210602	20210602	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en	en	en	arff_1	clf_1	yes	1825	30
-99083	20210602	20210602	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	nw	nw	nw	arff_1	clf_1	yes	1825	30
-99103	20210602	20210602	r123-all	x	x	cf_lgbm-1_py	x	x	en_nw_ext_25	x	x	arff_1	clf_1	yes	1825	30
-# 99100을 첫자리 1234제한, 학습률 조정																
-90100	20210602	20210602	r1-1234x	r2-123456	r3-123456	cf_lgbm-0.02_py	cf_lgbm-0.01_py	cf_lgbm-0.01_py	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	arff_1	clf_1	yes	1825	30
-# 99103을 첫자리 1234제한, 학습률 조정																
-90103	20210602	20210602	r123-1234x	x	x	cf_lgbm-0.01_py	x	x	en_nw_ext_25	x	x	arff_1	clf_1	yes	1825	30
-# !!!주의 99100에 대해 먼저 ml_classify까지 끝난 후에 모델 만들어야한다.  시작일자는 늘 최초(20210602)여야한다.(누적해서 arff생성해야하므로)																
-# 99100의; classification이 20180601부터 시작하고 그로부터 3년치부터 학습하기 위해 시작은 20210602이 되어야한다																
-# 90100을 probabilities로 2차학습  79101보다 미세하게 성능이 좋다																
-70101	20210602	20230331	r1-1234x	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	classifyr123_2	classifyr123_2	classifyr123_2	arff_2_70101	clf_2_70101	yes	1095	30
-# 90103을 probabilities로 2차학습 																
-70103	20210602	20210602	r123-1234x	x	x	cf_lgbm-0.01_py	x	x	classify103	x	x	arff_2_70103	clf_2_70103	yes	1095	30
-# 79101을 bodds로 3차 학습																
-79201	20220602	20230331	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	mbo_20	mbo_20	mbo_20	arff_3_79201	clf_3_79201	no	365	30
-# 70103을 bodds로 3차 학습																
-70203	20230331	20230331	r123-1234x	x	x	cf_lgbm-1_py	x	x	mbo_20	mbo_20	mbo_20	arff_3_70203	clf_3_70203	no	365	30
-# 70101을 bodds로 3차 학습 79201보다 성능이 좋다  -> 최초모델을 바로 추가학습하지 말고 최초모델에 제한 및 학습률 조정한 후에 추가학습하는 것이 좋다																
-70201	20220602	20230331	r1-1234x	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	mbo_20	mbo_20	mbo_20	arff_3_70201	clf_3_70201	no	1095	30
-# 모델 번호 첫자리 학습차수,   두자리 1=rank한자리  3=rank3자리,    세번째자리 구미방제한방법 6=123456,  2=12, 0=분포수																
-# featureset fs_1																
-11600	20210602	20210602	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_2	fs_2	fs_2	arff_1	clf_1	yes	1825	30
-11601	20210602	20210602	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_3	fs_3	fs_3	arff_1	clf_1	yes	1825	30
-11602	20210602	20210602	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_4	fs_4	fs_4	arff_1	clf_1	yes	1825	30
-11603	20210602	20210602	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_5	fs_5	fs_5	arff_1	clf_1	yes	1825	30
-11604	20210602	20210602	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_6	fs_6	fs_6	arff_1	clf_1	yes	1825	30
-13600	20210602	20210602	r123-all	x	x	cf_lgbm-1_py	x	x	fs_5	fs_5	fs_5	arff_1	clf_1	yes	1825	30
-11100	20210602	20220601	r1-1x	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_5	fs_5	fs_5	arff_1	clf_1	yes	1825	30
-11101	20210602	20220601	11100=(r1-1x)	r2-2345	r3-3456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_5	fs_5	fs_5	arff_1	clf_1	yes	1825	30
-11102	20210602	20220601	r1-1x	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_14	fs_14	fs_14	arff_11	clf_11	yes	1825	30
-11103	20210602	20220601	11102=(r1-1x)	r2-2345	r3-3456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_14	fs_14	fs_14	arff_11	clf_11	yes	1825	30
-11104	20210602	20230420	r1-1x	r2-2345	r3-3456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_10	fs_11	fs_11	arff_11	clf_11	yes	1825	30
-11200	20180601	20230420	r1-12x	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_5	fs_5	fs_5	arff_1	clf_1	yes	1825	30
-11300	20210602	20210602	r1-123x	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_5	fs_5	fs_5	arff_1	clf_1	yes	1825	30
-11400	20210602	20210602	r1-1234x	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_5	fs_5	fs_5	arff_1	clf_1	yes	1825	30
-13100	20210602	20210602	r123-1x	x	x	cf_lgbm-1_py	x	x	fs_5	fs_5	fs_5	arff_1	clf_1	yes	1825	30
-13200	20180601	20230420	r123-12x	x	x	cf_lgbm-0.05_py	x	x	fs_5	fs_5	fs_5	arff_1	clf_1	yes	1825	30
-13300	20210602	20210602	r123-123x	x	x	cf_lgbm-1_py	x	x	fs_5	fs_5	fs_5	arff_1	clf_1	yes	1825	30
-13400	20210602	20210602	r123-1234x	x	x	cf_lgbm-1_py	x	x	fs_5	fs_5	fs_5	arff_1	clf_1	yes	1825	30
-11401	20210602	20210602	r1-1234x	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_7	fs_7	fs_7	arff_1	clf_1	yes	1825	30
-13401	20210602	20210602	r123-1234x	x	x	cf_lgbm-1_py	x	x	fs_7	fs_7	fs_7	arff_1	clf_1	yes	1825	30
-#枠番1,2,6																
-11402	20180601	20230331	r1-1234x	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_9	fs_9	fs_9	arff_1	clf_1	yes	1825	30
-13402	20190712	20230331	r123-1234x	x	x	cf_lgbm-1_py	x	x	fs_9	fs_9	fs_9	arff_1	clf_1	yes	1825	30
-#選手傾向 + nw																
-11605	20210602	20220601	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_10	fs_10	fs_10	arff_11	clf_11	yes	1825	30
-# 選手傾向 + nw + en																
-11606	20220505	20220601	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_11	fs_11	fs_11	arff_11	clf_11	yes	1825	30
-# 選手傾向 + en																
-11607	20210602	20220601	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_12	fs_12	fs_12	arff_11	clf_11	yes	1825	30
-# 選手傾向 only																
-11608	20210602	20220601	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_13	fs_13	fs_13	arff_11	clf_11	yes	1825	30
-13609	20180601	20180601	r123-all	x	x	cf_lgbm-1_py	x	x	fs_14	x	x	arff_11	clf_11	yes	1825	30
-# 11609結果 + probabilities + bodds 																
-31609	20220602	20230420	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_15	fs_15	fs_15	arff_3_31609	clf_3_31609	no	365	30
-# 13609結果  + bodds 																
-33609	20220602	20230420	r123-all	x	x	cf_lgbm-1_py	x	x	fs_16	x	x	arff_3_33609	clf_3_33609	no	365	30
-# 11609結果 + bodds																
-31610	20220602	20230420	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_18	fs_18	fs_18	arff_3_31609	clf_3_31609	no	365	30
-#default
-99100	20211130	20211231	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	arff_1	clf_1	yes	1825	30
-# 選手傾向 + nw + en、削除：slope全体, motor, sex, age, late, avgst																
-11609	20210602	20210602	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_14	fs_14	fs_14	arff_11	clf_11	yes	1825	30
-# 99100을 probabilities로 2차학습																
-79101	20231101	20231115	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	classifyr123	classifyr123	classifyr123	arff_2_79101	clf_2_79101	yes	1095	30
-# 11609結果 + probabilities 2차학습																
-21609	20231101	20231115	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_17	fs_17	fs_17	arff_2_21609	clf_2_21609	yes	1095	30
-#CatboostRanker 공식피쳐																
-89100	20210603	20210602	rk-1	x	x	rk_catb-1_py	x	x	rk_1	x	x	arff_rk_1	clf_rk_1	yes	1825	30
-#CatboostRanker 공식피쳐 + 트렌드피쳐																
-89101	20210602	20230630	rk-1	x	x	rk_catb-1_py	x	x	rk_2	x	x	arff_rk_2	clf_rk_2	yes	1825	183
-#LGBMClasssifier 공식피쳐 + 트렌드피쳐																
-99101	20210602	20230630	r1-123456	r2-123456	r3-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	fs_19	fs_19	fs_19	arff_11	clf_11	yes	1825	183
+model_no	model_start_ymd	model_end_ymd	class_rank1	class_rank2	class_rank3	class_rank4	algorithm_rank1	algorithm_rank2	algorithm_rank3	algorithm_rank4	features_rank1	features_rank2	features_rank3	features_rank4	arff_sql_id	classification_sql_id	data_use_range	model_data_days	model_interval_days
+99100	20210602	20210602	r1-123456	r2-123456	r3-123456	x	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	x	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	x	arff_1	clf_1	yes	1825	30
+# 選手傾向 + nw + en、削除：slope全体, motor, sex, age, late, avgst																			
+11609	20180601	20230331	r1-123456	r2-123456	r3-123456	x	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	x	fs_14	fs_14	fs_14	x	arff_11	clf_11	yes	1825	30
+#CatboostRanker 공식피쳐																			
+89100	20210603	20210602	rk-1	x	x	x	rk_catb-1_py	x	x	x	rk_1	x	x	x	arff_rk_1	clf_rk_1	yes	1825	30
+#CatboostRanker 공식피쳐 + 트렌드피쳐																			
+89101	20210602	20230630	rk-1	x	x	x	rk_catb-1_py	x	x	x	rk_2	x	x	x	arff_rk_2	clf_rk_2	yes	1825	183
+#LGBMClasssifier 공식피쳐 + 트렌드피쳐																			
+99101	20210602	20230630	r1-123456	r2-123456	r3-123456	x	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	x	fs_19	fs_19	fs_19	x	arff_11	clf_11	yes	1825	183
+#LGBMClasssifier Class Balanced en_nw_ext_25																			
+99102	20210602	20210602	r1-123456	r2-123456	r3-123456	x	cf_lgbm-7_py	cf_lgbm-7_py	cf_lgbm-7_py	x	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	x	arff_1	clf_1	yes	1825	183
+#LGBMClasssifier fs_20피쳐																			
+99103	20210602	20210602	r1-123456	r2-123456	r3-123456	x	cf_lgbm-7_py	cf_lgbm-7_py	cf_lgbm-7_py	x	fs_20	fs_20	fs_20	x	arff_1	clf_1	yes	1825	30
+#LGBMClasssifier fs_21피쳐																			
+99104	20210602	20210602	r1-123456	r2-123456	r3-123456	x	cf_lgbm-8_py	cf_lgbm-8_py	cf_lgbm-8_py	x	fs_21	fs_21	fs_21	x	arff_1	clf_1	yes	1825	30
+#LGBMRanker 공식피쳐 + 트렌드피쳐 + 랭크 피쳐																			
+89102	20210602	20210602	rk-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_3	x	x	x	arff_rk_2	clf_rk_2	yes	1825	183

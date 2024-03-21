@@ -1,0 +1,559 @@
+=============================
+99103 rank1 balanced
+pydev debugger: starting (pid: 11048)
+Backend QtAgg is interactive backend. Turning interactive mode on.
+[1 2 3 4 5 6]
+{1: 0.31513379780368544, 2: 1.1039635330430695, 3: 1.3464722014460235, 4: 1.6173876585358549, 5: 2.8495976784065427, 6: 4.784037558685446}
+[LightGBM] [Warning] Categorical features with more bins than the configured maximum bin number found.
+[LightGBM] [Warning] For categorical features, max_bin and max_bin_by_feature may be ignored with a large number of categories.
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.051149 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 25595
+[LightGBM] [Info] Number of data points in the train set: 216028, number of used features: 114
+[LightGBM] [Info] Start training from score -1.791759
+[LightGBM] [Info] Start training from score -1.791759
+[LightGBM] [Info] Start training from score -1.791760
+[LightGBM] [Info] Start training from score -1.791759
+[LightGBM] [Info] Start training from score -1.791759
+[LightGBM] [Info] Start training from score -1.791759
+Boosting round 0: training loss = 1.7344, validation loss = 1.7576
+Boosting round 49: training loss = 0.9973, validation loss = 1.5186
+Boosting round 99: training loss = 0.7370, validation loss = 1.4749
+            importance
+mm                   6
+jyo                 83
+race                 2
+turn                 9
+grade                0
+raty                 9
+femcnt               1
+alvt                28
+time                 0
+fixent              15
+en1               2814
+en2               2755
+en3               2855
+en4               2821
+en5               2908
+en6               2840
+nw1                 40
+nw2                 37
+nw3                 35
+nw4                 41
+nw5                 41
+nw6                 33
+n2w1                22
+n2w2                18
+n2w3                18
+n2w4                16
+n2w5                20
+n2w6                 8
+n3w1                 5
+n3w2                 7
+n3w3                 3
+n3w4                 7
+n3w5                 5
+n3w6                11
+lw1                  5
+lw2                  4
+lw3                  3
+lw4                  1
+lw5                  4
+lw6                  8
+l2w1                 6
+l2w2                 4
+l2w3                 4
+l2w4                 4
+l2w5                 0
+l2w6                 0
+l3w1                 1
+l3w2                 0
+l3w3                 0
+l3w4                 0
+l3w5                 0
+l3w6                 0
+m2w1                26
+m2w2                36
+m2w3                38
+m2w4                39
+m2w5                33
+m2w6                29
+sex1                 0
+sex2                 0
+sex3                 0
+sex4                 1
+sex5                 0
+sex6                 0
+lv1                  7
+lv2                  4
+lv3                  4
+lv4                  2
+lv5                  3
+lv6                  2
+age1                 0
+age2                 0
+age3                 0
+age4                 0
+age5                 0
+age6                 0
+weit1                1
+weit2               11
+weit3                6
+weit4                6
+weit5                3
+weit6                2
+fly1                10
+fly2                 3
+fly3                 6
+fly4                12
+fly5                 4
+fly6                 3
+late1                0
+late2                0
+late3                0
+late4                0
+late5                0
+late6                0
+avgst1               3
+avgst2               1
+avgst3               5
+avgst4               8
+avgst5               3
+avgst6               0
+lvlrank             20
+nwrank              21
+n2wrank              0
+n3wrank              0
+lwrank               4
+l2wrank              0
+l3wrank              0
+m2rank               5
+m3rank               7
+stexhirank           0
+exhirank             6
+avgstrank            4
+avgcnrank            1
+seturank            64
+Training set score: 0.7102
+Test set score: 0.4138
+              precision    recall  f1-score   support
+
+           1       0.73      0.49      0.58     30075
+           2       0.30      0.36      0.33      7728
+           3       0.25      0.32      0.28      6513
+           4       0.21      0.32      0.25      5235
+           5       0.15      0.27      0.19      2840
+           6       0.12      0.25      0.16      1616
+
+    accuracy                           0.41     54007
+   macro avg       0.29      0.33      0.30     54007
+weighted avg       0.51      0.41      0.45     54007
+
+
+
+=============================
+balanced lgbmclassifier rank 3 en_nw_ext_25
+  boosting_type=gbdt,learning_rate=0.1
+
+[LightGBM] [Warning] Categorical features with more bins than the configured maximum bin number found.
+[LightGBM] [Warning] For categorical features, max_bin and max_bin_by_feature may be ignored with a large number of categories.
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.045075 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 22051
+[LightGBM] [Info] Number of data points in the train set: 216036, number of used features: 100
+[LightGBM] [Info] Start training from score -1.791759
+[LightGBM] [Info] Start training from score -1.791759
+[LightGBM] [Info] Start training from score -1.791759
+[LightGBM] [Info] Start training from score -1.791759
+[LightGBM] [Info] Start training from score -1.791759
+[LightGBM] [Info] Start training from score -1.791760
+Boosting round 0: training loss = 1.7742, validation loss = 1.7858
+Boosting round 49: training loss = 1.4261, validation loss = 1.7850
+Boosting round 99: training loss = 1.2285, validation loss = 1.8208
+        importance
+mm              19
+jyo             90
+race            13
+turn            12
+grade            1
+raty            29
+femcnt           0
+alvt            26
+time             0
+fixent          13
+en1           2696
+en2           2828
+en3           2891
+en4           2916
+en5           2949
+en6           3017
+nw1             10
+nw2             15
+nw3             22
+nw4             45
+nw5             52
+nw6             60
+n2w1             9
+n2w2            11
+n2w3             6
+n2w4             7
+n2w5             4
+n2w6             2
+n3w1             3
+n3w2            10
+n3w3             2
+n3w4             7
+n3w5            11
+n3w6            12
+lw1              6
+lw2              6
+lw3              1
+lw4              1
+lw5              9
+lw6              4
+l2w1             6
+l2w2             3
+l2w3             0
+l2w4             6
+l2w5             2
+l2w6             3
+l3w1             5
+l3w2             5
+l3w3             4
+l3w4             4
+l3w5             3
+l3w6             1
+m2w1             8
+m2w2             4
+m2w3            18
+m2w4            18
+m2w5            18
+m2w6            22
+sex1             0
+sex2             0
+sex3             0
+sex4             0
+sex5             0
+sex6             0
+lv1              6
+lv2              6
+lv3              0
+lv4              2
+lv5              6
+lv6              7
+age1             0
+age2             0
+age3             0
+age4             0
+age5             0
+age6             0
+weit1            1
+weit2            1
+weit3            0
+weit4            0
+weit5            8
+weit6            4
+fly1             1
+fly2             0
+fly3             3
+fly4             0
+fly5             4
+fly6             3
+late1            0
+late2            0
+late3            0
+late4            0
+late5            0
+late6            0
+avgst1           1
+avgst2           0
+avgst3           0
+avgst4           0
+avgst5           1
+avgst6           1
+Training set score: 0.6195
+Test set score: 0.2091
+              precision    recall  f1-score   support
+
+           1       0.11      0.18      0.13      4513
+           2       0.20      0.18      0.19      9914
+           3       0.23      0.19      0.21     10926
+           4       0.24      0.21      0.22     10852
+           5       0.23      0.23      0.23      9406
+           6       0.22      0.27      0.24      8399
+
+    accuracy                           0.21     54010
+   macro avg       0.21      0.21      0.20     54010
+weighted avg       0.22      0.21      0.21     54010
+
+=============================
+balanced lgbmclassifier rank 2
+  boosting_type=gbdt,learning_rate=0.1
+
+[LightGBM] [Warning] Categorical features with more bins than the configured maximum bin number found.
+[LightGBM] [Warning] For categorical features, max_bin and max_bin_by_feature may be ignored with a large number of categories.
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.044727 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 22051
+[LightGBM] [Info] Number of data points in the train set: 216036, number of used features: 100
+[LightGBM] [Info] Start training from score -1.791759
+[LightGBM] [Info] Start training from score -1.791759
+[LightGBM] [Info] Start training from score -1.791759
+[LightGBM] [Info] Start training from score -1.791759
+[LightGBM] [Info] Start training from score -1.791759
+[LightGBM] [Info] Start training from score -1.791759
+Boosting round 0: training loss = 1.7660, validation loss = 1.7813
+Boosting round 49: training loss = 1.3316, validation loss = 1.7366
+Boosting round 99: training loss = 1.1218, validation loss = 1.7658
+        importance
+mm               4
+jyo             62
+race            11
+turn            10
+grade            0
+raty            17
+femcnt           0
+alvt            55
+time             0
+fixent          11
+en1           2760
+en2           2848
+en3           2794
+en4           2895
+en5           2879
+en6           2955
+nw1             27
+nw2             38
+nw3             47
+nw4             54
+nw5             56
+nw6             63
+n2w1             9
+n2w2             9
+n2w3             6
+n2w4             1
+n2w5             2
+n2w6             1
+n3w1             2
+n3w2            21
+n3w3            19
+n3w4            13
+n3w5            21
+n3w6            20
+lw1              4
+lw2              7
+lw3              6
+lw4              8
+lw5              6
+lw6              4
+l2w1             3
+l2w2             0
+l2w3             4
+l2w4             4
+l2w5             2
+l2w6             0
+l3w1             1
+l3w2             2
+l3w3             2
+l3w4             2
+l3w5             2
+l3w6             1
+m2w1             5
+m2w2            31
+m2w3            33
+m2w4            29
+m2w5            27
+m2w6            22
+sex1             0
+sex2             0
+sex3             0
+sex4             0
+sex5             1
+sex6             0
+lv1              5
+lv2              1
+lv3              0
+lv4              7
+lv5             10
+lv6             10
+age1             3
+age2             0
+age3             0
+age4             0
+age5             0
+age6             0
+weit1            0
+weit2            1
+weit3            3
+weit4            7
+weit5            8
+weit6            9
+fly1             0
+fly2             1
+fly3             3
+fly4             4
+fly5             3
+fly6             9
+late1            0
+late2            0
+late3            0
+late4            0
+late5            0
+late6            0
+avgst1           0
+avgst2           0
+avgst3           0
+avgst4           0
+avgst5           0
+avgst6           0
+Training set score: 0.6503
+Test set score: 0.2389
+              precision    recall  f1-score   support
+
+           1       0.20      0.17      0.19      9304
+           2       0.33      0.24      0.28     13759
+           3       0.28      0.24      0.26     11358
+           4       0.24      0.25      0.25      9042
+           5       0.19      0.26      0.22      6309
+           6       0.16      0.30      0.21      4238
+
+    accuracy                           0.24     54010
+   macro avg       0.23      0.25      0.23     54010
+weighted avg       0.25      0.24      0.24     54010
+
+
+=============================
+balanced lgbmclassifier rank 1
+  boosting_type=gbdt,learning_rate=0.1
+
+[LightGBM] [Warning] Categorical features with more bins than the configured maximum bin number found.
+[LightGBM] [Warning] For categorical features, max_bin and max_bin_by_feature may be ignored with a large number of categories.
+[LightGBM] [Info] Auto-choosing col-wise multi-threading, the overhead of testing was 0.046602 seconds.
+You can set `force_col_wise=true` to remove the overhead.
+[LightGBM] [Info] Total Bins 22051
+[LightGBM] [Info] Number of data points in the train set: 216036, number of used features: 100
+[LightGBM] [Info] Start training from score -1.791759
+[LightGBM] [Info] Start training from score -1.791759
+[LightGBM] [Info] Start training from score -1.791759
+[LightGBM] [Info] Start training from score -1.791759
+[LightGBM] [Info] Start training from score -1.791759
+[LightGBM] [Info] Start training from score -1.791759
+Boosting round 0: training loss = 1.7349, validation loss = 1.7583
+Boosting round 49: training loss = 1.0022, validation loss = 1.5202
+Boosting round 99: training loss = 0.7453, validation loss = 1.4814
+        importance
+mm               7
+jyo             82
+race             2
+turn             8
+grade            0
+raty            17
+femcnt           1
+alvt            43
+time             0
+fixent          17
+en1           2824
+en2           2765
+en3           2834
+en4           2831
+en5           2956
+en6           2806
+nw1             44
+nw2             45
+nw3             39
+nw4             37
+nw5             45
+nw6             46
+n2w1            22
+n2w2            19
+n2w3            16
+n2w4            20
+n2w5            22
+n2w6            10
+n3w1             5
+n3w2             8
+n3w3             2
+n3w4            10
+n3w5             4
+n3w6            15
+lw1              5
+lw2              5
+lw3              3
+lw4              3
+lw5              4
+lw6             11
+l2w1             8
+l2w2             5
+l2w3             5
+l2w4             4
+l2w5             0
+l2w6             0
+l3w1             0
+l3w2             0
+l3w3             0
+l3w4             0
+l3w5             0
+l3w6             0
+m2w1            30
+m2w2            38
+m2w3            39
+m2w4            41
+m2w5            31
+m2w6            30
+sex1             0
+sex2             0
+sex3             0
+sex4             1
+sex5             0
+sex6             0
+lv1             11
+lv2              6
+lv3              6
+lv4              4
+lv5              6
+lv6              4
+age1             0
+age2             0
+age3             0
+age4             0
+age5             0
+age6             0
+weit1            3
+weit2           11
+weit3            6
+weit4            5
+weit5            2
+weit6            4
+fly1            12
+fly2             3
+fly3             6
+fly4            13
+fly5             4
+fly6             4
+late1            0
+late2            0
+late3            0
+late4            0
+late5            0
+late6            0
+avgst1           4
+avgst2           2
+avgst3           6
+avgst4           9
+avgst5           3
+avgst6           1
+Training set score: 0.7058
+Test set score: 0.4099
+              precision    recall  f1-score   support
+
+           1       0.73      0.48      0.58     30084
+           2       0.30      0.36      0.33      7729
+           3       0.25      0.32      0.28      6500
+           4       0.21      0.32      0.25      5236
+           5       0.14      0.25      0.18      2842
+           6       0.12      0.24      0.16      1619
+
+    accuracy                           0.41     54010
+   macro avg       0.29      0.33      0.30     54010
+weighted avg       0.51      0.41      0.44     54010
+

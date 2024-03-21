@@ -1,4 +1,49 @@
-﻿select 
+﻿CREATE OR REPLACE FUNCTION nvldbl(val1 double precision, val2 double precision)
+RETURNS double precision
+LANGUAGE plpgsql
+AS $$
+BEGIN
+    IF val1 IS NOT NULL AND val1 != 'NaN' THEN
+        RETURN val1;
+    ELSE
+        RETURN val2;
+    END IF;
+END;
+$$;
+
+
+select 
+  nvlint(n3point_waku_slope, 0)
+from rec_racer2
+where n3point_waku_slope ='NaN'
+-- order by COALESCE(n3point_waku_slope, 9999) desc
+;
+
+select
+  substring(sanrentanno from 3 for 1) rank1, count(1) hitcnt, 
+  (count(1)::float / (select count(1) totalcnt from rec_race where ymd::int between 20210603 and  20220602)::float)::numeric(5,3) hitrate
+from rec_race race
+where ymd::int between 20210603 and  20220602
+group by   substring(sanrentanno from 3 for 1)
+;
+
+select 
+  (prediction1) tansyono,
+  count(1) hitcnt,
+  (count(1)::float / (select count(1) totalcnt from ml_classification where modelno = '89100' and ymd::int between 20210603 and 20220602)::float)::numeric(5,3) hitrate
+from ml_classification mc 
+where modelno = '89100' and ymd::int between 20210603 and  20220602
+group by modelno, prediction1
+;
+
+
+select distinct modelno 
+from ml_classification mc ;
+
+
+select distinct avgstart_waku_slope[5] from rec_racer_arr2 rra;
+
+select 
   resultno, bettype, 
   (sum(betcnt)::float)::numeric(15,2) betcnt,
   (sum(hitamt) - sum(betamt)) incamt,

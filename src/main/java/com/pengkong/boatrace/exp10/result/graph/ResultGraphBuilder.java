@@ -105,7 +105,7 @@ public class ResultGraphBuilder {
 				//dirExResult = dirAllResult + resultType + "/" + stat.statBettype + "/" + stat.kumiban  + "/";
 				//dirExResult = dirAllResult + resultType + "/" + prop.getString("pattern_id") + "/" + stat.statBettype + "/" + stat.kumiban  + "/";
 				//dirExResult = dirAllResult + resultType + "/" + stat.statBettype + "/" + stat.kumiban  + "/";
-				dirExResult = dirAllResult + resultType + "/" + stat.statBettype + "/" + prop.getString("used_model_no")  + "/";
+				dirExResult = dirAllResult + resultType + "/" + stat.statBettype + "/" + prop.getString("used_model_no")  + "/" + prop.getString("pattern_id") + "/";
 				
 				String filePathCommon = dirExResult + String.join("_", 
 						prop.getString("result_type"),
