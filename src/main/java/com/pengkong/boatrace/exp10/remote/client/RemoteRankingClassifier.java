@@ -25,6 +25,7 @@ import com.pengkong.boatrace.mybatis.client.MlClassificationMapper;
 import com.pengkong.boatrace.mybatis.entity.MlClassification;
 import com.pengkong.boatrace.mybatis.entity.MlClassificationExample;
 import com.pengkong.boatrace.server.db.dto.DBRecord;
+import com.pengkong.boatrace.service.stat.WakuValue;
 import com.pengkong.common.MathUtil;
 
 /**
@@ -230,7 +231,7 @@ public class RemoteRankingClassifier {
 		}
 		
 		// score順にソート
-		Collections.sort(wakus, Comparator.comparingDouble(WakuScore::getScore));
+		Collections.sort(wakus, new WakuScoreReverseComparator());
 		
 		for(WakuScore ws : wakus) {
 			Classification clsn = new Classification();
@@ -262,15 +263,25 @@ public class RemoteRankingClassifier {
 
 	private class WakuScore {
 		public String waku;
-		public double score;
+		public Double score;
 		public WakuScore(String waku, double score) {
 			super();
 			this.waku = waku;
 			this.score = score;
 		}
-		public double getScore() {
+		public Double getScore() {
 			return score;
 		}
 	}
 
+	private class WakuScoreReverseComparator implements Comparator<WakuScore> {
+
+		public WakuScoreReverseComparator() {
+		}
+
+		@Override
+		public int compare(WakuScore o1, WakuScore o2) {
+			return o2.getScore().compareTo(o1.getScore());
+		}
+	}
 }

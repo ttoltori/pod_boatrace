@@ -1,15 +1,80 @@
-﻿CREATE OR REPLACE FUNCTION nvldbl(val1 double precision, val2 double precision)
-RETURNS double precision
-LANGUAGE plpgsql
-AS $$
-BEGIN
-    IF val1 IS NOT NULL AND val1 != 'NaN' THEN
-        RETURN val1;
-    ELSE
-        RETURN val2;
-    END IF;
-END;
-$$;
+﻿SELECT 
+  *
+FROM ml_classification
+WHERE modelno IN ('20007', '20008')
+ORDER BY ymd,jyocd,raceno, modelno
+;
+
+select count(1) from ml_classification mc where modelno = '20008';
+
+select grade, count(1)
+from rec_race 
+group by grade;
+
+-- ml_result에 대한 평가
+select 
+  -- race.grade,
+  substring(wakulevellist from 1 for 2) waku1,
+  modelno,  
+  count(1) betcnt,
+  (sum(hitamt) - sum(betamt) ) incamt,
+  (sum(hity)::float / count(1)::float )::numeric(5,2) hitrate,
+  (sum(hitamt)::float / sum(betamt)::float)::numeric(7,2) incrate
+from ml_result res, rec_race race
+where res.ymd = race.ymd and res.jyocd = race.jyocd and res.raceno = race.raceno 
+  and race.grade in ('ip')
+  and res.stat_bettype = '3T'
+  and res.bet_kumiban = '123'
+group by substring(wakulevellist from 1 for 2), modelno 
+-- group by race.grade, modelno
+order by waku1, modelno
+;
+
+
+select 
+  t1.bet_kumiban, 
+  count(1) betcnt,
+  (sum(t1.hitamt) - sum(t1.betamt) ) incamt,
+  (sum(t1.hity)::float / count(1)::float )::numeric(5,2) hitrate,
+  (sum(t1.hitamt)::float / sum(t1.betamt)::float)::numeric(7,2) incrate
+from
+	(select 
+	  *
+	from ml_result where resultno = '45'
+	) t1,
+	(select 
+	  *
+	from ml_result where resultno = '49'
+	) t2
+where t1.ymd = t2.ymd and t1.jyocd = t2.jyocd and t1.raceno = t2.raceno
+  and t1.stat_bettype = t2.stat_bettype
+  and t1.bet_kumiban = t2.bet_kumiban
+  and t1.stat_bettype = '3T'
+group by t1.bet_kumiban
+;
+
+
+
+select * from ml_classification mc where modelno = '20002';
+
+create table ml_result_1_44 as select * from ml_result;
+truncate ml_result;
+
+select distinct grade from rec_racer;
+
+select count(distinct (ymd || jyocd || raceno)) from rec_racer where rank = 9;
+
+select * from rec_racer where rank = 9 order by ymd, jyocd, raceno;
+
+select * from rec_racer where ymd='20090101' and jyocd='02' and raceno=6;
+
+select * from rec_racer_arr where ymd='20090101' and jyocd='02' and raceno=6;
+
+select 
+  distinct runcnt
+from rec_racer2 
+order by runcnt
+;
 
 
 select 

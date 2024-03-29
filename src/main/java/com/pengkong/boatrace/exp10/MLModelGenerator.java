@@ -172,10 +172,11 @@ public class MLModelGenerator extends MLModelGeneratorBase {
 		arrString[0] += "class"; 
 		if (isRegressionModel(rankNo)) {
 			arrString[1] += "float";	
+		} else if (isRankingModel(rankNo)){
+			arrString[1] += "int";
 		} else {
 			arrString[1] += "category";
 		}
-		 
 		
 		return arrString;
 	}

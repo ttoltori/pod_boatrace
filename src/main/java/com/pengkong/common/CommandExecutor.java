@@ -54,7 +54,8 @@ public final class CommandExecutor {
         Process process;
         try {
             process = builder.start();
-        } catch (IOException e) {
+        } catch (Exception e) {
+        	e.printStackTrace();
             throw new CommandExecuteFailedException("Command launch failed. [cmd: " + cmdAndParams + "]", e);
         }
 

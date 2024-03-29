@@ -63,3 +63,7 @@ r1-2x	true	2,x	(case when substring(sanrentanno from 1 for 1) = '2' then '2' els
 r2-2345	true	2,3,4,5,x	(case when substring(sanrentanno from 2 for 1) in ('2', '3', '4', '5')  then substring(sanrentanno from 2 for 1) else 'x' end) classes
 r3-3456	true	3,4,5,6,x	(case when substring(sanrentanno from 3 for 1) in ('3', '4', '5', '6')  then substring(sanrentanno from 3 for 1) else 'x' end) classes
 rk-1	true	x	( (case when rank = 9 then 6 else rank end)::text ) classes
+rk-ip-1	race.grade in ('ip','G3')	x	( (case when rank = 9 then 6 else rank end)::text ) classes
+rk-ipSG-1	true	x	( (case when rank = 9 then 6 else rank end)::text ) classes
+rk-ip-2	race.grade = 'ip'	x	( (case when rank = 9 then 6 else rank end)::text ) classes
+rk-B1	substring(race.wakulevellist from 1 for 2) = 'B1'	x	( (case when rank = 9 then 6 else rank end)::text ) classes

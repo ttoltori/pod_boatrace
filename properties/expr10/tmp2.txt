@@ -1,3 +1,30 @@
+ml_ranking_classify 20007
+ml_ranking_classify 20008
+
+ml_model 20010
+ml_model 20011
+
+ml_result 66
+ml_result 67
+
+ml_result 68
+ml_result 69
+ml_result 70
+
+ml_result 53
+
+ml_result 48
+ml_result 49
+ml_result 50
+ml_result 54
+ml_result 55
+ml_result 56
+
+ml_result 57
+
+ml_result 58
+
+python C:/Dev/github/py_boatrace/boatrace/classification/lgbm/BoatLGBMRankerTrainer.py params C:/Dev/experiment/expr10/arff/20001_rank1.csv C:/Dev/experiment/expr10/model_release/20001/1/nopattern/20001_nopattern_20210601_rank1.model mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,raceid,en,sex,age,lv,weight,branch,exhibit,waku,fly,late,avgst,avgtime,nw,n2w,n3w,lw,l2w,l3w,mtno,m2w,btno,b2w,rcnt,rcntsp,cond,condsp,n1p,n1psp,n2p,n2psp,n3p,n3psp,n1pw,n1pwsp,n2pw,n2pwsp,n3pw,n3pwsp,avgw,avgwsp,lvlrank,nwrank,n2wrank,n3wrank,lwrank,l2wrank,l3wrank,m2rank,m3rank,stexhirank,exhirank,avgstrank,avgcnrank,seturank,class category,category,category,category,category,category,int,int,category,category,int64,category,category,int,category,float,category,float,category,int,int,float,float,float,float,float,float,float,float,int,float,int,float,int,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,int,int,int,int,int,int,int,int,int,int,int,int,int,int,category
 
 89102
 params C:/Dev/experiment/expr10/arff/89102_rank1.csv model_filepath mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,raceid,en,sex,age,lv,weight,branch,exhibit,waku,fly,late,avgst,avgtime,nw,n2w,n3w,lw,l2w,l3w,mtno,m2w,btno,b2w,rcnt,rcntsp,cond,condsp,n1p,n1psp,n2p,n2psp,n3p,n3psp,n1pw,n1pwsp,n2pw,n2pwsp,n3pw,n3pwsp,avgw,avgwsp,lvlrank,nwrank,n2wrank,n3wrank,lwrank,l2wrank,l3wrank,m2rank,m3rank,stexhirank,exhirank,avgstrank,avgcnrank,seturank,class category,category,category,category,category,category,int,int,category,category,int64,category,category,int,category,float,category,float,category,int,int,float,float,float,float,float,float,float,float,int,float,int,float,int,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int

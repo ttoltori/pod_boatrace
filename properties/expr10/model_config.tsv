@@ -16,3 +16,25 @@ model_no	model_start_ymd	model_end_ymd	class_rank1	class_rank2	class_rank3	class
 99104	20210602	20210602	r1-123456	r2-123456	r3-123456	x	cf_lgbm-8_py	cf_lgbm-8_py	cf_lgbm-8_py	x	fs_21	fs_21	fs_21	x	arff_1	clf_1	yes	1825	30
 #LGBMRanker 공식피쳐 + 트렌드피쳐 + 랭크 피쳐																			
 89102	20210602	20210602	rk-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_3	x	x	x	arff_rk_2	clf_rk_2	yes	1825	183
+#LGBMRanker + ip,G3 only + class_weight X + learning rate=0.01																			
+20001	20210603	20220602	rk-ip-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_3	x	x	x	arff_rk_2	clf_rk_2	yes	1825	183
+#LGBMRanker + ip~ SG + class_weight X + learning rate=0.01																			
+20002	20210603	20220602	rk-ipSG-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_3	x	x	x	arff_rk_2	clf_rk_2	yes	1825	183
+#LGBMRanker + ip,G3 only + class_weight O + learning rate=0.01																			
+20003	20210603	20220602	rk-ip-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_3	x	x	x	arff_rk_2	clf_rk_2	yes	1825	183
+#LGBMRanker + ip~ SG + class_weight O + learning rate=0.01																			
+20004	20210603	20220602	rk-ipSG-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_3	x	x	x	arff_rk_2	clf_rk_2	yes	1825	183
+#CatboostRanker + ip,G3 only + class_weight X + learning rate=0.01																			
+20005	20210603	20220602	rk-ip-1	x	x	x	rk_catb-1_py	x	x	x	rk_3	x	x	x	arff_rk_2	clf_rk_2	yes	1825	183
+#CatboostRanker + ip SG + class_weight X + learning rate=0.01																			
+20006	20210603	20220602	rk-ipSG-1	x	x	x	rk_catb-1_py	x	x	x	rk_3	x	x	x	arff_rk_2	clf_rk_2	yes	1825	183
+#LGBMRanker + ip only + class_weight X + learning rate=0.1																			
+20007	20210602	20210602	rk-ip-2	x	x	x	rk_lgbm-1_py	x	x	x	rk_3	x	x	x	arff_rk_2	clf_rk_2	yes	1825	183
+#CatboostRanker + ip only + class_weight X + learning rate=0.1																			
+20008	20210602	20210602	rk-ip-2	x	x	x	rk_catb-1_py	x	x	x	rk_3	x	x	x	arff_rk_2	clf_rk_2	yes	1825	183
+#LGBMRanker + B1 only + class_weight X + learning rate=0.1																			
+20009	20210603	20220602	rk-B1	x	x	x	rk_lgbm-1_py	x	x	x	rk_3	x	x	x	arff_rk_2	clf_rk_B1	yes	1825	183
+#LGBMRanker + ip only + class_weight X + learning rate=0.1  6개월단위																			
+20010	20210603	20220602	rk-ip-2	x	x	x	rk_lgbm-1_py	x	x	x	rk_3	x	x	x	arff_rk_2	clf_rk_2	yes	1825	183
+#LGBMRanker + ip only + class_weight X + learning rate=0.1  1개월단위																			
+20011	20220224	20220602	rk-ip-2	x	x	x	rk_lgbm-1_py	x	x	x	rk_3	x	x	x	arff_rk_2	clf_rk_2	yes	1825	30

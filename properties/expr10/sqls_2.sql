@@ -78,3 +78,17 @@ BEGIN clf_rk_2
     and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
   order by race.ymd, race.jyocd, race.raceno, racer.waku
 END
+-- classification data sql
+-- {class_condition}사용
+BEGIN clf_rk_B1
+  select 'nopattern' pattern, race.ymd,  race.sime, 
+  {features} 
+  from rec_race race, rec_racer racer, rec_racer2 racer2
+  where race.ymd = racer.ymd and race.jyocd = racer.jyocd and race.raceno = racer.raceno 
+    and racer.ymd = racer2.ymd and racer.jyocd = racer2.jyocd and racer.raceno = racer2.raceno and racer.waku = racer2.waku
+    and sanrentanno <> '不成立' 
+    and race.grade in ({grade_condition}) 
+    and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
+    and (substring(race.wakulevellist from 1 for 2) = 'B1') 
+  order by race.ymd, race.jyocd, race.raceno, racer.waku
+END

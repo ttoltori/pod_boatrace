@@ -97,6 +97,10 @@ public abstract class MLModelGeneratorBase {
 		return (prop.getString("algorithm_rank" + rankNo).startsWith("rg_"));
 	}
 
+	boolean isRankingModel(int rankNo) {
+		return (prop.getString("algorithm_rank" + rankNo).startsWith("rk_"));
+	}
+
 	boolean isProcessOutlier() {
 		return !(prop.getString("outlier_method").equals(OutlierMethod.NO.getValue()));
 	}
