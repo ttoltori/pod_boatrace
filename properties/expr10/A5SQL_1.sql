@@ -1,8 +1,18 @@
-﻿SELECT 
-  *
+﻿
+select * from odds_monitor where odds_monitor.bettype = '3T';
+
+
+copy (
+select * from rec_racer_arr2 mc  
+) to 'F:\Dev\export\rec_racer_arr2.tsv' csv delimiter E'\t' header;
+
+
+SELECT 
+  modelno, max(ymd)
 FROM ml_classification
-WHERE modelno IN ('20007', '20008')
-ORDER BY ymd,jyocd,raceno, modelno
+WHERE modelno IN ('20010', '20011')
+GROUP BY modelno
+ORDER BY modelno
 ;
 
 select count(1) from ml_classification mc where modelno = '20008';

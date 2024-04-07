@@ -1,3 +1,15 @@
+drop table if exists rec_bodds;
+create table rec_bodds (
+ymd varchar(8),
+jyocd varchar(2),
+raceno smallint,
+bettype varchar(2),
+bodds double precision[]
+);
+drop index if exists indexes_rec_bodds;
+create index indexes_rec_bodds on rec_bodds (ymd, jyocd, raceno);
+
+
 drop table if exists rec_racer2;
 create table rec_racer2 (
 ymd varchar(8),
