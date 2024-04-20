@@ -97,6 +97,9 @@ public class ResultStat {
 	/** 全ての予想的中確率 */
 	public List<Double> listProb = new ArrayList<>();
 
+	/** 全ての기대치 */
+	public List<Double> listExp = new ArrayList<>();
+	
 	/** 区間別の残高一覧 */
 	public List<Double>[] arrBalancelist;
 	/** 区間別の最終残高 */
@@ -121,7 +124,10 @@ public class ResultStat {
 	/** 予想確率毎にカウント、的中カウント、的中金額を集計する */
 	public Map<Double, RangeStatUnit> mapProbStatUnit = new TreeMap<>();
 
-	/** [直前オッズ/予想確率]毎にカウント、的中カウント、的中金額を集計する ex) key="0.78_1.24" */
+	/** 기대치毎にカウント、的中カウント、的中金額を集計する */
+	public Map<Double, RangeStatUnit> mapExpStatUnit = new TreeMap<>();
+	
+/** [直前オッズ/予想確率]毎にカウント、的中カウント、的中金額を集計する ex) key="0.78_1.24" */
 	
 	public Map<String, RangeStatUnit> mapBoddsProbStatUnit = new TreeMap<>();
 
@@ -230,9 +236,15 @@ public class ResultStat {
 //		} else {
 //			probability = histogram.convertByKey("PR", result.getProbability());
 //		}
-		probability = MathUtil.scale2(result.getProbability());
+
 		Double beforeOdds = histogram.convertByBettypeKumiban(result.getBettype(), result.getBetKumiban(), result.getBetOdds());
 		Double resultOdds = histogram.convertByBettypeKumiban(result.getBettype(), result.getBetKumiban(), result.getResultOdds());
+		probability = MathUtil.scale2(result.getProbability());
+		
+		// 기대치 = 적중확율 * 옺즈.  임시로 예상확률을 기대치로 대체해본다. 조건 : 직전옺즈가 존재하는 기간이어야한다.
+		if (beforeOdds == null)
+			return;
+		probability = MathUtil.scale(result.getProbability() * result.getResultOdds(), 0);
 		
 		Integer beforeOddsRank = result.getBetOddsrank();
 		Integer resultOddsRank = result.getResultOddsrank();
@@ -256,6 +268,11 @@ public class ResultStat {
 			// 直前オッズ別集計
 			listBor.add(beforeOdds);
 			getRangeStatUnit(mapBeforeOddsStatUnit, beforeOdds).add(result);
+			
+			// 기대치 = 적중확율 * 옺즈  
+			//Double exp = probability * beforeOdds;  
+			//listExp.add(exp);
+			//getRangeStatUnit(mapExpStatUnit, exp).add(result);
 			
 			// 直前オッズ：予想確率別集計
 			factor = String.join("_", beforeOdds.toString(), probability.toString());

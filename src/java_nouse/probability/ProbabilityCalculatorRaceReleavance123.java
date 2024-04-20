@@ -69,4 +69,9 @@ public class ProbabilityCalculatorRaceReleavance123 extends AbstractProbabilityC
 				, min123, max123, 20
 				);
 	}
+	@Override
+	Double getProbability4T(DBRecord rec) {
+		// ranker이외의 경우는 사용하지 말 것.
+		return 0.0;
+	}
 }

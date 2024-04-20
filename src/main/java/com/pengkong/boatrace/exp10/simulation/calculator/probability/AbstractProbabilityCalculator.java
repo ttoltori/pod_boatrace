@@ -1,4 +1,4 @@
-package com.pengkong.boatrace.exp10.simulation.probability.calculator;
+package com.pengkong.boatrace.exp10.simulation.calculator.probability;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +27,19 @@ public abstract class AbstractProbabilityCalculator {
 		mapMethod.put("3T", this::getProbability3T);
 		mapMethod.put("2F", this::getProbability2F);
 		mapMethod.put("3F", this::getProbability3F);
+		
+		mapMethod.put("2M", this::getProbability2T);
+		mapMethod.put("3N", this::getProbability2T);
+		mapMethod.put("2N", this::getProbability2T);
+		mapMethod.put("3P", this::getProbability3T);
+		mapMethod.put("3R", this::getProbability3T);
+		mapMethod.put("3X", this::getProbability2T);
+		mapMethod.put("2G", this::getProbability3F);
+		mapMethod.put("3G", this::getProbability2F);
+		mapMethod.put("3B", this::getProbability3T);
+		mapMethod.put("3C", this::getProbability3C);
+		mapMethod.put("3D", this::getProbability3D);
+		mapMethod.put("3E", this::getProbability3E);
 	}
 	
 	/** DB取得値から予想的中確率をbettype別の組み合わを取得する */
@@ -43,4 +56,18 @@ public abstract class AbstractProbabilityCalculator {
 	abstract Double getProbability2F(DBRecord rec);
 	/** 3連複 */
 	abstract Double getProbability3F(DBRecord rec);
+	
+	abstract Double getProbability2M(DBRecord rec);
+	abstract Double getProbability3N(DBRecord rec);
+	abstract Double getProbability2N(DBRecord rec);
+	abstract Double getProbability3P(DBRecord rec);
+	abstract Double getProbability3R(DBRecord rec);
+	abstract Double getProbability3X(DBRecord rec);
+	abstract Double getProbability2G(DBRecord rec);
+	abstract Double getProbability3G(DBRecord rec);
+	abstract Double getProbability3B(DBRecord rec);
+	abstract Double getProbability3C(DBRecord rec);
+	abstract Double getProbability3D(DBRecord rec);
+	abstract Double getProbability3E(DBRecord rec);
+	
 }

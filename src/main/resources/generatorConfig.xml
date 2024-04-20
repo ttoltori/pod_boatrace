@@ -3,6 +3,8 @@
  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
+<!--  20240407 실행시 Exception getting JDBC Driver 나는 것을 아래 행 추가해서 해결 참고: https://www.unitrust.co.jp/3377  -->
+<classPathEntry location="C:\Dev\postgresql-42.2.4.jar" />
   <context id="context1">
     <!--
       生成するクラスオブジェクトにタイムスタンプを付与するかどうかを設定します。
@@ -85,11 +87,11 @@
           MapperでPKを指定したクエリ(selectByPrimaryKey等)のパラメータがデフォルトでPrimary Keyエンティティになります。
     <table schema="public" tableName="odds_trend"
      -->
-    <table schema="public" tableName="rec_bodds"
+    <table schema="public" tableName="ml_result"
             enableDeleteByExample="true"
             enableInsert="true"
             enableSelectByExample="true"
-            enableUpdateByExample="false"
+            enableUpdateByExample="true"
             enableCountByExample="false"
             enableSelectByPrimaryKey="false"
             enableUpdateByPrimaryKey="false"

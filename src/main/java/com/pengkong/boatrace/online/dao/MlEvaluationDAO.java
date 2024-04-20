@@ -24,10 +24,7 @@ public class MlEvaluationDAO extends AbstractDAO<MlEvaluation> {
 
 	@Override
 	public int updateImplementation(MlEvaluation e) {
-		MlEvaluationExample example = new MlEvaluationExample();
-		example.createCriteria().andResultnoEqualTo(e.getResultno());
-		
-		return mapper.updateByExampleSelective(e, example);
+		throw new IllegalAccessError("unsupported method.");
 	}
 	
 	public List<MlEvaluation> select(String resultNo) {

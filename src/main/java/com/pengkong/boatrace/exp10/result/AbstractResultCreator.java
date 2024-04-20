@@ -13,7 +13,7 @@ import com.pengkong.boatrace.exp10.odds.provider.AbstractOddsProvider;
 import com.pengkong.boatrace.exp10.odds.provider.OddsProviderInterface;
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
 import com.pengkong.boatrace.exp10.result.stat.BorkPatternProvider;
-import com.pengkong.boatrace.exp10.simulation.probability.calculator.AbstractProbabilityCalculator;
+import com.pengkong.boatrace.exp10.simulation.calculator.probability.AbstractProbabilityCalculator;
 import com.pengkong.boatrace.mybatis.entity.MlResult;
 import com.pengkong.boatrace.server.db.dto.DBRecord;
 import com.pengkong.common.MathUtil;
@@ -239,12 +239,12 @@ public abstract class AbstractResultCreator {
 	 * @throws Exception
 	 */
 	protected MlResult createDefault(BetType statBetType, BetType betType, String kumiban, DBRecord rec) throws Exception {
-		MlResult result = createDefault(betType, kumiban, rec);
+		MlResult result = createDefaultInner(statBetType, betType, kumiban, rec);
 		result.setStatBettype(statBetType.getValue());
 		return result;
 	}
 
-	protected MlResult createDefault(BetType betType, String kumiban, DBRecord rec) throws Exception {
+	protected MlResult createDefaultInner(BetType statBetType, BetType betType, String kumiban, DBRecord rec) throws Exception {
 		// 共通レース情報設定
 		MlResult result = createDefaultResult(rec);
 		
@@ -256,22 +256,11 @@ public abstract class AbstractResultCreator {
 		result.setBetamt(getDefaultBetamt(betType.getValue()));
 		
 		// 予想的中確率を設定する(BetTypeを基に計算する)
-		result.setProbability(MathUtil.scale2(probabilityCalculator.calculate(betType.getValue(), rec)));
+		//result.setProbability(MathUtil.scale2(probabilityCalculator.calculate(betType.getValue(), rec)));
+		result.setProbability(MathUtil.scale2(probabilityCalculator.calculate(statBetType.getValue(), rec)));
 		
 		// 直前オッズ
 		result = setbeforeOdds(result);
-		
-		// 直前オッズがパタンの場合, パタンをborkで書き換える 2023/2/16
-		// borkパタン化をやめる。bonus_borkでテストするほうが効率的に考えられる。 2023/2/19
-		/*
-		if (result.getPatternid().startsWith("wk1+bork1")) {
-			if (beforeOdds != null) {
-				result.setPattern(result.getPattern().replace("bork1", borkPatternProvider.getPattern(result.getPatternid(), beforeOdds)));
-			} else {
-				result.setPattern(result.getPattern().replace(result.getPatternid(), "nobork"));
-			}
-		}
-		*/
 		
 		// 確定オッズ
 		result = setResultOdds(result);

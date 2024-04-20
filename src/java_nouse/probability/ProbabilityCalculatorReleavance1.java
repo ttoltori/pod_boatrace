@@ -52,4 +52,9 @@ public class ProbabilityCalculatorReleavance1 extends AbstractProbabilityCalcula
 	Double getProbability3F(DBRecord rec) {
 		return MathUtil.convertToPercentile(rec.getDouble("probability1"), min1, max1, 20);
 	}
+	@Override
+	Double getProbability4T(DBRecord rec) {
+		// ranker이외의 경우는 사용하지 말 것.
+		return 0.0;
+	}
 }

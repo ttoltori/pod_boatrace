@@ -1182,126 +1182,6 @@ public class MlResultExample {
 			return (Criteria) this;
 		}
 
-		public Criteria andRaceOddsIsNull() {
-			addCriterion("race_odds is null");
-			return (Criteria) this;
-		}
-
-		public Criteria andRaceOddsIsNotNull() {
-			addCriterion("race_odds is not null");
-			return (Criteria) this;
-		}
-
-		public Criteria andRaceOddsEqualTo(Double value) {
-			addCriterion("race_odds =", value, "raceOdds");
-			return (Criteria) this;
-		}
-
-		public Criteria andRaceOddsNotEqualTo(Double value) {
-			addCriterion("race_odds <>", value, "raceOdds");
-			return (Criteria) this;
-		}
-
-		public Criteria andRaceOddsGreaterThan(Double value) {
-			addCriterion("race_odds >", value, "raceOdds");
-			return (Criteria) this;
-		}
-
-		public Criteria andRaceOddsGreaterThanOrEqualTo(Double value) {
-			addCriterion("race_odds >=", value, "raceOdds");
-			return (Criteria) this;
-		}
-
-		public Criteria andRaceOddsLessThan(Double value) {
-			addCriterion("race_odds <", value, "raceOdds");
-			return (Criteria) this;
-		}
-
-		public Criteria andRaceOddsLessThanOrEqualTo(Double value) {
-			addCriterion("race_odds <=", value, "raceOdds");
-			return (Criteria) this;
-		}
-
-		public Criteria andRaceOddsIn(List<Double> values) {
-			addCriterion("race_odds in", values, "raceOdds");
-			return (Criteria) this;
-		}
-
-		public Criteria andRaceOddsNotIn(List<Double> values) {
-			addCriterion("race_odds not in", values, "raceOdds");
-			return (Criteria) this;
-		}
-
-		public Criteria andRaceOddsBetween(Double value1, Double value2) {
-			addCriterion("race_odds between", value1, value2, "raceOdds");
-			return (Criteria) this;
-		}
-
-		public Criteria andRaceOddsNotBetween(Double value1, Double value2) {
-			addCriterion("race_odds not between", value1, value2, "raceOdds");
-			return (Criteria) this;
-		}
-
-		public Criteria andRaceOddsrankIsNull() {
-			addCriterion("race_oddsrank is null");
-			return (Criteria) this;
-		}
-
-		public Criteria andRaceOddsrankIsNotNull() {
-			addCriterion("race_oddsrank is not null");
-			return (Criteria) this;
-		}
-
-		public Criteria andRaceOddsrankEqualTo(Integer value) {
-			addCriterion("race_oddsrank =", value, "raceOddsrank");
-			return (Criteria) this;
-		}
-
-		public Criteria andRaceOddsrankNotEqualTo(Integer value) {
-			addCriterion("race_oddsrank <>", value, "raceOddsrank");
-			return (Criteria) this;
-		}
-
-		public Criteria andRaceOddsrankGreaterThan(Integer value) {
-			addCriterion("race_oddsrank >", value, "raceOddsrank");
-			return (Criteria) this;
-		}
-
-		public Criteria andRaceOddsrankGreaterThanOrEqualTo(Integer value) {
-			addCriterion("race_oddsrank >=", value, "raceOddsrank");
-			return (Criteria) this;
-		}
-
-		public Criteria andRaceOddsrankLessThan(Integer value) {
-			addCriterion("race_oddsrank <", value, "raceOddsrank");
-			return (Criteria) this;
-		}
-
-		public Criteria andRaceOddsrankLessThanOrEqualTo(Integer value) {
-			addCriterion("race_oddsrank <=", value, "raceOddsrank");
-			return (Criteria) this;
-		}
-
-		public Criteria andRaceOddsrankIn(List<Integer> values) {
-			addCriterion("race_oddsrank in", values, "raceOddsrank");
-			return (Criteria) this;
-		}
-
-		public Criteria andRaceOddsrankNotIn(List<Integer> values) {
-			addCriterion("race_oddsrank not in", values, "raceOddsrank");
-			return (Criteria) this;
-		}
-
-		public Criteria andRaceOddsrankBetween(Integer value1, Integer value2) {
-			addCriterion("race_oddsrank between", value1, value2, "raceOddsrank");
-			return (Criteria) this;
-		}
-
-		public Criteria andRaceOddsrankNotBetween(Integer value1, Integer value2) {
-			addCriterion("race_oddsrank not between", value1, value2, "raceOddsrank");
-			return (Criteria) this;
-		}
-
 		public Criteria andResultKumibanIsNull() {
 			addCriterion("result_kumiban is null");
 			return (Criteria) this;
@@ -1852,6 +1732,126 @@ public class MlResultExample {
 			return (Criteria) this;
 		}
 
+		public Criteria andExpectBorIsNull() {
+			addCriterion("expect_bor is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectBorIsNotNull() {
+			addCriterion("expect_bor is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectBorEqualTo(Double value) {
+			addCriterion("expect_bor =", value, "expectBor");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectBorNotEqualTo(Double value) {
+			addCriterion("expect_bor <>", value, "expectBor");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectBorGreaterThan(Double value) {
+			addCriterion("expect_bor >", value, "expectBor");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectBorGreaterThanOrEqualTo(Double value) {
+			addCriterion("expect_bor >=", value, "expectBor");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectBorLessThan(Double value) {
+			addCriterion("expect_bor <", value, "expectBor");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectBorLessThanOrEqualTo(Double value) {
+			addCriterion("expect_bor <=", value, "expectBor");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectBorIn(List<Double> values) {
+			addCriterion("expect_bor in", values, "expectBor");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectBorNotIn(List<Double> values) {
+			addCriterion("expect_bor not in", values, "expectBor");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectBorBetween(Double value1, Double value2) {
+			addCriterion("expect_bor between", value1, value2, "expectBor");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectBorNotBetween(Double value1, Double value2) {
+			addCriterion("expect_bor not between", value1, value2, "expectBor");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectRorIsNull() {
+			addCriterion("expect_ror is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectRorIsNotNull() {
+			addCriterion("expect_ror is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectRorEqualTo(Double value) {
+			addCriterion("expect_ror =", value, "expectRor");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectRorNotEqualTo(Double value) {
+			addCriterion("expect_ror <>", value, "expectRor");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectRorGreaterThan(Double value) {
+			addCriterion("expect_ror >", value, "expectRor");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectRorGreaterThanOrEqualTo(Double value) {
+			addCriterion("expect_ror >=", value, "expectRor");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectRorLessThan(Double value) {
+			addCriterion("expect_ror <", value, "expectRor");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectRorLessThanOrEqualTo(Double value) {
+			addCriterion("expect_ror <=", value, "expectRor");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectRorIn(List<Double> values) {
+			addCriterion("expect_ror in", values, "expectRor");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectRorNotIn(List<Double> values) {
+			addCriterion("expect_ror not in", values, "expectRor");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectRorBetween(Double value1, Double value2) {
+			addCriterion("expect_ror between", value1, value2, "expectRor");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectRorNotBetween(Double value1, Double value2) {
+			addCriterion("expect_ror not between", value1, value2, "expectRor");
+			return (Criteria) this;
+		}
+
 		public Criteria andResultTypeIsNull() {
 			addCriterion("result_type is null");
 			return (Criteria) this;
@@ -2169,6 +2169,126 @@ public class MlResultExample {
 
 		public Criteria andBalanceNotBetween(Integer value1, Integer value2) {
 			addCriterion("balance not between", value1, value2, "balance");
+			return (Criteria) this;
+		}
+
+		public Criteria andRaceOddsIsNull() {
+			addCriterion("race_odds is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRaceOddsIsNotNull() {
+			addCriterion("race_odds is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRaceOddsEqualTo(Double value) {
+			addCriterion("race_odds =", value, "raceOdds");
+			return (Criteria) this;
+		}
+
+		public Criteria andRaceOddsNotEqualTo(Double value) {
+			addCriterion("race_odds <>", value, "raceOdds");
+			return (Criteria) this;
+		}
+
+		public Criteria andRaceOddsGreaterThan(Double value) {
+			addCriterion("race_odds >", value, "raceOdds");
+			return (Criteria) this;
+		}
+
+		public Criteria andRaceOddsGreaterThanOrEqualTo(Double value) {
+			addCriterion("race_odds >=", value, "raceOdds");
+			return (Criteria) this;
+		}
+
+		public Criteria andRaceOddsLessThan(Double value) {
+			addCriterion("race_odds <", value, "raceOdds");
+			return (Criteria) this;
+		}
+
+		public Criteria andRaceOddsLessThanOrEqualTo(Double value) {
+			addCriterion("race_odds <=", value, "raceOdds");
+			return (Criteria) this;
+		}
+
+		public Criteria andRaceOddsIn(List<Double> values) {
+			addCriterion("race_odds in", values, "raceOdds");
+			return (Criteria) this;
+		}
+
+		public Criteria andRaceOddsNotIn(List<Double> values) {
+			addCriterion("race_odds not in", values, "raceOdds");
+			return (Criteria) this;
+		}
+
+		public Criteria andRaceOddsBetween(Double value1, Double value2) {
+			addCriterion("race_odds between", value1, value2, "raceOdds");
+			return (Criteria) this;
+		}
+
+		public Criteria andRaceOddsNotBetween(Double value1, Double value2) {
+			addCriterion("race_odds not between", value1, value2, "raceOdds");
+			return (Criteria) this;
+		}
+
+		public Criteria andRaceOddsrankIsNull() {
+			addCriterion("race_oddsrank is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRaceOddsrankIsNotNull() {
+			addCriterion("race_oddsrank is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRaceOddsrankEqualTo(Integer value) {
+			addCriterion("race_oddsrank =", value, "raceOddsrank");
+			return (Criteria) this;
+		}
+
+		public Criteria andRaceOddsrankNotEqualTo(Integer value) {
+			addCriterion("race_oddsrank <>", value, "raceOddsrank");
+			return (Criteria) this;
+		}
+
+		public Criteria andRaceOddsrankGreaterThan(Integer value) {
+			addCriterion("race_oddsrank >", value, "raceOddsrank");
+			return (Criteria) this;
+		}
+
+		public Criteria andRaceOddsrankGreaterThanOrEqualTo(Integer value) {
+			addCriterion("race_oddsrank >=", value, "raceOddsrank");
+			return (Criteria) this;
+		}
+
+		public Criteria andRaceOddsrankLessThan(Integer value) {
+			addCriterion("race_oddsrank <", value, "raceOddsrank");
+			return (Criteria) this;
+		}
+
+		public Criteria andRaceOddsrankLessThanOrEqualTo(Integer value) {
+			addCriterion("race_oddsrank <=", value, "raceOddsrank");
+			return (Criteria) this;
+		}
+
+		public Criteria andRaceOddsrankIn(List<Integer> values) {
+			addCriterion("race_oddsrank in", values, "raceOddsrank");
+			return (Criteria) this;
+		}
+
+		public Criteria andRaceOddsrankNotIn(List<Integer> values) {
+			addCriterion("race_oddsrank not in", values, "raceOddsrank");
+			return (Criteria) this;
+		}
+
+		public Criteria andRaceOddsrankBetween(Integer value1, Integer value2) {
+			addCriterion("race_oddsrank between", value1, value2, "raceOddsrank");
+			return (Criteria) this;
+		}
+
+		public Criteria andRaceOddsrankNotBetween(Integer value1, Integer value2) {
+			addCriterion("race_oddsrank not between", value1, value2, "raceOddsrank");
 			return (Criteria) this;
 		}
 	}

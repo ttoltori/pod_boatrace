@@ -35,4 +35,9 @@ public class ProbabilityCalculatorReleavanceSum extends AbstractProbabilityCalcu
 	Double getProbability3F(DBRecord rec) {
 		return MathUtil.scale1(rec.getDouble("probability1") + rec.getDouble("probability2") + rec.getDouble("probability3"));
 	}
+	@Override
+	Double getProbability4T(DBRecord rec) {
+		// ranker이외의 경우는 사용하지 말 것.
+		return 0.0;
+	}
 }

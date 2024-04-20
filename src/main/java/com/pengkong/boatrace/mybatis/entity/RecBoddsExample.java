@@ -362,243 +362,193 @@ public class RecBoddsExample {
 			return (Criteria) this;
 		}
 
-		public Criteria andPk3tIsNull() {
-			addCriterion("pk_3t is null");
+		public Criteria andBettypeIsNull() {
+			addCriterion("bettype is null");
 			return (Criteria) this;
 		}
 
-		public Criteria andPk3tIsNotNull() {
-			addCriterion("pk_3t is not null");
+		public Criteria andBettypeIsNotNull() {
+			addCriterion("bettype is not null");
 			return (Criteria) this;
 		}
 
-		public Criteria andPk3tEqualTo(Object value) {
-			addCriterion("pk_3t =", value, "pk3t");
+		public Criteria andBettypeEqualTo(String value) {
+			addCriterion("bettype =", value, "bettype");
 			return (Criteria) this;
 		}
 
-		public Criteria andPk3tNotEqualTo(Object value) {
-			addCriterion("pk_3t <>", value, "pk3t");
+		public Criteria andBettypeNotEqualTo(String value) {
+			addCriterion("bettype <>", value, "bettype");
 			return (Criteria) this;
 		}
 
-		public Criteria andPk3tGreaterThan(Object value) {
-			addCriterion("pk_3t >", value, "pk3t");
+		public Criteria andBettypeGreaterThan(String value) {
+			addCriterion("bettype >", value, "bettype");
 			return (Criteria) this;
 		}
 
-		public Criteria andPk3tGreaterThanOrEqualTo(Object value) {
-			addCriterion("pk_3t >=", value, "pk3t");
+		public Criteria andBettypeGreaterThanOrEqualTo(String value) {
+			addCriterion("bettype >=", value, "bettype");
 			return (Criteria) this;
 		}
 
-		public Criteria andPk3tLessThan(Object value) {
-			addCriterion("pk_3t <", value, "pk3t");
+		public Criteria andBettypeLessThan(String value) {
+			addCriterion("bettype <", value, "bettype");
 			return (Criteria) this;
 		}
 
-		public Criteria andPk3tLessThanOrEqualTo(Object value) {
-			addCriterion("pk_3t <=", value, "pk3t");
+		public Criteria andBettypeLessThanOrEqualTo(String value) {
+			addCriterion("bettype <=", value, "bettype");
 			return (Criteria) this;
 		}
 
-		public Criteria andPk3tIn(List<Object> values) {
-			addCriterion("pk_3t in", values, "pk3t");
+		public Criteria andBettypeLike(String value) {
+			addCriterion("bettype like", value, "bettype");
 			return (Criteria) this;
 		}
 
-		public Criteria andPk3tNotIn(List<Object> values) {
-			addCriterion("pk_3t not in", values, "pk3t");
+		public Criteria andBettypeNotLike(String value) {
+			addCriterion("bettype not like", value, "bettype");
 			return (Criteria) this;
 		}
 
-		public Criteria andPk3tBetween(Object value1, Object value2) {
-			addCriterion("pk_3t between", value1, value2, "pk3t");
+		public Criteria andBettypeIn(List<String> values) {
+			addCriterion("bettype in", values, "bettype");
 			return (Criteria) this;
 		}
 
-		public Criteria andPk3tNotBetween(Object value1, Object value2) {
-			addCriterion("pk_3t not between", value1, value2, "pk3t");
+		public Criteria andBettypeNotIn(List<String> values) {
+			addCriterion("bettype not in", values, "bettype");
 			return (Criteria) this;
 		}
 
-		public Criteria andPbo3tIsNull() {
-			addCriterion("pbo_3t is null");
+		public Criteria andBettypeBetween(String value1, String value2) {
+			addCriterion("bettype between", value1, value2, "bettype");
 			return (Criteria) this;
 		}
 
-		public Criteria andPbo3tIsNotNull() {
-			addCriterion("pbo_3t is not null");
+		public Criteria andBettypeNotBetween(String value1, String value2) {
+			addCriterion("bettype not between", value1, value2, "bettype");
 			return (Criteria) this;
 		}
 
-		public Criteria andPbo3tEqualTo(Object value) {
-			addCriterion("pbo_3t =", value, "pbo3t");
+		public Criteria andBorIsNull() {
+			addCriterion("bor is null");
 			return (Criteria) this;
 		}
 
-		public Criteria andPbo3tNotEqualTo(Object value) {
-			addCriterion("pbo_3t <>", value, "pbo3t");
+		public Criteria andBorIsNotNull() {
+			addCriterion("bor is not null");
 			return (Criteria) this;
 		}
 
-		public Criteria andPbo3tGreaterThan(Object value) {
-			addCriterion("pbo_3t >", value, "pbo3t");
+		public Criteria andBorEqualTo(Object value) {
+			addCriterion("bor =", value, "bor");
 			return (Criteria) this;
 		}
 
-		public Criteria andPbo3tGreaterThanOrEqualTo(Object value) {
-			addCriterion("pbo_3t >=", value, "pbo3t");
+		public Criteria andBorNotEqualTo(Object value) {
+			addCriterion("bor <>", value, "bor");
 			return (Criteria) this;
 		}
 
-		public Criteria andPbo3tLessThan(Object value) {
-			addCriterion("pbo_3t <", value, "pbo3t");
+		public Criteria andBorGreaterThan(Object value) {
+			addCriterion("bor >", value, "bor");
 			return (Criteria) this;
 		}
 
-		public Criteria andPbo3tLessThanOrEqualTo(Object value) {
-			addCriterion("pbo_3t <=", value, "pbo3t");
+		public Criteria andBorGreaterThanOrEqualTo(Object value) {
+			addCriterion("bor >=", value, "bor");
 			return (Criteria) this;
 		}
 
-		public Criteria andPbo3tIn(List<Object> values) {
-			addCriterion("pbo_3t in", values, "pbo3t");
+		public Criteria andBorLessThan(Object value) {
+			addCriterion("bor <", value, "bor");
 			return (Criteria) this;
 		}
 
-		public Criteria andPbo3tNotIn(List<Object> values) {
-			addCriterion("pbo_3t not in", values, "pbo3t");
+		public Criteria andBorLessThanOrEqualTo(Object value) {
+			addCriterion("bor <=", value, "bor");
 			return (Criteria) this;
 		}
 
-		public Criteria andPbo3tBetween(Object value1, Object value2) {
-			addCriterion("pbo_3t between", value1, value2, "pbo3t");
+		public Criteria andBorIn(List<Object> values) {
+			addCriterion("bor in", values, "bor");
 			return (Criteria) this;
 		}
 
-		public Criteria andPbo3tNotBetween(Object value1, Object value2) {
-			addCriterion("pbo_3t not between", value1, value2, "pbo3t");
+		public Criteria andBorNotIn(List<Object> values) {
+			addCriterion("bor not in", values, "bor");
 			return (Criteria) this;
 		}
 
-		public Criteria andMbo3tIsNull() {
-			addCriterion("mbo_3t is null");
+		public Criteria andBorBetween(Object value1, Object value2) {
+			addCriterion("bor between", value1, value2, "bor");
 			return (Criteria) this;
 		}
 
-		public Criteria andMbo3tIsNotNull() {
-			addCriterion("mbo_3t is not null");
+		public Criteria andBorNotBetween(Object value1, Object value2) {
+			addCriterion("bor not between", value1, value2, "bor");
 			return (Criteria) this;
 		}
 
-		public Criteria andMbo3tEqualTo(Object value) {
-			addCriterion("mbo_3t =", value, "mbo3t");
+		public Criteria andBorkIsNull() {
+			addCriterion("bork is null");
 			return (Criteria) this;
 		}
 
-		public Criteria andMbo3tNotEqualTo(Object value) {
-			addCriterion("mbo_3t <>", value, "mbo3t");
+		public Criteria andBorkIsNotNull() {
+			addCriterion("bork is not null");
 			return (Criteria) this;
 		}
 
-		public Criteria andMbo3tGreaterThan(Object value) {
-			addCriterion("mbo_3t >", value, "mbo3t");
+		public Criteria andBorkEqualTo(Object value) {
+			addCriterion("bork =", value, "bork");
 			return (Criteria) this;
 		}
 
-		public Criteria andMbo3tGreaterThanOrEqualTo(Object value) {
-			addCriterion("mbo_3t >=", value, "mbo3t");
+		public Criteria andBorkNotEqualTo(Object value) {
+			addCriterion("bork <>", value, "bork");
 			return (Criteria) this;
 		}
 
-		public Criteria andMbo3tLessThan(Object value) {
-			addCriterion("mbo_3t <", value, "mbo3t");
+		public Criteria andBorkGreaterThan(Object value) {
+			addCriterion("bork >", value, "bork");
 			return (Criteria) this;
 		}
 
-		public Criteria andMbo3tLessThanOrEqualTo(Object value) {
-			addCriterion("mbo_3t <=", value, "mbo3t");
+		public Criteria andBorkGreaterThanOrEqualTo(Object value) {
+			addCriterion("bork >=", value, "bork");
 			return (Criteria) this;
 		}
 
-		public Criteria andMbo3tIn(List<Object> values) {
-			addCriterion("mbo_3t in", values, "mbo3t");
+		public Criteria andBorkLessThan(Object value) {
+			addCriterion("bork <", value, "bork");
 			return (Criteria) this;
 		}
 
-		public Criteria andMbo3tNotIn(List<Object> values) {
-			addCriterion("mbo_3t not in", values, "mbo3t");
+		public Criteria andBorkLessThanOrEqualTo(Object value) {
+			addCriterion("bork <=", value, "bork");
 			return (Criteria) this;
 		}
 
-		public Criteria andMbo3tBetween(Object value1, Object value2) {
-			addCriterion("mbo_3t between", value1, value2, "mbo3t");
+		public Criteria andBorkIn(List<Object> values) {
+			addCriterion("bork in", values, "bork");
 			return (Criteria) this;
 		}
 
-		public Criteria andMbo3tNotBetween(Object value1, Object value2) {
-			addCriterion("mbo_3t not between", value1, value2, "mbo3t");
+		public Criteria andBorkNotIn(List<Object> values) {
+			addCriterion("bork not in", values, "bork");
 			return (Criteria) this;
 		}
 
-		public Criteria andMbork3tIsNull() {
-			addCriterion("mbork_3t is null");
+		public Criteria andBorkBetween(Object value1, Object value2) {
+			addCriterion("bork between", value1, value2, "bork");
 			return (Criteria) this;
 		}
 
-		public Criteria andMbork3tIsNotNull() {
-			addCriterion("mbork_3t is not null");
-			return (Criteria) this;
-		}
-
-		public Criteria andMbork3tEqualTo(Object value) {
-			addCriterion("mbork_3t =", value, "mbork3t");
-			return (Criteria) this;
-		}
-
-		public Criteria andMbork3tNotEqualTo(Object value) {
-			addCriterion("mbork_3t <>", value, "mbork3t");
-			return (Criteria) this;
-		}
-
-		public Criteria andMbork3tGreaterThan(Object value) {
-			addCriterion("mbork_3t >", value, "mbork3t");
-			return (Criteria) this;
-		}
-
-		public Criteria andMbork3tGreaterThanOrEqualTo(Object value) {
-			addCriterion("mbork_3t >=", value, "mbork3t");
-			return (Criteria) this;
-		}
-
-		public Criteria andMbork3tLessThan(Object value) {
-			addCriterion("mbork_3t <", value, "mbork3t");
-			return (Criteria) this;
-		}
-
-		public Criteria andMbork3tLessThanOrEqualTo(Object value) {
-			addCriterion("mbork_3t <=", value, "mbork3t");
-			return (Criteria) this;
-		}
-
-		public Criteria andMbork3tIn(List<Object> values) {
-			addCriterion("mbork_3t in", values, "mbork3t");
-			return (Criteria) this;
-		}
-
-		public Criteria andMbork3tNotIn(List<Object> values) {
-			addCriterion("mbork_3t not in", values, "mbork3t");
-			return (Criteria) this;
-		}
-
-		public Criteria andMbork3tBetween(Object value1, Object value2) {
-			addCriterion("mbork_3t between", value1, value2, "mbork3t");
-			return (Criteria) this;
-		}
-
-		public Criteria andMbork3tNotBetween(Object value1, Object value2) {
-			addCriterion("mbork_3t not between", value1, value2, "mbork3t");
+		public Criteria andBorkNotBetween(Object value1, Object value2) {
+			addCriterion("bork not between", value1, value2, "bork");
 			return (Criteria) this;
 		}
 	}

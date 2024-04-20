@@ -8,6 +8,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
+import com.pengkong.boatrace.exp10.simulation.calculator.probability.AbstractProbabilityCalculator;
+import com.pengkong.boatrace.exp10.simulation.calculator.probability.ProbabilityCaculator1234;
+import com.pengkong.boatrace.exp10.simulation.calculator.probability.ProbabilityCalculatorFactory;
 import com.pengkong.boatrace.server.db.dto.DBRecord;
 
 class ProbabilityCalculatorFactoryTest {
@@ -26,7 +29,7 @@ class ProbabilityCalculatorFactoryTest {
 	void test_create() {
 		MLPropertyUtil.getInstance().putProperty("probability_type", "default");
 		AbstractProbabilityCalculator pc = ProbabilityCalculatorFactory.create();
-		assertTrue(pc instanceof ProbabilityCaculatorDefault);
+		assertTrue(pc instanceof ProbabilityCaculator1234);
 		
 		DBRecord rec = new DBRecord();
 		rec.put("probability1", 1.0);

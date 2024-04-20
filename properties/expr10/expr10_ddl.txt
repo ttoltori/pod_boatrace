@@ -4,10 +4,12 @@ ymd varchar(8),
 jyocd varchar(2),
 raceno smallint,
 bettype varchar(2),
-bodds double precision[]
+bor double precision[],
+bork int[]
 );
 drop index if exists indexes_rec_bodds;
 create index indexes_rec_bodds on rec_bodds (ymd, jyocd, raceno);
+
 
 
 drop table if exists rec_racer2;
@@ -1475,7 +1477,47 @@ rbork_betrate double precision,       -- range_cnt / betcnt
 rbork_hitrate double precision,       -- range_hitcnt / range_betcnt
 rbork_incomerate double precision,    -- range_hitamt / range_betamt
 result_type varchar(10),           -- 実験のタイプ 
-evaluations_id varchar(255)         -- simulationの場合のみ、関連group no
+evaluations_id varchar(255),         -- simulationの場合のみ、関連group no
+-- 기대치(직전옺즈)の最適値計算情報 left to right 2024
+lexpbor_bestmin double precision,       -- 黒字となった最適範囲min
+lexpbor_bestmax double precision,       -- 黒字となった最適範囲max
+lexpbor_betcnt int,                     -- 最適範囲内のデータ数
+lexpbor_betamt int,                     -- 最適範囲内のbet金額
+lexpbor_hitcnt int,                     -- 最適範囲内の的中したデータ数
+lexpbor_hitamt int,                     -- 最適範囲内の的中金額合計
+lexpbor_betrate double precision,       -- range_cnt / betcnt
+lexpbor_hitrate double precision,       -- range_hitcnt / range_betcnt
+lexpbor_incomerate double precision,    -- range_hitamt / range_betamt
+-- 기대치(직전옺즈)の最適値計算情報 right to left 2024
+rexpbor_bestmin double precision,       -- 黒字となった最適範囲min
+rexpbor_bestmax double precision,       -- 黒字となった最適範囲max
+rexpbor_betcnt int,                     -- 最適範囲内のデータ数
+rexpbor_betamt int,                     -- 最適範囲内のbet金額
+rexpbor_hitcnt int,                     -- 最適範囲内の的中したデータ数
+rexpbor_hitamt int,                     -- 最適範囲内の的中金額合計
+rexpbor_betrate double precision,       -- range_cnt / betcnt
+rexpbor_hitrate double precision,       -- range_hitcnt / range_betcnt
+rexpbor_incomerate double precision,    -- range_hitamt / range_betamt
+-- 기대치(확정옺즈)の最適値計算情報 left to right 2024
+lexpror_bestmin double precision,       -- 黒字となった最適範囲min
+lexpror_bestmax double precision,       -- 黒字となった最適範囲max
+lexpror_betcnt int,                     -- 最適範囲内のデータ数
+lexpror_betamt int,                     -- 最適範囲内のbet金額
+lexpror_hitcnt int,                     -- 最適範囲内の的中したデータ数
+lexpror_hitamt int,                     -- 最適範囲内の的中金額合計
+lexpror_betrate double precision,       -- range_cnt / betcnt
+lexpror_hitrate double precision,       -- range_hitcnt / range_betcnt
+lexpror_incomerate double precision,    -- range_hitamt / range_betamt
+-- 기대치(확정옺즈)の最適値計算情報 right to left 2024
+rexpror_bestmin double precision,       -- 黒字となった最適範囲min
+rexpror_bestmax double precision,       -- 黒字となった最適範囲max
+rexpror_betcnt int,                     -- 最適範囲内のデータ数
+rexpror_betamt int,                     -- 最適範囲内のbet金額
+rexpror_hitcnt int,                     -- 最適範囲内の的中したデータ数
+rexpror_hitamt int,                     -- 最適範囲内の的中金額合計
+rexpror_betrate double precision,       -- range_cnt / betcnt
+rexpror_hitrate double precision,       -- range_hitcnt / range_betcnt
+rexpror_incomerate double precision    -- range_hitamt / range_betamt
 );
 drop index if exists indexes_ml_range_evaluation;
 create index indexes_ml_range_evaluation on ml_range_evaluation (result_type, bettype, kumiban, modelno, patternid, pattern);
@@ -1621,6 +1663,18 @@ prob_max double precision,
 prob_mean double precision,
 prob_stddev double precision,
 prob_median double precision,
+-- 기대치(확률*직전옺즈)의 기술통계량 2024
+expbor_min double precision,
+expbor_max double precision,
+expbor_mean double precision,
+expbor_stddev double precision,
+expbor_median double precision,
+-- 기대치(확률*확정옺즈)의 기술통계량 2024
+expror_min double precision,
+expror_max double precision,
+expror_mean double precision,
+expror_stddev double precision,
+expror_median double precision,
 -- 確定オッズの最適値計算情報
 ror_bestmin double precision,       -- 黒字となった最適範囲min
 ror_bestmax double precision,       -- 黒字となった最適範囲max
@@ -1677,16 +1731,26 @@ evaluations_id varchar(255),         -- simulationの場合のみ、関連group 
 bonus_pr varchar(30),
 bonus_bor varchar(30),
 bonus_bork varchar(30),
--- TOP1-3直前オッズRANKINGの最適値計算情報
-topbork_bestmin double precision,       -- 黒字となった最適範囲min
-topbork_bestmax double precision,       -- 黒字となった最適範囲max
-topbork_betcnt int,                     -- 最適範囲内のデータ数
-topbork_betamt int,                     -- 最適範囲内のbet金額
-topbork_hitcnt int,                     -- 最適範囲内の的中したデータ数
-topbork_hitamt int,                     -- 最適範囲内の的中金額合計
-topbork_betrate double precision,       -- range_cnt / betcnt
-topbork_hitrate double precision,       -- range_hitcnt / range_betcnt
-topbork_incomerate double precision    -- range_hitamt / range_betamt
+-- 기대치(직전옺즈)의 최적치계산정보 2024
+expbor_bestmin double precision,       -- 黒字となった最適範囲min
+expbor_bestmax double precision,       -- 黒字となった最適範囲max
+expbor_betcnt int,                     -- 最適範囲内のデータ数
+expbor_betamt int,                     -- 最適範囲内のbet金額
+expbor_hitcnt int,                     -- 最適範囲内の的中したデータ数
+expbor_hitamt int,                     -- 最適範囲内の的中金額合計
+expbor_betrate double precision,       -- range_cnt / betcnt
+expbor_hitrate double precision,       -- range_hitcnt / range_betcnt
+expbor_incomerate double precision,    -- range_hitamt / range_betamt
+-- 기대치(확정옺즈)의 최적치계산정보 2024
+expror_bestmin double precision,       -- 黒字となった最適範囲min
+expror_bestmax double precision,       -- 黒字となった最適範囲max
+expror_betcnt int,                     -- 最適範囲内のデータ数
+expror_betamt int,                     -- 最適範囲内のbet金額
+expror_hitcnt int,                     -- 最適範囲内の的中したデータ数
+expror_hitamt int,                     -- 最適範囲内の的中金額合計
+expror_betrate double precision,       -- range_cnt / betcnt
+expror_hitrate double precision,       -- range_hitcnt / range_betcnt
+expror_incomerate double precision    -- range_hitamt / range_betamt
 );
 
 drop index if exists indexes_ml_evaluation;
@@ -1785,6 +1849,8 @@ hitn int,
 betamt int,
 hitamt int,
 probability double precision,           -- 追加 2022/3/17 MLから算出した予想的中確率
+expect_bor double precision,            -- 직전옺즈로 계산한 기대치. 2024
+expect_ror double precision,            -- 확정옺즈로 계산한 기대치. 2024
 result_type varchar(10),                -- 実験のタイプ 
 custom varchar(3),
 hitrate_transition double precision,

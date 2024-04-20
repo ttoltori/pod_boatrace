@@ -69,8 +69,12 @@ public class ResultHelper {
 			}
 		}
 		
-		return (!predictions[0].equals(predictions[1]) && !predictions[1].equals(predictions[2])
-				&& !predictions[2].equals(predictions[0]));
+		if (predictions.length == 2) {
+			return (!predictions[0].equals(predictions[1]));
+		} else {
+			return (!predictions[0].equals(predictions[1]) && !predictions[1].equals(predictions[2])
+					&& !predictions[2].equals(predictions[0]));
+		}
 	}
 	
 	/** predictionsは常に３桁を前提とする。 
@@ -227,7 +231,7 @@ public class ResultHelper {
 		List<String> cnt1 = new ArrayList<>( Arrays.asList("1T", "2A", "3A"));
 		List<String> cnt2 = new ArrayList<>( Arrays.asList("2T", "2F", "2M", "2N", "3X", "3G"));
 		List<String> cnt3 = new ArrayList<>( Arrays.asList("3T", "3F", "3N", "3P", "3R", "2G", "3B"));
-		List<String> cnt4 = new ArrayList<>( Arrays.asList("3T", "3F", "3N", "3P", "3R", "2G", "3C", "3D", "3E"));
+		List<String> cnt4 = new ArrayList<>( Arrays.asList( "3C", "3D", "3E"));
 		
 		if (cnt1.indexOf(statBettype) != -1) {
 			return 1;

@@ -21,7 +21,7 @@
     <result column="incomerate" jdbcType="DOUBLE" property="incomerate" />
     <result column="hmeanrate" jdbcType="DOUBLE" property="hmeanrate" />
     <result column="balance" jdbcType="ARRAY" property="balance" typeHandler="com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler" />
-    <result column="bal_slope" jdbcType="ARRAY" property="balSlope" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler" />
+    <result column="bal_slope" jdbcType="ARRAY" property="balSlope" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler" /> 
     <result column="betr_slope" jdbcType="DOUBLE" property="betrSlope" />
     <result column="hitr_slope" jdbcType="DOUBLE" property="hitrSlope" />
     <result column="incr_slope" jdbcType="DOUBLE" property="incrSlope" />
@@ -63,6 +63,16 @@
     <result column="prob_mean" jdbcType="DOUBLE" property="probMean" />
     <result column="prob_stddev" jdbcType="DOUBLE" property="probStddev" />
     <result column="prob_median" jdbcType="DOUBLE" property="probMedian" />
+    <result column="expbor_min" jdbcType="DOUBLE" property="expborMin" />
+    <result column="expbor_max" jdbcType="DOUBLE" property="expborMax" />
+    <result column="expbor_mean" jdbcType="DOUBLE" property="expborMean" />
+    <result column="expbor_stddev" jdbcType="DOUBLE" property="expborStddev" />
+    <result column="expbor_median" jdbcType="DOUBLE" property="expborMedian" />
+    <result column="expror_min" jdbcType="DOUBLE" property="exprorMin" />
+    <result column="expror_max" jdbcType="DOUBLE" property="exprorMax" />
+    <result column="expror_mean" jdbcType="DOUBLE" property="exprorMean" />
+    <result column="expror_stddev" jdbcType="DOUBLE" property="exprorStddev" />
+    <result column="expror_median" jdbcType="DOUBLE" property="exprorMedian" />
     <result column="ror_bestmin" jdbcType="DOUBLE" property="rorBestmin" />
     <result column="ror_bestmax" jdbcType="DOUBLE" property="rorBestmax" />
     <result column="ror_betcnt" jdbcType="INTEGER" property="rorBetcnt" />
@@ -114,6 +124,24 @@
     <result column="bonus_pr" jdbcType="VARCHAR" property="bonusPr" />
     <result column="bonus_bor" jdbcType="VARCHAR" property="bonusBor" />
     <result column="bonus_bork" jdbcType="VARCHAR" property="bonusBork" />
+    <result column="expbor_bestmin" jdbcType="DOUBLE" property="expborBestmin" />
+    <result column="expbor_bestmax" jdbcType="DOUBLE" property="expborBestmax" />
+    <result column="expbor_betcnt" jdbcType="INTEGER" property="expborBetcnt" />
+    <result column="expbor_betamt" jdbcType="INTEGER" property="expborBetamt" />
+    <result column="expbor_hitcnt" jdbcType="INTEGER" property="expborHitcnt" />
+    <result column="expbor_hitamt" jdbcType="INTEGER" property="expborHitamt" />
+    <result column="expbor_betrate" jdbcType="DOUBLE" property="expborBetrate" />
+    <result column="expbor_hitrate" jdbcType="DOUBLE" property="expborHitrate" />
+    <result column="expbor_incomerate" jdbcType="DOUBLE" property="expborIncomerate" />
+    <result column="expror_bestmin" jdbcType="DOUBLE" property="exprorBestmin" />
+    <result column="expror_bestmax" jdbcType="DOUBLE" property="exprorBestmax" />
+    <result column="expror_betcnt" jdbcType="INTEGER" property="exprorBetcnt" />
+    <result column="expror_betamt" jdbcType="INTEGER" property="exprorBetamt" />
+    <result column="expror_hitcnt" jdbcType="INTEGER" property="exprorHitcnt" />
+    <result column="expror_hitamt" jdbcType="INTEGER" property="exprorHitamt" />
+    <result column="expror_betrate" jdbcType="DOUBLE" property="exprorBetrate" />
+    <result column="expror_hitrate" jdbcType="DOUBLE" property="exprorHitrate" />
+    <result column="expror_incomerate" jdbcType="DOUBLE" property="exprorIncomerate" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -122,39 +150,6 @@
     -->
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
-        <if test="criteria.valid">
-          <trim prefix="(" prefixOverrides="and" suffix=")">
-            <foreach collection="criteria.criteria" item="criterion">
-              <choose>
-                <when test="criterion.noValue">
-                  and ${criterion.condition}
-                </when>
-                <when test="criterion.singleValue">
-                  and ${criterion.condition} #{criterion.value}
-                </when>
-                <when test="criterion.betweenValue">
-                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                </when>
-                <when test="criterion.listValue">
-                  and ${criterion.condition}
-                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
-                    #{listItem}
-                  </foreach>
-                </when>
-              </choose>
-            </foreach>
-          </trim>
-        </if>
-      </foreach>
-    </where>
-  </sql>
-  <sql id="Update_By_Example_Where_Clause">
-    <!--
-      WARNING - @mbg.generated
-      This element is automatically generated by MyBatis Generator, do not modify.
-    -->
-    <where>
-      <foreach collection="example.oredCriteria" item="criteria" separator="or">
         <if test="criteria.valid">
           <trim prefix="(" prefixOverrides="and" suffix=")">
             <foreach collection="criteria.criteria" item="criterion">
@@ -193,15 +188,19 @@
     hoddsrk_median, rodds_min, rodds_max, rodds_mean, rodds_stddev, rodds_median, roddsrk_min, 
     roddsrk_max, roddsrk_mean, roddsrk_stddev, roddsrk_median, bodds_min, bodds_max, 
     bodds_mean, bodds_stddev, bodds_median, boddsrk_min, boddsrk_max, boddsrk_mean, boddsrk_stddev, 
-    boddsrk_median, prob_min, prob_max, prob_mean, prob_stddev, prob_median, ror_bestmin, 
-    ror_bestmax, ror_betcnt, ror_betamt, ror_hitcnt, ror_hitamt, ror_betrate, ror_hitrate, 
-    ror_incomerate, rork_bestmin, rork_bestmax, rork_betcnt, rork_betamt, rork_hitcnt, 
-    rork_hitamt, rork_betrate, rork_hitrate, rork_incomerate, bor_bestmin, bor_bestmax, 
-    bor_betcnt, bor_betamt, bor_hitcnt, bor_hitamt, bor_betrate, bor_hitrate, bor_incomerate, 
-    bork_bestmin, bork_bestmax, bork_betcnt, bork_betamt, bork_hitcnt, bork_hitamt, bork_betrate, 
-    bork_hitrate, bork_incomerate, pr_bestmin, pr_bestmax, pr_betcnt, pr_betamt, pr_hitcnt, 
-    pr_hitamt, pr_betrate, pr_hitrate, pr_incomerate, bal_pluscnt, result_type, evaluations_id, 
-    bonus_pr, bonus_bor, bonus_bork
+    boddsrk_median, prob_min, prob_max, prob_mean, prob_stddev, prob_median, expbor_min, 
+    expbor_max, expbor_mean, expbor_stddev, expbor_median, expror_min, expror_max, expror_mean, 
+    expror_stddev, expror_median, ror_bestmin, ror_bestmax, ror_betcnt, ror_betamt, ror_hitcnt, 
+    ror_hitamt, ror_betrate, ror_hitrate, ror_incomerate, rork_bestmin, rork_bestmax, 
+    rork_betcnt, rork_betamt, rork_hitcnt, rork_hitamt, rork_betrate, rork_hitrate, rork_incomerate, 
+    bor_bestmin, bor_bestmax, bor_betcnt, bor_betamt, bor_hitcnt, bor_hitamt, bor_betrate, 
+    bor_hitrate, bor_incomerate, bork_bestmin, bork_bestmax, bork_betcnt, bork_betamt, 
+    bork_hitcnt, bork_hitamt, bork_betrate, bork_hitrate, bork_incomerate, pr_bestmin, 
+    pr_bestmax, pr_betcnt, pr_betamt, pr_hitcnt, pr_hitamt, pr_betrate, pr_hitrate, pr_incomerate, 
+    bal_pluscnt, result_type, evaluations_id, bonus_pr, bonus_bor, bonus_bork, expbor_bestmin, 
+    expbor_bestmax, expbor_betcnt, expbor_betamt, expbor_hitcnt, expbor_hitamt, expbor_betrate, 
+    expbor_hitrate, expbor_incomerate, expror_bestmin, expror_bestmax, expror_betcnt, 
+    expror_betamt, expror_hitcnt, expror_hitamt, expror_betrate, expror_hitrate, expror_incomerate
   </sql>
   <select id="selectByExample" parameterType="com.pengkong.boatrace.mybatis.entity.MlEvaluationExample" resultMap="BaseResultMap">
     <!--
@@ -256,24 +255,33 @@
       boddsrk_max, boddsrk_mean, boddsrk_stddev, 
       boddsrk_median, prob_min, prob_max, 
       prob_mean, prob_stddev, prob_median, 
-      ror_bestmin, ror_bestmax, ror_betcnt, 
-      ror_betamt, ror_hitcnt, ror_hitamt, 
-      ror_betrate, ror_hitrate, ror_incomerate, 
-      rork_bestmin, rork_bestmax, rork_betcnt, 
-      rork_betamt, rork_hitcnt, rork_hitamt, 
-      rork_betrate, rork_hitrate, rork_incomerate, 
-      bor_bestmin, bor_bestmax, bor_betcnt, 
-      bor_betamt, bor_hitcnt, bor_hitamt, 
-      bor_betrate, bor_hitrate, bor_incomerate, 
-      bork_bestmin, bork_bestmax, bork_betcnt, 
-      bork_betamt, bork_hitcnt, bork_hitamt, 
-      bork_betrate, bork_hitrate, bork_incomerate, 
-      pr_bestmin, pr_bestmax, pr_betcnt, 
-      pr_betamt, pr_hitcnt, pr_hitamt, 
-      pr_betrate, pr_hitrate, pr_incomerate, 
-      bal_pluscnt, result_type, evaluations_id, 
-      bonus_pr, bonus_bor, bonus_bork
-      )
+      expbor_min, expbor_max, expbor_mean, 
+      expbor_stddev, expbor_median, expror_min, 
+      expror_max, expror_mean, expror_stddev, 
+      expror_median, ror_bestmin, ror_bestmax, 
+      ror_betcnt, ror_betamt, ror_hitcnt, 
+      ror_hitamt, ror_betrate, ror_hitrate, 
+      ror_incomerate, rork_bestmin, rork_bestmax, 
+      rork_betcnt, rork_betamt, rork_hitcnt, 
+      rork_hitamt, rork_betrate, rork_hitrate, 
+      rork_incomerate, bor_bestmin, bor_bestmax, 
+      bor_betcnt, bor_betamt, bor_hitcnt, 
+      bor_hitamt, bor_betrate, bor_hitrate, 
+      bor_incomerate, bork_bestmin, bork_bestmax, 
+      bork_betcnt, bork_betamt, bork_hitcnt, 
+      bork_hitamt, bork_betrate, bork_hitrate, 
+      bork_incomerate, pr_bestmin, pr_bestmax, 
+      pr_betcnt, pr_betamt, pr_hitcnt, 
+      pr_hitamt, pr_betrate, pr_hitrate, 
+      pr_incomerate, bal_pluscnt, result_type, 
+      evaluations_id, bonus_pr, bonus_bor, 
+      bonus_bork, expbor_bestmin, expbor_bestmax, 
+      expbor_betcnt, expbor_betamt, expbor_hitcnt, 
+      expbor_hitamt, expbor_betrate, expbor_hitrate, 
+      expbor_incomerate, expror_bestmin, expror_bestmax, 
+      expror_betcnt, expror_betamt, expror_hitcnt, 
+      expror_hitamt, expror_betrate, expror_hitrate, 
+      expror_incomerate)
     values (#{resultno,jdbcType=VARCHAR}, #{modelno,jdbcType=VARCHAR}, #{patternid,jdbcType=VARCHAR}, 
       #{pattern,jdbcType=VARCHAR}, #{bettype,jdbcType=VARCHAR}, #{kumiban,jdbcType=VARCHAR}, 
       #{betcnt,jdbcType=INTEGER}, #{hitcnt,jdbcType=INTEGER}, #{betamt,jdbcType=INTEGER}, 
@@ -295,24 +303,33 @@
       #{boddsrkMax,jdbcType=DOUBLE}, #{boddsrkMean,jdbcType=DOUBLE}, #{boddsrkStddev,jdbcType=DOUBLE}, 
       #{boddsrkMedian,jdbcType=DOUBLE}, #{probMin,jdbcType=DOUBLE}, #{probMax,jdbcType=DOUBLE}, 
       #{probMean,jdbcType=DOUBLE}, #{probStddev,jdbcType=DOUBLE}, #{probMedian,jdbcType=DOUBLE}, 
-      #{rorBestmin,jdbcType=DOUBLE}, #{rorBestmax,jdbcType=DOUBLE}, #{rorBetcnt,jdbcType=INTEGER}, 
-      #{rorBetamt,jdbcType=INTEGER}, #{rorHitcnt,jdbcType=INTEGER}, #{rorHitamt,jdbcType=INTEGER}, 
-      #{rorBetrate,jdbcType=DOUBLE}, #{rorHitrate,jdbcType=DOUBLE}, #{rorIncomerate,jdbcType=DOUBLE}, 
-      #{rorkBestmin,jdbcType=DOUBLE}, #{rorkBestmax,jdbcType=DOUBLE}, #{rorkBetcnt,jdbcType=INTEGER}, 
-      #{rorkBetamt,jdbcType=INTEGER}, #{rorkHitcnt,jdbcType=INTEGER}, #{rorkHitamt,jdbcType=INTEGER}, 
-      #{rorkBetrate,jdbcType=DOUBLE}, #{rorkHitrate,jdbcType=DOUBLE}, #{rorkIncomerate,jdbcType=DOUBLE}, 
-      #{borBestmin,jdbcType=DOUBLE}, #{borBestmax,jdbcType=DOUBLE}, #{borBetcnt,jdbcType=INTEGER}, 
-      #{borBetamt,jdbcType=INTEGER}, #{borHitcnt,jdbcType=INTEGER}, #{borHitamt,jdbcType=INTEGER}, 
-      #{borBetrate,jdbcType=DOUBLE}, #{borHitrate,jdbcType=DOUBLE}, #{borIncomerate,jdbcType=DOUBLE}, 
-      #{borkBestmin,jdbcType=DOUBLE}, #{borkBestmax,jdbcType=DOUBLE}, #{borkBetcnt,jdbcType=INTEGER}, 
-      #{borkBetamt,jdbcType=INTEGER}, #{borkHitcnt,jdbcType=INTEGER}, #{borkHitamt,jdbcType=INTEGER}, 
-      #{borkBetrate,jdbcType=DOUBLE}, #{borkHitrate,jdbcType=DOUBLE}, #{borkIncomerate,jdbcType=DOUBLE}, 
-      #{prBestmin,jdbcType=DOUBLE}, #{prBestmax,jdbcType=DOUBLE}, #{prBetcnt,jdbcType=INTEGER}, 
-      #{prBetamt,jdbcType=INTEGER}, #{prHitcnt,jdbcType=INTEGER}, #{prHitamt,jdbcType=INTEGER}, 
-      #{prBetrate,jdbcType=DOUBLE}, #{prHitrate,jdbcType=DOUBLE}, #{prIncomerate,jdbcType=DOUBLE}, 
-      #{balPluscnt,jdbcType=INTEGER}, #{resultType,jdbcType=VARCHAR}, #{evaluationsId,jdbcType=VARCHAR}, 
-      #{bonusPr,jdbcType=VARCHAR}, #{bonusBor,jdbcType=VARCHAR}, #{bonusBork,jdbcType=VARCHAR}
-      )
+      #{expborMin,jdbcType=DOUBLE}, #{expborMax,jdbcType=DOUBLE}, #{expborMean,jdbcType=DOUBLE}, 
+      #{expborStddev,jdbcType=DOUBLE}, #{expborMedian,jdbcType=DOUBLE}, #{exprorMin,jdbcType=DOUBLE}, 
+      #{exprorMax,jdbcType=DOUBLE}, #{exprorMean,jdbcType=DOUBLE}, #{exprorStddev,jdbcType=DOUBLE}, 
+      #{exprorMedian,jdbcType=DOUBLE}, #{rorBestmin,jdbcType=DOUBLE}, #{rorBestmax,jdbcType=DOUBLE}, 
+      #{rorBetcnt,jdbcType=INTEGER}, #{rorBetamt,jdbcType=INTEGER}, #{rorHitcnt,jdbcType=INTEGER}, 
+      #{rorHitamt,jdbcType=INTEGER}, #{rorBetrate,jdbcType=DOUBLE}, #{rorHitrate,jdbcType=DOUBLE}, 
+      #{rorIncomerate,jdbcType=DOUBLE}, #{rorkBestmin,jdbcType=DOUBLE}, #{rorkBestmax,jdbcType=DOUBLE}, 
+      #{rorkBetcnt,jdbcType=INTEGER}, #{rorkBetamt,jdbcType=INTEGER}, #{rorkHitcnt,jdbcType=INTEGER}, 
+      #{rorkHitamt,jdbcType=INTEGER}, #{rorkBetrate,jdbcType=DOUBLE}, #{rorkHitrate,jdbcType=DOUBLE}, 
+      #{rorkIncomerate,jdbcType=DOUBLE}, #{borBestmin,jdbcType=DOUBLE}, #{borBestmax,jdbcType=DOUBLE}, 
+      #{borBetcnt,jdbcType=INTEGER}, #{borBetamt,jdbcType=INTEGER}, #{borHitcnt,jdbcType=INTEGER}, 
+      #{borHitamt,jdbcType=INTEGER}, #{borBetrate,jdbcType=DOUBLE}, #{borHitrate,jdbcType=DOUBLE}, 
+      #{borIncomerate,jdbcType=DOUBLE}, #{borkBestmin,jdbcType=DOUBLE}, #{borkBestmax,jdbcType=DOUBLE}, 
+      #{borkBetcnt,jdbcType=INTEGER}, #{borkBetamt,jdbcType=INTEGER}, #{borkHitcnt,jdbcType=INTEGER}, 
+      #{borkHitamt,jdbcType=INTEGER}, #{borkBetrate,jdbcType=DOUBLE}, #{borkHitrate,jdbcType=DOUBLE}, 
+      #{borkIncomerate,jdbcType=DOUBLE}, #{prBestmin,jdbcType=DOUBLE}, #{prBestmax,jdbcType=DOUBLE}, 
+      #{prBetcnt,jdbcType=INTEGER}, #{prBetamt,jdbcType=INTEGER}, #{prHitcnt,jdbcType=INTEGER}, 
+      #{prHitamt,jdbcType=INTEGER}, #{prBetrate,jdbcType=DOUBLE}, #{prHitrate,jdbcType=DOUBLE}, 
+      #{prIncomerate,jdbcType=DOUBLE}, #{balPluscnt,jdbcType=INTEGER}, #{resultType,jdbcType=VARCHAR}, 
+      #{evaluationsId,jdbcType=VARCHAR}, #{bonusPr,jdbcType=VARCHAR}, #{bonusBor,jdbcType=VARCHAR}, 
+      #{bonusBork,jdbcType=VARCHAR}, #{expborBestmin,jdbcType=DOUBLE}, #{expborBestmax,jdbcType=DOUBLE}, 
+      #{expborBetcnt,jdbcType=INTEGER}, #{expborBetamt,jdbcType=INTEGER}, #{expborHitcnt,jdbcType=INTEGER}, 
+      #{expborHitamt,jdbcType=INTEGER}, #{expborBetrate,jdbcType=DOUBLE}, #{expborHitrate,jdbcType=DOUBLE}, 
+      #{expborIncomerate,jdbcType=DOUBLE}, #{exprorBestmin,jdbcType=DOUBLE}, #{exprorBestmax,jdbcType=DOUBLE}, 
+      #{exprorBetcnt,jdbcType=INTEGER}, #{exprorBetamt,jdbcType=INTEGER}, #{exprorHitcnt,jdbcType=INTEGER}, 
+      #{exprorHitamt,jdbcType=INTEGER}, #{exprorBetrate,jdbcType=DOUBLE}, #{exprorHitrate,jdbcType=DOUBLE}, 
+      #{exprorIncomerate,jdbcType=DOUBLE})
   </insert>
   <insert id="insertSelective" parameterType="com.pengkong.boatrace.mybatis.entity.MlEvaluation">
     <!--
@@ -367,7 +384,7 @@
         balance,
       </if>
       <if test="balSlope != null">
-        bal_slope,
+        balSlope,
       </if>
       <if test="betrSlope != null">
         betr_slope,
@@ -491,6 +508,36 @@
       </if>
       <if test="probMedian != null">
         prob_median,
+      </if>
+      <if test="expborMin != null">
+        expbor_min,
+      </if>
+      <if test="expborMax != null">
+        expbor_max,
+      </if>
+      <if test="expborMean != null">
+        expbor_mean,
+      </if>
+      <if test="expborStddev != null">
+        expbor_stddev,
+      </if>
+      <if test="expborMedian != null">
+        expbor_median,
+      </if>
+      <if test="exprorMin != null">
+        expror_min,
+      </if>
+      <if test="exprorMax != null">
+        expror_max,
+      </if>
+      <if test="exprorMean != null">
+        expror_mean,
+      </if>
+      <if test="exprorStddev != null">
+        expror_stddev,
+      </if>
+      <if test="exprorMedian != null">
+        expror_median,
       </if>
       <if test="rorBestmin != null">
         ror_bestmin,
@@ -644,6 +691,60 @@
       </if>
       <if test="bonusBork != null">
         bonus_bork,
+      </if>
+      <if test="expborBestmin != null">
+        expbor_bestmin,
+      </if>
+      <if test="expborBestmax != null">
+        expbor_bestmax,
+      </if>
+      <if test="expborBetcnt != null">
+        expbor_betcnt,
+      </if>
+      <if test="expborBetamt != null">
+        expbor_betamt,
+      </if>
+      <if test="expborHitcnt != null">
+        expbor_hitcnt,
+      </if>
+      <if test="expborHitamt != null">
+        expbor_hitamt,
+      </if>
+      <if test="expborBetrate != null">
+        expbor_betrate,
+      </if>
+      <if test="expborHitrate != null">
+        expbor_hitrate,
+      </if>
+      <if test="expborIncomerate != null">
+        expbor_incomerate,
+      </if>
+      <if test="exprorBestmin != null">
+        expror_bestmin,
+      </if>
+      <if test="exprorBestmax != null">
+        expror_bestmax,
+      </if>
+      <if test="exprorBetcnt != null">
+        expror_betcnt,
+      </if>
+      <if test="exprorBetamt != null">
+        expror_betamt,
+      </if>
+      <if test="exprorHitcnt != null">
+        expror_hitcnt,
+      </if>
+      <if test="exprorHitamt != null">
+        expror_hitamt,
+      </if>
+      <if test="exprorBetrate != null">
+        expror_betrate,
+      </if>
+      <if test="exprorHitrate != null">
+        expror_hitrate,
+      </if>
+      <if test="exprorIncomerate != null">
+        expror_incomerate,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -818,6 +919,36 @@
       <if test="probMedian != null">
         #{probMedian,jdbcType=DOUBLE},
       </if>
+      <if test="expborMin != null">
+        #{expborMin,jdbcType=DOUBLE},
+      </if>
+      <if test="expborMax != null">
+        #{expborMax,jdbcType=DOUBLE},
+      </if>
+      <if test="expborMean != null">
+        #{expborMean,jdbcType=DOUBLE},
+      </if>
+      <if test="expborStddev != null">
+        #{expborStddev,jdbcType=DOUBLE},
+      </if>
+      <if test="expborMedian != null">
+        #{expborMedian,jdbcType=DOUBLE},
+      </if>
+      <if test="exprorMin != null">
+        #{exprorMin,jdbcType=DOUBLE},
+      </if>
+      <if test="exprorMax != null">
+        #{exprorMax,jdbcType=DOUBLE},
+      </if>
+      <if test="exprorMean != null">
+        #{exprorMean,jdbcType=DOUBLE},
+      </if>
+      <if test="exprorStddev != null">
+        #{exprorStddev,jdbcType=DOUBLE},
+      </if>
+      <if test="exprorMedian != null">
+        #{exprorMedian,jdbcType=DOUBLE},
+      </if>
       <if test="rorBestmin != null">
         #{rorBestmin,jdbcType=DOUBLE},
       </if>
@@ -971,460 +1102,60 @@
       <if test="bonusBork != null">
         #{bonusBork,jdbcType=VARCHAR},
       </if>
+      <if test="expborBestmin != null">
+        #{expborBestmin,jdbcType=DOUBLE},
+      </if>
+      <if test="expborBestmax != null">
+        #{expborBestmax,jdbcType=DOUBLE},
+      </if>
+      <if test="expborBetcnt != null">
+        #{expborBetcnt,jdbcType=INTEGER},
+      </if>
+      <if test="expborBetamt != null">
+        #{expborBetamt,jdbcType=INTEGER},
+      </if>
+      <if test="expborHitcnt != null">
+        #{expborHitcnt,jdbcType=INTEGER},
+      </if>
+      <if test="expborHitamt != null">
+        #{expborHitamt,jdbcType=INTEGER},
+      </if>
+      <if test="expborBetrate != null">
+        #{expborBetrate,jdbcType=DOUBLE},
+      </if>
+      <if test="expborHitrate != null">
+        #{expborHitrate,jdbcType=DOUBLE},
+      </if>
+      <if test="expborIncomerate != null">
+        #{expborIncomerate,jdbcType=DOUBLE},
+      </if>
+      <if test="exprorBestmin != null">
+        #{exprorBestmin,jdbcType=DOUBLE},
+      </if>
+      <if test="exprorBestmax != null">
+        #{exprorBestmax,jdbcType=DOUBLE},
+      </if>
+      <if test="exprorBetcnt != null">
+        #{exprorBetcnt,jdbcType=INTEGER},
+      </if>
+      <if test="exprorBetamt != null">
+        #{exprorBetamt,jdbcType=INTEGER},
+      </if>
+      <if test="exprorHitcnt != null">
+        #{exprorHitcnt,jdbcType=INTEGER},
+      </if>
+      <if test="exprorHitamt != null">
+        #{exprorHitamt,jdbcType=INTEGER},
+      </if>
+      <if test="exprorBetrate != null">
+        #{exprorBetrate,jdbcType=DOUBLE},
+      </if>
+      <if test="exprorHitrate != null">
+        #{exprorHitrate,jdbcType=DOUBLE},
+      </if>
+      <if test="exprorIncomerate != null">
+        #{exprorIncomerate,jdbcType=DOUBLE},
+      </if>
     </trim>
   </insert>
-  <update id="updateByExampleSelective" parameterType="map">
-    <!--
-      WARNING - @mbg.generated
-      This element is automatically generated by MyBatis Generator, do not modify.
-    -->
-    update public.ml_evaluation
-    <set>
-      <if test="record.resultno != null">
-        resultno = #{record.resultno,jdbcType=VARCHAR},
-      </if>
-      <if test="record.modelno != null">
-        modelno = #{record.modelno,jdbcType=VARCHAR},
-      </if>
-      <if test="record.patternid != null">
-        patternid = #{record.patternid,jdbcType=VARCHAR},
-      </if>
-      <if test="record.pattern != null">
-        pattern = #{record.pattern,jdbcType=VARCHAR},
-      </if>
-      <if test="record.bettype != null">
-        bettype = #{record.bettype,jdbcType=VARCHAR},
-      </if>
-      <if test="record.kumiban != null">
-        kumiban = #{record.kumiban,jdbcType=VARCHAR},
-      </if>
-      <if test="record.betcnt != null">
-        betcnt = #{record.betcnt,jdbcType=INTEGER},
-      </if>
-      <if test="record.hitcnt != null">
-        hitcnt = #{record.hitcnt,jdbcType=INTEGER},
-      </if>
-      <if test="record.betamt != null">
-        betamt = #{record.betamt,jdbcType=INTEGER},
-      </if>
-      <if test="record.hitamt != null">
-        hitamt = #{record.hitamt,jdbcType=INTEGER},
-      </if>
-      <if test="record.betrate != null">
-        betrate = #{record.betrate,jdbcType=DOUBLE},
-      </if>
-      <if test="record.hitrate != null">
-        hitrate = #{record.hitrate,jdbcType=DOUBLE},
-      </if>
-      <if test="record.incomerate != null">
-        incomerate = #{record.incomerate,jdbcType=DOUBLE},
-      </if>
-      <if test="record.hmeanrate != null">
-        hmeanrate = #{record.hmeanrate,jdbcType=DOUBLE},
-      </if>
-      <if test="record.balance != null">
-        balance = #{record.balance,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler},
-      </if>
-      <if test="record.balSlope != null">
-        bal_slope = #{record.balSlope,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler},
-      </if>
-      <if test="record.betrSlope != null">
-        betr_slope = #{record.betrSlope,jdbcType=DOUBLE},
-      </if>
-      <if test="record.hitrSlope != null">
-        hitr_slope = #{record.hitrSlope,jdbcType=DOUBLE},
-      </if>
-      <if test="record.incrSlope != null">
-        incr_slope = #{record.incrSlope,jdbcType=DOUBLE},
-      </if>
-      <if test="record.ptPrecision != null">
-        pt_precision = #{record.ptPrecision,jdbcType=DOUBLE},
-      </if>
-      <if test="record.ptRecall != null">
-        pt_recall = #{record.ptRecall,jdbcType=DOUBLE},
-      </if>
-      <if test="record.ptFmeasure != null">
-        pt_fmeasure = #{record.ptFmeasure,jdbcType=DOUBLE},
-      </if>
-      <if test="record.hoddsMin != null">
-        hodds_min = #{record.hoddsMin,jdbcType=DOUBLE},
-      </if>
-      <if test="record.hoddsMax != null">
-        hodds_max = #{record.hoddsMax,jdbcType=DOUBLE},
-      </if>
-      <if test="record.hoddsMean != null">
-        hodds_mean = #{record.hoddsMean,jdbcType=DOUBLE},
-      </if>
-      <if test="record.hoddsStddev != null">
-        hodds_stddev = #{record.hoddsStddev,jdbcType=DOUBLE},
-      </if>
-      <if test="record.hoddsMedian != null">
-        hodds_median = #{record.hoddsMedian,jdbcType=DOUBLE},
-      </if>
-      <if test="record.hoddsrkMin != null">
-        hoddsrk_min = #{record.hoddsrkMin,jdbcType=DOUBLE},
-      </if>
-      <if test="record.hoddsrkMax != null">
-        hoddsrk_max = #{record.hoddsrkMax,jdbcType=DOUBLE},
-      </if>
-      <if test="record.hoddsrkMean != null">
-        hoddsrk_mean = #{record.hoddsrkMean,jdbcType=DOUBLE},
-      </if>
-      <if test="record.hoddsrkStddev != null">
-        hoddsrk_stddev = #{record.hoddsrkStddev,jdbcType=DOUBLE},
-      </if>
-      <if test="record.hoddsrkMedian != null">
-        hoddsrk_median = #{record.hoddsrkMedian,jdbcType=DOUBLE},
-      </if>
-      <if test="record.roddsMin != null">
-        rodds_min = #{record.roddsMin,jdbcType=DOUBLE},
-      </if>
-      <if test="record.roddsMax != null">
-        rodds_max = #{record.roddsMax,jdbcType=DOUBLE},
-      </if>
-      <if test="record.roddsMean != null">
-        rodds_mean = #{record.roddsMean,jdbcType=DOUBLE},
-      </if>
-      <if test="record.roddsStddev != null">
-        rodds_stddev = #{record.roddsStddev,jdbcType=DOUBLE},
-      </if>
-      <if test="record.roddsMedian != null">
-        rodds_median = #{record.roddsMedian,jdbcType=DOUBLE},
-      </if>
-      <if test="record.roddsrkMin != null">
-        roddsrk_min = #{record.roddsrkMin,jdbcType=DOUBLE},
-      </if>
-      <if test="record.roddsrkMax != null">
-        roddsrk_max = #{record.roddsrkMax,jdbcType=DOUBLE},
-      </if>
-      <if test="record.roddsrkMean != null">
-        roddsrk_mean = #{record.roddsrkMean,jdbcType=DOUBLE},
-      </if>
-      <if test="record.roddsrkStddev != null">
-        roddsrk_stddev = #{record.roddsrkStddev,jdbcType=DOUBLE},
-      </if>
-      <if test="record.roddsrkMedian != null">
-        roddsrk_median = #{record.roddsrkMedian,jdbcType=DOUBLE},
-      </if>
-      <if test="record.boddsMin != null">
-        bodds_min = #{record.boddsMin,jdbcType=DOUBLE},
-      </if>
-      <if test="record.boddsMax != null">
-        bodds_max = #{record.boddsMax,jdbcType=DOUBLE},
-      </if>
-      <if test="record.boddsMean != null">
-        bodds_mean = #{record.boddsMean,jdbcType=DOUBLE},
-      </if>
-      <if test="record.boddsStddev != null">
-        bodds_stddev = #{record.boddsStddev,jdbcType=DOUBLE},
-      </if>
-      <if test="record.boddsMedian != null">
-        bodds_median = #{record.boddsMedian,jdbcType=DOUBLE},
-      </if>
-      <if test="record.boddsrkMin != null">
-        boddsrk_min = #{record.boddsrkMin,jdbcType=DOUBLE},
-      </if>
-      <if test="record.boddsrkMax != null">
-        boddsrk_max = #{record.boddsrkMax,jdbcType=DOUBLE},
-      </if>
-      <if test="record.boddsrkMean != null">
-        boddsrk_mean = #{record.boddsrkMean,jdbcType=DOUBLE},
-      </if>
-      <if test="record.boddsrkStddev != null">
-        boddsrk_stddev = #{record.boddsrkStddev,jdbcType=DOUBLE},
-      </if>
-      <if test="record.boddsrkMedian != null">
-        boddsrk_median = #{record.boddsrkMedian,jdbcType=DOUBLE},
-      </if>
-      <if test="record.probMin != null">
-        prob_min = #{record.probMin,jdbcType=DOUBLE},
-      </if>
-      <if test="record.probMax != null">
-        prob_max = #{record.probMax,jdbcType=DOUBLE},
-      </if>
-      <if test="record.probMean != null">
-        prob_mean = #{record.probMean,jdbcType=DOUBLE},
-      </if>
-      <if test="record.probStddev != null">
-        prob_stddev = #{record.probStddev,jdbcType=DOUBLE},
-      </if>
-      <if test="record.probMedian != null">
-        prob_median = #{record.probMedian,jdbcType=DOUBLE},
-      </if>
-      <if test="record.rorBestmin != null">
-        ror_bestmin = #{record.rorBestmin,jdbcType=DOUBLE},
-      </if>
-      <if test="record.rorBestmax != null">
-        ror_bestmax = #{record.rorBestmax,jdbcType=DOUBLE},
-      </if>
-      <if test="record.rorBetcnt != null">
-        ror_betcnt = #{record.rorBetcnt,jdbcType=INTEGER},
-      </if>
-      <if test="record.rorBetamt != null">
-        ror_betamt = #{record.rorBetamt,jdbcType=INTEGER},
-      </if>
-      <if test="record.rorHitcnt != null">
-        ror_hitcnt = #{record.rorHitcnt,jdbcType=INTEGER},
-      </if>
-      <if test="record.rorHitamt != null">
-        ror_hitamt = #{record.rorHitamt,jdbcType=INTEGER},
-      </if>
-      <if test="record.rorBetrate != null">
-        ror_betrate = #{record.rorBetrate,jdbcType=DOUBLE},
-      </if>
-      <if test="record.rorHitrate != null">
-        ror_hitrate = #{record.rorHitrate,jdbcType=DOUBLE},
-      </if>
-      <if test="record.rorIncomerate != null">
-        ror_incomerate = #{record.rorIncomerate,jdbcType=DOUBLE},
-      </if>
-      <if test="record.rorkBestmin != null">
-        rork_bestmin = #{record.rorkBestmin,jdbcType=DOUBLE},
-      </if>
-      <if test="record.rorkBestmax != null">
-        rork_bestmax = #{record.rorkBestmax,jdbcType=DOUBLE},
-      </if>
-      <if test="record.rorkBetcnt != null">
-        rork_betcnt = #{record.rorkBetcnt,jdbcType=INTEGER},
-      </if>
-      <if test="record.rorkBetamt != null">
-        rork_betamt = #{record.rorkBetamt,jdbcType=INTEGER},
-      </if>
-      <if test="record.rorkHitcnt != null">
-        rork_hitcnt = #{record.rorkHitcnt,jdbcType=INTEGER},
-      </if>
-      <if test="record.rorkHitamt != null">
-        rork_hitamt = #{record.rorkHitamt,jdbcType=INTEGER},
-      </if>
-      <if test="record.rorkBetrate != null">
-        rork_betrate = #{record.rorkBetrate,jdbcType=DOUBLE},
-      </if>
-      <if test="record.rorkHitrate != null">
-        rork_hitrate = #{record.rorkHitrate,jdbcType=DOUBLE},
-      </if>
-      <if test="record.rorkIncomerate != null">
-        rork_incomerate = #{record.rorkIncomerate,jdbcType=DOUBLE},
-      </if>
-      <if test="record.borBestmin != null">
-        bor_bestmin = #{record.borBestmin,jdbcType=DOUBLE},
-      </if>
-      <if test="record.borBestmax != null">
-        bor_bestmax = #{record.borBestmax,jdbcType=DOUBLE},
-      </if>
-      <if test="record.borBetcnt != null">
-        bor_betcnt = #{record.borBetcnt,jdbcType=INTEGER},
-      </if>
-      <if test="record.borBetamt != null">
-        bor_betamt = #{record.borBetamt,jdbcType=INTEGER},
-      </if>
-      <if test="record.borHitcnt != null">
-        bor_hitcnt = #{record.borHitcnt,jdbcType=INTEGER},
-      </if>
-      <if test="record.borHitamt != null">
-        bor_hitamt = #{record.borHitamt,jdbcType=INTEGER},
-      </if>
-      <if test="record.borBetrate != null">
-        bor_betrate = #{record.borBetrate,jdbcType=DOUBLE},
-      </if>
-      <if test="record.borHitrate != null">
-        bor_hitrate = #{record.borHitrate,jdbcType=DOUBLE},
-      </if>
-      <if test="record.borIncomerate != null">
-        bor_incomerate = #{record.borIncomerate,jdbcType=DOUBLE},
-      </if>
-      <if test="record.borkBestmin != null">
-        bork_bestmin = #{record.borkBestmin,jdbcType=DOUBLE},
-      </if>
-      <if test="record.borkBestmax != null">
-        bork_bestmax = #{record.borkBestmax,jdbcType=DOUBLE},
-      </if>
-      <if test="record.borkBetcnt != null">
-        bork_betcnt = #{record.borkBetcnt,jdbcType=INTEGER},
-      </if>
-      <if test="record.borkBetamt != null">
-        bork_betamt = #{record.borkBetamt,jdbcType=INTEGER},
-      </if>
-      <if test="record.borkHitcnt != null">
-        bork_hitcnt = #{record.borkHitcnt,jdbcType=INTEGER},
-      </if>
-      <if test="record.borkHitamt != null">
-        bork_hitamt = #{record.borkHitamt,jdbcType=INTEGER},
-      </if>
-      <if test="record.borkBetrate != null">
-        bork_betrate = #{record.borkBetrate,jdbcType=DOUBLE},
-      </if>
-      <if test="record.borkHitrate != null">
-        bork_hitrate = #{record.borkHitrate,jdbcType=DOUBLE},
-      </if>
-      <if test="record.borkIncomerate != null">
-        bork_incomerate = #{record.borkIncomerate,jdbcType=DOUBLE},
-      </if>
-      <if test="record.prBestmin != null">
-        pr_bestmin = #{record.prBestmin,jdbcType=DOUBLE},
-      </if>
-      <if test="record.prBestmax != null">
-        pr_bestmax = #{record.prBestmax,jdbcType=DOUBLE},
-      </if>
-      <if test="record.prBetcnt != null">
-        pr_betcnt = #{record.prBetcnt,jdbcType=INTEGER},
-      </if>
-      <if test="record.prBetamt != null">
-        pr_betamt = #{record.prBetamt,jdbcType=INTEGER},
-      </if>
-      <if test="record.prHitcnt != null">
-        pr_hitcnt = #{record.prHitcnt,jdbcType=INTEGER},
-      </if>
-      <if test="record.prHitamt != null">
-        pr_hitamt = #{record.prHitamt,jdbcType=INTEGER},
-      </if>
-      <if test="record.prBetrate != null">
-        pr_betrate = #{record.prBetrate,jdbcType=DOUBLE},
-      </if>
-      <if test="record.prHitrate != null">
-        pr_hitrate = #{record.prHitrate,jdbcType=DOUBLE},
-      </if>
-      <if test="record.prIncomerate != null">
-        pr_incomerate = #{record.prIncomerate,jdbcType=DOUBLE},
-      </if>
-      <if test="record.balPluscnt != null">
-        bal_pluscnt = #{record.balPluscnt,jdbcType=INTEGER},
-      </if>
-      <if test="record.resultType != null">
-        result_type = #{record.resultType,jdbcType=VARCHAR},
-      </if>
-      <if test="record.evaluationsId != null">
-        evaluations_id = #{record.evaluationsId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.bonusPr != null">
-        bonus_pr = #{record.bonusPr,jdbcType=VARCHAR},
-      </if>
-      <if test="record.bonusBor != null">
-        bonus_bor = #{record.bonusBor,jdbcType=VARCHAR},
-      </if>
-      <if test="record.bonusBork != null">
-        bonus_bork = #{record.bonusBork,jdbcType=VARCHAR},
-      </if>
-    </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExample" parameterType="map">
-    <!--
-      WARNING - @mbg.generated
-      This element is automatically generated by MyBatis Generator, do not modify.
-    -->
-    update public.ml_evaluation
-    set resultno = #{record.resultno,jdbcType=VARCHAR},
-      modelno = #{record.modelno,jdbcType=VARCHAR},
-      patternid = #{record.patternid,jdbcType=VARCHAR},
-      pattern = #{record.pattern,jdbcType=VARCHAR},
-      bettype = #{record.bettype,jdbcType=VARCHAR},
-      kumiban = #{record.kumiban,jdbcType=VARCHAR},
-      betcnt = #{record.betcnt,jdbcType=INTEGER},
-      hitcnt = #{record.hitcnt,jdbcType=INTEGER},
-      betamt = #{record.betamt,jdbcType=INTEGER},
-      hitamt = #{record.hitamt,jdbcType=INTEGER},
-      betrate = #{record.betrate,jdbcType=DOUBLE},
-      hitrate = #{record.hitrate,jdbcType=DOUBLE},
-      incomerate = #{record.incomerate,jdbcType=DOUBLE},
-      hmeanrate = #{record.hmeanrate,jdbcType=DOUBLE},
-      balance = #{record.balance,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler},
-      bal_slope = #{record.balSlope,jdbcType=ARRAY,typeHandler=com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler},
-      betr_slope = #{record.betrSlope,jdbcType=DOUBLE},
-      hitr_slope = #{record.hitrSlope,jdbcType=DOUBLE},
-      incr_slope = #{record.incrSlope,jdbcType=DOUBLE},
-      pt_precision = #{record.ptPrecision,jdbcType=DOUBLE},
-      pt_recall = #{record.ptRecall,jdbcType=DOUBLE},
-      pt_fmeasure = #{record.ptFmeasure,jdbcType=DOUBLE},
-      hodds_min = #{record.hoddsMin,jdbcType=DOUBLE},
-      hodds_max = #{record.hoddsMax,jdbcType=DOUBLE},
-      hodds_mean = #{record.hoddsMean,jdbcType=DOUBLE},
-      hodds_stddev = #{record.hoddsStddev,jdbcType=DOUBLE},
-      hodds_median = #{record.hoddsMedian,jdbcType=DOUBLE},
-      hoddsrk_min = #{record.hoddsrkMin,jdbcType=DOUBLE},
-      hoddsrk_max = #{record.hoddsrkMax,jdbcType=DOUBLE},
-      hoddsrk_mean = #{record.hoddsrkMean,jdbcType=DOUBLE},
-      hoddsrk_stddev = #{record.hoddsrkStddev,jdbcType=DOUBLE},
-      hoddsrk_median = #{record.hoddsrkMedian,jdbcType=DOUBLE},
-      rodds_min = #{record.roddsMin,jdbcType=DOUBLE},
-      rodds_max = #{record.roddsMax,jdbcType=DOUBLE},
-      rodds_mean = #{record.roddsMean,jdbcType=DOUBLE},
-      rodds_stddev = #{record.roddsStddev,jdbcType=DOUBLE},
-      rodds_median = #{record.roddsMedian,jdbcType=DOUBLE},
-      roddsrk_min = #{record.roddsrkMin,jdbcType=DOUBLE},
-      roddsrk_max = #{record.roddsrkMax,jdbcType=DOUBLE},
-      roddsrk_mean = #{record.roddsrkMean,jdbcType=DOUBLE},
-      roddsrk_stddev = #{record.roddsrkStddev,jdbcType=DOUBLE},
-      roddsrk_median = #{record.roddsrkMedian,jdbcType=DOUBLE},
-      bodds_min = #{record.boddsMin,jdbcType=DOUBLE},
-      bodds_max = #{record.boddsMax,jdbcType=DOUBLE},
-      bodds_mean = #{record.boddsMean,jdbcType=DOUBLE},
-      bodds_stddev = #{record.boddsStddev,jdbcType=DOUBLE},
-      bodds_median = #{record.boddsMedian,jdbcType=DOUBLE},
-      boddsrk_min = #{record.boddsrkMin,jdbcType=DOUBLE},
-      boddsrk_max = #{record.boddsrkMax,jdbcType=DOUBLE},
-      boddsrk_mean = #{record.boddsrkMean,jdbcType=DOUBLE},
-      boddsrk_stddev = #{record.boddsrkStddev,jdbcType=DOUBLE},
-      boddsrk_median = #{record.boddsrkMedian,jdbcType=DOUBLE},
-      prob_min = #{record.probMin,jdbcType=DOUBLE},
-      prob_max = #{record.probMax,jdbcType=DOUBLE},
-      prob_mean = #{record.probMean,jdbcType=DOUBLE},
-      prob_stddev = #{record.probStddev,jdbcType=DOUBLE},
-      prob_median = #{record.probMedian,jdbcType=DOUBLE},
-      ror_bestmin = #{record.rorBestmin,jdbcType=DOUBLE},
-      ror_bestmax = #{record.rorBestmax,jdbcType=DOUBLE},
-      ror_betcnt = #{record.rorBetcnt,jdbcType=INTEGER},
-      ror_betamt = #{record.rorBetamt,jdbcType=INTEGER},
-      ror_hitcnt = #{record.rorHitcnt,jdbcType=INTEGER},
-      ror_hitamt = #{record.rorHitamt,jdbcType=INTEGER},
-      ror_betrate = #{record.rorBetrate,jdbcType=DOUBLE},
-      ror_hitrate = #{record.rorHitrate,jdbcType=DOUBLE},
-      ror_incomerate = #{record.rorIncomerate,jdbcType=DOUBLE},
-      rork_bestmin = #{record.rorkBestmin,jdbcType=DOUBLE},
-      rork_bestmax = #{record.rorkBestmax,jdbcType=DOUBLE},
-      rork_betcnt = #{record.rorkBetcnt,jdbcType=INTEGER},
-      rork_betamt = #{record.rorkBetamt,jdbcType=INTEGER},
-      rork_hitcnt = #{record.rorkHitcnt,jdbcType=INTEGER},
-      rork_hitamt = #{record.rorkHitamt,jdbcType=INTEGER},
-      rork_betrate = #{record.rorkBetrate,jdbcType=DOUBLE},
-      rork_hitrate = #{record.rorkHitrate,jdbcType=DOUBLE},
-      rork_incomerate = #{record.rorkIncomerate,jdbcType=DOUBLE},
-      bor_bestmin = #{record.borBestmin,jdbcType=DOUBLE},
-      bor_bestmax = #{record.borBestmax,jdbcType=DOUBLE},
-      bor_betcnt = #{record.borBetcnt,jdbcType=INTEGER},
-      bor_betamt = #{record.borBetamt,jdbcType=INTEGER},
-      bor_hitcnt = #{record.borHitcnt,jdbcType=INTEGER},
-      bor_hitamt = #{record.borHitamt,jdbcType=INTEGER},
-      bor_betrate = #{record.borBetrate,jdbcType=DOUBLE},
-      bor_hitrate = #{record.borHitrate,jdbcType=DOUBLE},
-      bor_incomerate = #{record.borIncomerate,jdbcType=DOUBLE},
-      bork_bestmin = #{record.borkBestmin,jdbcType=DOUBLE},
-      bork_bestmax = #{record.borkBestmax,jdbcType=DOUBLE},
-      bork_betcnt = #{record.borkBetcnt,jdbcType=INTEGER},
-      bork_betamt = #{record.borkBetamt,jdbcType=INTEGER},
-      bork_hitcnt = #{record.borkHitcnt,jdbcType=INTEGER},
-      bork_hitamt = #{record.borkHitamt,jdbcType=INTEGER},
-      bork_betrate = #{record.borkBetrate,jdbcType=DOUBLE},
-      bork_hitrate = #{record.borkHitrate,jdbcType=DOUBLE},
-      bork_incomerate = #{record.borkIncomerate,jdbcType=DOUBLE},
-      pr_bestmin = #{record.prBestmin,jdbcType=DOUBLE},
-      pr_bestmax = #{record.prBestmax,jdbcType=DOUBLE},
-      pr_betcnt = #{record.prBetcnt,jdbcType=INTEGER},
-      pr_betamt = #{record.prBetamt,jdbcType=INTEGER},
-      pr_hitcnt = #{record.prHitcnt,jdbcType=INTEGER},
-      pr_hitamt = #{record.prHitamt,jdbcType=INTEGER},
-      pr_betrate = #{record.prBetrate,jdbcType=DOUBLE},
-      pr_hitrate = #{record.prHitrate,jdbcType=DOUBLE},
-      pr_incomerate = #{record.prIncomerate,jdbcType=DOUBLE},
-      bal_pluscnt = #{record.balPluscnt,jdbcType=INTEGER},
-      result_type = #{record.resultType,jdbcType=VARCHAR},
-      evaluations_id = #{record.evaluationsId,jdbcType=VARCHAR},
-      bonus_pr = #{record.bonusPr,jdbcType=VARCHAR},
-      bonus_bor = #{record.bonusBor,jdbcType=VARCHAR},
-      bonus_bork = #{record.bonusBork,jdbcType=VARCHAR}
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
 </mapper>

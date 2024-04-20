@@ -45,4 +45,9 @@ public class ProbabilityCalculatorSkewness extends AbstractProbabilityCalculator
 	Double getProbability3F(DBRecord rec) {
 		return MathUtil.convertToPercentile((Double) rec.getDouble("skewness"), min, max, 20);
 	}
+	@Override
+	Double getProbability4T(DBRecord rec) {
+		// ranker이외의 경우는 사용하지 말 것.
+		return 0.0;
+	}
 }

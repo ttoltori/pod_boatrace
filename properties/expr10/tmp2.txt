@@ -1,8 +1,16 @@
-ml_result 90
-ml_result 91
-ml_result 92
-ml_result 93
-ml_result 94
+
+ml_model 98102
+ml_model 98103
+
+ml_result 103
+
+ml_result 104
+
+ml_result 95
+ml_result 96
+ml_result 97
+ml_result 98
+ml_result 99
 
 ml_result 75
 ml_result 80
@@ -10,6 +18,9 @@ ml_result 81
 ml_result 82
 ml_result 83
 
+
+ml_classify 98102
+ml_classify 98103
 
 ml_ranking_classify 20007
 ml_ranking_classify 20008
@@ -38,6 +49,15 @@ ml_result 56
 ml_result 57
 
 ml_result 58
+
+20016 test
+mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,raceid,en,sex,age,lv,weight,branch,exhibit,stexhi,waku,fly,late,avgst,avgtime,nw,n2w,n3w,lw,l2w,l3w,mtno,m2w,btno,b2w,bork3t123,bork3t124,bork3t125,bork3t126,bork3t132,bork3t134,bork3t135,bork3t136,bork3t142,bork3t143,bork3t145,bork3t146,bork3t152,bork3t153,bork3t154,bork3t156,bork3t162,bork3t163,bork3t164,bork3t165,bork3t213,bork3t214,bork3t215,bork3t216,bork3t231,bork3t234,bork3t235,bork3t236,bork3t241,bork3t243,bork3t245,bork3t246,bork3t251,bork3t253,bork3t254,bork3t256,bork3t261,bork3t263,bork3t264,bork3t265,bork3t312,bork3t314,bork3t315,bork3t316,bork3t321,bork3t324,bork3t325,bork3t326,bork3t341,bork3t342,bork3t345,bork3t346,bork3t351,bork3t352,bork3t354,bork3t356,bork3t361,bork3t362,bork3t364,bork3t365,bork3t412,bork3t413,bork3t415,bork3t416,bork3t421,bork3t423,bork3t425,bork3t426,bork3t431,bork3t432,bork3t435,bork3t436,bork3t451,bork3t452,bork3t453,bork3t456,bork3t461,bork3t462,bork3t463,bork3t465,bork3t512,bork3t513,bork3t514,bork3t516,bork3t521,bork3t523,bork3t524,bork3t526,bork3t531,bork3t532,bork3t534,bork3t536,bork3t541,bork3t542,bork3t543,bork3t546,bork3t561,bork3t562,bork3t563,bork3t564,bork3t612,bork3t613,bork3t614,bork3t615,bork3t621,bork3t623,bork3t624,bork3t625,bork3t631,bork3t632,bork3t634,bork3t635,bork3t641,bork3t642,bork3t643,bork3t645,bork3t651,bork3t652,bork3t653,bork3t654::category,category,category,category,category,category,int,int,category,category,int64,category,category,int,category,float,category,float,float,category,int,int,float,float,float,float,float,float,float,float,int,float,int,float,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int
+
+params C:/Dev/experiment/expr10/arff/20016_rank1.csv model_filepath mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,raceid,en,sex,age,lv,weight,branch,exhibit,stexhi,waku,fly,late,avgst,avgtime,nw,n2w,n3w,lw,l2w,l3w,mtno,m2w,btno,b2w,bork3t123,bork3t124,bork3t125,bork3t126,bork3t132,bork3t134,bork3t135,bork3t136,bork3t142,bork3t143,bork3t145,bork3t146,bork3t152,bork3t153,bork3t154,bork3t156,bork3t162,bork3t163,bork3t164,bork3t165,bork3t213,bork3t214,bork3t215,bork3t216,bork3t231,bork3t234,bork3t235,bork3t236,bork3t241,bork3t243,bork3t245,bork3t246,bork3t251,bork3t253,bork3t254,bork3t256,bork3t261,bork3t263,bork3t264,bork3t265,bork3t312,bork3t314,bork3t315,bork3t316,bork3t321,bork3t324,bork3t325,bork3t326,bork3t341,bork3t342,bork3t345,bork3t346,bork3t351,bork3t352,bork3t354,bork3t356,bork3t361,bork3t362,bork3t364,bork3t365,bork3t412,bork3t413,bork3t415,bork3t416,bork3t421,bork3t423,bork3t425,bork3t426,bork3t431,bork3t432,bork3t435,bork3t436,bork3t451,bork3t452,bork3t453,bork3t456,bork3t461,bork3t462,bork3t463,bork3t465,bork3t512,bork3t513,bork3t514,bork3t516,bork3t521,bork3t523,bork3t524,bork3t526,bork3t531,bork3t532,bork3t534,bork3t536,bork3t541,bork3t542,bork3t543,bork3t546,bork3t561,bork3t562,bork3t563,bork3t564,bork3t612,bork3t613,bork3t614,bork3t615,bork3t621,bork3t623,bork3t624,bork3t625,bork3t631,bork3t632,bork3t634,bork3t635,bork3t641,bork3t642,bork3t643,bork3t645,bork3t651,bork3t652,bork3t653,bork3t654,class category,category,category,category,category,category,int,int,category,category,int64,category,category,int,category,float,category,float,float,category,int,int,float,float,float,float,float,float,float,float,int,float,int,float,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int
+
+
+20015 test
+params C:/Dev/experiment/expr10/arff/20015_rank1.csv model_filepath mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,raceid,en,sex,age,lv,weight,branch,exhibit,stexhi,waku,fly,late,avgst,avgtime,nw,n2w,n3w,lw,l2w,l3w,mtno,m2w,btno,b2w,bor3T123,bor3T124,bor3T125,bor3T126,bor3T132,bor3T134,bor3T135,bor3T136,bor3T142,bor3T143,bor3T145,bor3T146,bor3T152,bor3T153,bor3T154,bor3T156,bor3T162,bor3T163,bor3T164,bor3T165,bor3T213,bor3T214,bor3T215,bor3T216,bor3T231,bor3T234,bor3T235,bor3T236,bor3T241,bor3T243,bor3T245,bor3T246,bor3T251,bor3T253,bor3T254,bor3T256,bor3T261,bor3T263,bor3T264,bor3T265,bor3T312,bor3T314,bor3T315,bor3T316,bor3T321,bor3T324,bor3T325,bor3T326,bor3T341,bor3T342,bor3T345,bor3T346,bor3T351,bor3T352,bor3T354,bor3T356,bor3T361,bor3T362,bor3T364,bor3T365,bor3T412,bor3T413,bor3T415,bor3T416,bor3T421,bor3T423,bor3T425,bor3T426,bor3T431,bor3T432,bor3T435,bor3T436,bor3T451,bor3T452,bor3T453,bor3T456,bor3T461,bor3T462,bor3T463,bor3T465,bor3T512,bor3T513,bor3T514,bor3T516,bor3T521,bor3T523,bor3T524,bor3T526,bor3T531,bor3T532,bor3T534,bor3T536,bor3T541,bor3T542,bor3T543,bor3T546,bor3T561,bor3T562,bor3T563,bor3T564,bor3T612,bor3T613,bor3T614,bor3T615,bor3T621,bor3T623,bor3T624,bor3T625,bor3T631,bor3T632,bor3T634,bor3T635,bor3T641,bor3T642,bor3T643,bor3T645,bor3T651,bor3T652,bor3T653,bor3T654,class category,category,category,category,category,category,int,int,category,category,int64,category,category,int,category,float,category,float,float,category,int,int,float,float,float,float,float,float,float,float,int,float,int,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,int
 
 python C:/Dev/github/py_boatrace/boatrace/classification/lgbm/BoatLGBMRankerTrainer.py params C:/Dev/experiment/expr10/arff/20001_rank1.csv C:/Dev/experiment/expr10/model_release/20001/1/nopattern/20001_nopattern_20210601_rank1.model mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,raceid,en,sex,age,lv,weight,branch,exhibit,waku,fly,late,avgst,avgtime,nw,n2w,n3w,lw,l2w,l3w,mtno,m2w,btno,b2w,rcnt,rcntsp,cond,condsp,n1p,n1psp,n2p,n2psp,n3p,n3psp,n1pw,n1pwsp,n2pw,n2pwsp,n3pw,n3pwsp,avgw,avgwsp,lvlrank,nwrank,n2wrank,n3wrank,lwrank,l2wrank,l3wrank,m2rank,m3rank,stexhirank,exhirank,avgstrank,avgcnrank,seturank,class category,category,category,category,category,category,int,int,category,category,int64,category,category,int,category,float,category,float,category,int,int,float,float,float,float,float,float,float,float,int,float,int,float,int,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,int,int,int,int,int,int,int,int,int,int,int,int,int,int,category
 
