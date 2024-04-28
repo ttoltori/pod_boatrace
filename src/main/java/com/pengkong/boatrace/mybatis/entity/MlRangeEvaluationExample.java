@@ -8281,6 +8281,2166 @@ public class MlRangeEvaluationExample {
 			addCriterion("rexpror_incomerate not between", value1, value2, "rexprorIncomerate");
 			return (Criteria) this;
 		}
+
+		public Criteria andLexpborkBestminIsNull() {
+			addCriterion("lexpbork_bestmin is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBestminIsNotNull() {
+			addCriterion("lexpbork_bestmin is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBestminEqualTo(Double value) {
+			addCriterion("lexpbork_bestmin =", value, "lexpborkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBestminNotEqualTo(Double value) {
+			addCriterion("lexpbork_bestmin <>", value, "lexpborkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBestminGreaterThan(Double value) {
+			addCriterion("lexpbork_bestmin >", value, "lexpborkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBestminGreaterThanOrEqualTo(Double value) {
+			addCriterion("lexpbork_bestmin >=", value, "lexpborkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBestminLessThan(Double value) {
+			addCriterion("lexpbork_bestmin <", value, "lexpborkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBestminLessThanOrEqualTo(Double value) {
+			addCriterion("lexpbork_bestmin <=", value, "lexpborkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBestminIn(List<Double> values) {
+			addCriterion("lexpbork_bestmin in", values, "lexpborkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBestminNotIn(List<Double> values) {
+			addCriterion("lexpbork_bestmin not in", values, "lexpborkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBestminBetween(Double value1, Double value2) {
+			addCriterion("lexpbork_bestmin between", value1, value2, "lexpborkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBestminNotBetween(Double value1, Double value2) {
+			addCriterion("lexpbork_bestmin not between", value1, value2, "lexpborkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBestmaxIsNull() {
+			addCriterion("lexpbork_bestmax is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBestmaxIsNotNull() {
+			addCriterion("lexpbork_bestmax is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBestmaxEqualTo(Double value) {
+			addCriterion("lexpbork_bestmax =", value, "lexpborkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBestmaxNotEqualTo(Double value) {
+			addCriterion("lexpbork_bestmax <>", value, "lexpborkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBestmaxGreaterThan(Double value) {
+			addCriterion("lexpbork_bestmax >", value, "lexpborkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBestmaxGreaterThanOrEqualTo(Double value) {
+			addCriterion("lexpbork_bestmax >=", value, "lexpborkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBestmaxLessThan(Double value) {
+			addCriterion("lexpbork_bestmax <", value, "lexpborkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBestmaxLessThanOrEqualTo(Double value) {
+			addCriterion("lexpbork_bestmax <=", value, "lexpborkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBestmaxIn(List<Double> values) {
+			addCriterion("lexpbork_bestmax in", values, "lexpborkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBestmaxNotIn(List<Double> values) {
+			addCriterion("lexpbork_bestmax not in", values, "lexpborkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBestmaxBetween(Double value1, Double value2) {
+			addCriterion("lexpbork_bestmax between", value1, value2, "lexpborkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBestmaxNotBetween(Double value1, Double value2) {
+			addCriterion("lexpbork_bestmax not between", value1, value2, "lexpborkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetcntIsNull() {
+			addCriterion("lexpbork_betcnt is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetcntIsNotNull() {
+			addCriterion("lexpbork_betcnt is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetcntEqualTo(Integer value) {
+			addCriterion("lexpbork_betcnt =", value, "lexpborkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetcntNotEqualTo(Integer value) {
+			addCriterion("lexpbork_betcnt <>", value, "lexpborkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetcntGreaterThan(Integer value) {
+			addCriterion("lexpbork_betcnt >", value, "lexpborkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetcntGreaterThanOrEqualTo(Integer value) {
+			addCriterion("lexpbork_betcnt >=", value, "lexpborkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetcntLessThan(Integer value) {
+			addCriterion("lexpbork_betcnt <", value, "lexpborkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetcntLessThanOrEqualTo(Integer value) {
+			addCriterion("lexpbork_betcnt <=", value, "lexpborkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetcntIn(List<Integer> values) {
+			addCriterion("lexpbork_betcnt in", values, "lexpborkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetcntNotIn(List<Integer> values) {
+			addCriterion("lexpbork_betcnt not in", values, "lexpborkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetcntBetween(Integer value1, Integer value2) {
+			addCriterion("lexpbork_betcnt between", value1, value2, "lexpborkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetcntNotBetween(Integer value1, Integer value2) {
+			addCriterion("lexpbork_betcnt not between", value1, value2, "lexpborkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetamtIsNull() {
+			addCriterion("lexpbork_betamt is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetamtIsNotNull() {
+			addCriterion("lexpbork_betamt is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetamtEqualTo(Integer value) {
+			addCriterion("lexpbork_betamt =", value, "lexpborkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetamtNotEqualTo(Integer value) {
+			addCriterion("lexpbork_betamt <>", value, "lexpborkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetamtGreaterThan(Integer value) {
+			addCriterion("lexpbork_betamt >", value, "lexpborkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetamtGreaterThanOrEqualTo(Integer value) {
+			addCriterion("lexpbork_betamt >=", value, "lexpborkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetamtLessThan(Integer value) {
+			addCriterion("lexpbork_betamt <", value, "lexpborkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetamtLessThanOrEqualTo(Integer value) {
+			addCriterion("lexpbork_betamt <=", value, "lexpborkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetamtIn(List<Integer> values) {
+			addCriterion("lexpbork_betamt in", values, "lexpborkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetamtNotIn(List<Integer> values) {
+			addCriterion("lexpbork_betamt not in", values, "lexpborkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetamtBetween(Integer value1, Integer value2) {
+			addCriterion("lexpbork_betamt between", value1, value2, "lexpborkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetamtNotBetween(Integer value1, Integer value2) {
+			addCriterion("lexpbork_betamt not between", value1, value2, "lexpborkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitcntIsNull() {
+			addCriterion("lexpbork_hitcnt is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitcntIsNotNull() {
+			addCriterion("lexpbork_hitcnt is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitcntEqualTo(Integer value) {
+			addCriterion("lexpbork_hitcnt =", value, "lexpborkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitcntNotEqualTo(Integer value) {
+			addCriterion("lexpbork_hitcnt <>", value, "lexpborkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitcntGreaterThan(Integer value) {
+			addCriterion("lexpbork_hitcnt >", value, "lexpborkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitcntGreaterThanOrEqualTo(Integer value) {
+			addCriterion("lexpbork_hitcnt >=", value, "lexpborkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitcntLessThan(Integer value) {
+			addCriterion("lexpbork_hitcnt <", value, "lexpborkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitcntLessThanOrEqualTo(Integer value) {
+			addCriterion("lexpbork_hitcnt <=", value, "lexpborkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitcntIn(List<Integer> values) {
+			addCriterion("lexpbork_hitcnt in", values, "lexpborkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitcntNotIn(List<Integer> values) {
+			addCriterion("lexpbork_hitcnt not in", values, "lexpborkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitcntBetween(Integer value1, Integer value2) {
+			addCriterion("lexpbork_hitcnt between", value1, value2, "lexpborkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitcntNotBetween(Integer value1, Integer value2) {
+			addCriterion("lexpbork_hitcnt not between", value1, value2, "lexpborkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitamtIsNull() {
+			addCriterion("lexpbork_hitamt is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitamtIsNotNull() {
+			addCriterion("lexpbork_hitamt is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitamtEqualTo(Integer value) {
+			addCriterion("lexpbork_hitamt =", value, "lexpborkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitamtNotEqualTo(Integer value) {
+			addCriterion("lexpbork_hitamt <>", value, "lexpborkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitamtGreaterThan(Integer value) {
+			addCriterion("lexpbork_hitamt >", value, "lexpborkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitamtGreaterThanOrEqualTo(Integer value) {
+			addCriterion("lexpbork_hitamt >=", value, "lexpborkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitamtLessThan(Integer value) {
+			addCriterion("lexpbork_hitamt <", value, "lexpborkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitamtLessThanOrEqualTo(Integer value) {
+			addCriterion("lexpbork_hitamt <=", value, "lexpborkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitamtIn(List<Integer> values) {
+			addCriterion("lexpbork_hitamt in", values, "lexpborkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitamtNotIn(List<Integer> values) {
+			addCriterion("lexpbork_hitamt not in", values, "lexpborkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitamtBetween(Integer value1, Integer value2) {
+			addCriterion("lexpbork_hitamt between", value1, value2, "lexpborkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitamtNotBetween(Integer value1, Integer value2) {
+			addCriterion("lexpbork_hitamt not between", value1, value2, "lexpborkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetrateIsNull() {
+			addCriterion("lexpbork_betrate is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetrateIsNotNull() {
+			addCriterion("lexpbork_betrate is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetrateEqualTo(Double value) {
+			addCriterion("lexpbork_betrate =", value, "lexpborkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetrateNotEqualTo(Double value) {
+			addCriterion("lexpbork_betrate <>", value, "lexpborkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetrateGreaterThan(Double value) {
+			addCriterion("lexpbork_betrate >", value, "lexpborkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetrateGreaterThanOrEqualTo(Double value) {
+			addCriterion("lexpbork_betrate >=", value, "lexpborkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetrateLessThan(Double value) {
+			addCriterion("lexpbork_betrate <", value, "lexpborkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetrateLessThanOrEqualTo(Double value) {
+			addCriterion("lexpbork_betrate <=", value, "lexpborkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetrateIn(List<Double> values) {
+			addCriterion("lexpbork_betrate in", values, "lexpborkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetrateNotIn(List<Double> values) {
+			addCriterion("lexpbork_betrate not in", values, "lexpborkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetrateBetween(Double value1, Double value2) {
+			addCriterion("lexpbork_betrate between", value1, value2, "lexpborkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkBetrateNotBetween(Double value1, Double value2) {
+			addCriterion("lexpbork_betrate not between", value1, value2, "lexpborkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitrateIsNull() {
+			addCriterion("lexpbork_hitrate is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitrateIsNotNull() {
+			addCriterion("lexpbork_hitrate is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitrateEqualTo(Double value) {
+			addCriterion("lexpbork_hitrate =", value, "lexpborkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitrateNotEqualTo(Double value) {
+			addCriterion("lexpbork_hitrate <>", value, "lexpborkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitrateGreaterThan(Double value) {
+			addCriterion("lexpbork_hitrate >", value, "lexpborkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitrateGreaterThanOrEqualTo(Double value) {
+			addCriterion("lexpbork_hitrate >=", value, "lexpborkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitrateLessThan(Double value) {
+			addCriterion("lexpbork_hitrate <", value, "lexpborkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitrateLessThanOrEqualTo(Double value) {
+			addCriterion("lexpbork_hitrate <=", value, "lexpborkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitrateIn(List<Double> values) {
+			addCriterion("lexpbork_hitrate in", values, "lexpborkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitrateNotIn(List<Double> values) {
+			addCriterion("lexpbork_hitrate not in", values, "lexpborkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitrateBetween(Double value1, Double value2) {
+			addCriterion("lexpbork_hitrate between", value1, value2, "lexpborkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkHitrateNotBetween(Double value1, Double value2) {
+			addCriterion("lexpbork_hitrate not between", value1, value2, "lexpborkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkIncomerateIsNull() {
+			addCriterion("lexpbork_incomerate is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkIncomerateIsNotNull() {
+			addCriterion("lexpbork_incomerate is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkIncomerateEqualTo(Double value) {
+			addCriterion("lexpbork_incomerate =", value, "lexpborkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkIncomerateNotEqualTo(Double value) {
+			addCriterion("lexpbork_incomerate <>", value, "lexpborkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkIncomerateGreaterThan(Double value) {
+			addCriterion("lexpbork_incomerate >", value, "lexpborkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkIncomerateGreaterThanOrEqualTo(Double value) {
+			addCriterion("lexpbork_incomerate >=", value, "lexpborkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkIncomerateLessThan(Double value) {
+			addCriterion("lexpbork_incomerate <", value, "lexpborkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkIncomerateLessThanOrEqualTo(Double value) {
+			addCriterion("lexpbork_incomerate <=", value, "lexpborkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkIncomerateIn(List<Double> values) {
+			addCriterion("lexpbork_incomerate in", values, "lexpborkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkIncomerateNotIn(List<Double> values) {
+			addCriterion("lexpbork_incomerate not in", values, "lexpborkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkIncomerateBetween(Double value1, Double value2) {
+			addCriterion("lexpbork_incomerate between", value1, value2, "lexpborkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexpborkIncomerateNotBetween(Double value1, Double value2) {
+			addCriterion("lexpbork_incomerate not between", value1, value2, "lexpborkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBestminIsNull() {
+			addCriterion("rexpbork_bestmin is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBestminIsNotNull() {
+			addCriterion("rexpbork_bestmin is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBestminEqualTo(Double value) {
+			addCriterion("rexpbork_bestmin =", value, "rexpborkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBestminNotEqualTo(Double value) {
+			addCriterion("rexpbork_bestmin <>", value, "rexpborkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBestminGreaterThan(Double value) {
+			addCriterion("rexpbork_bestmin >", value, "rexpborkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBestminGreaterThanOrEqualTo(Double value) {
+			addCriterion("rexpbork_bestmin >=", value, "rexpborkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBestminLessThan(Double value) {
+			addCriterion("rexpbork_bestmin <", value, "rexpborkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBestminLessThanOrEqualTo(Double value) {
+			addCriterion("rexpbork_bestmin <=", value, "rexpborkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBestminIn(List<Double> values) {
+			addCriterion("rexpbork_bestmin in", values, "rexpborkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBestminNotIn(List<Double> values) {
+			addCriterion("rexpbork_bestmin not in", values, "rexpborkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBestminBetween(Double value1, Double value2) {
+			addCriterion("rexpbork_bestmin between", value1, value2, "rexpborkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBestminNotBetween(Double value1, Double value2) {
+			addCriterion("rexpbork_bestmin not between", value1, value2, "rexpborkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBestmaxIsNull() {
+			addCriterion("rexpbork_bestmax is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBestmaxIsNotNull() {
+			addCriterion("rexpbork_bestmax is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBestmaxEqualTo(Double value) {
+			addCriterion("rexpbork_bestmax =", value, "rexpborkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBestmaxNotEqualTo(Double value) {
+			addCriterion("rexpbork_bestmax <>", value, "rexpborkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBestmaxGreaterThan(Double value) {
+			addCriterion("rexpbork_bestmax >", value, "rexpborkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBestmaxGreaterThanOrEqualTo(Double value) {
+			addCriterion("rexpbork_bestmax >=", value, "rexpborkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBestmaxLessThan(Double value) {
+			addCriterion("rexpbork_bestmax <", value, "rexpborkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBestmaxLessThanOrEqualTo(Double value) {
+			addCriterion("rexpbork_bestmax <=", value, "rexpborkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBestmaxIn(List<Double> values) {
+			addCriterion("rexpbork_bestmax in", values, "rexpborkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBestmaxNotIn(List<Double> values) {
+			addCriterion("rexpbork_bestmax not in", values, "rexpborkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBestmaxBetween(Double value1, Double value2) {
+			addCriterion("rexpbork_bestmax between", value1, value2, "rexpborkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBestmaxNotBetween(Double value1, Double value2) {
+			addCriterion("rexpbork_bestmax not between", value1, value2, "rexpborkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetcntIsNull() {
+			addCriterion("rexpbork_betcnt is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetcntIsNotNull() {
+			addCriterion("rexpbork_betcnt is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetcntEqualTo(Integer value) {
+			addCriterion("rexpbork_betcnt =", value, "rexpborkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetcntNotEqualTo(Integer value) {
+			addCriterion("rexpbork_betcnt <>", value, "rexpborkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetcntGreaterThan(Integer value) {
+			addCriterion("rexpbork_betcnt >", value, "rexpborkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetcntGreaterThanOrEqualTo(Integer value) {
+			addCriterion("rexpbork_betcnt >=", value, "rexpborkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetcntLessThan(Integer value) {
+			addCriterion("rexpbork_betcnt <", value, "rexpborkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetcntLessThanOrEqualTo(Integer value) {
+			addCriterion("rexpbork_betcnt <=", value, "rexpborkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetcntIn(List<Integer> values) {
+			addCriterion("rexpbork_betcnt in", values, "rexpborkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetcntNotIn(List<Integer> values) {
+			addCriterion("rexpbork_betcnt not in", values, "rexpborkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetcntBetween(Integer value1, Integer value2) {
+			addCriterion("rexpbork_betcnt between", value1, value2, "rexpborkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetcntNotBetween(Integer value1, Integer value2) {
+			addCriterion("rexpbork_betcnt not between", value1, value2, "rexpborkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetamtIsNull() {
+			addCriterion("rexpbork_betamt is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetamtIsNotNull() {
+			addCriterion("rexpbork_betamt is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetamtEqualTo(Integer value) {
+			addCriterion("rexpbork_betamt =", value, "rexpborkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetamtNotEqualTo(Integer value) {
+			addCriterion("rexpbork_betamt <>", value, "rexpborkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetamtGreaterThan(Integer value) {
+			addCriterion("rexpbork_betamt >", value, "rexpborkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetamtGreaterThanOrEqualTo(Integer value) {
+			addCriterion("rexpbork_betamt >=", value, "rexpborkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetamtLessThan(Integer value) {
+			addCriterion("rexpbork_betamt <", value, "rexpborkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetamtLessThanOrEqualTo(Integer value) {
+			addCriterion("rexpbork_betamt <=", value, "rexpborkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetamtIn(List<Integer> values) {
+			addCriterion("rexpbork_betamt in", values, "rexpborkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetamtNotIn(List<Integer> values) {
+			addCriterion("rexpbork_betamt not in", values, "rexpborkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetamtBetween(Integer value1, Integer value2) {
+			addCriterion("rexpbork_betamt between", value1, value2, "rexpborkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetamtNotBetween(Integer value1, Integer value2) {
+			addCriterion("rexpbork_betamt not between", value1, value2, "rexpborkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitcntIsNull() {
+			addCriterion("rexpbork_hitcnt is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitcntIsNotNull() {
+			addCriterion("rexpbork_hitcnt is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitcntEqualTo(Integer value) {
+			addCriterion("rexpbork_hitcnt =", value, "rexpborkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitcntNotEqualTo(Integer value) {
+			addCriterion("rexpbork_hitcnt <>", value, "rexpborkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitcntGreaterThan(Integer value) {
+			addCriterion("rexpbork_hitcnt >", value, "rexpborkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitcntGreaterThanOrEqualTo(Integer value) {
+			addCriterion("rexpbork_hitcnt >=", value, "rexpborkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitcntLessThan(Integer value) {
+			addCriterion("rexpbork_hitcnt <", value, "rexpborkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitcntLessThanOrEqualTo(Integer value) {
+			addCriterion("rexpbork_hitcnt <=", value, "rexpborkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitcntIn(List<Integer> values) {
+			addCriterion("rexpbork_hitcnt in", values, "rexpborkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitcntNotIn(List<Integer> values) {
+			addCriterion("rexpbork_hitcnt not in", values, "rexpborkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitcntBetween(Integer value1, Integer value2) {
+			addCriterion("rexpbork_hitcnt between", value1, value2, "rexpborkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitcntNotBetween(Integer value1, Integer value2) {
+			addCriterion("rexpbork_hitcnt not between", value1, value2, "rexpborkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitamtIsNull() {
+			addCriterion("rexpbork_hitamt is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitamtIsNotNull() {
+			addCriterion("rexpbork_hitamt is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitamtEqualTo(Integer value) {
+			addCriterion("rexpbork_hitamt =", value, "rexpborkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitamtNotEqualTo(Integer value) {
+			addCriterion("rexpbork_hitamt <>", value, "rexpborkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitamtGreaterThan(Integer value) {
+			addCriterion("rexpbork_hitamt >", value, "rexpborkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitamtGreaterThanOrEqualTo(Integer value) {
+			addCriterion("rexpbork_hitamt >=", value, "rexpborkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitamtLessThan(Integer value) {
+			addCriterion("rexpbork_hitamt <", value, "rexpborkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitamtLessThanOrEqualTo(Integer value) {
+			addCriterion("rexpbork_hitamt <=", value, "rexpborkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitamtIn(List<Integer> values) {
+			addCriterion("rexpbork_hitamt in", values, "rexpborkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitamtNotIn(List<Integer> values) {
+			addCriterion("rexpbork_hitamt not in", values, "rexpborkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitamtBetween(Integer value1, Integer value2) {
+			addCriterion("rexpbork_hitamt between", value1, value2, "rexpborkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitamtNotBetween(Integer value1, Integer value2) {
+			addCriterion("rexpbork_hitamt not between", value1, value2, "rexpborkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetrateIsNull() {
+			addCriterion("rexpbork_betrate is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetrateIsNotNull() {
+			addCriterion("rexpbork_betrate is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetrateEqualTo(Double value) {
+			addCriterion("rexpbork_betrate =", value, "rexpborkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetrateNotEqualTo(Double value) {
+			addCriterion("rexpbork_betrate <>", value, "rexpborkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetrateGreaterThan(Double value) {
+			addCriterion("rexpbork_betrate >", value, "rexpborkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetrateGreaterThanOrEqualTo(Double value) {
+			addCriterion("rexpbork_betrate >=", value, "rexpborkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetrateLessThan(Double value) {
+			addCriterion("rexpbork_betrate <", value, "rexpborkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetrateLessThanOrEqualTo(Double value) {
+			addCriterion("rexpbork_betrate <=", value, "rexpborkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetrateIn(List<Double> values) {
+			addCriterion("rexpbork_betrate in", values, "rexpborkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetrateNotIn(List<Double> values) {
+			addCriterion("rexpbork_betrate not in", values, "rexpborkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetrateBetween(Double value1, Double value2) {
+			addCriterion("rexpbork_betrate between", value1, value2, "rexpborkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkBetrateNotBetween(Double value1, Double value2) {
+			addCriterion("rexpbork_betrate not between", value1, value2, "rexpborkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitrateIsNull() {
+			addCriterion("rexpbork_hitrate is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitrateIsNotNull() {
+			addCriterion("rexpbork_hitrate is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitrateEqualTo(Double value) {
+			addCriterion("rexpbork_hitrate =", value, "rexpborkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitrateNotEqualTo(Double value) {
+			addCriterion("rexpbork_hitrate <>", value, "rexpborkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitrateGreaterThan(Double value) {
+			addCriterion("rexpbork_hitrate >", value, "rexpborkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitrateGreaterThanOrEqualTo(Double value) {
+			addCriterion("rexpbork_hitrate >=", value, "rexpborkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitrateLessThan(Double value) {
+			addCriterion("rexpbork_hitrate <", value, "rexpborkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitrateLessThanOrEqualTo(Double value) {
+			addCriterion("rexpbork_hitrate <=", value, "rexpborkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitrateIn(List<Double> values) {
+			addCriterion("rexpbork_hitrate in", values, "rexpborkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitrateNotIn(List<Double> values) {
+			addCriterion("rexpbork_hitrate not in", values, "rexpborkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitrateBetween(Double value1, Double value2) {
+			addCriterion("rexpbork_hitrate between", value1, value2, "rexpborkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkHitrateNotBetween(Double value1, Double value2) {
+			addCriterion("rexpbork_hitrate not between", value1, value2, "rexpborkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkIncomerateIsNull() {
+			addCriterion("rexpbork_incomerate is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkIncomerateIsNotNull() {
+			addCriterion("rexpbork_incomerate is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkIncomerateEqualTo(Double value) {
+			addCriterion("rexpbork_incomerate =", value, "rexpborkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkIncomerateNotEqualTo(Double value) {
+			addCriterion("rexpbork_incomerate <>", value, "rexpborkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkIncomerateGreaterThan(Double value) {
+			addCriterion("rexpbork_incomerate >", value, "rexpborkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkIncomerateGreaterThanOrEqualTo(Double value) {
+			addCriterion("rexpbork_incomerate >=", value, "rexpborkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkIncomerateLessThan(Double value) {
+			addCriterion("rexpbork_incomerate <", value, "rexpborkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkIncomerateLessThanOrEqualTo(Double value) {
+			addCriterion("rexpbork_incomerate <=", value, "rexpborkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkIncomerateIn(List<Double> values) {
+			addCriterion("rexpbork_incomerate in", values, "rexpborkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkIncomerateNotIn(List<Double> values) {
+			addCriterion("rexpbork_incomerate not in", values, "rexpborkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkIncomerateBetween(Double value1, Double value2) {
+			addCriterion("rexpbork_incomerate between", value1, value2, "rexpborkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexpborkIncomerateNotBetween(Double value1, Double value2) {
+			addCriterion("rexpbork_incomerate not between", value1, value2, "rexpborkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBestminIsNull() {
+			addCriterion("lexprork_bestmin is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBestminIsNotNull() {
+			addCriterion("lexprork_bestmin is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBestminEqualTo(Double value) {
+			addCriterion("lexprork_bestmin =", value, "lexprorkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBestminNotEqualTo(Double value) {
+			addCriterion("lexprork_bestmin <>", value, "lexprorkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBestminGreaterThan(Double value) {
+			addCriterion("lexprork_bestmin >", value, "lexprorkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBestminGreaterThanOrEqualTo(Double value) {
+			addCriterion("lexprork_bestmin >=", value, "lexprorkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBestminLessThan(Double value) {
+			addCriterion("lexprork_bestmin <", value, "lexprorkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBestminLessThanOrEqualTo(Double value) {
+			addCriterion("lexprork_bestmin <=", value, "lexprorkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBestminIn(List<Double> values) {
+			addCriterion("lexprork_bestmin in", values, "lexprorkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBestminNotIn(List<Double> values) {
+			addCriterion("lexprork_bestmin not in", values, "lexprorkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBestminBetween(Double value1, Double value2) {
+			addCriterion("lexprork_bestmin between", value1, value2, "lexprorkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBestminNotBetween(Double value1, Double value2) {
+			addCriterion("lexprork_bestmin not between", value1, value2, "lexprorkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBestmaxIsNull() {
+			addCriterion("lexprork_bestmax is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBestmaxIsNotNull() {
+			addCriterion("lexprork_bestmax is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBestmaxEqualTo(Double value) {
+			addCriterion("lexprork_bestmax =", value, "lexprorkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBestmaxNotEqualTo(Double value) {
+			addCriterion("lexprork_bestmax <>", value, "lexprorkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBestmaxGreaterThan(Double value) {
+			addCriterion("lexprork_bestmax >", value, "lexprorkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBestmaxGreaterThanOrEqualTo(Double value) {
+			addCriterion("lexprork_bestmax >=", value, "lexprorkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBestmaxLessThan(Double value) {
+			addCriterion("lexprork_bestmax <", value, "lexprorkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBestmaxLessThanOrEqualTo(Double value) {
+			addCriterion("lexprork_bestmax <=", value, "lexprorkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBestmaxIn(List<Double> values) {
+			addCriterion("lexprork_bestmax in", values, "lexprorkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBestmaxNotIn(List<Double> values) {
+			addCriterion("lexprork_bestmax not in", values, "lexprorkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBestmaxBetween(Double value1, Double value2) {
+			addCriterion("lexprork_bestmax between", value1, value2, "lexprorkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBestmaxNotBetween(Double value1, Double value2) {
+			addCriterion("lexprork_bestmax not between", value1, value2, "lexprorkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetcntIsNull() {
+			addCriterion("lexprork_betcnt is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetcntIsNotNull() {
+			addCriterion("lexprork_betcnt is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetcntEqualTo(Integer value) {
+			addCriterion("lexprork_betcnt =", value, "lexprorkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetcntNotEqualTo(Integer value) {
+			addCriterion("lexprork_betcnt <>", value, "lexprorkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetcntGreaterThan(Integer value) {
+			addCriterion("lexprork_betcnt >", value, "lexprorkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetcntGreaterThanOrEqualTo(Integer value) {
+			addCriterion("lexprork_betcnt >=", value, "lexprorkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetcntLessThan(Integer value) {
+			addCriterion("lexprork_betcnt <", value, "lexprorkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetcntLessThanOrEqualTo(Integer value) {
+			addCriterion("lexprork_betcnt <=", value, "lexprorkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetcntIn(List<Integer> values) {
+			addCriterion("lexprork_betcnt in", values, "lexprorkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetcntNotIn(List<Integer> values) {
+			addCriterion("lexprork_betcnt not in", values, "lexprorkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetcntBetween(Integer value1, Integer value2) {
+			addCriterion("lexprork_betcnt between", value1, value2, "lexprorkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetcntNotBetween(Integer value1, Integer value2) {
+			addCriterion("lexprork_betcnt not between", value1, value2, "lexprorkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetamtIsNull() {
+			addCriterion("lexprork_betamt is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetamtIsNotNull() {
+			addCriterion("lexprork_betamt is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetamtEqualTo(Integer value) {
+			addCriterion("lexprork_betamt =", value, "lexprorkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetamtNotEqualTo(Integer value) {
+			addCriterion("lexprork_betamt <>", value, "lexprorkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetamtGreaterThan(Integer value) {
+			addCriterion("lexprork_betamt >", value, "lexprorkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetamtGreaterThanOrEqualTo(Integer value) {
+			addCriterion("lexprork_betamt >=", value, "lexprorkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetamtLessThan(Integer value) {
+			addCriterion("lexprork_betamt <", value, "lexprorkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetamtLessThanOrEqualTo(Integer value) {
+			addCriterion("lexprork_betamt <=", value, "lexprorkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetamtIn(List<Integer> values) {
+			addCriterion("lexprork_betamt in", values, "lexprorkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetamtNotIn(List<Integer> values) {
+			addCriterion("lexprork_betamt not in", values, "lexprorkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetamtBetween(Integer value1, Integer value2) {
+			addCriterion("lexprork_betamt between", value1, value2, "lexprorkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetamtNotBetween(Integer value1, Integer value2) {
+			addCriterion("lexprork_betamt not between", value1, value2, "lexprorkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitcntIsNull() {
+			addCriterion("lexprork_hitcnt is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitcntIsNotNull() {
+			addCriterion("lexprork_hitcnt is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitcntEqualTo(Integer value) {
+			addCriterion("lexprork_hitcnt =", value, "lexprorkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitcntNotEqualTo(Integer value) {
+			addCriterion("lexprork_hitcnt <>", value, "lexprorkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitcntGreaterThan(Integer value) {
+			addCriterion("lexprork_hitcnt >", value, "lexprorkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitcntGreaterThanOrEqualTo(Integer value) {
+			addCriterion("lexprork_hitcnt >=", value, "lexprorkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitcntLessThan(Integer value) {
+			addCriterion("lexprork_hitcnt <", value, "lexprorkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitcntLessThanOrEqualTo(Integer value) {
+			addCriterion("lexprork_hitcnt <=", value, "lexprorkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitcntIn(List<Integer> values) {
+			addCriterion("lexprork_hitcnt in", values, "lexprorkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitcntNotIn(List<Integer> values) {
+			addCriterion("lexprork_hitcnt not in", values, "lexprorkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitcntBetween(Integer value1, Integer value2) {
+			addCriterion("lexprork_hitcnt between", value1, value2, "lexprorkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitcntNotBetween(Integer value1, Integer value2) {
+			addCriterion("lexprork_hitcnt not between", value1, value2, "lexprorkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitamtIsNull() {
+			addCriterion("lexprork_hitamt is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitamtIsNotNull() {
+			addCriterion("lexprork_hitamt is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitamtEqualTo(Integer value) {
+			addCriterion("lexprork_hitamt =", value, "lexprorkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitamtNotEqualTo(Integer value) {
+			addCriterion("lexprork_hitamt <>", value, "lexprorkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitamtGreaterThan(Integer value) {
+			addCriterion("lexprork_hitamt >", value, "lexprorkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitamtGreaterThanOrEqualTo(Integer value) {
+			addCriterion("lexprork_hitamt >=", value, "lexprorkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitamtLessThan(Integer value) {
+			addCriterion("lexprork_hitamt <", value, "lexprorkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitamtLessThanOrEqualTo(Integer value) {
+			addCriterion("lexprork_hitamt <=", value, "lexprorkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitamtIn(List<Integer> values) {
+			addCriterion("lexprork_hitamt in", values, "lexprorkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitamtNotIn(List<Integer> values) {
+			addCriterion("lexprork_hitamt not in", values, "lexprorkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitamtBetween(Integer value1, Integer value2) {
+			addCriterion("lexprork_hitamt between", value1, value2, "lexprorkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitamtNotBetween(Integer value1, Integer value2) {
+			addCriterion("lexprork_hitamt not between", value1, value2, "lexprorkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetrateIsNull() {
+			addCriterion("lexprork_betrate is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetrateIsNotNull() {
+			addCriterion("lexprork_betrate is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetrateEqualTo(Double value) {
+			addCriterion("lexprork_betrate =", value, "lexprorkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetrateNotEqualTo(Double value) {
+			addCriterion("lexprork_betrate <>", value, "lexprorkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetrateGreaterThan(Double value) {
+			addCriterion("lexprork_betrate >", value, "lexprorkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetrateGreaterThanOrEqualTo(Double value) {
+			addCriterion("lexprork_betrate >=", value, "lexprorkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetrateLessThan(Double value) {
+			addCriterion("lexprork_betrate <", value, "lexprorkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetrateLessThanOrEqualTo(Double value) {
+			addCriterion("lexprork_betrate <=", value, "lexprorkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetrateIn(List<Double> values) {
+			addCriterion("lexprork_betrate in", values, "lexprorkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetrateNotIn(List<Double> values) {
+			addCriterion("lexprork_betrate not in", values, "lexprorkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetrateBetween(Double value1, Double value2) {
+			addCriterion("lexprork_betrate between", value1, value2, "lexprorkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkBetrateNotBetween(Double value1, Double value2) {
+			addCriterion("lexprork_betrate not between", value1, value2, "lexprorkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitrateIsNull() {
+			addCriterion("lexprork_hitrate is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitrateIsNotNull() {
+			addCriterion("lexprork_hitrate is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitrateEqualTo(Double value) {
+			addCriterion("lexprork_hitrate =", value, "lexprorkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitrateNotEqualTo(Double value) {
+			addCriterion("lexprork_hitrate <>", value, "lexprorkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitrateGreaterThan(Double value) {
+			addCriterion("lexprork_hitrate >", value, "lexprorkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitrateGreaterThanOrEqualTo(Double value) {
+			addCriterion("lexprork_hitrate >=", value, "lexprorkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitrateLessThan(Double value) {
+			addCriterion("lexprork_hitrate <", value, "lexprorkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitrateLessThanOrEqualTo(Double value) {
+			addCriterion("lexprork_hitrate <=", value, "lexprorkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitrateIn(List<Double> values) {
+			addCriterion("lexprork_hitrate in", values, "lexprorkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitrateNotIn(List<Double> values) {
+			addCriterion("lexprork_hitrate not in", values, "lexprorkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitrateBetween(Double value1, Double value2) {
+			addCriterion("lexprork_hitrate between", value1, value2, "lexprorkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkHitrateNotBetween(Double value1, Double value2) {
+			addCriterion("lexprork_hitrate not between", value1, value2, "lexprorkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkIncomerateIsNull() {
+			addCriterion("lexprork_incomerate is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkIncomerateIsNotNull() {
+			addCriterion("lexprork_incomerate is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkIncomerateEqualTo(Double value) {
+			addCriterion("lexprork_incomerate =", value, "lexprorkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkIncomerateNotEqualTo(Double value) {
+			addCriterion("lexprork_incomerate <>", value, "lexprorkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkIncomerateGreaterThan(Double value) {
+			addCriterion("lexprork_incomerate >", value, "lexprorkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkIncomerateGreaterThanOrEqualTo(Double value) {
+			addCriterion("lexprork_incomerate >=", value, "lexprorkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkIncomerateLessThan(Double value) {
+			addCriterion("lexprork_incomerate <", value, "lexprorkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkIncomerateLessThanOrEqualTo(Double value) {
+			addCriterion("lexprork_incomerate <=", value, "lexprorkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkIncomerateIn(List<Double> values) {
+			addCriterion("lexprork_incomerate in", values, "lexprorkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkIncomerateNotIn(List<Double> values) {
+			addCriterion("lexprork_incomerate not in", values, "lexprorkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkIncomerateBetween(Double value1, Double value2) {
+			addCriterion("lexprork_incomerate between", value1, value2, "lexprorkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andLexprorkIncomerateNotBetween(Double value1, Double value2) {
+			addCriterion("lexprork_incomerate not between", value1, value2, "lexprorkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBestminIsNull() {
+			addCriterion("rexprork_bestmin is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBestminIsNotNull() {
+			addCriterion("rexprork_bestmin is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBestminEqualTo(Double value) {
+			addCriterion("rexprork_bestmin =", value, "rexprorkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBestminNotEqualTo(Double value) {
+			addCriterion("rexprork_bestmin <>", value, "rexprorkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBestminGreaterThan(Double value) {
+			addCriterion("rexprork_bestmin >", value, "rexprorkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBestminGreaterThanOrEqualTo(Double value) {
+			addCriterion("rexprork_bestmin >=", value, "rexprorkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBestminLessThan(Double value) {
+			addCriterion("rexprork_bestmin <", value, "rexprorkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBestminLessThanOrEqualTo(Double value) {
+			addCriterion("rexprork_bestmin <=", value, "rexprorkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBestminIn(List<Double> values) {
+			addCriterion("rexprork_bestmin in", values, "rexprorkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBestminNotIn(List<Double> values) {
+			addCriterion("rexprork_bestmin not in", values, "rexprorkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBestminBetween(Double value1, Double value2) {
+			addCriterion("rexprork_bestmin between", value1, value2, "rexprorkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBestminNotBetween(Double value1, Double value2) {
+			addCriterion("rexprork_bestmin not between", value1, value2, "rexprorkBestmin");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBestmaxIsNull() {
+			addCriterion("rexprork_bestmax is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBestmaxIsNotNull() {
+			addCriterion("rexprork_bestmax is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBestmaxEqualTo(Double value) {
+			addCriterion("rexprork_bestmax =", value, "rexprorkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBestmaxNotEqualTo(Double value) {
+			addCriterion("rexprork_bestmax <>", value, "rexprorkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBestmaxGreaterThan(Double value) {
+			addCriterion("rexprork_bestmax >", value, "rexprorkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBestmaxGreaterThanOrEqualTo(Double value) {
+			addCriterion("rexprork_bestmax >=", value, "rexprorkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBestmaxLessThan(Double value) {
+			addCriterion("rexprork_bestmax <", value, "rexprorkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBestmaxLessThanOrEqualTo(Double value) {
+			addCriterion("rexprork_bestmax <=", value, "rexprorkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBestmaxIn(List<Double> values) {
+			addCriterion("rexprork_bestmax in", values, "rexprorkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBestmaxNotIn(List<Double> values) {
+			addCriterion("rexprork_bestmax not in", values, "rexprorkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBestmaxBetween(Double value1, Double value2) {
+			addCriterion("rexprork_bestmax between", value1, value2, "rexprorkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBestmaxNotBetween(Double value1, Double value2) {
+			addCriterion("rexprork_bestmax not between", value1, value2, "rexprorkBestmax");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetcntIsNull() {
+			addCriterion("rexprork_betcnt is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetcntIsNotNull() {
+			addCriterion("rexprork_betcnt is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetcntEqualTo(Integer value) {
+			addCriterion("rexprork_betcnt =", value, "rexprorkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetcntNotEqualTo(Integer value) {
+			addCriterion("rexprork_betcnt <>", value, "rexprorkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetcntGreaterThan(Integer value) {
+			addCriterion("rexprork_betcnt >", value, "rexprorkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetcntGreaterThanOrEqualTo(Integer value) {
+			addCriterion("rexprork_betcnt >=", value, "rexprorkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetcntLessThan(Integer value) {
+			addCriterion("rexprork_betcnt <", value, "rexprorkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetcntLessThanOrEqualTo(Integer value) {
+			addCriterion("rexprork_betcnt <=", value, "rexprorkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetcntIn(List<Integer> values) {
+			addCriterion("rexprork_betcnt in", values, "rexprorkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetcntNotIn(List<Integer> values) {
+			addCriterion("rexprork_betcnt not in", values, "rexprorkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetcntBetween(Integer value1, Integer value2) {
+			addCriterion("rexprork_betcnt between", value1, value2, "rexprorkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetcntNotBetween(Integer value1, Integer value2) {
+			addCriterion("rexprork_betcnt not between", value1, value2, "rexprorkBetcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetamtIsNull() {
+			addCriterion("rexprork_betamt is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetamtIsNotNull() {
+			addCriterion("rexprork_betamt is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetamtEqualTo(Integer value) {
+			addCriterion("rexprork_betamt =", value, "rexprorkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetamtNotEqualTo(Integer value) {
+			addCriterion("rexprork_betamt <>", value, "rexprorkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetamtGreaterThan(Integer value) {
+			addCriterion("rexprork_betamt >", value, "rexprorkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetamtGreaterThanOrEqualTo(Integer value) {
+			addCriterion("rexprork_betamt >=", value, "rexprorkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetamtLessThan(Integer value) {
+			addCriterion("rexprork_betamt <", value, "rexprorkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetamtLessThanOrEqualTo(Integer value) {
+			addCriterion("rexprork_betamt <=", value, "rexprorkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetamtIn(List<Integer> values) {
+			addCriterion("rexprork_betamt in", values, "rexprorkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetamtNotIn(List<Integer> values) {
+			addCriterion("rexprork_betamt not in", values, "rexprorkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetamtBetween(Integer value1, Integer value2) {
+			addCriterion("rexprork_betamt between", value1, value2, "rexprorkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetamtNotBetween(Integer value1, Integer value2) {
+			addCriterion("rexprork_betamt not between", value1, value2, "rexprorkBetamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitcntIsNull() {
+			addCriterion("rexprork_hitcnt is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitcntIsNotNull() {
+			addCriterion("rexprork_hitcnt is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitcntEqualTo(Integer value) {
+			addCriterion("rexprork_hitcnt =", value, "rexprorkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitcntNotEqualTo(Integer value) {
+			addCriterion("rexprork_hitcnt <>", value, "rexprorkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitcntGreaterThan(Integer value) {
+			addCriterion("rexprork_hitcnt >", value, "rexprorkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitcntGreaterThanOrEqualTo(Integer value) {
+			addCriterion("rexprork_hitcnt >=", value, "rexprorkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitcntLessThan(Integer value) {
+			addCriterion("rexprork_hitcnt <", value, "rexprorkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitcntLessThanOrEqualTo(Integer value) {
+			addCriterion("rexprork_hitcnt <=", value, "rexprorkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitcntIn(List<Integer> values) {
+			addCriterion("rexprork_hitcnt in", values, "rexprorkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitcntNotIn(List<Integer> values) {
+			addCriterion("rexprork_hitcnt not in", values, "rexprorkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitcntBetween(Integer value1, Integer value2) {
+			addCriterion("rexprork_hitcnt between", value1, value2, "rexprorkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitcntNotBetween(Integer value1, Integer value2) {
+			addCriterion("rexprork_hitcnt not between", value1, value2, "rexprorkHitcnt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitamtIsNull() {
+			addCriterion("rexprork_hitamt is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitamtIsNotNull() {
+			addCriterion("rexprork_hitamt is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitamtEqualTo(Integer value) {
+			addCriterion("rexprork_hitamt =", value, "rexprorkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitamtNotEqualTo(Integer value) {
+			addCriterion("rexprork_hitamt <>", value, "rexprorkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitamtGreaterThan(Integer value) {
+			addCriterion("rexprork_hitamt >", value, "rexprorkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitamtGreaterThanOrEqualTo(Integer value) {
+			addCriterion("rexprork_hitamt >=", value, "rexprorkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitamtLessThan(Integer value) {
+			addCriterion("rexprork_hitamt <", value, "rexprorkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitamtLessThanOrEqualTo(Integer value) {
+			addCriterion("rexprork_hitamt <=", value, "rexprorkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitamtIn(List<Integer> values) {
+			addCriterion("rexprork_hitamt in", values, "rexprorkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitamtNotIn(List<Integer> values) {
+			addCriterion("rexprork_hitamt not in", values, "rexprorkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitamtBetween(Integer value1, Integer value2) {
+			addCriterion("rexprork_hitamt between", value1, value2, "rexprorkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitamtNotBetween(Integer value1, Integer value2) {
+			addCriterion("rexprork_hitamt not between", value1, value2, "rexprorkHitamt");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetrateIsNull() {
+			addCriterion("rexprork_betrate is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetrateIsNotNull() {
+			addCriterion("rexprork_betrate is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetrateEqualTo(Double value) {
+			addCriterion("rexprork_betrate =", value, "rexprorkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetrateNotEqualTo(Double value) {
+			addCriterion("rexprork_betrate <>", value, "rexprorkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetrateGreaterThan(Double value) {
+			addCriterion("rexprork_betrate >", value, "rexprorkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetrateGreaterThanOrEqualTo(Double value) {
+			addCriterion("rexprork_betrate >=", value, "rexprorkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetrateLessThan(Double value) {
+			addCriterion("rexprork_betrate <", value, "rexprorkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetrateLessThanOrEqualTo(Double value) {
+			addCriterion("rexprork_betrate <=", value, "rexprorkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetrateIn(List<Double> values) {
+			addCriterion("rexprork_betrate in", values, "rexprorkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetrateNotIn(List<Double> values) {
+			addCriterion("rexprork_betrate not in", values, "rexprorkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetrateBetween(Double value1, Double value2) {
+			addCriterion("rexprork_betrate between", value1, value2, "rexprorkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkBetrateNotBetween(Double value1, Double value2) {
+			addCriterion("rexprork_betrate not between", value1, value2, "rexprorkBetrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitrateIsNull() {
+			addCriterion("rexprork_hitrate is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitrateIsNotNull() {
+			addCriterion("rexprork_hitrate is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitrateEqualTo(Double value) {
+			addCriterion("rexprork_hitrate =", value, "rexprorkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitrateNotEqualTo(Double value) {
+			addCriterion("rexprork_hitrate <>", value, "rexprorkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitrateGreaterThan(Double value) {
+			addCriterion("rexprork_hitrate >", value, "rexprorkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitrateGreaterThanOrEqualTo(Double value) {
+			addCriterion("rexprork_hitrate >=", value, "rexprorkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitrateLessThan(Double value) {
+			addCriterion("rexprork_hitrate <", value, "rexprorkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitrateLessThanOrEqualTo(Double value) {
+			addCriterion("rexprork_hitrate <=", value, "rexprorkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitrateIn(List<Double> values) {
+			addCriterion("rexprork_hitrate in", values, "rexprorkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitrateNotIn(List<Double> values) {
+			addCriterion("rexprork_hitrate not in", values, "rexprorkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitrateBetween(Double value1, Double value2) {
+			addCriterion("rexprork_hitrate between", value1, value2, "rexprorkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkHitrateNotBetween(Double value1, Double value2) {
+			addCriterion("rexprork_hitrate not between", value1, value2, "rexprorkHitrate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkIncomerateIsNull() {
+			addCriterion("rexprork_incomerate is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkIncomerateIsNotNull() {
+			addCriterion("rexprork_incomerate is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkIncomerateEqualTo(Double value) {
+			addCriterion("rexprork_incomerate =", value, "rexprorkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkIncomerateNotEqualTo(Double value) {
+			addCriterion("rexprork_incomerate <>", value, "rexprorkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkIncomerateGreaterThan(Double value) {
+			addCriterion("rexprork_incomerate >", value, "rexprorkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkIncomerateGreaterThanOrEqualTo(Double value) {
+			addCriterion("rexprork_incomerate >=", value, "rexprorkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkIncomerateLessThan(Double value) {
+			addCriterion("rexprork_incomerate <", value, "rexprorkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkIncomerateLessThanOrEqualTo(Double value) {
+			addCriterion("rexprork_incomerate <=", value, "rexprorkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkIncomerateIn(List<Double> values) {
+			addCriterion("rexprork_incomerate in", values, "rexprorkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkIncomerateNotIn(List<Double> values) {
+			addCriterion("rexprork_incomerate not in", values, "rexprorkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkIncomerateBetween(Double value1, Double value2) {
+			addCriterion("rexprork_incomerate between", value1, value2, "rexprorkIncomerate");
+			return (Criteria) this;
+		}
+
+		public Criteria andRexprorkIncomerateNotBetween(Double value1, Double value2) {
+			addCriterion("rexprork_incomerate not between", value1, value2, "rexprorkIncomerate");
+			return (Criteria) this;
+		}
 	}
 
 	/**

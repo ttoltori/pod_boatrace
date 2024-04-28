@@ -1,3 +1,61 @@
+ml_model_ranking_classify 89103
+ml_model_ranking_classify 20017
+
+
+
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/github/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20231126 20231210 C:/boatrace/offline/properties/offline.properties
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/github/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20231211 20231225 C:/boatrace/offline/properties/offline.properties
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/github/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20231226 20240110 C:/boatrace/offline/properties/offline.properties
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/github/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20240111 20240125 C:/boatrace/offline/properties/offline.properties
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/github/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20240126 20240210 C:/boatrace/offline/properties/offline.properties
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/github/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20240211 20240225 C:/boatrace/offline/properties/offline.properties
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/github/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20240226 20240310 C:/boatrace/offline/properties/offline.properties
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/github/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20240311 20240325 C:/boatrace/offline/properties/offline.properties
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/github/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20240326 20240410 C:/boatrace/offline/properties/offline.properties
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/github/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20240411 20240426 C:/boatrace/offline/properties/offline.properties
+
+
+106:91520
+108:91520
+
+
+
+ml_result 123
+ml_result 124
+
+ml_result 125
+ml_result 126
+
+ml_result 108
+ml_result 109
+ml_result 110
+ml_result 111
+
+ml_result 124
+ml_result 125
+ml_result 114
+ml_result 115
+ml_result 116
+ml_result 117
+
+ml_result 126
+ml_result 120
+ml_result 121
+ml_result 118
+ml_result 119
+ml_result 112
+ml_result 113
+
 
 ml_model 98102
 ml_model 98103
@@ -6,11 +64,13 @@ ml_result 103
 
 ml_result 104
 
-ml_result 95
-ml_result 96
-ml_result 97
-ml_result 98
-ml_result 99
+ml_result 1
+
+ml_result 123
+ml_result 124
+ml_result 125
+ml_result 126
+
 
 ml_result 75
 ml_result 80

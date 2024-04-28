@@ -13,6 +13,7 @@ import com.pengkong.boatrace.exp10.odds.provider.AbstractOddsProvider;
 import com.pengkong.boatrace.exp10.odds.provider.OddsProviderInterface;
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
 import com.pengkong.boatrace.exp10.result.stat.BorkPatternProvider;
+import com.pengkong.boatrace.exp10.simulation.calculator.expectation.AbstractProbabilityExpCalculator;
 import com.pengkong.boatrace.exp10.simulation.calculator.probability.AbstractProbabilityCalculator;
 import com.pengkong.boatrace.mybatis.entity.MlResult;
 import com.pengkong.boatrace.server.db.dto.DBRecord;
@@ -39,6 +40,9 @@ public abstract class AbstractResultCreator {
 	
 	/** 予想的中確率をbettype毎の戦略に沿って組み合わせるためのクラス */
 	protected AbstractProbabilityCalculator probabilityCalculator;
+	
+	/** 기대치(확률*옺즈)를 계산하기 위한 확률을 취득하는 클래스 */
+	protected AbstractProbabilityExpCalculator probabilityExpCalculator;
 	
 	protected BorkPatternProvider borkPatternProvider = new BorkPatternProvider();
 	
@@ -261,9 +265,21 @@ public abstract class AbstractResultCreator {
 		
 		// 直前オッズ
 		result = setbeforeOdds(result);
-		
 		// 確定オッズ
 		result = setResultOdds(result);
+		
+		if (result.getBetOdds() != null) {
+			result.setExpectBor(  MathUtil.scale0(probabilityExpCalculator.calculate(betType.getValue(), rec) * result.getBetOdds()) );
+		}
+		if (result.getBetOddsrank() != null) {
+			result.setExpectBork(  MathUtil.scale0(probabilityExpCalculator.calculate(betType.getValue(), rec) * result.getBetOddsrank()) );
+		}
+		if (result.getResultOdds() != null) {
+			result.setExpectRor(  MathUtil.scale0(probabilityExpCalculator.calculate(betType.getValue(), rec) * result.getResultOdds()) );
+		}
+		if (result.getResultOddsrank() != null) {
+			result.setExpectRork(  MathUtil.scale0(probabilityExpCalculator.calculate(betType.getValue(), rec) * result.getResultOddsrank()) );
+		}
 		
 		// レース結果設定 */
 		result = setRaceResult(betType, rec, result);

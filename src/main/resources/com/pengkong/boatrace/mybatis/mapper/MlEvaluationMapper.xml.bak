@@ -73,6 +73,16 @@
     <result column="expror_mean" jdbcType="DOUBLE" property="exprorMean" />
     <result column="expror_stddev" jdbcType="DOUBLE" property="exprorStddev" />
     <result column="expror_median" jdbcType="DOUBLE" property="exprorMedian" />
+    <result column="expbork_min" jdbcType="DOUBLE" property="expborkMin" />
+    <result column="expbork_max" jdbcType="DOUBLE" property="expborkMax" />
+    <result column="expbork_mean" jdbcType="DOUBLE" property="expborkMean" />
+    <result column="expbork_stddev" jdbcType="DOUBLE" property="expborkStddev" />
+    <result column="expbork_median" jdbcType="DOUBLE" property="expborkMedian" />
+    <result column="exprork_min" jdbcType="DOUBLE" property="exprorkMin" />
+    <result column="exprork_max" jdbcType="DOUBLE" property="exprorkMax" />
+    <result column="exprork_mean" jdbcType="DOUBLE" property="exprorkMean" />
+    <result column="exprork_stddev" jdbcType="DOUBLE" property="exprorkStddev" />
+    <result column="exprork_median" jdbcType="DOUBLE" property="exprorkMedian" />
     <result column="ror_bestmin" jdbcType="DOUBLE" property="rorBestmin" />
     <result column="ror_bestmax" jdbcType="DOUBLE" property="rorBestmax" />
     <result column="ror_betcnt" jdbcType="INTEGER" property="rorBetcnt" />
@@ -142,6 +152,24 @@
     <result column="expror_betrate" jdbcType="DOUBLE" property="exprorBetrate" />
     <result column="expror_hitrate" jdbcType="DOUBLE" property="exprorHitrate" />
     <result column="expror_incomerate" jdbcType="DOUBLE" property="exprorIncomerate" />
+    <result column="expbork_bestmin" jdbcType="DOUBLE" property="expborkBestmin" />
+    <result column="expbork_bestmax" jdbcType="DOUBLE" property="expborkBestmax" />
+    <result column="expbork_betcnt" jdbcType="INTEGER" property="expborkBetcnt" />
+    <result column="expbork_betamt" jdbcType="INTEGER" property="expborkBetamt" />
+    <result column="expbork_hitcnt" jdbcType="INTEGER" property="expborkHitcnt" />
+    <result column="expbork_hitamt" jdbcType="INTEGER" property="expborkHitamt" />
+    <result column="expbork_betrate" jdbcType="DOUBLE" property="expborkBetrate" />
+    <result column="expbork_hitrate" jdbcType="DOUBLE" property="expborkHitrate" />
+    <result column="expbork_incomerate" jdbcType="DOUBLE" property="expborkIncomerate" />
+    <result column="exprork_bestmin" jdbcType="DOUBLE" property="exprorkBestmin" />
+    <result column="exprork_bestmax" jdbcType="DOUBLE" property="exprorkBestmax" />
+    <result column="exprork_betcnt" jdbcType="INTEGER" property="exprorkBetcnt" />
+    <result column="exprork_betamt" jdbcType="INTEGER" property="exprorkBetamt" />
+    <result column="exprork_hitcnt" jdbcType="INTEGER" property="exprorkHitcnt" />
+    <result column="exprork_hitamt" jdbcType="INTEGER" property="exprorkHitamt" />
+    <result column="exprork_betrate" jdbcType="DOUBLE" property="exprorkBetrate" />
+    <result column="exprork_hitrate" jdbcType="DOUBLE" property="exprorkHitrate" />
+    <result column="exprork_incomerate" jdbcType="DOUBLE" property="exprorkIncomerate" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -190,17 +218,23 @@
     bodds_mean, bodds_stddev, bodds_median, boddsrk_min, boddsrk_max, boddsrk_mean, boddsrk_stddev, 
     boddsrk_median, prob_min, prob_max, prob_mean, prob_stddev, prob_median, expbor_min, 
     expbor_max, expbor_mean, expbor_stddev, expbor_median, expror_min, expror_max, expror_mean, 
-    expror_stddev, expror_median, ror_bestmin, ror_bestmax, ror_betcnt, ror_betamt, ror_hitcnt, 
-    ror_hitamt, ror_betrate, ror_hitrate, ror_incomerate, rork_bestmin, rork_bestmax, 
-    rork_betcnt, rork_betamt, rork_hitcnt, rork_hitamt, rork_betrate, rork_hitrate, rork_incomerate, 
-    bor_bestmin, bor_bestmax, bor_betcnt, bor_betamt, bor_hitcnt, bor_hitamt, bor_betrate, 
-    bor_hitrate, bor_incomerate, bork_bestmin, bork_bestmax, bork_betcnt, bork_betamt, 
-    bork_hitcnt, bork_hitamt, bork_betrate, bork_hitrate, bork_incomerate, pr_bestmin, 
-    pr_bestmax, pr_betcnt, pr_betamt, pr_hitcnt, pr_hitamt, pr_betrate, pr_hitrate, pr_incomerate, 
+    expror_stddev, expror_median, expbork_min, expbork_max, expbork_mean, expbork_stddev, 
+    expbork_median, exprork_min, exprork_max, exprork_mean, exprork_stddev, exprork_median, 
+    ror_bestmin, ror_bestmax, ror_betcnt, ror_betamt, ror_hitcnt, ror_hitamt, ror_betrate, 
+    ror_hitrate, ror_incomerate, rork_bestmin, rork_bestmax, rork_betcnt, rork_betamt, 
+    rork_hitcnt, rork_hitamt, rork_betrate, rork_hitrate, rork_incomerate, bor_bestmin, 
+    bor_bestmax, bor_betcnt, bor_betamt, bor_hitcnt, bor_hitamt, bor_betrate, bor_hitrate, 
+    bor_incomerate, bork_bestmin, bork_bestmax, bork_betcnt, bork_betamt, bork_hitcnt, 
+    bork_hitamt, bork_betrate, bork_hitrate, bork_incomerate, pr_bestmin, pr_bestmax, 
+    pr_betcnt, pr_betamt, pr_hitcnt, pr_hitamt, pr_betrate, pr_hitrate, pr_incomerate, 
     bal_pluscnt, result_type, evaluations_id, bonus_pr, bonus_bor, bonus_bork, expbor_bestmin, 
     expbor_bestmax, expbor_betcnt, expbor_betamt, expbor_hitcnt, expbor_hitamt, expbor_betrate, 
     expbor_hitrate, expbor_incomerate, expror_bestmin, expror_bestmax, expror_betcnt, 
-    expror_betamt, expror_hitcnt, expror_hitamt, expror_betrate, expror_hitrate, expror_incomerate
+    expror_betamt, expror_hitcnt, expror_hitamt, expror_betrate, expror_hitrate, expror_incomerate, 
+    expbork_bestmin, expbork_bestmax, expbork_betcnt, expbork_betamt, expbork_hitcnt, 
+    expbork_hitamt, expbork_betrate, expbork_hitrate, expbork_incomerate, exprork_bestmin, 
+    exprork_bestmax, exprork_betcnt, exprork_betamt, exprork_hitcnt, exprork_hitamt, 
+    exprork_betrate, exprork_hitrate, exprork_incomerate
   </sql>
   <select id="selectByExample" parameterType="com.pengkong.boatrace.mybatis.entity.MlEvaluationExample" resultMap="BaseResultMap">
     <!--
@@ -258,30 +292,39 @@
       expbor_min, expbor_max, expbor_mean, 
       expbor_stddev, expbor_median, expror_min, 
       expror_max, expror_mean, expror_stddev, 
-      expror_median, ror_bestmin, ror_bestmax, 
-      ror_betcnt, ror_betamt, ror_hitcnt, 
-      ror_hitamt, ror_betrate, ror_hitrate, 
-      ror_incomerate, rork_bestmin, rork_bestmax, 
-      rork_betcnt, rork_betamt, rork_hitcnt, 
-      rork_hitamt, rork_betrate, rork_hitrate, 
-      rork_incomerate, bor_bestmin, bor_bestmax, 
-      bor_betcnt, bor_betamt, bor_hitcnt, 
-      bor_hitamt, bor_betrate, bor_hitrate, 
-      bor_incomerate, bork_bestmin, bork_bestmax, 
-      bork_betcnt, bork_betamt, bork_hitcnt, 
-      bork_hitamt, bork_betrate, bork_hitrate, 
-      bork_incomerate, pr_bestmin, pr_bestmax, 
-      pr_betcnt, pr_betamt, pr_hitcnt, 
-      pr_hitamt, pr_betrate, pr_hitrate, 
-      pr_incomerate, bal_pluscnt, result_type, 
-      evaluations_id, bonus_pr, bonus_bor, 
-      bonus_bork, expbor_bestmin, expbor_bestmax, 
-      expbor_betcnt, expbor_betamt, expbor_hitcnt, 
-      expbor_hitamt, expbor_betrate, expbor_hitrate, 
-      expbor_incomerate, expror_bestmin, expror_bestmax, 
-      expror_betcnt, expror_betamt, expror_hitcnt, 
-      expror_hitamt, expror_betrate, expror_hitrate, 
-      expror_incomerate)
+      expror_median, expbork_min, expbork_max, 
+      expbork_mean, expbork_stddev, expbork_median, 
+      exprork_min, exprork_max, exprork_mean, 
+      exprork_stddev, exprork_median, ror_bestmin, 
+      ror_bestmax, ror_betcnt, ror_betamt, 
+      ror_hitcnt, ror_hitamt, ror_betrate, 
+      ror_hitrate, ror_incomerate, rork_bestmin, 
+      rork_bestmax, rork_betcnt, rork_betamt, 
+      rork_hitcnt, rork_hitamt, rork_betrate, 
+      rork_hitrate, rork_incomerate, bor_bestmin, 
+      bor_bestmax, bor_betcnt, bor_betamt, 
+      bor_hitcnt, bor_hitamt, bor_betrate, 
+      bor_hitrate, bor_incomerate, bork_bestmin, 
+      bork_bestmax, bork_betcnt, bork_betamt, 
+      bork_hitcnt, bork_hitamt, bork_betrate, 
+      bork_hitrate, bork_incomerate, pr_bestmin, 
+      pr_bestmax, pr_betcnt, pr_betamt, 
+      pr_hitcnt, pr_hitamt, pr_betrate, 
+      pr_hitrate, pr_incomerate, bal_pluscnt, 
+      result_type, evaluations_id, bonus_pr, 
+      bonus_bor, bonus_bork, expbor_bestmin, 
+      expbor_bestmax, expbor_betcnt, expbor_betamt, 
+      expbor_hitcnt, expbor_hitamt, expbor_betrate, 
+      expbor_hitrate, expbor_incomerate, expror_bestmin, 
+      expror_bestmax, expror_betcnt, expror_betamt, 
+      expror_hitcnt, expror_hitamt, expror_betrate, 
+      expror_hitrate, expror_incomerate, expbork_bestmin, 
+      expbork_bestmax, expbork_betcnt, expbork_betamt, 
+      expbork_hitcnt, expbork_hitamt, expbork_betrate, 
+      expbork_hitrate, expbork_incomerate, exprork_bestmin, 
+      exprork_bestmax, exprork_betcnt, exprork_betamt, 
+      exprork_hitcnt, exprork_hitamt, exprork_betrate, 
+      exprork_hitrate, exprork_incomerate)
     values (#{resultno,jdbcType=VARCHAR}, #{modelno,jdbcType=VARCHAR}, #{patternid,jdbcType=VARCHAR}, 
       #{pattern,jdbcType=VARCHAR}, #{bettype,jdbcType=VARCHAR}, #{kumiban,jdbcType=VARCHAR}, 
       #{betcnt,jdbcType=INTEGER}, #{hitcnt,jdbcType=INTEGER}, #{betamt,jdbcType=INTEGER}, 
@@ -306,30 +349,39 @@
       #{expborMin,jdbcType=DOUBLE}, #{expborMax,jdbcType=DOUBLE}, #{expborMean,jdbcType=DOUBLE}, 
       #{expborStddev,jdbcType=DOUBLE}, #{expborMedian,jdbcType=DOUBLE}, #{exprorMin,jdbcType=DOUBLE}, 
       #{exprorMax,jdbcType=DOUBLE}, #{exprorMean,jdbcType=DOUBLE}, #{exprorStddev,jdbcType=DOUBLE}, 
-      #{exprorMedian,jdbcType=DOUBLE}, #{rorBestmin,jdbcType=DOUBLE}, #{rorBestmax,jdbcType=DOUBLE}, 
-      #{rorBetcnt,jdbcType=INTEGER}, #{rorBetamt,jdbcType=INTEGER}, #{rorHitcnt,jdbcType=INTEGER}, 
-      #{rorHitamt,jdbcType=INTEGER}, #{rorBetrate,jdbcType=DOUBLE}, #{rorHitrate,jdbcType=DOUBLE}, 
-      #{rorIncomerate,jdbcType=DOUBLE}, #{rorkBestmin,jdbcType=DOUBLE}, #{rorkBestmax,jdbcType=DOUBLE}, 
-      #{rorkBetcnt,jdbcType=INTEGER}, #{rorkBetamt,jdbcType=INTEGER}, #{rorkHitcnt,jdbcType=INTEGER}, 
-      #{rorkHitamt,jdbcType=INTEGER}, #{rorkBetrate,jdbcType=DOUBLE}, #{rorkHitrate,jdbcType=DOUBLE}, 
-      #{rorkIncomerate,jdbcType=DOUBLE}, #{borBestmin,jdbcType=DOUBLE}, #{borBestmax,jdbcType=DOUBLE}, 
-      #{borBetcnt,jdbcType=INTEGER}, #{borBetamt,jdbcType=INTEGER}, #{borHitcnt,jdbcType=INTEGER}, 
-      #{borHitamt,jdbcType=INTEGER}, #{borBetrate,jdbcType=DOUBLE}, #{borHitrate,jdbcType=DOUBLE}, 
-      #{borIncomerate,jdbcType=DOUBLE}, #{borkBestmin,jdbcType=DOUBLE}, #{borkBestmax,jdbcType=DOUBLE}, 
-      #{borkBetcnt,jdbcType=INTEGER}, #{borkBetamt,jdbcType=INTEGER}, #{borkHitcnt,jdbcType=INTEGER}, 
-      #{borkHitamt,jdbcType=INTEGER}, #{borkBetrate,jdbcType=DOUBLE}, #{borkHitrate,jdbcType=DOUBLE}, 
-      #{borkIncomerate,jdbcType=DOUBLE}, #{prBestmin,jdbcType=DOUBLE}, #{prBestmax,jdbcType=DOUBLE}, 
-      #{prBetcnt,jdbcType=INTEGER}, #{prBetamt,jdbcType=INTEGER}, #{prHitcnt,jdbcType=INTEGER}, 
-      #{prHitamt,jdbcType=INTEGER}, #{prBetrate,jdbcType=DOUBLE}, #{prHitrate,jdbcType=DOUBLE}, 
-      #{prIncomerate,jdbcType=DOUBLE}, #{balPluscnt,jdbcType=INTEGER}, #{resultType,jdbcType=VARCHAR}, 
-      #{evaluationsId,jdbcType=VARCHAR}, #{bonusPr,jdbcType=VARCHAR}, #{bonusBor,jdbcType=VARCHAR}, 
-      #{bonusBork,jdbcType=VARCHAR}, #{expborBestmin,jdbcType=DOUBLE}, #{expborBestmax,jdbcType=DOUBLE}, 
-      #{expborBetcnt,jdbcType=INTEGER}, #{expborBetamt,jdbcType=INTEGER}, #{expborHitcnt,jdbcType=INTEGER}, 
-      #{expborHitamt,jdbcType=INTEGER}, #{expborBetrate,jdbcType=DOUBLE}, #{expborHitrate,jdbcType=DOUBLE}, 
-      #{expborIncomerate,jdbcType=DOUBLE}, #{exprorBestmin,jdbcType=DOUBLE}, #{exprorBestmax,jdbcType=DOUBLE}, 
-      #{exprorBetcnt,jdbcType=INTEGER}, #{exprorBetamt,jdbcType=INTEGER}, #{exprorHitcnt,jdbcType=INTEGER}, 
-      #{exprorHitamt,jdbcType=INTEGER}, #{exprorBetrate,jdbcType=DOUBLE}, #{exprorHitrate,jdbcType=DOUBLE}, 
-      #{exprorIncomerate,jdbcType=DOUBLE})
+      #{exprorMedian,jdbcType=DOUBLE}, #{expborkMin,jdbcType=DOUBLE}, #{expborkMax,jdbcType=DOUBLE}, 
+      #{expborkMean,jdbcType=DOUBLE}, #{expborkStddev,jdbcType=DOUBLE}, #{expborkMedian,jdbcType=DOUBLE}, 
+      #{exprorkMin,jdbcType=DOUBLE}, #{exprorkMax,jdbcType=DOUBLE}, #{exprorkMean,jdbcType=DOUBLE}, 
+      #{exprorkStddev,jdbcType=DOUBLE}, #{exprorkMedian,jdbcType=DOUBLE}, #{rorBestmin,jdbcType=DOUBLE}, 
+      #{rorBestmax,jdbcType=DOUBLE}, #{rorBetcnt,jdbcType=INTEGER}, #{rorBetamt,jdbcType=INTEGER}, 
+      #{rorHitcnt,jdbcType=INTEGER}, #{rorHitamt,jdbcType=INTEGER}, #{rorBetrate,jdbcType=DOUBLE}, 
+      #{rorHitrate,jdbcType=DOUBLE}, #{rorIncomerate,jdbcType=DOUBLE}, #{rorkBestmin,jdbcType=DOUBLE}, 
+      #{rorkBestmax,jdbcType=DOUBLE}, #{rorkBetcnt,jdbcType=INTEGER}, #{rorkBetamt,jdbcType=INTEGER}, 
+      #{rorkHitcnt,jdbcType=INTEGER}, #{rorkHitamt,jdbcType=INTEGER}, #{rorkBetrate,jdbcType=DOUBLE}, 
+      #{rorkHitrate,jdbcType=DOUBLE}, #{rorkIncomerate,jdbcType=DOUBLE}, #{borBestmin,jdbcType=DOUBLE}, 
+      #{borBestmax,jdbcType=DOUBLE}, #{borBetcnt,jdbcType=INTEGER}, #{borBetamt,jdbcType=INTEGER}, 
+      #{borHitcnt,jdbcType=INTEGER}, #{borHitamt,jdbcType=INTEGER}, #{borBetrate,jdbcType=DOUBLE}, 
+      #{borHitrate,jdbcType=DOUBLE}, #{borIncomerate,jdbcType=DOUBLE}, #{borkBestmin,jdbcType=DOUBLE}, 
+      #{borkBestmax,jdbcType=DOUBLE}, #{borkBetcnt,jdbcType=INTEGER}, #{borkBetamt,jdbcType=INTEGER}, 
+      #{borkHitcnt,jdbcType=INTEGER}, #{borkHitamt,jdbcType=INTEGER}, #{borkBetrate,jdbcType=DOUBLE}, 
+      #{borkHitrate,jdbcType=DOUBLE}, #{borkIncomerate,jdbcType=DOUBLE}, #{prBestmin,jdbcType=DOUBLE}, 
+      #{prBestmax,jdbcType=DOUBLE}, #{prBetcnt,jdbcType=INTEGER}, #{prBetamt,jdbcType=INTEGER}, 
+      #{prHitcnt,jdbcType=INTEGER}, #{prHitamt,jdbcType=INTEGER}, #{prBetrate,jdbcType=DOUBLE}, 
+      #{prHitrate,jdbcType=DOUBLE}, #{prIncomerate,jdbcType=DOUBLE}, #{balPluscnt,jdbcType=INTEGER}, 
+      #{resultType,jdbcType=VARCHAR}, #{evaluationsId,jdbcType=VARCHAR}, #{bonusPr,jdbcType=VARCHAR}, 
+      #{bonusBor,jdbcType=VARCHAR}, #{bonusBork,jdbcType=VARCHAR}, #{expborBestmin,jdbcType=DOUBLE}, 
+      #{expborBestmax,jdbcType=DOUBLE}, #{expborBetcnt,jdbcType=INTEGER}, #{expborBetamt,jdbcType=INTEGER}, 
+      #{expborHitcnt,jdbcType=INTEGER}, #{expborHitamt,jdbcType=INTEGER}, #{expborBetrate,jdbcType=DOUBLE}, 
+      #{expborHitrate,jdbcType=DOUBLE}, #{expborIncomerate,jdbcType=DOUBLE}, #{exprorBestmin,jdbcType=DOUBLE}, 
+      #{exprorBestmax,jdbcType=DOUBLE}, #{exprorBetcnt,jdbcType=INTEGER}, #{exprorBetamt,jdbcType=INTEGER}, 
+      #{exprorHitcnt,jdbcType=INTEGER}, #{exprorHitamt,jdbcType=INTEGER}, #{exprorBetrate,jdbcType=DOUBLE}, 
+      #{exprorHitrate,jdbcType=DOUBLE}, #{exprorIncomerate,jdbcType=DOUBLE}, #{expborkBestmin,jdbcType=DOUBLE}, 
+      #{expborkBestmax,jdbcType=DOUBLE}, #{expborkBetcnt,jdbcType=INTEGER}, #{expborkBetamt,jdbcType=INTEGER}, 
+      #{expborkHitcnt,jdbcType=INTEGER}, #{expborkHitamt,jdbcType=INTEGER}, #{expborkBetrate,jdbcType=DOUBLE}, 
+      #{expborkHitrate,jdbcType=DOUBLE}, #{expborkIncomerate,jdbcType=DOUBLE}, #{exprorkBestmin,jdbcType=DOUBLE}, 
+      #{exprorkBestmax,jdbcType=DOUBLE}, #{exprorkBetcnt,jdbcType=INTEGER}, #{exprorkBetamt,jdbcType=INTEGER}, 
+      #{exprorkHitcnt,jdbcType=INTEGER}, #{exprorkHitamt,jdbcType=INTEGER}, #{exprorkBetrate,jdbcType=DOUBLE}, 
+      #{exprorkHitrate,jdbcType=DOUBLE}, #{exprorkIncomerate,jdbcType=DOUBLE})
   </insert>
   <insert id="insertSelective" parameterType="com.pengkong.boatrace.mybatis.entity.MlEvaluation">
     <!--
@@ -384,7 +436,7 @@
         balance,
       </if>
       <if test="balSlope != null">
-        balSlope,
+        bal_slope,
       </if>
       <if test="betrSlope != null">
         betr_slope,
@@ -538,6 +590,36 @@
       </if>
       <if test="exprorMedian != null">
         expror_median,
+      </if>
+      <if test="expborkMin != null">
+        expbork_min,
+      </if>
+      <if test="expborkMax != null">
+        expbork_max,
+      </if>
+      <if test="expborkMean != null">
+        expbork_mean,
+      </if>
+      <if test="expborkStddev != null">
+        expbork_stddev,
+      </if>
+      <if test="expborkMedian != null">
+        expbork_median,
+      </if>
+      <if test="exprorkMin != null">
+        exprork_min,
+      </if>
+      <if test="exprorkMax != null">
+        exprork_max,
+      </if>
+      <if test="exprorkMean != null">
+        exprork_mean,
+      </if>
+      <if test="exprorkStddev != null">
+        exprork_stddev,
+      </if>
+      <if test="exprorkMedian != null">
+        exprork_median,
       </if>
       <if test="rorBestmin != null">
         ror_bestmin,
@@ -746,6 +828,60 @@
       <if test="exprorIncomerate != null">
         expror_incomerate,
       </if>
+      <if test="expborkBestmin != null">
+        expbork_bestmin,
+      </if>
+      <if test="expborkBestmax != null">
+        expbork_bestmax,
+      </if>
+      <if test="expborkBetcnt != null">
+        expbork_betcnt,
+      </if>
+      <if test="expborkBetamt != null">
+        expbork_betamt,
+      </if>
+      <if test="expborkHitcnt != null">
+        expbork_hitcnt,
+      </if>
+      <if test="expborkHitamt != null">
+        expbork_hitamt,
+      </if>
+      <if test="expborkBetrate != null">
+        expbork_betrate,
+      </if>
+      <if test="expborkHitrate != null">
+        expbork_hitrate,
+      </if>
+      <if test="expborkIncomerate != null">
+        expbork_incomerate,
+      </if>
+      <if test="exprorkBestmin != null">
+        exprork_bestmin,
+      </if>
+      <if test="exprorkBestmax != null">
+        exprork_bestmax,
+      </if>
+      <if test="exprorkBetcnt != null">
+        exprork_betcnt,
+      </if>
+      <if test="exprorkBetamt != null">
+        exprork_betamt,
+      </if>
+      <if test="exprorkHitcnt != null">
+        exprork_hitcnt,
+      </if>
+      <if test="exprorkHitamt != null">
+        exprork_hitamt,
+      </if>
+      <if test="exprorkBetrate != null">
+        exprork_betrate,
+      </if>
+      <if test="exprorkHitrate != null">
+        exprork_hitrate,
+      </if>
+      <if test="exprorkIncomerate != null">
+        exprork_incomerate,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="resultno != null">
@@ -948,6 +1084,36 @@
       </if>
       <if test="exprorMedian != null">
         #{exprorMedian,jdbcType=DOUBLE},
+      </if>
+      <if test="expborkMin != null">
+        #{expborkMin,jdbcType=DOUBLE},
+      </if>
+      <if test="expborkMax != null">
+        #{expborkMax,jdbcType=DOUBLE},
+      </if>
+      <if test="expborkMean != null">
+        #{expborkMean,jdbcType=DOUBLE},
+      </if>
+      <if test="expborkStddev != null">
+        #{expborkStddev,jdbcType=DOUBLE},
+      </if>
+      <if test="expborkMedian != null">
+        #{expborkMedian,jdbcType=DOUBLE},
+      </if>
+      <if test="exprorkMin != null">
+        #{exprorkMin,jdbcType=DOUBLE},
+      </if>
+      <if test="exprorkMax != null">
+        #{exprorkMax,jdbcType=DOUBLE},
+      </if>
+      <if test="exprorkMean != null">
+        #{exprorkMean,jdbcType=DOUBLE},
+      </if>
+      <if test="exprorkStddev != null">
+        #{exprorkStddev,jdbcType=DOUBLE},
+      </if>
+      <if test="exprorkMedian != null">
+        #{exprorkMedian,jdbcType=DOUBLE},
       </if>
       <if test="rorBestmin != null">
         #{rorBestmin,jdbcType=DOUBLE},
@@ -1155,6 +1321,60 @@
       </if>
       <if test="exprorIncomerate != null">
         #{exprorIncomerate,jdbcType=DOUBLE},
+      </if>
+      <if test="expborkBestmin != null">
+        #{expborkBestmin,jdbcType=DOUBLE},
+      </if>
+      <if test="expborkBestmax != null">
+        #{expborkBestmax,jdbcType=DOUBLE},
+      </if>
+      <if test="expborkBetcnt != null">
+        #{expborkBetcnt,jdbcType=INTEGER},
+      </if>
+      <if test="expborkBetamt != null">
+        #{expborkBetamt,jdbcType=INTEGER},
+      </if>
+      <if test="expborkHitcnt != null">
+        #{expborkHitcnt,jdbcType=INTEGER},
+      </if>
+      <if test="expborkHitamt != null">
+        #{expborkHitamt,jdbcType=INTEGER},
+      </if>
+      <if test="expborkBetrate != null">
+        #{expborkBetrate,jdbcType=DOUBLE},
+      </if>
+      <if test="expborkHitrate != null">
+        #{expborkHitrate,jdbcType=DOUBLE},
+      </if>
+      <if test="expborkIncomerate != null">
+        #{expborkIncomerate,jdbcType=DOUBLE},
+      </if>
+      <if test="exprorkBestmin != null">
+        #{exprorkBestmin,jdbcType=DOUBLE},
+      </if>
+      <if test="exprorkBestmax != null">
+        #{exprorkBestmax,jdbcType=DOUBLE},
+      </if>
+      <if test="exprorkBetcnt != null">
+        #{exprorkBetcnt,jdbcType=INTEGER},
+      </if>
+      <if test="exprorkBetamt != null">
+        #{exprorkBetamt,jdbcType=INTEGER},
+      </if>
+      <if test="exprorkHitcnt != null">
+        #{exprorkHitcnt,jdbcType=INTEGER},
+      </if>
+      <if test="exprorkHitamt != null">
+        #{exprorkHitamt,jdbcType=INTEGER},
+      </if>
+      <if test="exprorkBetrate != null">
+        #{exprorkBetrate,jdbcType=DOUBLE},
+      </if>
+      <if test="exprorkHitrate != null">
+        #{exprorkHitrate,jdbcType=DOUBLE},
+      </if>
+      <if test="exprorkIncomerate != null">
+        #{exprorkIncomerate,jdbcType=DOUBLE},
       </if>
     </trim>
   </insert>

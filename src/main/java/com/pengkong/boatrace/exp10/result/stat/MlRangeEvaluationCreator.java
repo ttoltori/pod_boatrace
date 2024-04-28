@@ -52,6 +52,13 @@ public class MlRangeEvaluationCreator extends MlCreatorBase<MlRangeEvaluation>
 		dto = setRangeStatistics(dto, "Lrork", new LtrimRangeFinder(stat.mapRorkStatUnit.values()), stat.sumOfBet);
 		dto = setRangeStatistics(dto, "Rrork", new RtrimRangeFinder(stat.mapRorkStatUnit.values()), stat.sumOfBet);
 
+		// 확정옺즈 기대치
+		dto = setRangeStatistics(dto, "Lexpror", new LtrimRangeFinder(stat.mapExpRorStatUnit.values()), stat.sumOfBet);
+		dto = setRangeStatistics(dto, "Rexpror", new RtrimRangeFinder(stat.mapExpRorStatUnit.values()), stat.sumOfBet);
+		// 확정옺즈랭킹 기대치
+		dto = setRangeStatistics(dto, "Lexprork", new LtrimRangeFinder(stat.mapExpRorkStatUnit.values()), stat.sumOfBet);
+		dto = setRangeStatistics(dto, "Rexprork", new RtrimRangeFinder(stat.mapExpRorkStatUnit.values()), stat.sumOfBet);
+		
 		// ---------------- 直前オッズが存在する場合 記述統計量/最適範囲設定 -----------------------------  
 		if (stat.mapBeforeOddsStatUnit.size() > 0) {
 			dto = setRangeStatistics(dto, "Lbor", new LtrimRangeFinder(stat.mapBeforeOddsStatUnit.values()), stat.sumOfBetBodds);
@@ -59,6 +66,13 @@ public class MlRangeEvaluationCreator extends MlCreatorBase<MlRangeEvaluation>
 
 			dto = setRangeStatistics(dto, "Lbork", new LtrimRangeFinder(stat.mapBorkStatUnit.values()), stat.sumOfBetBodds);
 			dto = setRangeStatistics(dto, "Rbork", new RtrimRangeFinder(stat.mapBorkStatUnit.values()), stat.sumOfBetBodds);
+			
+			// 직전옺즈 기대치
+			dto = setRangeStatistics(dto, "Lexpbor", new LtrimRangeFinder(stat.mapExpBorStatUnit.values()), stat.sumOfBet);
+			dto = setRangeStatistics(dto, "Rexpbor", new RtrimRangeFinder(stat.mapExpBorStatUnit.values()), stat.sumOfBet);
+			// 직전옺즈랭킹 기대치
+			dto = setRangeStatistics(dto, "Lexpbork", new LtrimRangeFinder(stat.mapExpBorkStatUnit.values()), stat.sumOfBet);
+			dto = setRangeStatistics(dto, "Rexpbork", new RtrimRangeFinder(stat.mapExpBorkStatUnit.values()), stat.sumOfBet);
 		}
 
 		MLPropertyUtil prop = MLPropertyUtil.getInstance();

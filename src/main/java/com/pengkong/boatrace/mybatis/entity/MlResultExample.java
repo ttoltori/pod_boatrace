@@ -1852,6 +1852,126 @@ public class MlResultExample {
 			return (Criteria) this;
 		}
 
+		public Criteria andExpectBorkIsNull() {
+			addCriterion("expect_bork is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectBorkIsNotNull() {
+			addCriterion("expect_bork is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectBorkEqualTo(Double value) {
+			addCriterion("expect_bork =", value, "expectBork");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectBorkNotEqualTo(Double value) {
+			addCriterion("expect_bork <>", value, "expectBork");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectBorkGreaterThan(Double value) {
+			addCriterion("expect_bork >", value, "expectBork");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectBorkGreaterThanOrEqualTo(Double value) {
+			addCriterion("expect_bork >=", value, "expectBork");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectBorkLessThan(Double value) {
+			addCriterion("expect_bork <", value, "expectBork");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectBorkLessThanOrEqualTo(Double value) {
+			addCriterion("expect_bork <=", value, "expectBork");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectBorkIn(List<Double> values) {
+			addCriterion("expect_bork in", values, "expectBork");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectBorkNotIn(List<Double> values) {
+			addCriterion("expect_bork not in", values, "expectBork");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectBorkBetween(Double value1, Double value2) {
+			addCriterion("expect_bork between", value1, value2, "expectBork");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectBorkNotBetween(Double value1, Double value2) {
+			addCriterion("expect_bork not between", value1, value2, "expectBork");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectRorkIsNull() {
+			addCriterion("expect_rork is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectRorkIsNotNull() {
+			addCriterion("expect_rork is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectRorkEqualTo(Double value) {
+			addCriterion("expect_rork =", value, "expectRork");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectRorkNotEqualTo(Double value) {
+			addCriterion("expect_rork <>", value, "expectRork");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectRorkGreaterThan(Double value) {
+			addCriterion("expect_rork >", value, "expectRork");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectRorkGreaterThanOrEqualTo(Double value) {
+			addCriterion("expect_rork >=", value, "expectRork");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectRorkLessThan(Double value) {
+			addCriterion("expect_rork <", value, "expectRork");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectRorkLessThanOrEqualTo(Double value) {
+			addCriterion("expect_rork <=", value, "expectRork");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectRorkIn(List<Double> values) {
+			addCriterion("expect_rork in", values, "expectRork");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectRorkNotIn(List<Double> values) {
+			addCriterion("expect_rork not in", values, "expectRork");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectRorkBetween(Double value1, Double value2) {
+			addCriterion("expect_rork between", value1, value2, "expectRork");
+			return (Criteria) this;
+		}
+
+		public Criteria andExpectRorkNotBetween(Double value1, Double value2) {
+			addCriterion("expect_rork not between", value1, value2, "expectRork");
+			return (Criteria) this;
+		}
+
 		public Criteria andResultTypeIsNull() {
 			addCriterion("result_type is null");
 			return (Criteria) this;

@@ -20,7 +20,6 @@ import com.pengkong.boatrace.exp10.property.StrategyTemplate;
 import com.pengkong.boatrace.exp10.result.AbstractResultCreator;
 import com.pengkong.boatrace.exp10.result.graph.ResultGraphBuilder;
 import com.pengkong.boatrace.exp10.result.graph.split.ResultGraphBuilderSplit;
-import com.pengkong.boatrace.exp10.result.stat.MlBorkEvaluationCreator;
 import com.pengkong.boatrace.exp10.result.stat.MlEvaluationCreator;
 import com.pengkong.boatrace.exp10.result.stat.MlRangeEvaluationCreator;
 import com.pengkong.boatrace.exp10.result.stat.MlTermEvaluationCreator;
@@ -29,13 +28,9 @@ import com.pengkong.boatrace.exp10.result.stat.ResultStatBuilder;
 import com.pengkong.boatrace.exp10.result.stat.split.ResultStatBuilderSplit;
 import com.pengkong.boatrace.exp10.simulation.data.AbstractRaceDataLoader;
 import com.pengkong.boatrace.exp10.simulation.data.DBRaceDataLoader;
-import com.pengkong.boatrace.mybatis.client.MlBorkEvaluationMapper;
 import com.pengkong.boatrace.mybatis.client.MlEvaluationMapper;
 import com.pengkong.boatrace.mybatis.client.MlRangeEvaluationMapper;
 import com.pengkong.boatrace.mybatis.client.MlResultMapper;
-import com.pengkong.boatrace.mybatis.client.MlTermEvaluationMapper;
-import com.pengkong.boatrace.mybatis.entity.MlBorkEvaluation;
-import com.pengkong.boatrace.mybatis.entity.MlBorkEvaluationExample;
 import com.pengkong.boatrace.mybatis.entity.MlEvaluation;
 import com.pengkong.boatrace.mybatis.entity.MlEvaluationExample;
 import com.pengkong.boatrace.mybatis.entity.MlRangeEvaluation;
@@ -43,7 +38,6 @@ import com.pengkong.boatrace.mybatis.entity.MlRangeEvaluationExample;
 import com.pengkong.boatrace.mybatis.entity.MlResult;
 import com.pengkong.boatrace.mybatis.entity.MlResultExample;
 import com.pengkong.boatrace.mybatis.entity.MlTermEvaluation;
-import com.pengkong.boatrace.mybatis.entity.MlTermEvaluationExample;
 import com.pengkong.boatrace.server.db.dto.DBRecord;
 import com.pengkong.boatrace.util.BoatUtil;
 import com.pengkong.boatrace.util.DatabaseUtil;
@@ -187,11 +181,11 @@ public class MLResultGenerator {
 		try {
 			MlResultMapper mapper = session.getMapper(MlResultMapper.class);
 			MlEvaluationMapper mapperEval = session.getMapper(MlEvaluationMapper.class);
-			MlBorkEvaluationMapper mapperBorkEval = session.getMapper(MlBorkEvaluationMapper.class);
 			MlRangeEvaluationMapper mapperRangeEval = session.getMapper(MlRangeEvaluationMapper.class);
+//			MlBorkEvaluationMapper mapperBorkEval = session.getMapper(MlBorkEvaluationMapper.class);
+//			MlTermEvaluationMapper mapperTermEval = session.getMapper(MlTermEvaluationMapper.class);
 //			MlRorkEvaluationMapper mapperRorkEval = session.getMapper(MlRorkEvaluationMapper.class);
 //			MlPrEvaluationMapper mapperPrEval = session.getMapper(MlPrEvaluationMapper.class);
-			MlTermEvaluationMapper mapperTermEval = session.getMapper(MlTermEvaluationMapper.class);
 			
 			if (isSaveResult) {
 				// 既存ml_result削除
@@ -257,13 +251,13 @@ public class MLResultGenerator {
 				rangeExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type"));
 				mapperRangeEval.deleteByExample(rangeExam);
 				
-				MlBorkEvaluationExample borkExam = new MlBorkEvaluationExample();
-				borkExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type"));
-				mapperBorkEval.deleteByExample(borkExam);
-
-				MlTermEvaluationExample termExam = new MlTermEvaluationExample();
-				termExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type"));
-				mapperTermEval.deleteByExample(termExam);
+//				MlBorkEvaluationExample borkExam = new MlBorkEvaluationExample();
+//				borkExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type"));
+//				mapperBorkEval.deleteByExample(borkExam);
+//
+//				MlTermEvaluationExample termExam = new MlTermEvaluationExample();
+//				termExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type"));
+//				mapperTermEval.deleteByExample(termExam);
 				
 //				MlRorkEvaluationExample rorkExam = new MlRorkEvaluationExample();
 //				rorkExam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type")).andEvaluationsIdEqualTo(evaluationsId);
@@ -284,8 +278,8 @@ public class MLResultGenerator {
 					// ！注意：graph出力用データがstatに更新されるためDB保存に関係なくcreateMlEvaluationを呼び出しておく必要がある
 					MlEvaluationCreator evaluationCreator = new MlEvaluationCreator(stat);
 					MlRangeEvaluationCreator rangeEvalCreator = new MlRangeEvaluationCreator(stat);
-					MlBorkEvaluationCreator borkEvaluationCreator = new MlBorkEvaluationCreator(stat);
 					MlTermEvaluationCreator termEvaluationCreator = new MlTermEvaluationCreator(stat);
+//					MlBorkEvaluationCreator borkEvaluationCreator = new MlBorkEvaluationCreator(stat);
 //					MlRorkEvaluationCreator rorkEvaluationCreator = new MlRorkEvaluationCreator(stat);
 //					MlPrEvaluationCreator prEvaluationCreator = new MlPrEvaluationCreator(stat);
 					
@@ -294,9 +288,8 @@ public class MLResultGenerator {
 					MlRangeEvaluation rangeRec = rangeEvalCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum);
 					
 					// オプション
-					MlBorkEvaluation borkRec = borkEvaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"));
+//					MlBorkEvaluation borkRec = borkEvaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"));
 					MlTermEvaluation termRec = termEvaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum); 
-
 //					MlRorkEvaluation rorkRec = rorkEvaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum);
 //					MlPrEvaluation prRec = prEvaluationCreator.create(exNo, usedModelNo, prop.getString("pattern_id"), splitNum); 
 					
@@ -308,9 +301,9 @@ public class MLResultGenerator {
 						// insert
 						mapperEval.insert(rec);
 						mapperRangeEval.insert(rangeRec);
-						mapperBorkEval.insert(borkRec);
 						
-						mapperTermEval.insert(termRec);
+//						mapperBorkEval.insert(borkRec);
+//						mapperTermEval.insert(termRec);
 //						mapperRorkEval.insert(rorkRec);
 //						mapperPrEval.insert(prRec);
 					}

@@ -88,6 +88,15 @@ public class StringUtil {
 		return sb.toString();
 	}
 
+	
+	public static List<Double> strings2Doubles(String[] strs) {
+		List<Double> result = new ArrayList<Double>();
+		for (String str : strs) {
+			result.add(Double.valueOf(str));
+		}
+		
+		return result;
+	}
 	/**
 	 * option文字列等を分割してlistで取得する。 ex) "1,2-5,7" -> [1,2,3,4,5,6,7]
 	 */
@@ -183,6 +192,10 @@ public class StringUtil {
 	}
 
 	public static void main(String[] args) {
+		String[] strs = {"1", "2"};
+		List<Double> doubles =  StringUtil.strings2Doubles(strs);
+		
+		
 		HashMap<Integer, Integer> test = new HashMap<>();
 		test.put(1, 1);
 		test.put(2, 1);

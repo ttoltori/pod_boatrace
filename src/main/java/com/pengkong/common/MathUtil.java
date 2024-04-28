@@ -98,6 +98,10 @@ public class MathUtil {
 		}
 	}
 	
+	public static Double scale0(Double value) {
+		return MathUtil.scale(value, 0);
+	}
+
 	public static Double scale1(Double value) {
 		return MathUtil.scale(value, 1);
 	}
@@ -315,13 +319,35 @@ public class MathUtil {
         return     MathUtil.scale( ((value - min) / range) * percentile , 0)  ;
     }
 	
+    public static double calculatePercentile(List<Double> numbers, double N) {
+        // Sort the list in ascending order
+        Collections.sort(numbers);
+
+        // Calculate the index of the Nth percentile
+        int indexOfPercentile = (int) Math.ceil(N * numbers.size() / 100.0) - 1;
+
+        // If the index is out of bounds, return the maximum or minimum value
+        if (indexOfPercentile < 0) {
+            return numbers.get(0);
+        } else if (indexOfPercentile >= numbers.size()) {
+            return numbers.get(numbers.size() - 1);
+        }
+
+        // Return the Nth percentile value
+        return numbers.get(indexOfPercentile);
+    }
+    
 	public static void main(String[] args) {
 		try {
-			System.out.println( MathUtil.min(0.1, -3.0, 3.0, 20.0 ));
-			System.out.println( MathUtil.max(0.1, -3.0, 3.0, 20.0 ));
-			System.out.println( MathUtil.convertToPercentile(0.1, -3, 3, 20 ));
-			System.out.println((double)21 / 100.0);
-			System.out.println((double)33 / 100.0);
+			List<Double> list = Arrays.asList(1.0, 25.0, 50.0, 75.0, 1000.0);
+			System.out.println( MathUtil.calculatePercentile(list, 5));
+			
+			
+//			System.out.println( MathUtil.min(0.0, 25.0, 50.0, 75.0, 100.0 ));
+//			System.out.println( MathUtil.max(0.0, 25.0, 50.0, 75.0, 100.0 ));
+//			System.out.println( MathUtil.convertToPercentile(25, 1, 100, 95 ));
+//			System.out.println((double)21 / 100.0);
+//			System.out.println((double)33 / 100.0);
 			
 //			List<Double> yList1 = new ArrayList<>();
 //			double[] yData1 = {0};

@@ -52,11 +52,22 @@ public class MlCreatorBase<E>
 	 * @throws Exception
 	 */
 	E setRangeStatistics(E dto, String field, AbstractRangeFinder rangeFinder, double totalBetCnt) throws Exception{
+		String methodName;
+		String[] postFixes = {"Betcnt", "Betamt", "Hitcnt", "Hitamt", "Betrate", "Hitrate", "Incomerate"};
+		
 		Class<? extends Object> clazz = dto.getClass();
 		
 		List<RangeStatUnit> bestRangeUnits = rangeFinder.findBestRangeStatUnits();
 		
 		if (bestRangeUnits.size() <= 0) {
+			for (int i = 0; i < postFixes.length; i++) {
+				methodName = String.join("", "set", field, postFixes[i]);
+				if (methodName.endsWith("rate")) {
+					clazz.getMethod(methodName, Double.class).invoke(dto, 0.0);
+				} else {
+					clazz.getMethod(methodName, Integer.class).invoke(dto, 0);
+				}
+			}
 			return dto;
 		}
 		
@@ -68,8 +79,6 @@ public class MlCreatorBase<E>
 
 		
 		// 直前オッズ最適範囲に対する統計情報
-		String methodName;
-		String[] postFixes = {"Betcnt", "Betamt", "Hitcnt", "Hitamt", "Betrate", "Hitrate", "Incomerate"};
 		
 		Double[] values = getRangeDtoValues(bestRangeUnits, totalBetCnt);
 		

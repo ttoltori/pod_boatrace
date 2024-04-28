@@ -28,23 +28,23 @@ public abstract class AbstractProbabilityCalculator {
 		mapMethod.put("2F", this::getProbability2F);
 		mapMethod.put("3F", this::getProbability3F);
 		
-		mapMethod.put("2M", this::getProbability2T);
-		mapMethod.put("3N", this::getProbability2T);
-		mapMethod.put("2N", this::getProbability2T);
-		mapMethod.put("3P", this::getProbability3T);
-		mapMethod.put("3R", this::getProbability3T);
-		mapMethod.put("3X", this::getProbability2T);
-		mapMethod.put("2G", this::getProbability3F);
-		mapMethod.put("3G", this::getProbability2F);
-		mapMethod.put("3B", this::getProbability3T);
+		mapMethod.put("2M", this::getProbability2M);
+		mapMethod.put("3N", this::getProbability3N);
+		mapMethod.put("2N", this::getProbability2N);
+		mapMethod.put("3P", this::getProbability3P);
+		mapMethod.put("3R", this::getProbability3R);
+		mapMethod.put("3X", this::getProbability3X);
+		mapMethod.put("2G", this::getProbability2G);
+		mapMethod.put("3G", this::getProbability3G);
+		mapMethod.put("3B", this::getProbability3B);
 		mapMethod.put("3C", this::getProbability3C);
 		mapMethod.put("3D", this::getProbability3D);
 		mapMethod.put("3E", this::getProbability3E);
 	}
 	
 	/** DB取得値から予想的中確率をbettype別の組み合わを取得する */
-	public Double calculate(String betType, DBRecord rec) {
-		return mapMethod.get(betType).apply(rec);
+	public Double calculate(String statBettype, DBRecord rec) {
+		return mapMethod.get(statBettype).apply(rec);
 	}
 	/** 単勝 */
 	abstract Double getProbability1T(DBRecord rec);

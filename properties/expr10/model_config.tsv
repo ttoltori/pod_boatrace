@@ -51,3 +51,9 @@ model_no	model_start_ymd	model_end_ymd	class_rank1	class_rank2	class_rank3	class
 # 다시 생성 fs_22 + ip only + class_weight O + learning rate=0.1  1개월단위																			
 98102	20210603	20231031	r12-all-ip	x	x	x	cf_lgbm-7_py	x	x	x	fs_20	x	x	x	arff_11	clf_11	yes	1825	30
 98103	20210603	20231031	r123-all-ip	x	x	x	cf_lgbm-7_py	x	x	x	fs_20	x	x	x	arff_11	clf_11	yes	1825	30
+#LGBMRanker + ipSG + class_weight X + learning rate=0.1  1개월단위																			
+20017	20210603	20231002	rk-ipSG-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_2	x	x	x	arff_rk_2	clf_rk_2	yes	1825	30
+# 다시 생성 fs_22 + ip only + class_weight O + learning rate=0.1  1개월단위																			
+98104	20210603	20231031	rk-ipSG-1	x	x	x	cf_lgbm-7_py	x	x	x	fs_19	x	x	x	arff_11	clf_11	yes	1825	30
+#CatboostRanker + ipSG + class_weight X + learning rate=0.1  1개월단위																			
+89103	20210603	20240426	rk-ipSG-1	x	x	x	rk_catb-1_py	x	x	x	rk_2	x	x	x	arff_rk_2	clf_rk_2	yes	1825	30

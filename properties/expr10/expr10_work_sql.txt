@@ -2298,16 +2298,16 @@ insert into rec_racer2
     unnest(n1point_waku), unnest(n1point_waku_slope), unnest(n2point_waku), unnest(n2point_waku_slope), unnest(n3point_waku), unnest(n3point_waku_slope), 
     unnest(avgstart_waku), unnest(avgstart_waku_slope)
   from rec_racer_arr2
-  where ymd >= '20090101' and ymd <= '20231125'
+  where ymd >= '20231126' and ymd <= '20240426'
 ;
 
 5.
-java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
-  com.pengkong.boatrace.exp10.racer.util.RecRacerArray2Generator 20090101 20231125 180
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/github/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.exp10.racer.util.RecRacerArray2Generator 20231126 20240426 180
 
 4.
-java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
-  com.pengkong.boatrace.exp10.racer.util.RecRacerTrendGenerator 20090101 20231125 180
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/github/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.exp10.racer.util.RecRacerTrendGenerator 20231126 20240426 180
 
 3.
 insert into rec_racer_arr
@@ -2339,18 +2339,18 @@ select
   array_agg(startresult)
 from (
   select * from rec_racer 
-   where ymd >= '20090101' and ymd <= '20231125'
+   where ymd >= '20231126' and ymd <= '20240426'
    order by ymd, jyocd, raceno, waku 
 ) tmp
 group by ymd, jyocd, raceno;
 
 2.
-java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*;. ^
-  com.pengkong.boatrace.util.RaceFileUploader 20090101 20231125 C:/boatrace/offline/properties/offline.properties
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/github/pod_boatrace_test/lib/*;. ^
+  com.pengkong.boatrace.util.RaceFileUploader 20231126 20240426 C:/boatrace/offline/properties/offline.properties
 
 1.
-java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/workspace/Oxygen/pod_boatrace_test/lib/*; ^
-  com.pengkong.boatrace.scraping.BoatWebDownloader 20231101 20231108 C:/boatrace/offline/properties/offline.properties
+java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/github/pod_boatrace_test/lib/*; ^
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20231126 20240426 C:/boatrace/offline/properties/offline.properties
 
 -- javaに反映済み
 update rec_race set racetype = 

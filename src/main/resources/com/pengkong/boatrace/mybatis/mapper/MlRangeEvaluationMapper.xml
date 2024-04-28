@@ -140,6 +140,42 @@
     <result column="rexpror_betrate" jdbcType="DOUBLE" property="rexprorBetrate" />
     <result column="rexpror_hitrate" jdbcType="DOUBLE" property="rexprorHitrate" />
     <result column="rexpror_incomerate" jdbcType="DOUBLE" property="rexprorIncomerate" />
+    <result column="lexpbork_bestmin" jdbcType="DOUBLE" property="lexpborkBestmin" />
+    <result column="lexpbork_bestmax" jdbcType="DOUBLE" property="lexpborkBestmax" />
+    <result column="lexpbork_betcnt" jdbcType="INTEGER" property="lexpborkBetcnt" />
+    <result column="lexpbork_betamt" jdbcType="INTEGER" property="lexpborkBetamt" />
+    <result column="lexpbork_hitcnt" jdbcType="INTEGER" property="lexpborkHitcnt" />
+    <result column="lexpbork_hitamt" jdbcType="INTEGER" property="lexpborkHitamt" />
+    <result column="lexpbork_betrate" jdbcType="DOUBLE" property="lexpborkBetrate" />
+    <result column="lexpbork_hitrate" jdbcType="DOUBLE" property="lexpborkHitrate" />
+    <result column="lexpbork_incomerate" jdbcType="DOUBLE" property="lexpborkIncomerate" />
+    <result column="rexpbork_bestmin" jdbcType="DOUBLE" property="rexpborkBestmin" />
+    <result column="rexpbork_bestmax" jdbcType="DOUBLE" property="rexpborkBestmax" />
+    <result column="rexpbork_betcnt" jdbcType="INTEGER" property="rexpborkBetcnt" />
+    <result column="rexpbork_betamt" jdbcType="INTEGER" property="rexpborkBetamt" />
+    <result column="rexpbork_hitcnt" jdbcType="INTEGER" property="rexpborkHitcnt" />
+    <result column="rexpbork_hitamt" jdbcType="INTEGER" property="rexpborkHitamt" />
+    <result column="rexpbork_betrate" jdbcType="DOUBLE" property="rexpborkBetrate" />
+    <result column="rexpbork_hitrate" jdbcType="DOUBLE" property="rexpborkHitrate" />
+    <result column="rexpbork_incomerate" jdbcType="DOUBLE" property="rexpborkIncomerate" />
+    <result column="lexprork_bestmin" jdbcType="DOUBLE" property="lexprorkBestmin" />
+    <result column="lexprork_bestmax" jdbcType="DOUBLE" property="lexprorkBestmax" />
+    <result column="lexprork_betcnt" jdbcType="INTEGER" property="lexprorkBetcnt" />
+    <result column="lexprork_betamt" jdbcType="INTEGER" property="lexprorkBetamt" />
+    <result column="lexprork_hitcnt" jdbcType="INTEGER" property="lexprorkHitcnt" />
+    <result column="lexprork_hitamt" jdbcType="INTEGER" property="lexprorkHitamt" />
+    <result column="lexprork_betrate" jdbcType="DOUBLE" property="lexprorkBetrate" />
+    <result column="lexprork_hitrate" jdbcType="DOUBLE" property="lexprorkHitrate" />
+    <result column="lexprork_incomerate" jdbcType="DOUBLE" property="lexprorkIncomerate" />
+    <result column="rexprork_bestmin" jdbcType="DOUBLE" property="rexprorkBestmin" />
+    <result column="rexprork_bestmax" jdbcType="DOUBLE" property="rexprorkBestmax" />
+    <result column="rexprork_betcnt" jdbcType="INTEGER" property="rexprorkBetcnt" />
+    <result column="rexprork_betamt" jdbcType="INTEGER" property="rexprorkBetamt" />
+    <result column="rexprork_hitcnt" jdbcType="INTEGER" property="rexprorkHitcnt" />
+    <result column="rexprork_hitamt" jdbcType="INTEGER" property="rexprorkHitamt" />
+    <result column="rexprork_betrate" jdbcType="DOUBLE" property="rexprorkBetrate" />
+    <result column="rexprork_hitrate" jdbcType="DOUBLE" property="rexprorkHitrate" />
+    <result column="rexprork_incomerate" jdbcType="DOUBLE" property="rexprorkIncomerate" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <!--
@@ -201,7 +237,14 @@
     lexpror_bestmax, lexpror_betcnt, lexpror_betamt, lexpror_hitcnt, lexpror_hitamt, 
     lexpror_betrate, lexpror_hitrate, lexpror_incomerate, rexpror_bestmin, rexpror_bestmax, 
     rexpror_betcnt, rexpror_betamt, rexpror_hitcnt, rexpror_hitamt, rexpror_betrate, 
-    rexpror_hitrate, rexpror_incomerate
+    rexpror_hitrate, rexpror_incomerate, lexpbork_bestmin, lexpbork_bestmax, lexpbork_betcnt, 
+    lexpbork_betamt, lexpbork_hitcnt, lexpbork_hitamt, lexpbork_betrate, lexpbork_hitrate, 
+    lexpbork_incomerate, rexpbork_bestmin, rexpbork_bestmax, rexpbork_betcnt, rexpbork_betamt, 
+    rexpbork_hitcnt, rexpbork_hitamt, rexpbork_betrate, rexpbork_hitrate, rexpbork_incomerate, 
+    lexprork_bestmin, lexprork_bestmax, lexprork_betcnt, lexprork_betamt, lexprork_hitcnt, 
+    lexprork_hitamt, lexprork_betrate, lexprork_hitrate, lexprork_incomerate, rexprork_bestmin, 
+    rexprork_bestmax, rexprork_betcnt, rexprork_betamt, rexprork_hitcnt, rexprork_hitamt, 
+    rexprork_betrate, rexprork_hitrate, rexprork_incomerate
   </sql>
   <select id="selectByExample" parameterType="com.pengkong.boatrace.mybatis.entity.MlRangeEvaluationExample" resultMap="BaseResultMap">
     <!--
@@ -281,7 +324,19 @@
       lexpror_hitrate, lexpror_incomerate, rexpror_bestmin, 
       rexpror_bestmax, rexpror_betcnt, rexpror_betamt, 
       rexpror_hitcnt, rexpror_hitamt, rexpror_betrate, 
-      rexpror_hitrate, rexpror_incomerate)
+      rexpror_hitrate, rexpror_incomerate, lexpbork_bestmin, 
+      lexpbork_bestmax, lexpbork_betcnt, lexpbork_betamt, 
+      lexpbork_hitcnt, lexpbork_hitamt, lexpbork_betrate, 
+      lexpbork_hitrate, lexpbork_incomerate, rexpbork_bestmin, 
+      rexpbork_bestmax, rexpbork_betcnt, rexpbork_betamt, 
+      rexpbork_hitcnt, rexpbork_hitamt, rexpbork_betrate, 
+      rexpbork_hitrate, rexpbork_incomerate, lexprork_bestmin, 
+      lexprork_bestmax, lexprork_betcnt, lexprork_betamt, 
+      lexprork_hitcnt, lexprork_hitamt, lexprork_betrate, 
+      lexprork_hitrate, lexprork_incomerate, rexprork_bestmin, 
+      rexprork_bestmax, rexprork_betcnt, rexprork_betamt, 
+      rexprork_hitcnt, rexprork_hitamt, rexprork_betrate, 
+      rexprork_hitrate, rexprork_incomerate)
     values (#{resultno,jdbcType=VARCHAR}, #{modelno,jdbcType=VARCHAR}, #{patternid,jdbcType=VARCHAR}, 
       #{pattern,jdbcType=VARCHAR}, #{bettype,jdbcType=VARCHAR}, #{kumiban,jdbcType=VARCHAR}, 
       #{lprBestmin,jdbcType=DOUBLE}, #{lprBestmax,jdbcType=DOUBLE}, #{lprBetcnt,jdbcType=INTEGER}, 
@@ -326,7 +381,19 @@
       #{lexprorHitrate,jdbcType=DOUBLE}, #{lexprorIncomerate,jdbcType=DOUBLE}, #{rexprorBestmin,jdbcType=DOUBLE}, 
       #{rexprorBestmax,jdbcType=DOUBLE}, #{rexprorBetcnt,jdbcType=INTEGER}, #{rexprorBetamt,jdbcType=INTEGER}, 
       #{rexprorHitcnt,jdbcType=INTEGER}, #{rexprorHitamt,jdbcType=INTEGER}, #{rexprorBetrate,jdbcType=DOUBLE}, 
-      #{rexprorHitrate,jdbcType=DOUBLE}, #{rexprorIncomerate,jdbcType=DOUBLE})
+      #{rexprorHitrate,jdbcType=DOUBLE}, #{rexprorIncomerate,jdbcType=DOUBLE}, #{lexpborkBestmin,jdbcType=DOUBLE}, 
+      #{lexpborkBestmax,jdbcType=DOUBLE}, #{lexpborkBetcnt,jdbcType=INTEGER}, #{lexpborkBetamt,jdbcType=INTEGER}, 
+      #{lexpborkHitcnt,jdbcType=INTEGER}, #{lexpborkHitamt,jdbcType=INTEGER}, #{lexpborkBetrate,jdbcType=DOUBLE}, 
+      #{lexpborkHitrate,jdbcType=DOUBLE}, #{lexpborkIncomerate,jdbcType=DOUBLE}, #{rexpborkBestmin,jdbcType=DOUBLE}, 
+      #{rexpborkBestmax,jdbcType=DOUBLE}, #{rexpborkBetcnt,jdbcType=INTEGER}, #{rexpborkBetamt,jdbcType=INTEGER}, 
+      #{rexpborkHitcnt,jdbcType=INTEGER}, #{rexpborkHitamt,jdbcType=INTEGER}, #{rexpborkBetrate,jdbcType=DOUBLE}, 
+      #{rexpborkHitrate,jdbcType=DOUBLE}, #{rexpborkIncomerate,jdbcType=DOUBLE}, #{lexprorkBestmin,jdbcType=DOUBLE}, 
+      #{lexprorkBestmax,jdbcType=DOUBLE}, #{lexprorkBetcnt,jdbcType=INTEGER}, #{lexprorkBetamt,jdbcType=INTEGER}, 
+      #{lexprorkHitcnt,jdbcType=INTEGER}, #{lexprorkHitamt,jdbcType=INTEGER}, #{lexprorkBetrate,jdbcType=DOUBLE}, 
+      #{lexprorkHitrate,jdbcType=DOUBLE}, #{lexprorkIncomerate,jdbcType=DOUBLE}, #{rexprorkBestmin,jdbcType=DOUBLE}, 
+      #{rexprorkBestmax,jdbcType=DOUBLE}, #{rexprorkBetcnt,jdbcType=INTEGER}, #{rexprorkBetamt,jdbcType=INTEGER}, 
+      #{rexprorkHitcnt,jdbcType=INTEGER}, #{rexprorkHitamt,jdbcType=INTEGER}, #{rexprorkBetrate,jdbcType=DOUBLE}, 
+      #{rexprorkHitrate,jdbcType=DOUBLE}, #{rexprorkIncomerate,jdbcType=DOUBLE})
   </insert>
   <insert id="insertSelective" parameterType="com.pengkong.boatrace.mybatis.entity.MlRangeEvaluation">
     <!--
@@ -737,6 +804,114 @@
       <if test="rexprorIncomerate != null">
         rexpror_incomerate,
       </if>
+      <if test="lexpborkBestmin != null">
+        lexpbork_bestmin,
+      </if>
+      <if test="lexpborkBestmax != null">
+        lexpbork_bestmax,
+      </if>
+      <if test="lexpborkBetcnt != null">
+        lexpbork_betcnt,
+      </if>
+      <if test="lexpborkBetamt != null">
+        lexpbork_betamt,
+      </if>
+      <if test="lexpborkHitcnt != null">
+        lexpbork_hitcnt,
+      </if>
+      <if test="lexpborkHitamt != null">
+        lexpbork_hitamt,
+      </if>
+      <if test="lexpborkBetrate != null">
+        lexpbork_betrate,
+      </if>
+      <if test="lexpborkHitrate != null">
+        lexpbork_hitrate,
+      </if>
+      <if test="lexpborkIncomerate != null">
+        lexpbork_incomerate,
+      </if>
+      <if test="rexpborkBestmin != null">
+        rexpbork_bestmin,
+      </if>
+      <if test="rexpborkBestmax != null">
+        rexpbork_bestmax,
+      </if>
+      <if test="rexpborkBetcnt != null">
+        rexpbork_betcnt,
+      </if>
+      <if test="rexpborkBetamt != null">
+        rexpbork_betamt,
+      </if>
+      <if test="rexpborkHitcnt != null">
+        rexpbork_hitcnt,
+      </if>
+      <if test="rexpborkHitamt != null">
+        rexpbork_hitamt,
+      </if>
+      <if test="rexpborkBetrate != null">
+        rexpbork_betrate,
+      </if>
+      <if test="rexpborkHitrate != null">
+        rexpbork_hitrate,
+      </if>
+      <if test="rexpborkIncomerate != null">
+        rexpbork_incomerate,
+      </if>
+      <if test="lexprorkBestmin != null">
+        lexprork_bestmin,
+      </if>
+      <if test="lexprorkBestmax != null">
+        lexprork_bestmax,
+      </if>
+      <if test="lexprorkBetcnt != null">
+        lexprork_betcnt,
+      </if>
+      <if test="lexprorkBetamt != null">
+        lexprork_betamt,
+      </if>
+      <if test="lexprorkHitcnt != null">
+        lexprork_hitcnt,
+      </if>
+      <if test="lexprorkHitamt != null">
+        lexprork_hitamt,
+      </if>
+      <if test="lexprorkBetrate != null">
+        lexprork_betrate,
+      </if>
+      <if test="lexprorkHitrate != null">
+        lexprork_hitrate,
+      </if>
+      <if test="lexprorkIncomerate != null">
+        lexprork_incomerate,
+      </if>
+      <if test="rexprorkBestmin != null">
+        rexprork_bestmin,
+      </if>
+      <if test="rexprorkBestmax != null">
+        rexprork_bestmax,
+      </if>
+      <if test="rexprorkBetcnt != null">
+        rexprork_betcnt,
+      </if>
+      <if test="rexprorkBetamt != null">
+        rexprork_betamt,
+      </if>
+      <if test="rexprorkHitcnt != null">
+        rexprork_hitcnt,
+      </if>
+      <if test="rexprorkHitamt != null">
+        rexprork_hitamt,
+      </if>
+      <if test="rexprorkBetrate != null">
+        rexprork_betrate,
+      </if>
+      <if test="rexprorkHitrate != null">
+        rexprork_hitrate,
+      </if>
+      <if test="rexprorkIncomerate != null">
+        rexprork_incomerate,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="resultno != null">
@@ -1140,6 +1315,114 @@
       </if>
       <if test="rexprorIncomerate != null">
         #{rexprorIncomerate,jdbcType=DOUBLE},
+      </if>
+      <if test="lexpborkBestmin != null">
+        #{lexpborkBestmin,jdbcType=DOUBLE},
+      </if>
+      <if test="lexpborkBestmax != null">
+        #{lexpborkBestmax,jdbcType=DOUBLE},
+      </if>
+      <if test="lexpborkBetcnt != null">
+        #{lexpborkBetcnt,jdbcType=INTEGER},
+      </if>
+      <if test="lexpborkBetamt != null">
+        #{lexpborkBetamt,jdbcType=INTEGER},
+      </if>
+      <if test="lexpborkHitcnt != null">
+        #{lexpborkHitcnt,jdbcType=INTEGER},
+      </if>
+      <if test="lexpborkHitamt != null">
+        #{lexpborkHitamt,jdbcType=INTEGER},
+      </if>
+      <if test="lexpborkBetrate != null">
+        #{lexpborkBetrate,jdbcType=DOUBLE},
+      </if>
+      <if test="lexpborkHitrate != null">
+        #{lexpborkHitrate,jdbcType=DOUBLE},
+      </if>
+      <if test="lexpborkIncomerate != null">
+        #{lexpborkIncomerate,jdbcType=DOUBLE},
+      </if>
+      <if test="rexpborkBestmin != null">
+        #{rexpborkBestmin,jdbcType=DOUBLE},
+      </if>
+      <if test="rexpborkBestmax != null">
+        #{rexpborkBestmax,jdbcType=DOUBLE},
+      </if>
+      <if test="rexpborkBetcnt != null">
+        #{rexpborkBetcnt,jdbcType=INTEGER},
+      </if>
+      <if test="rexpborkBetamt != null">
+        #{rexpborkBetamt,jdbcType=INTEGER},
+      </if>
+      <if test="rexpborkHitcnt != null">
+        #{rexpborkHitcnt,jdbcType=INTEGER},
+      </if>
+      <if test="rexpborkHitamt != null">
+        #{rexpborkHitamt,jdbcType=INTEGER},
+      </if>
+      <if test="rexpborkBetrate != null">
+        #{rexpborkBetrate,jdbcType=DOUBLE},
+      </if>
+      <if test="rexpborkHitrate != null">
+        #{rexpborkHitrate,jdbcType=DOUBLE},
+      </if>
+      <if test="rexpborkIncomerate != null">
+        #{rexpborkIncomerate,jdbcType=DOUBLE},
+      </if>
+      <if test="lexprorkBestmin != null">
+        #{lexprorkBestmin,jdbcType=DOUBLE},
+      </if>
+      <if test="lexprorkBestmax != null">
+        #{lexprorkBestmax,jdbcType=DOUBLE},
+      </if>
+      <if test="lexprorkBetcnt != null">
+        #{lexprorkBetcnt,jdbcType=INTEGER},
+      </if>
+      <if test="lexprorkBetamt != null">
+        #{lexprorkBetamt,jdbcType=INTEGER},
+      </if>
+      <if test="lexprorkHitcnt != null">
+        #{lexprorkHitcnt,jdbcType=INTEGER},
+      </if>
+      <if test="lexprorkHitamt != null">
+        #{lexprorkHitamt,jdbcType=INTEGER},
+      </if>
+      <if test="lexprorkBetrate != null">
+        #{lexprorkBetrate,jdbcType=DOUBLE},
+      </if>
+      <if test="lexprorkHitrate != null">
+        #{lexprorkHitrate,jdbcType=DOUBLE},
+      </if>
+      <if test="lexprorkIncomerate != null">
+        #{lexprorkIncomerate,jdbcType=DOUBLE},
+      </if>
+      <if test="rexprorkBestmin != null">
+        #{rexprorkBestmin,jdbcType=DOUBLE},
+      </if>
+      <if test="rexprorkBestmax != null">
+        #{rexprorkBestmax,jdbcType=DOUBLE},
+      </if>
+      <if test="rexprorkBetcnt != null">
+        #{rexprorkBetcnt,jdbcType=INTEGER},
+      </if>
+      <if test="rexprorkBetamt != null">
+        #{rexprorkBetamt,jdbcType=INTEGER},
+      </if>
+      <if test="rexprorkHitcnt != null">
+        #{rexprorkHitcnt,jdbcType=INTEGER},
+      </if>
+      <if test="rexprorkHitamt != null">
+        #{rexprorkHitamt,jdbcType=INTEGER},
+      </if>
+      <if test="rexprorkBetrate != null">
+        #{rexprorkBetrate,jdbcType=DOUBLE},
+      </if>
+      <if test="rexprorkHitrate != null">
+        #{rexprorkHitrate,jdbcType=DOUBLE},
+      </if>
+      <if test="rexprorkIncomerate != null">
+        #{rexprorkIncomerate,jdbcType=DOUBLE},
       </if>
     </trim>
   </insert>

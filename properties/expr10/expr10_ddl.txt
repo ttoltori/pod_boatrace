@@ -1517,7 +1517,47 @@ rexpror_hitcnt int,                     -- 最適範囲内の的中したデー�
 rexpror_hitamt int,                     -- 最適範囲内の的中金額合計
 rexpror_betrate double precision,       -- range_cnt / betcnt
 rexpror_hitrate double precision,       -- range_hitcnt / range_betcnt
-rexpror_incomerate double precision    -- range_hitamt / range_betamt
+rexpror_incomerate double precision,    -- range_hitamt / range_betamt
+-- 기대치(직전옺즈랭킹)の最適値計算情報 left to right 2024
+lexpbork_bestmin double precision,       -- 黒字となった最適範囲min
+lexpbork_bestmax double precision,       -- 黒字となった最適範囲max
+lexpbork_betcnt int,                     -- 最適範囲内のデータ数
+lexpbork_betamt int,                     -- 最適範囲内のbet金額
+lexpbork_hitcnt int,                     -- 最適範囲内の的中したデータ数
+lexpbork_hitamt int,                     -- 最適範囲内の的中金額合計
+lexpbork_betrate double precision,       -- range_cnt / betcnt
+lexpbork_hitrate double precision,       -- range_hitcnt / range_betcnt
+lexpbork_incomerate double precision,    -- range_hitamt / range_betamt
+-- 기대치(직전옺즈랭킹)の最適値計算情報 right to left 2024
+rexpbork_bestmin double precision,       -- 黒字となった最適範囲min
+rexpbork_bestmax double precision,       -- 黒字となった最適範囲max
+rexpbork_betcnt int,                     -- 最適範囲内のデータ数
+rexpbork_betamt int,                     -- 最適範囲内のbet金額
+rexpbork_hitcnt int,                     -- 最適範囲内の的中したデータ数
+rexpbork_hitamt int,                     -- 最適範囲内の的中金額合計
+rexpbork_betrate double precision,       -- range_cnt / betcnt
+rexpbork_hitrate double precision,       -- range_hitcnt / range_betcnt
+rexpbork_incomerate double precision,    -- range_hitamt / range_betamt
+-- 기대치(확정옺즈랭킹)の最適値計算情報 left to right 2024
+lexprork_bestmin double precision,       -- 黒字となった最適範囲min
+lexprork_bestmax double precision,       -- 黒字となった最適範囲max
+lexprork_betcnt int,                     -- 最適範囲内のデータ数
+lexprork_betamt int,                     -- 最適範囲内のbet金額
+lexprork_hitcnt int,                     -- 最適範囲内の的中したデータ数
+lexprork_hitamt int,                     -- 最適範囲内の的中金額合計
+lexprork_betrate double precision,       -- range_cnt / betcnt
+lexprork_hitrate double precision,       -- range_hitcnt / range_betcnt
+lexprork_incomerate double precision,    -- range_hitamt / range_betamt
+-- 기대치(확정옺즈랭킹)の最適値計算情報 right to left 2024
+rexprork_bestmin double precision,       -- 黒字となった最適範囲min
+rexprork_bestmax double precision,       -- 黒字となった最適範囲max
+rexprork_betcnt int,                     -- 最適範囲内のデータ数
+rexprork_betamt int,                     -- 最適範囲内のbet金額
+rexprork_hitcnt int,                     -- 最適範囲内の的中したデータ数
+rexprork_hitamt int,                     -- 最適範囲内の的中金額合計
+rexprork_betrate double precision,       -- range_cnt / betcnt
+rexprork_hitrate double precision,       -- range_hitcnt / range_betcnt
+rexprork_incomerate double precision    -- range_hitamt / range_betamt
 );
 drop index if exists indexes_ml_range_evaluation;
 create index indexes_ml_range_evaluation on ml_range_evaluation (result_type, bettype, kumiban, modelno, patternid, pattern);
@@ -1675,6 +1715,18 @@ expror_max double precision,
 expror_mean double precision,
 expror_stddev double precision,
 expror_median double precision,
+-- 기대치(확률*직전옺즈랭킹)의 기술통계량 2024
+expbork_min double precision,
+expbork_max double precision,
+expbork_mean double precision,
+expbork_stddev double precision,
+expbork_median double precision,
+-- 기대치(확률*확정옺즈랭킹)의 기술통계량 2024
+exprork_min double precision,
+exprork_max double precision,
+exprork_mean double precision,
+exprork_stddev double precision,
+exprork_median double precision,
 -- 確定オッズの最適値計算情報
 ror_bestmin double precision,       -- 黒字となった最適範囲min
 ror_bestmax double precision,       -- 黒字となった最適範囲max
@@ -1750,7 +1802,27 @@ expror_hitcnt int,                     -- 最適範囲内の的中したデー�
 expror_hitamt int,                     -- 最適範囲内の的中金額合計
 expror_betrate double precision,       -- range_cnt / betcnt
 expror_hitrate double precision,       -- range_hitcnt / range_betcnt
-expror_incomerate double precision    -- range_hitamt / range_betamt
+expror_incomerate double precision,    -- range_hitamt / range_betamt
+-- 기대치(직전옺즈랭킹)의 최적치계산정보 2024
+expbork_bestmin double precision,       -- 黒字となった最適範囲min
+expbork_bestmax double precision,       -- 黒字となった最適範囲max
+expbork_betcnt int,                     -- 最適範囲内のデータ数
+expbork_betamt int,                     -- 最適範囲内のbet金額
+expbork_hitcnt int,                     -- 最適範囲内の的中したデータ数
+expbork_hitamt int,                     -- 最適範囲内の的中金額合計
+expbork_betrate double precision,       -- range_cnt / betcnt
+expbork_hitrate double precision,       -- range_hitcnt / range_betcnt
+expbork_incomerate double precision,    -- range_hitamt / range_betamt
+-- 기대치(확정옺즈랭킹)의 최적치계산정보 2024
+exprork_bestmin double precision,       -- 黒字となった最適範囲min
+exprork_bestmax double precision,       -- 黒字となった最適範囲max
+exprork_betcnt int,                     -- 最適範囲内のデータ数
+exprork_betamt int,                     -- 最適範囲内のbet金額
+exprork_hitcnt int,                     -- 最適範囲内の的中したデータ数
+exprork_hitamt int,                     -- 最適範囲内の的中金額合計
+exprork_betrate double precision,       -- range_cnt / betcnt
+exprork_hitrate double precision,       -- range_hitcnt / range_betcnt
+exprork_incomerate double precision    -- range_hitamt / range_betamt
 );
 
 drop index if exists indexes_ml_evaluation;
@@ -1849,8 +1921,10 @@ hitn int,
 betamt int,
 hitamt int,
 probability double precision,           -- 追加 2022/3/17 MLから算出した予想的中確率
-expect_bor double precision,            -- 직전옺즈로 계산한 기대치. 2024
-expect_ror double precision,            -- 확정옺즈로 계산한 기대치. 2024
+expect_bor double precision,            -- 직전옺즈*예상확률로 계산한 기대치. 2024
+expect_ror double precision,            -- 확정옺즈*예상확률로 계산한 기대치. 2024
+expect_bork double precision,            -- 직전옺즈랭킹*예상확률으로 계산한 기대치. 2024
+expect_rork double precision,            -- 확정옺즈랭킹*예상확률으로 계산한 기대치. 2024
 result_type varchar(10),                -- 実験のタイプ 
 custom varchar(3),
 hitrate_transition double precision,

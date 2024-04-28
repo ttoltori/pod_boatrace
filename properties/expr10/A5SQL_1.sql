@@ -1,4 +1,188 @@
 ﻿
+
+
+select min(ymd), max(ymd), count(1) 
+from ml_classification mc 
+where modelno = '20017'
+;
+
+select max(ymd) from rec_race;
+
+
+select
+  grade, count(1)
+from rec_race race
+where ymd::int between 20210603 and 20230602
+    and sanrentanno <> '不成立'
+group by grade
+;
+
+select
+	'nopattern' pattern,
+	race.ymd,
+	sanrentanprize::double precision,
+	substring(race.ymd
+from
+	5 for 2) mm,
+	race.jyocd,
+	race.raceno::text,
+	turn::text,
+	race.grade,
+	race.racetype::text,
+	femalecount::text,
+	alevelcount::text,
+	timezone::text,
+	fixedentrance,
+	entry[1]::text entry1,
+	entry[2]::text entry2,
+	entry[3]::text entry3,
+	entry[4]::text entry4,
+	entry[5]::text entry5,
+	entry[6]::text entry6,
+	nationwiningrate[1]::text nationwiningrate1,
+	nationwiningrate[2]::text nationwiningrate2,
+	nationwiningrate[3]::text nationwiningrate3,
+	nationwiningrate[4]::text nationwiningrate4,
+	nationwiningrate[5]::text nationwiningrate5,
+	nationwiningrate[6]::text nationwiningrate6,
+	nation2winingrate[1]::text nation2winingrate1,
+	nation2winingrate[2]::text nation2winingrate2,
+	nation2winingrate[3]::text nation2winingrate3,
+	nation2winingrate[4]::text nation2winingrate4,
+	nation2winingrate[5]::text nation2winingrate5,
+	nation2winingrate[6]::text nation2winingrate6,
+	nation3winingrate[1]::text nation3winingrate1,
+	nation3winingrate[2]::text nation3winingrate2,
+	nation3winingrate[3]::text nation3winingrate3,
+	nation3winingrate[4]::text nation3winingrate4,
+	nation3winingrate[5]::text nation3winingrate5,
+	nation3winingrate[6]::text nation3winingrate6,
+	localwiningrate[1]::text localwiningrate1,
+	localwiningrate[2]::text localwiningrate2,
+	localwiningrate[3]::text localwiningrate3,
+	localwiningrate[4]::text localwiningrate4,
+	localwiningrate[5]::text localwiningrate5,
+	localwiningrate[6]::text localwiningrate6,
+	local2winingrate[1]::text local2winingrate1,
+	local2winingrate[2]::text local2winingrate2,
+	local2winingrate[3]::text local2winingrate3,
+	local2winingrate[4]::text local2winingrate4,
+	local2winingrate[5]::text local2winingrate5,
+	local2winingrate[6]::text local2winingrate6,
+	local3winingrate[1]::text local3winingrate1,
+	local3winingrate[2]::text local3winingrate2,
+	local3winingrate[3]::text local3winingrate3,
+	local3winingrate[4]::text local3winingrate4,
+	local3winingrate[5]::text local3winingrate5,
+	local3winingrate[6]::text local3winingrate6,
+	motor2winingrate[1]::text motor2winingrate1,
+	motor2winingrate[2]::text motor2winingrate2,
+	motor2winingrate[3]::text motor2winingrate3,
+	motor2winingrate[4]::text motor2winingrate4,
+	motor2winingrate[5]::text motor2winingrate5,
+	motor2winingrate[6]::text motor2winingrate6,
+	sex[1] sex1,
+	sex[2] sex2,
+	sex[3] sex3,
+	sex[4] sex4,
+	sex[5] sex5,
+	sex[6] sex6,
+	level[1] level1,
+	level[2] level2,
+	level[3] level3,
+	level[4] level4,
+	level[5] level5,
+	level[6] level6,
+	age[1]::text age1,
+	age[2]::text age2,
+	age[3]::text age3,
+	age[4]::text age4,
+	age[5]::text age5,
+	age[6]::text age6,
+	weight[1]::text weit1,
+	weight[2]::text weit2,
+	weight[3]::text weit3,
+	weight[4]::text weit4,
+	weight[5]::text weit5,
+	weight[6]::text weit6,
+	flying[1]::text fly1,
+	flying[2]::text fly2,
+	flying[3]::text fly3,
+	flying[4]::text fly4,
+	flying[5]::text fly5,
+	flying[6]::text fly6,
+	late[1]::text late1,
+	late[2]::text late2,
+	late[3]::text late3,
+	late[4]::text late4,
+	late[5]::text late5,
+	late[6]::text late6,
+	averagestart[1]::text avgst1,
+	averagestart[2]::text avgst2,
+	averagestart[3]::text avgst3,
+	averagestart[4]::text avgst4,
+	averagestart[5]::text avgst5,
+	averagestart[6]::text avgst6,
+	levelrank lvlrank,
+	nationwiningrank nwrank,
+	nation2winingrank n2wrank,
+	nation3winingrank n3wrank,
+	localwiningrank lwrank,
+	local2winingrank l2wrank,
+	local3winingrank l3wrank,
+	motor2rank m2rank,
+	motor3rank m3rank,
+	startexhibitrank stexhirank,
+	exhibitrank exhirank,
+	averagestartrank avgstrank,
+	avgstcondrank avgcnrank,
+	setuwinrank seturank,
+	( (case
+		when arr.rank = 9 then 6
+		else arr.rank
+	end)::text ) classes
+from
+	rec_race race,
+	rec_racer_arr arr,
+	rec_racer_arr2 arr2
+where
+	race.ymd = arr.ymd
+	and race.jyocd = arr.jyocd
+	and race.raceno = arr.raceno
+	and race.ymd = arr2.ymd
+	and race.jyocd = arr2.jyocd
+	and race.raceno = arr2.raceno
+	and sanrentanno <> '不成立'
+	and grade in ('ip', 'G3', 'G2', 'G1', 'SG')
+	and race.ymd >= '20160603'
+	and race.ymd <= '20231030'
+	and (true)
+order by
+	pattern,
+	race.ymd,
+	race.sime
+;
+
+
+
+
+
+select * from ml_classification mc where modelno = '98102';
+
+select 'nopattern' pattern, race.ymd,
+substring(race.ymd from 5 for 2) mm,race.jyocd,race.raceno::text,turn::text,race.grade,race.racetype::text,femalecount::text,alevelcount::text,timezone::text,fixedentrance,concat_ws('', race.ymd, race.jyocd, lpad(race.raceno::text, 2, '0')) raceid,entry::text en,sex sex,age::text age,level lv,weight::text weight,branch branch,exhibit::text exhibit,startexhibit::text stexhi,racer.waku::text waku,flying::text fly,late::text late,averagestart::text avgst,avgtime::text avgtime,nationwiningrate::text nw,nation2winingrate::text n2w,nation3winingrate::text n3w,localwiningrate::text lw,nvldbl(local2winingrate,0.0)::text l2w,nvldbl(local3winingrate,0.0)::text l3w,motorno::text mtno,motor2winingrate::text m2w,boatno::text btno,boat2winingrate::text b2w,bor[0]::text bor3T123,bor[1]::text bor3T124,bor[2]::text bor3T125,bor[3]::text bor3T126,bor[4]::text bor3T132,bor[5]::text bor3T134,bor[6]::text bor3T135,bor[7]::text bor3T136,bor[8]::text bor3T142,bor[9]::text bor3T143,bor[10]::text bor3T145,bor[11]::text bor3T146,bor[12]::text bor3T152,bor[13]::text bor3T153,bor[14]::text bor3T154,bor[15]::text bor3T156,bor[16]::text bor3T162,bor[17]::text bor3T163,bor[18]::text bor3T164,bor[19]::text bor3T165,bor[20]::text bor3T213,bor[21]::text bor3T214,bor[22]::text bor3T215,bor[23]::text bor3T216,bor[24]::text bor3T231,bor[25]::text bor3T234,bor[26]::text bor3T235,bor[27]::text bor3T236,bor[28]::text bor3T241,bor[29]::text bor3T243,bor[30]::text bor3T245,bor[31]::text bor3T246,bor[32]::text bor3T251,bor[33]::text bor3T253,bor[34]::text bor3T254,bor[35]::text bor3T256,bor[36]::text bor3T261,bor[37]::text bor3T263,bor[38]::text bor3T264,bor[39]::text bor3T265,bor[40]::text bor3T312,bor[41]::text bor3T314,bor[42]::text bor3T315,bor[43]::text bor3T316,bor[44]::text bor3T321,bor[45]::text bor3T324,bor[46]::text bor3T325,bor[47]::text bor3T326,bor[48]::text bor3T341,bor[49]::text bor3T342,bor[50]::text bor3T345,bor[51]::text bor3T346,bor[52]::text bor3T351,bor[53]::text bor3T352,bor[54]::text bor3T354,bor[55]::text bor3T356,bor[56]::text bor3T361,bor[57]::text bor3T362,bor[58]::text bor3T364,bor[59]::text bor3T365,bor[60]::text bor3T412,bor[61]::text bor3T413,bor[62]::text bor3T415,bor[63]::text bor3T416,bor[64]::text bor3T421,bor[65]::text bor3T423,bor[66]::text bor3T425,bor[67]::text bor3T426,bor[68]::text bor3T431,bor[69]::text bor3T432,bor[70]::text bor3T435,bor[71]::text bor3T436,bor[72]::text bor3T451,bor[73]::text bor3T452,bor[74]::text bor3T453,bor[75]::text bor3T456,bor[76]::text bor3T461,bor[77]::text bor3T462,bor[78]::text bor3T463,bor[79]::text bor3T465,bor[80]::text bor3T512,bor[81]::text bor3T513,bor[82]::text bor3T514,bor[83]::text bor3T516,bor[84]::text bor3T521,bor[85]::text bor3T523,bor[86]::text bor3T524,bor[87]::text bor3T526,bor[88]::text bor3T531,bor[89]::text bor3T532,bor[90]::text bor3T534,bor[91]::text bor3T536,bor[92]::text bor3T541,bor[93]::text bor3T542,bor[94]::text bor3T543,bor[95]::text bor3T546,bor[96]::text bor3T561,bor[97]::text bor3T562,bor[98]::text bor3T563,bor[99]::text bor3T564,bor[100]::text bor3T612,bor[101]::text bor3T613,bor[102]::text bor3T614,bor[103]::text bor3T615,bor[104]::text bor3T621,bor[105]::text bor3T623,bor[106]::text bor3T624,bor[107]::text bor3T625,bor[108]::text bor3T631,bor[109]::text bor3T632,bor[110]::text bor3T634,bor[111]::text bor3T635,bor[112]::text bor3T641,bor[113]::text bor3T642,bor[114]::text bor3T643,bor[115]::text bor3T645,bor[116]::text bor3T651,bor[117]::text bor3T652,bor[118]::text bor3T653,bor[119]::text bor3T654,
+( (case when rank = 9 then 6 else rank end)::text ) classes
+from rec_race race, rec_racer racer, rec_racer2 racer2, rec_bodds bo
+where race.ymd = racer.ymd and race.jyocd = racer.jyocd and race.raceno = racer.raceno
+and race.ymd = bo.ymd and race.jyocd = bo.jyocd and race.raceno = bo.raceno
+and racer.ymd = racer2.ymd and racer.jyocd = racer2.jyocd and racer.raceno = racer2.raceno and racer.waku = racer2.waku
+and sanrentanno <> '不成立'
+and race.grade in ('ip', 'G3', 'G2', 'G1', 'SG')
+and race.ymd >= '20210601' and race.ymd <= '20230601'
+and (race.grade = 'ip')
+order by race.ymd, race.jyocd, race.raceno, racer.waku
+;
+
 select * from odds_monitor where odds_monitor.bettype = '3T';
 
 
@@ -88,7 +272,7 @@ order by runcnt
 
 
 select 
-  nvlint(n3point_waku_slope, 0)
+  nullif(n3point_waku_slope, 0)
 from rec_racer2
 where n3point_waku_slope ='NaN'
 -- order by COALESCE(n3point_waku_slope, 9999) desc

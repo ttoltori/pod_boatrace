@@ -38,6 +38,10 @@ import com.pengkong.boatrace.exp10.result.graph.chart.term.TermTimelineBetcntInc
 import com.pengkong.boatrace.exp10.result.graph.chart.term.TermTimelineHitrateIncomerate;
 import com.pengkong.boatrace.exp10.result.graph.chart.v2.BeforeOddsRangePerformance2;
 import com.pengkong.boatrace.exp10.result.graph.chart.v2.BeforeOddsRankRangePerformance2;
+import com.pengkong.boatrace.exp10.result.graph.chart.v2.ExpBorRangePerformance2;
+import com.pengkong.boatrace.exp10.result.graph.chart.v2.ExpBorkRangePerformance2;
+import com.pengkong.boatrace.exp10.result.graph.chart.v2.ExpRorRangePerformance2;
+import com.pengkong.boatrace.exp10.result.graph.chart.v2.ExpRorkRangePerformance2;
 import com.pengkong.boatrace.exp10.result.graph.chart.v2.ProbabilityRangePerformance2;
 import com.pengkong.boatrace.exp10.result.graph.chart.v2.ResultOddsRangePerformance2;
 import com.pengkong.boatrace.exp10.result.graph.chart.v2.ResultOddsRankRangePerformance2;
@@ -248,18 +252,11 @@ public class ResultGraphBuilder {
 				
 				listChart.add(new BeforeOddsRankRangePerformance2(stat).create());
 				listChart.add(new BeforeOddsRangePerformance2(stat).create());
-				//listChart.add(new BoddsProbabilityBubble(stat).create());
-				//listChart.add(new BestBoddsRankBoddsBubble(stat, xyRange).create());
 				listChart.add(new BoddsRankProbabilityBetcntBubble(stat).create());
 
 				
 				listChart.add(new ResultOddsRankRangePerformance2(stat).create());
-				//listChart.add(new ResultOddsRangePerformance2(stat).create());
-				// listChart.add(new BestBoddsRankProbBubble(stat, xyRange).create());
-				//listChart.add(new BestRoddsRankProbBubble(stat, xyRange).create());
-				//listChart.add(new BestBoddsRankRoddsRankBubble(stat, xyRange).create());
 				listChart.add(new BoddsProbabilityBubble(stat).create());
-				//listChart.add(new BoddsProbabilityBetcntBubble(stat).create());
 				listChart.add(new BoddsRankBoddsBubble(stat).create());
 				
 				BitmapEncoder.saveBitmap(listChart, 3, 3, filePath, BitmapFormat.PNG);
@@ -308,6 +305,21 @@ public class ResultGraphBuilder {
 				listChart.add(new RoddsRankProbabilityBubble(stat).create());
 				listChart.add(new RoddsRankProbabilityBetcntBubble(stat).create());
 				listChart.add(new TermTimelineBetcntIncome(stat).create());
+				
+				BitmapEncoder.saveBitmap(listChart, 3, 3, filePath, BitmapFormat.PNG);
+			} else if (graphType.equals("8")) {
+				listChart.add(new TermTimelineBalance(stat).create());
+				listChart.add(new ProbabilityRangePerformance2(stat).create());
+				listChart.add(new ExpBorRangePerformance2(stat).create());
+				
+				listChart.add(new BeforeOddsRankRangePerformance2(stat).create());
+				listChart.add(new BeforeOddsRangePerformance2(stat).create());
+				listChart.add(new ExpRorRangePerformance2(stat).create());
+
+				
+				listChart.add(new ResultOddsRankRangePerformance2(stat).create());
+				listChart.add(new ExpBorkRangePerformance2(stat).create());
+				listChart.add(new ExpRorkRangePerformance2(stat).create());
 				
 				BitmapEncoder.saveBitmap(listChart, 3, 3, filePath, BitmapFormat.PNG);
 			} else {

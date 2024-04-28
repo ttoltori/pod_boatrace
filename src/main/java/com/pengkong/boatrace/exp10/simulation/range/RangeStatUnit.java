@@ -58,6 +58,31 @@ public class RangeStatUnit {
 		return values;
 	}
 	
+	public void add(RangeStatUnit unit) {
+		betCnt += unit.betCnt;
+		betAmt += unit.betAmt;
+		hitCnt += unit.hitCnt;
+		hitAmt += unit.hitAmt;
+		if (hitOddsMax < unit.hitOddsMax) {
+			hitOddsMax = unit.hitOddsMax;
+		}
+		if (hitOddsrankMax < unit.hitOddsrankMax) {
+			hitOddsrankMax = unit.hitOddsrankMax;
+		}
+		
+		if (bOddsMin > unit.bOddsMin) {
+			bOddsMin = unit.bOddsMin;
+		}
+
+		if (bOddsMax > unit.bOddsMax) {
+			bOddsMax = unit.bOddsMax;
+		}
+		
+		if (bOddsrankMax < unit.bOddsrankMax) {
+			bOddsrankMax = unit.bOddsrankMax;
+		}
+	}
+	
 	/** 集計値追加 */
 	public void add(MlResult result) {
 		betCnt++;

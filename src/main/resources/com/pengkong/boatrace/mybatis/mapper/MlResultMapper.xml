@@ -32,6 +32,8 @@
     <result column="probability" jdbcType="DOUBLE" property="probability" />
     <result column="expect_bor" jdbcType="DOUBLE" property="expectBor" />
     <result column="expect_ror" jdbcType="DOUBLE" property="expectRor" />
+    <result column="expect_bork" jdbcType="DOUBLE" property="expectBork" />
+    <result column="expect_rork" jdbcType="DOUBLE" property="expectRork" />
     <result column="result_type" jdbcType="VARCHAR" property="resultType" />
     <result column="custom" jdbcType="VARCHAR" property="custom" />
     <result column="hitrate_transition" jdbcType="DOUBLE" property="hitrateTransition" />
@@ -114,8 +116,8 @@
     resultno, modelno, patternid, pattern, ymd, jyocd, raceno, sime, predict_rank123, 
     result_rank123, bettype, stat_bettype, bet_kumiban, bet_odds, bet_oddsrank, result_kumiban, 
     result_odds, result_oddsrank, result_amt, hity, hitn, betamt, hitamt, probability, 
-    expect_bor, expect_ror, result_type, custom, hitrate_transition, incomerate_transition, 
-    balance, race_odds, race_oddsrank
+    expect_bor, expect_ror, expect_bork, expect_rork, result_type, custom, hitrate_transition, 
+    incomerate_transition, balance, race_odds, race_oddsrank
   </sql>
   <select id="selectByExample" parameterType="com.pengkong.boatrace.mybatis.entity.MlResultExample" resultMap="BaseResultMap">
     <!--
@@ -159,8 +161,9 @@
       result_kumiban, result_odds, result_oddsrank, 
       result_amt, hity, hitn, 
       betamt, hitamt, probability, 
-      expect_bor, expect_ror, result_type, 
-      custom, hitrate_transition, incomerate_transition, 
+      expect_bor, expect_ror, expect_bork, 
+      expect_rork, result_type, custom, 
+      hitrate_transition, incomerate_transition, 
       balance, race_odds, race_oddsrank
       )
     values (#{resultno,jdbcType=VARCHAR}, #{modelno,jdbcType=VARCHAR}, #{patternid,jdbcType=VARCHAR}, 
@@ -171,8 +174,9 @@
       #{resultKumiban,jdbcType=VARCHAR}, #{resultOdds,jdbcType=DOUBLE}, #{resultOddsrank,jdbcType=INTEGER}, 
       #{resultAmt,jdbcType=INTEGER}, #{hity,jdbcType=INTEGER}, #{hitn,jdbcType=INTEGER}, 
       #{betamt,jdbcType=INTEGER}, #{hitamt,jdbcType=INTEGER}, #{probability,jdbcType=DOUBLE}, 
-      #{expectBor,jdbcType=DOUBLE}, #{expectRor,jdbcType=DOUBLE}, #{resultType,jdbcType=VARCHAR}, 
-      #{custom,jdbcType=VARCHAR}, #{hitrateTransition,jdbcType=DOUBLE}, #{incomerateTransition,jdbcType=DOUBLE}, 
+      #{expectBor,jdbcType=DOUBLE}, #{expectRor,jdbcType=DOUBLE}, #{expectBork,jdbcType=DOUBLE}, 
+      #{expectRork,jdbcType=DOUBLE}, #{resultType,jdbcType=VARCHAR}, #{custom,jdbcType=VARCHAR}, 
+      #{hitrateTransition,jdbcType=DOUBLE}, #{incomerateTransition,jdbcType=DOUBLE}, 
       #{balance,jdbcType=INTEGER}, #{raceOdds,jdbcType=DOUBLE}, #{raceOddsrank,jdbcType=INTEGER}
       )
   </insert>
@@ -260,6 +264,12 @@
       </if>
       <if test="expectRor != null">
         expect_ror,
+      </if>
+      <if test="expectBork != null">
+        expect_bork,
+      </if>
+      <if test="expectRork != null">
+        expect_rork,
       </if>
       <if test="resultType != null">
         result_type,
@@ -361,6 +371,12 @@
       </if>
       <if test="expectRor != null">
         #{expectRor,jdbcType=DOUBLE},
+      </if>
+      <if test="expectBork != null">
+        #{expectBork,jdbcType=DOUBLE},
+      </if>
+      <if test="expectRork != null">
+        #{expectRork,jdbcType=DOUBLE},
       </if>
       <if test="resultType != null">
         #{resultType,jdbcType=VARCHAR},
@@ -470,6 +486,12 @@
       <if test="record.expectRor != null">
         expect_ror = #{record.expectRor,jdbcType=DOUBLE},
       </if>
+      <if test="record.expectBork != null">
+        expect_bork = #{record.expectBork,jdbcType=DOUBLE},
+      </if>
+      <if test="record.expectRork != null">
+        expect_rork = #{record.expectRork,jdbcType=DOUBLE},
+      </if>
       <if test="record.resultType != null">
         result_type = #{record.resultType,jdbcType=VARCHAR},
       </if>
@@ -528,6 +550,8 @@
       probability = #{record.probability,jdbcType=DOUBLE},
       expect_bor = #{record.expectBor,jdbcType=DOUBLE},
       expect_ror = #{record.expectRor,jdbcType=DOUBLE},
+      expect_bork = #{record.expectBork,jdbcType=DOUBLE},
+      expect_rork = #{record.expectRork,jdbcType=DOUBLE},
       result_type = #{record.resultType,jdbcType=VARCHAR},
       custom = #{record.custom,jdbcType=VARCHAR},
       hitrate_transition = #{record.hitrateTransition,jdbcType=DOUBLE},

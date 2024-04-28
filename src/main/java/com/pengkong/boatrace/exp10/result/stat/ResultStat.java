@@ -97,7 +97,6 @@ public class ResultStat {
 	/** 全ての予想的中確率 */
 	public List<Double> listProb = new ArrayList<>();
 
-	/** 全ての기대치 */
 	public List<Double> listExp = new ArrayList<>();
 	
 	/** 区間別の残高一覧 */
@@ -152,22 +151,6 @@ public class ResultStat {
 	/** 直前オッズRANK/直前オッズ */
 	public Map<String, RangeStatUnit> mapBorkBorStatUnit = new TreeMap<>();
 	
-	/** TOP直前オッズの直前(予測)オッズ */
-	@Deprecated
-	public List<Double> listTopBeforeOdds = new ArrayList<>();
-
-	/** TOP直前オッズの直前オッズ毎にカウント、的中カウント、的中金額を集計する */
-	@Deprecated
-	public Map<Double, RangeStatUnit> mapTopBeforeOddsStatUnit = new TreeMap<>();
-	
-	/** TOP確定オッズの直前(予測)オッズ */
-	@Deprecated
-	public List<Double> listTopResultOdds = new ArrayList<>();
-
-	/** TOP直前オッズの直前オッズ毎にカウント、的中カウント、的中金額を集計する */
-	@Deprecated
-	public Map<Double, RangeStatUnit> mapTopResultOddsStatUnit = new TreeMap<>();
-
 	/** 時系列グラフの期間単位カウンタ */
 	public int termCount = 0;
 	
@@ -209,7 +192,23 @@ public class ResultStat {
 	
 	/** bork別の投票結果リストを保持する。後で期間単位に分割してbork毎期間毎黒字カウントを計算するため。 */
 	public HashMapList<BorkTermUnit> mapBorkTerm = new HashMapList<>();
+
+	/** 직전 옺즈 기대치 */
+	public List<Double> listExpBor = new ArrayList<Double>();
+	public Map<Double, RangeStatUnit> mapExpBorStatUnit = new TreeMap<>();
+
+	/** 직전 옺즈랭킹 기대치 */
+	public List<Double> listExpBork = new ArrayList<Double>();
+	public Map<Double, RangeStatUnit> mapExpBorkStatUnit = new TreeMap<>();
 	
+	/** 확정 옺즈 기대치 */
+	public List<Double> listExpRor = new ArrayList<Double>();
+	public Map<Double, RangeStatUnit> mapExpRorStatUnit = new TreeMap<>();
+	
+	/** 확정 옺즈 랭킹 기대치 */
+	public List<Double> listExpRork = new ArrayList<Double>();
+	public Map<Double, RangeStatUnit> mapExpRorkStatUnit = new TreeMap<>();
+
 	public ResultStat(String statBettype, String kumiban, String patternId, String pattern, int startBalance) {
 		this.statBettype = statBettype;
 		this.kumiban = kumiban;
@@ -227,8 +226,6 @@ public class ResultStat {
 
 	public void add(MlResult result, Double totalBetCnt) throws Exception {
 		String factor;
-		
-		Double probability;
 		// histogram化の使用可否はhistogramクラス内で判定する
 		// patternidに確率が含まれた場合はhitogram化しない
 //		if (result.getPatternid().contains("prob")) {
@@ -237,14 +234,22 @@ public class ResultStat {
 //			probability = histogram.convertByKey("PR", result.getProbability());
 //		}
 
-		Double beforeOdds = histogram.convertByBettypeKumiban(result.getBettype(), result.getBetKumiban(), result.getBetOdds());
-		Double resultOdds = histogram.convertByBettypeKumiban(result.getBettype(), result.getBetKumiban(), result.getResultOdds());
-		probability = MathUtil.scale2(result.getProbability());
+//		Double beforeOdds = histogram.convertByBettypeKumiban(result.getBettype(), result.getBetKumiban(), result.getBetOdds());
+//		Double resultOdds = histogram.convertByBettypeKumiban(result.getBettype(), result.getBetKumiban(), result.getResultOdds());
+		
+		Double beforeOdds = result.getBetOdds();
+		Double resultOdds = result.getResultOdds();
+		Double prob = result.getProbability();
+		Double expBor = result.getExpectBor();
+		Double expBork = result.getExpectBork();
+		Double expRor = result.getExpectRor();
+		Double expRork = result.getExpectRork();
+		
 		
 		// 기대치 = 적중확율 * 옺즈.  임시로 예상확률을 기대치로 대체해본다. 조건 : 직전옺즈가 존재하는 기간이어야한다.
 		if (beforeOdds == null)
 			return;
-		probability = MathUtil.scale(result.getProbability() * result.getResultOdds(), 0);
+		prob = MathUtil.scale(result.getProbability() * result.getResultOdds(), 0);
 		
 		Integer beforeOddsRank = result.getBetOddsrank();
 		Integer resultOddsRank = result.getResultOddsrank();
@@ -269,18 +274,17 @@ public class ResultStat {
 			listBor.add(beforeOdds);
 			getRangeStatUnit(mapBeforeOddsStatUnit, beforeOdds).add(result);
 			
-			// 기대치 = 적중확율 * 옺즈  
-			//Double exp = probability * beforeOdds;  
-			//listExp.add(exp);
-			//getRangeStatUnit(mapExpStatUnit, exp).add(result);
-			
 			// 直前オッズ：予想確率別集計
-			factor = String.join("_", beforeOdds.toString(), probability.toString());
+			factor = String.join("_", beforeOdds.toString(), prob.toString());
 			getRangeStatUnit(mapBoddsProbStatUnit, factor).add(result);
 			
 			// 直前オッズ：確定オッズ
 			factor = String.join("_", beforeOdds.toString(), String.valueOf(resultOdds));
 			getRangeStatUnit(mapBorRorStatUnit, factor).add(result);
+			
+			// 직전옺즈 기대치
+			listExpBor.add(expBor);
+			getRangeStatUnit(mapExpBorStatUnit, expBor).add(result);
 		}
 
 		if (beforeOddsRank != null) {
@@ -289,7 +293,7 @@ public class ResultStat {
 			getRangeStatUnit(mapBorkStatUnit, beforeOddsRank.doubleValue()).add(result);
 			
 			// 直前オッズRANK：予想確率別集計
-			factor = String.join("_", beforeOddsRank.toString(), probability.toString());
+			factor = String.join("_", beforeOddsRank.toString(), prob.toString());
 			getRangeStatUnit(mapBoddsRankProbStatUnit, factor).add(result);
 			
 			// 直前オッズRANK：確定オッズRANK
@@ -300,13 +304,11 @@ public class ResultStat {
 			factor = String.join("_", beforeOddsRank.toString(), String.valueOf(beforeOdds));
 			getRangeStatUnit(mapBorkBorStatUnit, factor).add(result);
 			
-			// TOP直前オッズ
-			//if (beforeOddsRank <= 3) {
-			//	listTopBeforeOdds.add(beforeOdds);
-			//	getRangeStatUnit(mapTopBeforeOddsStatUnit, beforeOdds).add(result);
-			//}
-			
 			mapBorkTerm.addItem(beforeOddsRank.toString(), new BorkTermUnit(result.getBetamt(), result.getHitamt()));
+
+			// 직전옺즈랭킹 기대치
+			listExpBork.add(expBork);
+			getRangeStatUnit(mapExpBorkStatUnit, expBork).add(result);
 		}
 		betrateBodds = MathUtil.scale2(sumOfBetBodds / totalBetCnt);
 		hitrateBodds = MathUtil.scale2(sumOfHitBodds / sumOfBetBodds);
@@ -328,8 +330,8 @@ public class ResultStat {
 		sumOfBetAmount += result.getBetamt();
 
 		// 予想確率別集計
-		listProb.add(probability);
-		getRangeStatUnit(mapProbStatUnit, probability).add(result);
+		listProb.add(prob);
+		getRangeStatUnit(mapProbStatUnit, prob).add(result);
 
 		// 確定オッズ別集計
 		if (resultOdds != null) {
@@ -337,8 +339,12 @@ public class ResultStat {
 			getRangeStatUnit(mapResultOddsStatUnit, resultOdds).add(result);
 			
 			// 確定オッズ：予想確率別集計
-			factor = String.join("_", resultOdds.toString(), probability.toString());
+			factor = String.join("_", resultOdds.toString(), prob.toString());
 			getRangeStatUnit(mapRoddsProbStatUnit, factor).add(result);
+			
+			// 확정옺즈 기대치
+			listExpRor.add(expRor);
+			getRangeStatUnit(mapExpRorStatUnit, expRor).add(result);
 		}
 		
 		if (resultOddsRank != null) {
@@ -347,14 +353,12 @@ public class ResultStat {
 			getRangeStatUnit(mapRorkStatUnit, resultOddsRank.doubleValue()).add(result);
 			
 			// 確定オッズRANK：予想確率別集計
-			factor = String.join("_", resultOddsRank.toString(), probability.toString());
+			factor = String.join("_", resultOddsRank.toString(), prob.toString());
 			getRangeStatUnit(mapRoddsRankProbStatUnit, factor).add(result);
 
-			// TOP確定オッズ
-			//if (resultOddsRank <= 3) {
-			//	listTopResultOdds.add(resultOdds);
-			//	getRangeStatUnit(mapTopResultOddsStatUnit, resultOdds).add(result);
-			//}
+			// 확정옺즈랭킹 기대치
+			listExpRork.add(expRork);
+			getRangeStatUnit(mapExpRorkStatUnit, expRork).add(result);
 		}
 		
 		// 的中した場合

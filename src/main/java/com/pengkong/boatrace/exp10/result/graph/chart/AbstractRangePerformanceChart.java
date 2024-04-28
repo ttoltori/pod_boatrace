@@ -80,7 +80,8 @@ public abstract class AbstractRangePerformanceChart extends AbstractChart {
 		xyData = XYGraphData.convertXYGraphData(mapBetcnt);
 		series = chart.addSeries("帳票数:1", xyData.getXdataArray(), xyData.getYdataArray());
 		series.setChartCategorySeriesRenderStyle(CategorySeriesRenderStyle.Line);
-		series.setMarker(SeriesMarkers.CIRCLE);
+		//series.setMarker(SeriesMarkers.CIRCLE);
+		series.setMarker(SeriesMarkers.NONE);
 		series.setMarkerColor(Color.RED);
 		series.setLineColor(Color.RED);
 		series.setLineWidth(calculateLineWidth());

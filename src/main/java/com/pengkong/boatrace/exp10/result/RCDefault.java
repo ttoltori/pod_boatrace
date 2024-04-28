@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.pengkong.boatrace.common.enums.BetType;
 import com.pengkong.boatrace.exp10.odds.provider.ResultOddsProvider;
+import com.pengkong.boatrace.exp10.simulation.calculator.expectation.ProbabilityExpCalculatorFactory;
 import com.pengkong.boatrace.exp10.simulation.calculator.probability.ProbabilityCalculatorFactory;
 import com.pengkong.boatrace.exp10.simulation.data.rmi.client.RmiBeforeOddsProvider;
 import com.pengkong.boatrace.mybatis.entity.MlResult;
@@ -30,8 +31,11 @@ public class RCDefault extends AbstractResultCreator {
 
 	@Override
 	protected void preExecute() {
-		// 予想確率組み合わせクラス
+		// 予想確率組み合わせクラス (statBettype기준)
 		probabilityCalculator = ProbabilityCalculatorFactory.create();
+		
+		// 기대치 계산용  예상확률을 취득 (bettype기준) 
+		probabilityExpCalculator = ProbabilityExpCalculatorFactory.create();
 		
 		// 直前オッズ
 		beforeOddsProvider = new RmiBeforeOddsProvider();

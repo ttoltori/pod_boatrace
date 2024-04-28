@@ -1,14 +1,19 @@
 package com.pengkong.boatrace.exp10.result.stat;
 
+import java.util.List;
+
 import org.apache.commons.math3.exception.NoDataException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.pengkong.boatrace.common.enums.Delimeter;
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
 import com.pengkong.boatrace.exp10.result.ResultHelper;
+import com.pengkong.boatrace.exp10.simulation.calculator.HistogramCalculator;
 import com.pengkong.boatrace.exp10.simulation.range.BestRangeFinder;
 import com.pengkong.boatrace.mybatis.entity.MlEvaluation;
 import com.pengkong.common.MathUtil;
+import com.pengkong.common.StringUtil;
 
 public class MlEvaluationCreator extends MlCreatorBase<MlEvaluation> 
 {
@@ -28,6 +33,8 @@ public class MlEvaluationCreator extends MlCreatorBase<MlEvaluation>
 	 * @return MlEvaluation
 	 */
 	public MlEvaluation create(String exNo, String modelNo, String patternId, int balanceSplitNum) throws Exception {
+		convertMaps2Histogram();
+		
 		logger.debug("creating MlEvaluation. " + String.join(",", exNo, modelNo, stat.statBettype, stat.kumiban, patternId, stat.pattern));
 		double[] regression;
 		// 的中が一つもなければEvaluationを作成しない
@@ -104,7 +111,15 @@ public class MlEvaluationCreator extends MlCreatorBase<MlEvaluation>
 
 		// 予想確率
 		dto = setDescriptiveStatistics(dto, "Prob", stat.listProb);
+		
+		// 직전옺즈 / 랭킹 기대치
+		dto = setDescriptiveStatistics(dto, "Expbor", stat.listExpBor);
+		dto = setDescriptiveStatistics(dto, "Expbork", stat.listExpBork);
 
+		// 확정옺즈 / 랭킹 기대치
+		dto = setDescriptiveStatistics(dto, "Expror", stat.listExpRor);
+		dto = setDescriptiveStatistics(dto, "Exprork", stat.listExpRork);
+		
 		// ---------------- 最適範囲設定 -----------------------------  
 		//  確定オッズ / RANK 
 		dto = setRangeStatistics(dto, "Ror", new BestRangeFinder(stat.mapResultOddsStatUnit.values()), stat.sumOfBet);
@@ -112,6 +127,11 @@ public class MlEvaluationCreator extends MlCreatorBase<MlEvaluation>
 
 		// 予想確率
 		dto = setRangeStatistics(dto, "Pr", new BestRangeFinder(stat.mapProbStatUnit.values()), stat.sumOfBet);
+
+		// 확정옺즈 / 랭킹 기대치
+		dto = setRangeStatistics(dto, "Expror", new BestRangeFinder(stat.mapExpRorStatUnit.values()), stat.sumOfBet);
+		dto = setRangeStatistics(dto, "Exprork", new BestRangeFinder(stat.mapExpRorkStatUnit.values()), stat.sumOfBet);
+		
 		
 		// ---------------- 直前オッズが存在する場合 記述統計量/最適範囲設定 -----------------------------  
 		if (stat.mapBeforeOddsStatUnit.size() > 0) {
@@ -121,6 +141,10 @@ public class MlEvaluationCreator extends MlCreatorBase<MlEvaluation>
 			
 			dto = setRangeStatistics(dto, "Bor", new BestRangeFinder(stat.mapBeforeOddsStatUnit.values()), stat.sumOfBetBodds);
 			dto = setRangeStatistics(dto, "Bork", new BestRangeFinder(stat.mapBorkStatUnit.values()), stat.sumOfBetBodds);
+			
+			// 직전옺즈 / 랭킹 기대치
+			dto = setRangeStatistics(dto, "Expbor", new BestRangeFinder(stat.mapExpBorStatUnit.values()), stat.sumOfBet);
+			dto = setRangeStatistics(dto, "Expbork", new BestRangeFinder(stat.mapExpBorkStatUnit.values()), stat.sumOfBet);
 		}
 
 		// betrate regression
@@ -146,5 +170,19 @@ public class MlEvaluationCreator extends MlCreatorBase<MlEvaluation>
 		
 		stat.evaluation = dto;
 		return dto;
+	}
+	
+	void convertMaps2Histogram() {
+		HistogramCalculator hc = new HistogramCalculator();
+		String[] strPercents = MLPropertyUtil.getInstance().getString("histogram_percents").split(Delimeter.COMMA.getValue());
+		List<Double> percents = StringUtil.strings2Doubles(strPercents);
+		
+		stat.mapProbStatUnit = hc.histogram(stat.mapProbStatUnit, percents);
+		stat.mapBeforeOddsStatUnit = hc.histogram(stat.mapBeforeOddsStatUnit, percents);
+		stat.mapExpBorStatUnit = hc.histogram(stat.mapExpBorStatUnit, percents);
+		stat.mapExpRorStatUnit = hc.histogram(stat.mapExpRorStatUnit, percents);
+		stat.mapExpBorkStatUnit = hc.histogram(stat.mapExpBorkStatUnit, percents);
+		stat.mapExpRorkStatUnit = hc.histogram(stat.mapExpRorkStatUnit, percents);
+		
 	}
 }
