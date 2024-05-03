@@ -147,6 +147,7 @@ public class ResultGraphBuilder {
 				//dirExResult = dirAllResult + prop.getString("groups") + "/" + prop.getString("grade_type") + "/" +  prop.getString("bettype") + "/" + stat.kumiban + "/" ;
 				
 				dirExResult = dirAllResult + prop.getString("grade_type") + "/"  +  prop.getString("stat_bettype") + "/" + stat.kumiban + "/"; 
+				dirExResult = dirAllResult + prop.getString("grade_type") + "/"  +  prop.getString("stat_bettype") + "/"; 
 						//String.join("-", prop.getString("factor"), prop.getString("cond_range")) + "/";
 						//String.join("-", prop.getString("factor"), prop.getString("cond_range"), prop.getString("limit"),prop.getString("models"),prop.getString("group_sql_id")) + "/";
 				// VIC dirExResult = dirAllResult + prop.getString("grade_type") + "/" +  prop.getString("bettype") + "/" + stat.kumiban + "/" + String.join("-", prop.getString("factor_no"), prop.getString("factor")) + "/";

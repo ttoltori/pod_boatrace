@@ -195,8 +195,12 @@ public class ModelInfoManager {
 		String[] featureIds = fsTpl.getFeatureIds(featureSetId);
 		List<Feature> featureList  = featureTemplate.getFeatureList(featureIds);
 		for (Feature fe : featureList) {
+			try {
 				sb2.append(BoatConst.featureTypeMap.get(fe.arffType));
 				sb2.append(",");
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		sb.append(sb2.substring(0, sb2.length()-1));
 		
@@ -224,6 +228,7 @@ public class ModelInfoManager {
 		String[] arffNames = new String[listFeature.size()];
 		String[] arffTypes = new String[listFeature.size()];
 		for (int i = 0; i < listFeature.size(); i++) {
+			
 			arffNames[i] =  listFeature.get(i).arffName;
 			arffTypes[i] =  listFeature.get(i).arffType;
 		}

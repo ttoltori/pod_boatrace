@@ -3,8 +3,6 @@ package com.pengkong.boatrace.exp10.simulation.evaluation;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
-
 import com.pengkong.boatrace.common.enums.Delimeter;
 import com.pengkong.boatrace.exception.WarningException;
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;

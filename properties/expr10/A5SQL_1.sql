@@ -3,7 +3,7 @@
 
 select min(ymd), max(ymd), count(1) 
 from ml_classification mc 
-where modelno = '20017'
+where modelno = '89105'
 ;
 
 select max(ymd) from rec_race;

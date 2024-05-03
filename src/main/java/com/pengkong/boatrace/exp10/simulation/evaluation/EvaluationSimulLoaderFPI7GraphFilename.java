@@ -163,7 +163,6 @@ public class EvaluationSimulLoaderFPI7GraphFilename extends AbstractEvaluationLo
 		
 		try {
 			MLPropertyUtil.getInstance().addFile(propertyFilepath);
-			MLPropertyUtil prop = MLPropertyUtil.getInstance();
 			
 			List<Evaluation> evals = new EvaluationSimulLoaderFPI7GraphFilename().getEvaluations();
 			System.out.println(evals.size());

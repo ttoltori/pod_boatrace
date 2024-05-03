@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.pengkong.boatrace.common.enums.Delimeter;
 import com.pengkong.boatrace.exception.WarningException;
-import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
 import com.pengkong.boatrace.exp10.property.SqlTemplate;
 import com.pengkong.boatrace.exp10.util.EvaluationHelper;
 import com.pengkong.boatrace.mybatis.client.CustomMapper;

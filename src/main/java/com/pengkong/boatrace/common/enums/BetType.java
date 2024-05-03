@@ -23,11 +23,11 @@ import com.pengkong.boatrace.exp10.simulation.SCDefault;
 public enum BetType {
 	_1F("1F"),  // deprecated
 	_KF("KF"),  // deprecated
-	_3M("3M"),  // deprecated ３連単1-2-3, 1-3-2, 2-1-3, 3-1-2 4点 (통계단위 3자리)
-	_3U("3U"),  // deprecated ３連単1-2-3456, 1-3456-2  8点 (통계단위 3자리)
-	_3Y("3Y"),  // deprecated ３連単1-3456-2, 2-3456-1 8点 (통계단위 2자리)
-    _3A("3A"),  // deprecated ３連単 1-23456-3456
-    _2A("2A"),  // deprecated ２連単  1-23456
+	//_3M("3M"),  // deprecated ３連単1-2-3, 1-3-2, 2-1-3, 3-1-2 4点 (통계단위 3자리)
+	//_3U("3U"),  // deprecated ３連単1-2-3456, 1-3456-2  8点 (통계단위 3자리)
+	//_3Y("3Y"),  // deprecated ３連単1-3456-2, 2-3456-1 8点 (통계단위 2자리)
+    //_3A("3A"),  // deprecated ３連単 1-23456-3456
+    //_2A("2A"),  // deprecated ２連単  1-23456
 	_1T("1T"),
 	_2F("2F"),
 	_2T("2T"),

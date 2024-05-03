@@ -132,6 +132,12 @@ insert into ml_classification select * from ml_classification_bk1 where modelno:
 !!!노트북에서 ml_classify할때 referential은 model_release, ml_classification도 동기화해두어야 한다.
 
 ========================================================================
+2024/04/29
+
+
+
+
+========================================================================
 2024/03/19
 👀 LGBMRanker 만든다
   👀 class_weight 적용되는지 확인한다

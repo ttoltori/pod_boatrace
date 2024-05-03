@@ -50,6 +50,10 @@ public class FeatureSetTemplate {
 		if (!isInitialized)
 			initialize();
 		
+		String str = featureSetMap.get(featuresetId);
+		if (str == null) {
+			System.out.println("");
+		}
 		return featureSetMap.get(featuresetId).split(Delimeter.COMMA.getValue());
 	}
 

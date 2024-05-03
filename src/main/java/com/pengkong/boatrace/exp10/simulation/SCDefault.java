@@ -49,12 +49,6 @@ public class SCDefault extends AbstractSimulationCreator {
 	}
 
 	@Override
-	List<MlResult> get3Mresult(DBRecord rec) throws Exception {
-		List<MlResult> result = execute(BetType._3M, rec);
-		return result;
-	}
-
-	@Override
 	List<MlResult> get3Nresult(DBRecord rec) throws Exception {
 		List<MlResult> result = execute(BetType._3N, rec);
 		return result;
@@ -78,28 +72,8 @@ public class SCDefault extends AbstractSimulationCreator {
         return result;
     }
     @Override
-    List<MlResult> get3Uresult(DBRecord rec) throws Exception {
-        List<MlResult> result = execute(BetType._3U, rec);
-        return result;
-    }
-    @Override
     List<MlResult> get3Xresult(DBRecord rec) throws Exception {
         List<MlResult> result = execute(BetType._3X, rec);
-        return result;
-    }
-    @Override
-    List<MlResult> get3Yresult(DBRecord rec) throws Exception {
-        List<MlResult> result = execute(BetType._3Y, rec);
-        return result;
-    }
-    @Override
-    List<MlResult> get3Aresult(DBRecord rec) throws Exception {
-        List<MlResult> result = execute(BetType._3A, rec);
-        return result;
-    }
-    @Override
-    List<MlResult> get2Aresult(DBRecord rec) throws Exception {
-        List<MlResult> result = execute(BetType._2A, rec);
         return result;
     }
     @Override
@@ -112,6 +86,30 @@ public class SCDefault extends AbstractSimulationCreator {
         List<MlResult> result = execute(BetType._3G, rec);
         return result;
     }
+	@Override
+	List<MlResult> get3Bresult(DBRecord rec) throws Exception {
+        List<MlResult> result = execute(BetType._3B, rec);
+        return result;
+	}
+
+	@Override
+	List<MlResult> get3Cresult(DBRecord rec) throws Exception {
+        List<MlResult> result = execute(BetType._3C, rec);
+        return result;
+	}
+
+	@Override
+	List<MlResult> get3Dresult(DBRecord rec) throws Exception {
+        List<MlResult> result = execute(BetType._3D, rec);
+        return result;
+	}
+
+	@Override
+	List<MlResult> get3Eresult(DBRecord rec) throws Exception {
+        List<MlResult> result = execute(BetType._3E, rec);
+        return result;
+	}
+	
     /**
 	 * ①.複数のMlClassificationに対して
 	 * ②-1.各MlClassificationに対して対してパタンマッチングしたい複数のEvaluationを取得する。

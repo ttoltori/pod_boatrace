@@ -16,14 +16,18 @@ public class BonusProvider {
 	private String PR = "bonus_pr"; // probability bonus 
 	private String BOR = "bonus_bor"; // before odds bonus
 	private String BORK = "bonus_bork"; // before odds rank bonus
+	private String EBOR = "bonus_ebor"; // 기대치 before odds bonus
+	private String EBORK = "bonus_ebork"; // 기대치 before odds rank bonus
 	
-	/** key= PR, BOR, BORK */
+	/** key= PR, BOR, BORK, EBOR, EBORK */
 	Map<String, AbstractBonusProvider> mapProvider;
 	
-	public BonusProvider(String bonusPr, String bonusBor, String bonusBork) {
+	public BonusProvider(String bonusPr, String bonusBor, String bonusBork, String bonusEbor, String bonusEbork) {
 	    this.PR = bonusPr;
         this.BOR = bonusBor;
         this.BORK = bonusBork;
+        this.EBOR = bonusEbor;
+        this.EBORK = bonusEbork;
 	    
 		mapProvider = new HashedMap<>();
 		// 予想確率
@@ -32,6 +36,10 @@ public class BonusProvider {
 		mapProvider.put(BOR, new BorBonusProvider());
 		// 直前オッズRANK
 		mapProvider.put(BORK, new BorkBonusProvider());
+		// 直前オッズ期待値
+		mapProvider.put(EBOR, new EBorBonusProvider());
+		// 直前オッズRANK期待値
+		mapProvider.put(EBORK, new EBorkBonusProvider());
 	}
 	
 	public List<MlResult> apply(List<MlResult> list,  Evaluation evaluation) {
@@ -43,6 +51,12 @@ public class BonusProvider {
 		
 		// 直前オッズRANK bonusを適用する
 		list = applyEach(BORK, list, evaluation);
+		
+		// 直前オッズ期待値bonusを適用する
+		list = applyEach(EBOR, list, evaluation);
+		
+		// 直前オッズランク期待値bonusを適用する
+		list = applyEach(EBORK, list, evaluation);
 		
 		return list;
 	}

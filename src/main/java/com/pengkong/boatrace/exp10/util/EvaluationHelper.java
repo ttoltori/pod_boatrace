@@ -190,8 +190,8 @@ public class EvaluationHelper {
 		//return postFixRangeSelector(eval, rangeSelector, bonusPr, bonusBor, bonusBork, bonusBorkBor);
 	}
 	
-	public static Evaluation postFixRangeSelector(Evaluation eval, String rangeSelector, String bonusPr,
-			String bonusBor, String bonusBork, String bonusBorkBor) {
+	// 順番に気を付ける  bonusPr, bonusBor, bonusBork, bonusBorkBor, bonusEbor, bonusEbork
+	public static Evaluation postFixRangeSelector(Evaluation eval, String rangeSelector, String...bonuses) {
 		Logger logger = LoggerFactory.getLogger(EvaluationHelper.class);		
 		try {
 
@@ -200,21 +200,32 @@ public class EvaluationHelper {
 				eval.put("range_selector", rangeSelector);
 			}
 			if (eval.get("bonus_pr").equals(RangeValidationType.NONE.getValue())) {
-				eval.put("bonus_pr", bonusPr);
+				eval.put("bonus_pr", bonuses[0]);
 			}
 
 			if (eval.get("bonus_bor").equals(RangeValidationType.NONE.getValue())) {
-				eval.put("bonus_bor", bonusBor);
+				eval.put("bonus_bor", bonuses[1]);
 			}
 
 			if (eval.get("bonus_bork").equals(RangeValidationType.NONE.getValue())) {
-				eval.put("bonus_bork", bonusBork);
+				eval.put("bonus_bork", bonuses[2]);
 			}
 
-			// borkborが追加される前のgroupファイルはnullになる。　if (eval.get("bonus_borkbor").equals(RangeValidationType.NONE.getValue())) {
-			if (eval.get("bonus_borkbor") == null || eval.get("bonus_borkbor").equals(RangeValidationType.NONE.getValue())) {
-				eval.put("bonus_borkbor", bonusBorkBor);
+			if (eval.get("bonus_borkbor").equals(RangeValidationType.NONE.getValue())) {
+				eval.put("bonus_borkbor", bonuses[3]);
 			}
+			
+			if (eval.get("bonus_ebor").equals(RangeValidationType.NONE.getValue())) {
+				eval.put("bonus_ebor", bonuses[4]);
+			}
+			if (eval.get("bonus_ebork").equals(RangeValidationType.NONE.getValue())) {
+				eval.put("bonus_ebork", bonuses[5]);
+			}
+			
+			// borkborが追加される前のgroupファイルはnullになる。　if (eval.get("bonus_borkbor").equals(RangeValidationType.NONE.getValue())) {
+//			if (eval.get("bonus_borkbor") == null || eval.get("bonus_borkbor").equals(RangeValidationType.NONE.getValue())) {
+//				eval.put("bonus_borkbor", bonuses[3]);
+//			}
 		} catch (Exception e) {
 			logger.error("evaluation format error: " + eval, e);
 		}

@@ -45,15 +45,27 @@ model_no	model_start_ymd	model_end_ymd	class_rank1	class_rank2	class_rank3	class
 #LGBMRanker + ip only + class_weight X + learning rate=0.01  1개월단위																			
 20014	20210603	20231031	rk-ip-2	x	x	x	rk_lgbm-1_py	x	x	x	rk_3	x	x	x	arff_rk_2	clf_rk_2	yes	1825	30
 #LGBMRanker + ip SG + class_weight X + learning rate=0.2  bodds,stexhi																			
-20015	20230602	20231031	rk-ipSG-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_4	x	x	x	arff_rk_3	clf_rk_3	yes	730	30
+# 20015	20230602	20231031	rk-ipSG-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_4	x	x	x	arff_rk_3	clf_rk_3	yes	730	30
 #LGBMRanker + ip SG + class_weight X + learning rate=0.2  bodds rank,stexhi																			
-20016	20230602	20230602	rk-ipSG-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_5	x	x	x	arff_rk_3	clf_rk_3	yes	730	30
+# 20016	20230602	20230602	rk-ipSG-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_5	x	x	x	arff_rk_3	clf_rk_3	yes	730	30
 # 다시 생성 fs_22 + ip only + class_weight O + learning rate=0.1  1개월단위																			
 98102	20210603	20231031	r12-all-ip	x	x	x	cf_lgbm-7_py	x	x	x	fs_20	x	x	x	arff_11	clf_11	yes	1825	30
 98103	20210603	20231031	r123-all-ip	x	x	x	cf_lgbm-7_py	x	x	x	fs_20	x	x	x	arff_11	clf_11	yes	1825	30
 #LGBMRanker + ipSG + class_weight X + learning rate=0.1  1개월단위																			
-20017	20210603	20231002	rk-ipSG-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_2	x	x	x	arff_rk_2	clf_rk_2	yes	1825	30
+20017	20210603	20240426	rk-ipSG-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_2	x	x	x	arff_rk_2	clf_rk_2	yes	1825	30
 # 다시 생성 fs_22 + ip only + class_weight O + learning rate=0.1  1개월단위																			
 98104	20210603	20231031	rk-ipSG-1	x	x	x	cf_lgbm-7_py	x	x	x	fs_19	x	x	x	arff_11	clf_11	yes	1825	30
-#CatboostRanker + ipSG + class_weight X + learning rate=0.1  1개월단위																			
-89103	20210603	20240426	rk-ipSG-1	x	x	x	rk_catb-1_py	x	x	x	rk_2	x	x	x	arff_rk_2	clf_rk_2	yes	1825	30
+#CatboostRanker + ipSG + class_weight X + iterations=100  1개월단위																			
+89103	20210603	20240426	rk-ipSG-1	x	x	x	rk_catb-1_py	x	x	x	rk_6	x	x	x	arff_rk_2	clf_rk_2	yes	1825	30
+#LGBMRanker + ipSG + class_weight X + learning rate=0.01 1개월단위																			
+20018	20210603	20240426	rk-ipSG-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_2	x	x	x	arff_rk_2	clf_rk_2	yes	1825	30
+#CatboostRanker + ipSG + class_weight X + iterations=100 + learning rate = 0.01 1개월단위																			
+89104	20210603	20240426	rk-ipSG-1	x	x	x	rk_catb-1_py	x	x	x	rk_2	x	x	x	arff_rk_2	clf_rk_2	yes	1825	30
+#LGBMRanker + ipSG + class_weight X + learning rate=0.005 1개월단위																			
+20019	20210603	20240426	rk-ipSG-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_2	x	x	x	arff_rk_2	clf_rk_2	yes	1825	30
+#CatboostRanker + ipSG + class_weight X + iterations=100 + learning rate = 0.005 1개월단위																			
+89105	20210603	20240426	rk-ipSG-1	x	x	x	rk_catb-1_py	x	x	x	rk_2	x	x	x	arff_rk_2	clf_rk_2	yes	1825	30
+#LGBMRanker + ipSG + class_weight X + learning rate=0.03 1개월단위																			
+20020	20210603	20240426	rk-ipSG-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_2	x	x	x	arff_rk_2	clf_rk_2	yes	1825	30
+#LGBMRanker + ipSG + class_weight X + learning rate=0.05 1개월단위																			
+20021	20210603	20240426	rk-ipSG-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_2	x	x	x	arff_rk_2	clf_rk_2	yes	1825	30

@@ -56,16 +56,11 @@ public abstract class AbstractResultCreator {
 	protected abstract List<MlResult> get2Fresult(String kumiban, DBRecord rec) throws Exception;
 	protected abstract List<MlResult> get3Fresult(String kumiban, DBRecord rec) throws Exception;
 	protected abstract List<MlResult> get2Mresult(String[] predictions, DBRecord rec) throws Exception;
-	protected abstract List<MlResult> get3Mresult(String[] predictions, DBRecord rec) throws Exception;
 	protected abstract List<MlResult> get3Nresult(String[] predictions, DBRecord rec) throws Exception;
 	protected abstract List<MlResult> get2Nresult(String[] predictions, DBRecord rec) throws Exception;
 	protected abstract List<MlResult> get3Presult(String[] predictions, DBRecord rec) throws Exception;
 	protected abstract List<MlResult> get3Rresult(String[] predictions, DBRecord rec) throws Exception;
-	protected abstract List<MlResult> get3Uresult(String[] predictions, DBRecord rec) throws Exception;
 	protected abstract List<MlResult> get3Xresult(String[] predictions, DBRecord rec) throws Exception;
-	protected abstract List<MlResult> get3Yresult(String[] predictions, DBRecord rec) throws Exception;
-    protected abstract List<MlResult> get3Aresult(String[] predictions, DBRecord rec) throws Exception;
-    protected abstract List<MlResult> get2Aresult(String[] predictions, DBRecord rec) throws Exception;
     protected abstract List<MlResult> get2Gresult(String[] predictions, DBRecord rec) throws Exception;
     protected abstract List<MlResult> get3Gresult(String[] predictions, DBRecord rec) throws Exception;
     protected abstract List<MlResult> get3Bresult(String[] predictions, DBRecord rec) throws Exception;
@@ -81,16 +76,11 @@ public abstract class AbstractResultCreator {
 		mapBetType.put(BetType._2F, "nirenhuku"); // 1*, 2*
 		mapBetType.put(BetType._3F, "sanrenhuku"); // 1*, 2*
 		mapBetType.put(BetType._2M, "nirentan"); // formation 12,21
-		mapBetType.put(BetType._3M, "sanrentan"); // ３連単1-2-3, 1-3-2, 2-1-3, 3-1-2 4点 (통계단위 3자리)
 		mapBetType.put(BetType._3N, "nirentan"); // formation 12,13
 		mapBetType.put(BetType._2N, "sanrentan"); // ３連単1-2-3456, 4点 (통계단위 2자리)
 		mapBetType.put(BetType._3P, "sanrentan"); // ３連単1-2-3456, 1-3-2456  6点 無視
 		mapBetType.put(BetType._3R, "sanrentan"); // ３連単1-2-3456, 1-3-2456  8点 無視
-		mapBetType.put(BetType._3U, "sanrentan"); // ３連単1-2-3456, 1-3456-2  8点 無視
 		mapBetType.put(BetType._3X, "sanrentan"); // ３連単1-3456-2, 2-3456-1 8点 (통계단위 2자리)
-		mapBetType.put(BetType._3Y, "sanrentan"); // ３連単1-2-3456, 1-3456-2  8点 (통계단위 2자리)
-        mapBetType.put(BetType._3A, "sanrentan"); // ３連単
-        mapBetType.put(BetType._2A, "nirentan"); // ２連単
         mapBetType.put(BetType._2G, "nirenhuku"); // ２連複 12,13 2点 (통계단위 3자리)
         mapBetType.put(BetType._3G, "sanrenhuku"); // ３連複 1-2-3456 4点 (통계단위 2자리)
         mapBetType.put(BetType._3B, "sanrentan"); // 3連単 123,132 2点 (통계단위 3자리)
@@ -182,10 +172,6 @@ public abstract class AbstractResultCreator {
 			if (BetType._2N.getValue().equals(betTypeStr)) {
 				result.addAll(get2Nresult(predictions, dbRec));
 			}
-			// 3M ３連単1-2-3, 1-3-2, 2-1-3, 3-1-2 4点
-			if (BetType._3M.getValue().equals(betTypeStr)) {
-				result.addAll(get3Mresult(predictions, dbRec));
-			}
 			// 3P ３連単1-2-3, 1-3-2, 2-1-3, 2-3-1, 3-1-2, 3-2-1 6点
 			if (BetType._3P.getValue().equals(betTypeStr)) {
 				result.addAll(get3Presult(predictions, dbRec));
@@ -194,22 +180,9 @@ public abstract class AbstractResultCreator {
 			if (BetType._3R.getValue().equals(betTypeStr)) {
 				result.addAll(get3Rresult(predictions, dbRec));
 			}
-			// 3U ３連単1-2-3456, 1-3456-2  8点
-			if (BetType._3U.getValue().equals(betTypeStr)) {
-				result.addAll(get3Uresult(predictions, dbRec));
-			}
 			if (BetType._3X.getValue().equals(betTypeStr)) {
 				result.addAll(get3Xresult(predictions, dbRec));
 			}
-			if (BetType._3Y.getValue().equals(betTypeStr)) {
-				result.addAll(get3Yresult(predictions, dbRec));
-			}
-            if (BetType._3A.getValue().equals(betTypeStr)) {
-                result.addAll(get3Aresult(predictions, dbRec));
-            }
-            if (BetType._2A.getValue().equals(betTypeStr)) {
-                result.addAll(get2Aresult(predictions, dbRec));
-            }
             if (BetType._2G.getValue().equals(betTypeStr)) {
                 result.addAll(get2Gresult(predictions, dbRec));
             }

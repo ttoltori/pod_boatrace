@@ -96,8 +96,9 @@ public abstract class AbstractSimulationCreator {
 			modelSelector = prop.getString("model_selector");
 
 			// Bonus適用
-			bonusProvider = new BonusProvider("bonus_pr", "bonus_bor", "bonus_bork");
-            secondBonusProvider = new BonusProvider("bonus_pr2", "bonus_bor2", "bonus_bork2");
+			bonusProvider = new BonusProvider("bonus_pr", "bonus_bor", "bonus_bork", "bonus_ebor", "bonus_ebork");
+			// evaluationファイルの上段部のrange定義を上書きでなく～～2に追加する。
+            secondBonusProvider = new BonusProvider("bonus_pr2", "bonus_bor2", "bonus_bork2", "bonus_ebor2", "bonus_ebork2");
 
 			// Evaluationチェック
 			evLoader = EvaluationLoaderFactory.create();
@@ -197,10 +198,6 @@ public abstract class AbstractSimulationCreator {
 			if (BetType._2M.getValue().equals(betType)) {
 				result.addAll(get2Mresult(dbRec));
 			}
-			// 3M 3T formation
-			if (BetType._3M.getValue().equals(betType)) {
-				result.addAll(get3Mresult(dbRec));
-			}
 			// 3N 2T formation
 			if (BetType._3N.getValue().equals(betType)) {
 				result.addAll(get3Nresult(dbRec));
@@ -217,21 +214,8 @@ public abstract class AbstractSimulationCreator {
             if (BetType._3R.getValue().equals(betType)) {
                 result.addAll(get3Rresult(dbRec));
             }
-            // 3U ３連単1-2-3456, 1-3456-2  8点
-            if (BetType._3U.getValue().equals(betType)) {
-                result.addAll(get3Uresult(dbRec));
-            }
             if (BetType._3X.getValue().equals(betType)) {
                 result.addAll(get3Xresult(dbRec));
-            }
-            if (BetType._3Y.getValue().equals(betType)) {
-                result.addAll(get3Yresult(dbRec));
-            }
-            if (BetType._3A.getValue().equals(betType)) {
-                result.addAll(get3Aresult(dbRec));
-            }
-            if (BetType._2A.getValue().equals(betType)) {
-                result.addAll(get2Aresult(dbRec));
             }
             if (BetType._2G.getValue().equals(betType)) {
                 result.addAll(get2Gresult(dbRec));
@@ -250,18 +234,17 @@ public abstract class AbstractSimulationCreator {
 	abstract List<MlResult> get2Fresult(DBRecord rec) throws Exception;
 	abstract List<MlResult> get3Fresult(DBRecord rec) throws Exception;
 	abstract List<MlResult> get2Mresult(DBRecord rec) throws Exception;
-	abstract List<MlResult> get3Mresult(DBRecord rec) throws Exception;
 	abstract List<MlResult> get3Nresult(DBRecord rec) throws Exception;
 	abstract List<MlResult> get2Nresult(DBRecord rec) throws Exception;
     abstract List<MlResult> get3Presult(DBRecord rec) throws Exception;
     abstract List<MlResult> get3Rresult(DBRecord rec) throws Exception;
-    abstract List<MlResult> get3Uresult(DBRecord rec) throws Exception;
     abstract List<MlResult> get3Xresult(DBRecord rec) throws Exception;
-    abstract List<MlResult> get3Yresult(DBRecord rec) throws Exception;
-    abstract List<MlResult> get3Aresult(DBRecord rec) throws Exception;
-    abstract List<MlResult> get2Aresult(DBRecord rec) throws Exception;
     abstract List<MlResult> get2Gresult(DBRecord rec) throws Exception;
     abstract List<MlResult> get3Gresult(DBRecord rec) throws Exception;
+    abstract List<MlResult> get3Bresult(DBRecord rec) throws Exception;
+    abstract List<MlResult> get3Cresult(DBRecord rec) throws Exception;
+    abstract List<MlResult> get3Dresult(DBRecord rec) throws Exception;
+    abstract List<MlResult> get3Eresult(DBRecord rec) throws Exception;
 
 	/**
 	 * ①.複数のMlClassificationに対して
@@ -315,21 +298,32 @@ public abstract class AbstractSimulationCreator {
 	 * 3X,3Y追加 2022/9/2
 	 * */
 	String getPredictions(String betType, MlClassification clf) {
-		if (BetType._1T.getValue().equals(betType) || BetType._1F.getValue().equals(betType)
-		        || BetType._3A.getValue().equals(betType) || BetType._2A.getValue().equals(betType) ) {
+		if (BetType._1T.getValue().equals(betType) || BetType._1F.getValue().equals(betType)) {
+			// 1桁
 			return getPredictRank123(clf).substring(0, 1);
 		} else if (BetType._2T.getValue().equals(betType) || BetType._2F.getValue().equals(betType)
 				|| BetType._2M.getValue().equals(betType) || BetType._2N.getValue().equals(betType)
-				|| BetType._3X.getValue().equals(betType) || BetType._3Y.getValue().equals(betType)
+				|| BetType._3X.getValue().equals(betType)
 				) {
+			
+			// 2桁
 			return getPredictRank123(clf).substring(0, 2);
+		} else if (BetType._3C.getValue().equals(betType) || BetType._3D.getValue().equals(betType)
+				|| BetType._3E.getValue().equals(betType)) {
+			// 4桁
+			return getPredictRank1234(clf);
 		} else {
+			// 3桁
 			return getPredictRank123(clf).substring(0, 3);
 		}
 	}
 
 	String getPredictRank123(MlClassification clf) {
 		return clf.getPrediction1() + clf.getPrediction2() + clf.getPrediction3();
+	}
+
+	String getPredictRank1234(MlClassification clf) {
+		return clf.getPrediction1() + clf.getPrediction2() + clf.getPrediction3() + clf.getPrediction4();
 	}
 
 	/** 
@@ -356,9 +350,11 @@ public abstract class AbstractSimulationCreator {
 		rec.put("prediction1", clf.getPrediction1());
 		rec.put("prediction2", clf.getPrediction2());
 		rec.put("prediction3", clf.getPrediction3());
+		rec.put("prediction4", clf.getPrediction4());
 		rec.put("probability1", clf.getProbability1());
 		rec.put("probability2", clf.getProbability2());
 		rec.put("probability3", clf.getProbability3());
+		rec.put("probability4", clf.getProbability4());
 
 		return rec;
 	}

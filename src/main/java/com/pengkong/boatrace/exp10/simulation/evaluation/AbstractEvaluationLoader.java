@@ -37,7 +37,7 @@ public abstract class AbstractEvaluationLoader{
 	protected SqlSession session = null;
 	
 	/** group定義ファイルロード */
-	abstract void  initialize() throws Exception;
+	abstract  void  initialize() throws Exception;
 	
 	/** 初期化処理 */
 	protected void checkInitialized() throws Exception {
