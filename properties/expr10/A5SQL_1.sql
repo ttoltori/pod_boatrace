@@ -1,4 +1,6 @@
 ﻿
+copy ml_evaluation from 'D:\Dev\export\20240504_ml_evaluation.tsv' csv delimiter E'\t' header;
+;
 
 
 select min(ymd), max(ymd), count(1) 
