@@ -193,6 +193,11 @@ public class MLClassificationGenerator {
 				rec.setProbability3(listClassification.get(2).probability);
 			}
 			
+			if (listClassification.size() > 3) {
+				rec.setPrediction4(listClassification.get(3).prediction);
+				rec.setProbability4(listClassification.get(3).probability);
+			}
+
 			DescriptiveStatistics desc = new DescriptiveStatistics();
 			for (int i = 0; i < listClassification.size(); i++) {
 				desc.addValue(listClassification.get(i).probability);
@@ -280,7 +285,9 @@ public class MLClassificationGenerator {
 		List<String> listFeatureId = new ArrayList<>();
 		String[] featureIds;
 		// rank1,2,3のarff featureをすべて取得
-		for (int rankNo = 1; rankNo <= 3; rankNo++) {
+		
+		int rankCnt = prop.getInteger("rankcnt");
+		for (int rankNo = 1; rankNo <= rankCnt; rankNo++) {
 			String featureStr = featureSetTemplate.getFeatureIdString(prop.getString("features_rank" + rankNo));
 			if (featureStr.equals("x"))
 				continue;

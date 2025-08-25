@@ -8,8 +8,12 @@ public class ProbabilityExpCalculatorFactory {
 		String id = MLPropertyUtil.getInstance().getString("expect_type");
 		if (id.equals("d123")) {
 			return new ProbabilityExpCaculator123();
+		} else if (id.equals("dr123")) {
+			return new ProbabilityExpCaculatorR123();
 		} else if (id.equals("d1")) {
 			return new ProbabilityExpCaculator1();
+		} else if (id.equals("default")) {
+			return new ProbabilityExpCaculatorDefault();
 		}
 		
 		return null;

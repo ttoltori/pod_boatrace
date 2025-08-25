@@ -1,0 +1,64 @@
+
+
+
+ttoltori@DESKTOP-3TF8182:~/
+rmf-web$ 
+^C
+ttoltori@DESKTOP-3TF8182:~/
+rmf-web$ 
+cd /home/
+ttoltori/rmf-web/packages/api-server
+ttoltori@DESKTOP-3TF8182:~/
+ttoltori@DESKTOP-3TF8182:~/rmf-web/packages/api-server$ cd /home/ttoltori/rmf-web
+ttoltori@DESKTOP-3TF8182:~/rmf-web$ pipenv install termcolor
+Creating a virtualenv for this project
+Pipfile: /home/ttoltori/rmf-web/Pipfile
+Using /usr/bin/python33.12.3 to create virtualenv...
+⠦ Creating virtual environment...created virtual environment CPython3.12.3.final.0-64 in 378ms
+  creator CPython3Posix(dest=/home/ttoltori/.local/share/virtualenvs/rmf-web-2T8pc8fl, 
+clear=False, no_vcs_ignore=False, global=False)
+  seeder FromAppData(download=False, pip=bundle, via=copy, 
+app_data_dir=/home/ttoltori/.local/share/virtualenv)
+    added seed packages: pip==25.0.1
+  activators 
+BashActivator,CShellActivator,FishActivator,NushellActivator,PowerShellActivator,PythonActivator
+
+✔ Successfully created virtual environment!
+Virtualenv location: /home/ttoltori/.local/share/virtualenvs/rmf-web-2T8pc8fl
+To activate this project's virtualenv, run pipenv shell.
+Alternatively, run a command inside the virtualenv with pipenv run.
+Installing termcolor...
+✔ Installation Succeeded
+To activate this project's virtualenv, run pipenv shell.
+Alternatively, run a command inside the virtualenv with pipenv run.
+Installing dependencies from Pipfile.lock (f9955b)...
+All dependencies are now up-to-date!
+Package termcolor found in develop section, will update there too.
+Upgrading termcolor in  dependencies.
+Building requirements...
+Resolving dependencies...
+✔ Success!
+Building requirements...
+Resolving dependencies...
+✔ Success!
+Upgrading termcolor in  dependencies.
+Building requirements...
+Resolving dependencies...
+✔ Success!
+Building requirements...
+Resolving dependencies...
+✔ Success!
+To activate this project's virtualenv, run pipenv shell.
+Alternatively, run a command inside the virtualenv with pipenv run.
+Installing dependencies from Pipfile.lock (9fee10)...
+All dependencies are now up-to-date!
+Installing dependencies from Pipfile.lock (9fee10)...
+ttoltori@DESKTOP-3TF8182:~/rmf-web$ 
+
+https://www.freelancer.com/ajax/table/project_contest_datatable.php?tag=&type=false&budget_min=false&budget_max=false&contest_budget_min=false&contest_budget_max=false&hourlyrate_min=false&hourlyrate_max=false&hourlyProjectDuration=false&skills_chosen=13&languages=false&status=open&vicinity=false&countries=false&lat=false&lon=false&iDisplayStart=50&iDisplayLength=50&iSortingCols=1&iSortCol_0=6&sSortDir_0=desc&format_version=3&
+
+
+https://www.freelancer.com/projects/technical-writing/technical-writing-for-user-manuals
+
+전자기록 열람자, 일시, 열람문서 범위, 페이지 수 등 국민이 이해할만한 수준의 정보 공개 요청
+2025도4697 로그기록 정보 공개 요청

@@ -1,4 +1,37 @@
-﻿select
+﻿select * from ml_classification mc 
+where modelno = '20028';
+
+--delete from ml_classification where modelno = '20028';
+
+
+select modelno, count(1) cnt
+from ml_classification mc
+where mc.prediction1 = '1' and mc.prediction2 = '2' and mc.prediction3 = '3'
+and ymd::int between 20210603 and 20240426
+group by modelno
+;
+
+
+
+select modelno, min(ymd), max(ymd)
+from ml_classification mc 
+group by modelno 
+order by modelno 
+;
+
+
+insert into rec_racer2 
+  select ymd, jyocd, raceno, generate_series(1, array_length(runcnt, 1)) AS waku,
+    unnest(runcnt), unnest(runcnt_slope), unnest(cond), unnest(cond_slope), 
+    unnest(n1point), unnest(n1point_slope), unnest(n2point), unnest(n2point_slope), unnest(n3point), unnest(n3point_slope), 
+    unnest(n1point_waku), unnest(n1point_waku_slope), unnest(n2point_waku), unnest(n2point_waku_slope), unnest(n3point_waku), unnest(n3point_waku_slope), 
+    unnest(avgstart_waku), unnest(avgstart_waku_slope)
+  from rec_racer_arr2
+  where ymd >= '20240427' and ymd <= '20241106'
+;
+
+
+select
   max(ymd)
 from 
 (

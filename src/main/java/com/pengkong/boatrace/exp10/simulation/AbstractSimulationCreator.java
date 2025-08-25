@@ -223,6 +223,18 @@ public abstract class AbstractSimulationCreator {
             if (BetType._3G.getValue().equals(betType)) {
                 result.addAll(get3Gresult(dbRec));
             }
+            if (BetType._3B.getValue().equals(betType)) {
+                result.addAll(get3Bresult(dbRec));
+            }
+            if (BetType._3C.getValue().equals(betType)) {
+                result.addAll(get3Cresult(dbRec));
+            }
+            if (BetType._3D.getValue().equals(betType)) {
+                result.addAll(get3Dresult(dbRec));
+            }
+            if (BetType._3E.getValue().equals(betType)) {
+                result.addAll(get3Eresult(dbRec));
+            }
 		}
 
 		return result;
@@ -351,10 +363,14 @@ public abstract class AbstractSimulationCreator {
 		rec.put("prediction2", clf.getPrediction2());
 		rec.put("prediction3", clf.getPrediction3());
 		rec.put("prediction4", clf.getPrediction4());
+		rec.put("prediction5", clf.getPrediction5());
+		rec.put("prediction6", clf.getPrediction6());
 		rec.put("probability1", clf.getProbability1());
 		rec.put("probability2", clf.getProbability2());
 		rec.put("probability3", clf.getProbability3());
 		rec.put("probability4", clf.getProbability4());
+		rec.put("probability5", clf.getProbability5());
+		rec.put("probability6", clf.getProbability6());
 
 		return rec;
 	}

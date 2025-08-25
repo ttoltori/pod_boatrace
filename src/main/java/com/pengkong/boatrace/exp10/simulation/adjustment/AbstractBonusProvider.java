@@ -40,7 +40,8 @@ public abstract class AbstractBonusProvider {
 			Double[] range = new Double[2];
 			range[0] = Double.valueOf(rangeToken[0]);
 			range[1] = Double.valueOf(rangeToken[1]);
-			mapBonusFactor.put(range, Double.valueOf(token[1]));
+			// 20240509 1~2=0 에서 =0은 무시한다. 일일이 쓰기 귀찮다.  mapBonusFactor.put(range, Double.valueOf(token[1]));
+			mapBonusFactor.put(range, Double.valueOf(1));
 		}
 	}
 	
@@ -87,7 +88,8 @@ public abstract class AbstractBonusProvider {
 				continue;
 			}
 
-			result.setBetamt((int)((double)result.getBetamt() * factor));
+			// result.setBetamt((int)((double)result.getBetamt() * factor));
+			result.setBetamt((int)((double)result.getBetamt()));
 			
 			result = ResultHelper.calculateIncome(result);
 			applied.add(result);

@@ -40,13 +40,13 @@
 <node CREATED="1704119645069" ID="ID_1755029352" MODIFIED="1704119654388" TEXT="&#xc120;&#xd615;&#xd310;&#xbcc4;&#xbd84;&#xc11d;"/>
 </node>
 <node CREATED="1705843169943" ID="ID_1462452287" MODIFIED="1705843177690" POSITION="left" TEXT="&#xc54c;&#xace0;&#xb9ac;&#xc998;">
-<node CREATED="1705843183155" FOLDED="true" ID="ID_1066730640" MODIFIED="1710647326649" TEXT="GBM">
+<node CREATED="1705843183155" ID="ID_1066730640" MODIFIED="1721651674968" TEXT="GBM">
 <node CREATED="1705843192372" ID="ID_747717318" MODIFIED="1705843196475" TEXT="XGBoost"/>
 <node CREATED="1705843197489" ID="ID_1200518654" MODIFIED="1705843204458" TEXT="LGBM"/>
 <node CREATED="1705843204817" ID="ID_1556563328" MODIFIED="1705843208123" TEXT="CATBOOST"/>
 </node>
 </node>
-<node CREATED="1705843316851" FOLDED="true" ID="ID_1375033797" MODIFIED="1710772766603" POSITION="right" TEXT="Articles">
+<node CREATED="1705843316851" ID="ID_1375033797" MODIFIED="1722152879762" POSITION="right" TEXT="Articles">
 <node CREATED="1705843337268" ID="ID_352978558" MODIFIED="1705843337268" TEXT="XGBoost, LightGBM, CatBoost &#xc815;&#xb9ac; &#xbc0f; &#xbe44;&#xad50;">
 <node CREATED="1705843325543" ID="ID_1379656157" LINK="https://statinknu.tistory.com/33" MODIFIED="1705843325543" TEXT="https://statinknu.tistory.com/33"/>
 </node>
@@ -86,9 +86,11 @@
 <icon BUILTIN="yes"/>
 <node CREATED="1708350428988" LINK="http://matsukaze.ai/" MODIFIED="1708350428988" TEXT="matsukaze.ai"/>
 </node>
-<node CREATED="1710772750650" HGAP="-216" ID="ID_1312144859" MODIFIED="1710772760031" TEXT="asd" VSHIFT="29"/>
+<node CREATED="1722152878189" ID="ID_1633838763" MODIFIED="1722152878189" TEXT="netkeiba&#x306b;&#x304a;&#x3051;&#x308b;&#x6a5f;&#x68b0;&#x5b66;&#x7fd2;&#x3092;&#x7528;&#x3044;&#x305f;&#x7af6;&#x99ac;&#x30aa;&#x30c3;&#x30ba;&#x4e88;&#x6e2c;&#x624b;&#x6cd5;&#x306e;&#x958b;&#x767a;&#x3068;&#x305d;&#x306e;&#x5909;&#x9769;">
+<node CREATED="1722152867863" ID="ID_1355259587" LINK="https://techcon.mixi.co.jp/2024/d1-6.html" MODIFIED="1722152867863" TEXT="https://techcon.mixi.co.jp/2024/d1-6.html"/>
 </node>
-<node CREATED="1708143860542" FOLDED="true" ID="ID_149231443" MODIFIED="1710250037080" POSITION="right" TEXT="rank&#x5b66;&#x7fd2;">
+</node>
+<node CREATED="1708143860542" ID="ID_149231443" MODIFIED="1721651930395" POSITION="right" TEXT="rank&#x5b66;&#x7fd2;">
 <node CREATED="1708143876955" ID="ID_1675899497" MODIFIED="1708143876955" TEXT="Numerai&#x3067;&#x30e9;&#x30f3;&#x30af;&#x5b66;&#x7fd2;&#x3057;&#x3066;&#x307f;&#x305f;">
 <node CREATED="1708143882178" ID="ID_1682246312" LINK="https://zenn.dev/mege/articles/ad754e0a80de6f" MODIFIED="1708143882178" TEXT="https://zenn.dev/mege/articles/ad754e0a80de6f"/>
 </node>
@@ -107,7 +109,7 @@
 <node CREATED="1708184923689" ID="ID_1646376888" MODIFIED="1708269619707" TEXT="CatBoost&#x3067;&#x30e9;&#x30f3;&#x30af;&#x5b66;&#x7fd2;&#x3092;&#x3057;&#x3066;&#x307f;&#x308b;">
 <node CREATED="1708184931532" ID="ID_834803662" LINK="https://blog.tstylestudio.com/2022/02/15/catboost/" MODIFIED="1708184931532" TEXT="https://blog.tstylestudio.com/2022/02/15/catboost/"/>
 </node>
-<node CREATED="1708185719753" ID="ID_700457709" MODIFIED="1708185720844" TEXT="LightGBM&#x306b;&#x3088;&#x308b;AI&#x7af6;&#x99ac;&#x4e88;&#x60f3;(&#x30e9;&#x30f3;&#x30ad;&#x30f3;&#x30b0;&#x5b66;&#x7fd2;)">
+<node CREATED="1708185719753" FOLDED="true" ID="ID_700457709" MODIFIED="1738244072268" TEXT="LightGBM&#x306b;&#x3088;&#x308b;AI&#x7af6;&#x99ac;&#x4e88;&#x60f3;(&#x30e9;&#x30f3;&#x30ad;&#x30f3;&#x30b0;&#x5b66;&#x7fd2;)">
 <node CREATED="1708185775339" LINK="https://pc-keiba.com/wp/lambdarank/" MODIFIED="1708185775339" TEXT="https://pc-keiba.com/wp/lambdarank/"/>
 </node>
 <node CREATED="1708185817254" ID="ID_423498195" MODIFIED="1708185819512" TEXT="LightGBM&#x306b;&#x3088;&#x308b;AI&#x7af6;&#x8247;&#x4e88;&#x60f3;(&#x30e9;&#x30f3;&#x30ad;&#x30f3;&#x30b0;&#x5b66;&#x7fd2;)">
@@ -129,7 +131,7 @@
 <node CREATED="1708270853044" LINK="https://towardsdatascience.com/catboost-gradient-tree-boosting-for-recommender-systems-classification-and-regression-2f04f573a79e" MODIFIED="1708270853044" TEXT="https://towardsdatascience.com/catboost-gradient-tree-boosting-for-recommender-systems-classification-and-regression-2f04f573a79e"/>
 </node>
 </node>
-<node CREATED="1710251215572" ID="ID_1484627069" MODIFIED="1710251220425" POSITION="left" TEXT="&#xc791;&#xc804;">
+<node CREATED="1710251215572" HGAP="67" ID="ID_1484627069" MODIFIED="1721651658648" POSITION="left" TEXT="&#xc791;&#xc804;" VSHIFT="14">
 <node CREATED="1710251221260" ID="ID_664912160" MODIFIED="1710251232489" TEXT="&#xbaa8;&#xb378;&#xd3c9;&#xac00; &#xc7ac;&#xc2e4;&#xd589;"/>
 <node CREATED="1710251234648" ID="ID_805637308" MODIFIED="1710251239122" TEXT="&#xcf54;&#xcf54;&#xbaa8; &#xbca0;&#xd305;&#xbc95;"/>
 <node CREATED="1710251244651" ID="ID_1421848694" MODIFIED="1710251249820" TEXT="&#xbaa8;&#xb378;&#xcd94;&#xac00; "/>

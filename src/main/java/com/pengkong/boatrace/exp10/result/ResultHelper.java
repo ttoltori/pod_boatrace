@@ -2,7 +2,9 @@ package com.pengkong.boatrace.exp10.result;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.pengkong.boatrace.common.enums.Delimeter;
 import com.pengkong.boatrace.mybatis.entity.MlResult;
@@ -21,7 +23,7 @@ public class ResultHelper {
 	public static String[] getPredictions(DBRecord dbRec) throws IllegalStateException {
 		List<String> listPrediction = new ArrayList<>();
 		// rankingモデルはprediction6まで存在する。
-		int predictCnt = (dbRec.getString("prediction6") != null) ? 6 : 3; 
+		int predictCnt = getPredictionCnt(dbRec); 
 		for (int i = 1; i <=predictCnt ; i++) {
 			String prediction = dbRec.getString("prediction" + i);
 			if (prediction == null) {
@@ -46,10 +48,22 @@ public class ResultHelper {
 		return listPrediction.toArray(new String[0]);
 	}
 	
-
+	private static int getPredictionCnt(DBRecord rec) {
+		if (rec.getString("prediction6") != null) {
+			return 6;
+		} else if (rec.getString("prediction4") != null) {
+			return 4;
+		} else {
+			return 3;
+		}
+	}
+	
+	
 	public static String getPredictions(MlResult result) {
 		int digits = ResultHelper.getDigitCount(result.getStatBettype());
-		
+//		if (digits > 3) {
+//			digits = 3;
+//		}
 		return result.getPredictRank123().substring(0,digits);
 	}
 
@@ -69,12 +83,23 @@ public class ResultHelper {
 			}
 		}
 		
-		if (predictions.length == 2) {
-			return (!predictions[0].equals(predictions[1]));
-		} else {
-			return (!predictions[0].equals(predictions[1]) && !predictions[1].equals(predictions[2])
-					&& !predictions[2].equals(predictions[0]));
+		Map<String, String> mapPrediction = new HashMap<String, String>();
+		for (int i = 0; i < digits; i++) {
+			mapPrediction.put(predictions[i], predictions[i]);
 		}
+		int uniqueCnt = mapPrediction.size();
+		
+		return (digits == uniqueCnt);
+		
+//		if (predictions.length == 2) {
+//			return (!predictions[0].equals(predictions[1]));
+//		}	else	if (predictions.length == 3) {
+//			return (!predictions[0].equals(predictions[1]) && !predictions[1].equals(predictions[2])
+//					&& !predictions[2].equals(predictions[0]));
+//		} else {
+//			return (!predictions[0].equals(predictions[1]) && !predictions[1].equals(predictions[2])
+//					&& !predictions[2].equals(predictions[0]));
+//		}
 	}
 	
 	/** predictionsは常に３桁を前提とする。 
@@ -355,6 +380,11 @@ public class ResultHelper {
 		result.setHitrateTransition(src.getHitrateTransition());
 		result.setIncomerateTransition(src.getIncomerateTransition());
 		result.setBalance(src.getBalance());
+		
+		result.setExpectBor(src.getExpectBor());
+		result.setExpectBork(src.getExpectBork());
+		result.setExpectRor(src.getExpectBor());
+		result.setExpectRork(src.getExpectRork());
 		
 		return result;
 	}

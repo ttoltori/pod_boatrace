@@ -19,3 +19,13 @@ rk_catb-1_py	python C:/Dev/github/py_boatrace/boatrace/classification/catboost/B
 cf_lgbm-7_py	python C:/Dev/github/py_boatrace/boatrace/classification/lgbm/BoatLGBMClassifierTrainerBalanced.py boosting_type=gbdt,learning_rate=0.1 {csv_filepath} {model_filepath} {feature_name_list} {feature_type_list}
 cf_lgbm-8_py	python C:/Dev/github/py_boatrace/boatrace/classification/lgbm/BoatLGBMClassifierTrainerBalanced.py boosting_type=gbdt,learning_rate=0.01 {csv_filepath} {model_filepath} {feature_name_list} {feature_type_list}
 rk_lgbm-1_py	python C:/Dev/github/py_boatrace/boatrace/classification/lgbm/BoatLGBMRankerTrainer.py params {csv_filepath} {model_filepath} {feature_name_list} {feature_type_list}
+# dart, balanced, tuning	
+cf_lgbm-9_py	python C:/Dev/github/py_boatrace/boatrace/classification/lgbm/BoatLGBMClassifierTrainerBalanced.py boosting_type=dart,max_depth=8,num_leaves=20,min_child_samples=50 {csv_filepath} {model_filepath} {feature_name_list} {feature_type_list}
+# dart	
+cf_lgbm-10_py	python C:/Dev/github/py_boatrace/boatrace/classification/lgbm/BoatLGBMClassifierTrainer.py boosting_type=dart {csv_filepath} {model_filepath} {feature_name_list} {feature_type_list}
+# gbdt, balanced, tuning	
+cf_lgbm-11_py	python C:/Dev/github/py_boatrace/boatrace/classification/lgbm/BoatLGBMClassifierTrainerBalanced.py boosting_type=gbdt,max_depth=8,num_leaves=20,min_child_samples=50 {csv_filepath} {model_filepath} {feature_name_list} {feature_type_list}
+# gbdt, balanced	
+cf_lgbm-12_py	python C:/Dev/github/py_boatrace/boatrace/classification/lgbm/BoatLGBMClassifierTrainerBalanced.py boosting_type=gbdt {csv_filepath} {model_filepath} {feature_name_list} {feature_type_list}
+# gbdt, tuning	
+cf_lgbm-13_py	python C:/Dev/github/py_boatrace/boatrace/classification/lgbm/BoatLGBMClassifierTrainer.py boosting_type=gbdt,max_depth=8,num_leaves=20,min_child_samples=50 {csv_filepath} {model_filepath} {feature_name_list} {feature_type_list}

@@ -3,6 +3,7 @@ package com.pengkong.boatrace.util;
 import java.io.File;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Date;
@@ -99,13 +100,13 @@ public class OddsMonitorFileUploader {
 						mapItem.put(monitorItem.getKey(), monitorItem);
 					}
 					
-//					OddsListItem oddsListItem = getOddsListItem(token);
-//					if (oddsListItem == null) { // 対象組番が未存在ならスキップ
-//						logger.warn("skip 対象組番が未存在. " + yyyyMMdd + "_" + token[2] + "_" + token[3]);
-//						continue;
-//					}
-//					
-//					monitorItem.oddsList.add(oddsListItem);
+					OddsListItem oddsListItem = getOddsListItem(token);
+					if (oddsListItem == null) { // 対象組番が未存在ならスキップ
+						logger.warn("skip 対象組番が未存在. " + yyyyMMdd + "_" + token[2] + "_" + token[3]);
+						continue;
+					}
+					
+					monitorItem.oddsList.add(oddsListItem);
 				}
 				
 				// 以前データ削除
@@ -147,8 +148,8 @@ public class OddsMonitorFileUploader {
 		result.setBettype(item.betType);
 		result.setKumiban(item.kumiban);
 		// 20221114 no need to upload. 
-		// result.setOddslist(item.getOddsArray());
-		// result.setLastindex((short)item.oddsList.size());
+		result.setOddslist(item.getOddsArray());
+		result.setLastindex((short)item.oddsList.size());
 		
 		Odds bOdds = boddsProvider.get(item.ymd, item.jyoCd, String.valueOf(item.raceNo), item.betType, item.kumiban);
 		result.setBork(bOdds.rank);
@@ -219,22 +220,22 @@ public class OddsMonitorFileUploader {
 		public short raceNo;
 		public String betType;
 		public String kumiban;
-//		public List<OddsListItem> oddsList = new ArrayList<>();
+		public List<OddsListItem> oddsList = new ArrayList<>();
 		
 		public String getKey() {
 			return jyoCd + raceNo;
 		}
 		
-//		public double[] getOddsArray() {
-//			double[] odds = new double[oddsList.size()];
-//			
-//			oddsList.sort(new OddsListItemComparator());
-//			for (int i = 0; i < oddsList.size(); i++) {
-//				odds[i] = oddsList.get(i).odds;
-//			}
-//			
-//			return odds;
-//		}
+		public double[] getOddsArray() {
+			double[] odds = new double[oddsList.size()];
+			
+			oddsList.sort(new OddsListItemComparator());
+			for (int i = 0; i < oddsList.size(); i++) {
+				odds[i] = oddsList.get(i).odds;
+			}
+			
+			return odds;
+		}
 	}
 	
 	class OddsListItem {
@@ -262,7 +263,7 @@ public class OddsMonitorFileUploader {
 		kumiban = args[3];
 		
 		try {
-			MLPropertyUtil.getInstance().addFile("C:/Dev/workspace/Oxygen/pod_boatrace/properties/expr10/expr10.properties");
+			MLPropertyUtil.getInstance().addFile("C:/Dev/github/pod_boatrace/properties/expr10/expr10.properties");
 			new OddsMonitorFileUploader(betType, kumiban).execute(fromYmd, toYmd);
 			
 		} catch (Exception e) {

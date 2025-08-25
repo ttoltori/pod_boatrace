@@ -179,6 +179,7 @@ public class MlEvaluationCreator extends MlCreatorBase<MlEvaluation>
 		
 		stat.mapProbStatUnit = hc.histogram(stat.mapProbStatUnit, percents);
 		stat.mapBeforeOddsStatUnit = hc.histogram(stat.mapBeforeOddsStatUnit, percents);
+		stat.mapResultOddsStatUnit = hc.histogram(stat.mapResultOddsStatUnit, percents);
 		stat.mapExpBorStatUnit = hc.histogram(stat.mapExpBorStatUnit, percents);
 		stat.mapExpRorStatUnit = hc.histogram(stat.mapExpRorStatUnit, percents);
 		stat.mapExpBorkStatUnit = hc.histogram(stat.mapExpBorkStatUnit, percents);

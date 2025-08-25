@@ -249,7 +249,7 @@ public class ResultStat {
 		// 기대치 = 적중확율 * 옺즈.  임시로 예상확률을 기대치로 대체해본다. 조건 : 직전옺즈가 존재하는 기간이어야한다.
 		if (beforeOdds == null)
 			return;
-		prob = MathUtil.scale(result.getProbability() * result.getResultOdds(), 0);
+//		prob = MathUtil.scale(result.getProbability() * result.getResultOdds(), 0);
 		
 		Integer beforeOddsRank = result.getBetOddsrank();
 		Integer resultOddsRank = result.getResultOddsrank();

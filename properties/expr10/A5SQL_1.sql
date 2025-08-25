@@ -1,4 +1,576 @@
 ﻿
+select grade, prediction, count(1) betcnt, sum(prize) income, 
+  (sum(hit)::float/count(1)::float)::numeric(5,2) hitrate, ((count(1)+(sum(prize)/100))::float / count(1)::float)::numeric(5,2) incomerate
+from 
+(
+    select 	rr.ymd, rr.jyocd, rr.raceno, rr.grade, rr.timezone, rr.turn, rr.fixedentrance fixed, rr.alevelcount acnt,
+          mc.ymd, mc.jyocd, mc.raceno, (mc.prediction1 || mc.prediction2 || mc.prediction3) prediction,
+		  ( (case when (mc.prediction1 || mc.prediction2 || mc.prediction3) = rr.sanrentanno then 1 else 0 end)::int ) hit,
+		  ( (case when (mc.prediction1 || mc.prediction2 || mc.prediction3) = rr.sanrentanno then sanrentanprize-100 else -100 end)::int ) prize
+	from ml_classification mc, rec_race rr 
+	where mc.ymd = rr.ymd and mc.jyocd = rr.jyocd and mc.raceno = rr.raceno
+	  and mc.modelno = '20022'
+	  and mc.prediction1 <> mc.prediction2 and mc.prediction2 <> mc.prediction3 and mc.prediction1 <> mc.prediction3
+	  and mc.ymd::int between 20210603 and 20230602
+ ) tmp
+ group by grade, prediction
+ order by grade, prediction
+ ;
+
+ 
+select grade, count(1) betcnt, sum(prize) income, 
+(sum(hit)::float/count(1)::float)::numeric(5,2) hitrate, ((count(1)+(sum(prize)/100))::float / count(1)::float)::numeric(5,2) incomerate
+from 
+(
+	select
+	  rr.ymd, rr.jyocd, rr.raceno, rr.grade, rr.timezone, rr.turn, rr.fixedentrance fixed, rr.alevelcount acnt,
+	  om.bor,om.bork,om.ror,om.rork,
+	  rr2.entry[1] entry1, rr2.entry[2] entry2, rr2.entry[3] entry3, rr2.entry[4] entry4, rr2.entry[5] entry5, rr2.entry[6] entry6,
+	  rr2.level[1] level1, rr2.level[2] level2, rr2.level[3] level3, rr2.level[4] level4, rr2.level[5] level5, rr2.level[6] level6,
+	  (mc.prediction1 || mc.prediction2 || mc.prediction3) as bkumiban, rr.sanrentanno as rkumiban,
+	  ( (case when (mc.prediction1 || mc.prediction2 || mc.prediction3) = rr.sanrentanno then 1 else 0 end)::int ) hit,
+	  ( (case when (mc.prediction1 || mc.prediction2 || mc.prediction3) = rr.sanrentanno then sanrentanprize-100 else -100 end)::int ) prize
+	from ml_classification mc, rec_race rr, rec_racer_arr rr2 
+	where mc.ymd = rr.ymd and mc.jyocd = rr.jyocd and mc.raceno = rr.raceno 
+	  and mc.ymd = om.ymd and mc.jyocd = om.jyocd and mc.raceno = om.raceno and om.bettype = '3T' and om.kumiban='123'
+	  and mc.ymd = rr2.ymd and mc.jyocd = rr2.jyocd and mc.raceno = rr2.raceno
+	  and mc.modelno = '99100'
+	  and rr.grade = 'ip'
+      and mc.ymd::int between 20210603 and 20230602
+--    and mc.ymd::int between 20210603 and 20220602
+--    and mc.ymd::int between 20220603 and 20230602
+--	  and mc.ymd::int between 20230603 and 20240426
+--	  and mc.ymd::int between 20240603 and 20241031
+	  and mc.prediction1 = '1' and mc.prediction2 = '2' and mc.prediction3 = '3'
+--	  and mc.prediction1 = '1' and mc.prediction2 = '2'
+	order by rr.ymd, rr.jyocd, rr.raceno
+)
+where 1 = 1
+--  and grade = 'G1'
+--  and timezone <> 'N'
+--  and fixed = 'N'
+--  and bor::int between 10 and 15 
+--  and bork between 1 and 3
+--   and timezone = 'N' and fixed = 'N'
+--  and acnt >= 4
+group by grade
+;
+
+
+
+
+copy (
+select * from rec_racer_arr2 mc  
+) to 'F:\Dev\export\rec_racer_arr2.tsv' csv delimiter E'\t' header;
+
+copy (
+select
+  rr.ymd, rr.jyocd, rr.raceno, rr.grade, rr.timezone, rr.turn, rr.fixedentrance fixed, rr.alevelcount acnt,
+  om.bor,om.bork,om.ror,om.rork,
+--  rr2.entry[1] entry1, rr2.entry[2] entry2, rr2.entry[3] entry3, rr2.entry[4] entry4, rr2.entry[5] entry5, rr2.entry[6] entry6,
+--  rr2.level[1] level1, rr2.level[2] level2, rr2.level[3] level3, rr2.level[4] level4, rr2.level[5] level5, rr2.level[6] level6,
+--  (mc.prediction1 || mc.prediction2) as b2t, rr.nirentanno as r2t,
+  (mc.prediction1 || mc.prediction2 || mc.prediction3) as b3t, rr.sanrentanno as r3t,
+  ( (case when (mc.prediction1 || mc.prediction2 || mc.prediction3) = rr.sanrentanno then sanrentanprize else -100 end)::text ) prize
+--    ( (case when (mc.prediction1 || mc.prediction2) = rr.nirentanno then nirentanprize-100 else -100 end)::text ) prize
+from ml_classification mc, rec_race rr, odds_monitor om, rec_racer_arr rr2 
+where mc.ymd = rr.ymd and mc.jyocd = rr.jyocd and mc.raceno = rr.raceno 
+  and mc.ymd = om.ymd and mc.jyocd = om.jyocd and mc.raceno = om.raceno and om.bettype = '3T' and om.kumiban='123'
+  and mc.ymd = rr2.ymd and mc.jyocd = rr2.jyocd and mc.raceno = rr2.raceno
+  and mc.modelno = '99100'
+  and mc.ymd::int between 20210603 and 20230603
+  and mc.prediction1 = '1' and mc.prediction2 = '2' and mc.prediction3 = '3'
+--  and mc.prediction1 = '1' and mc.prediction2 = '2'
+  and rr.grade = 'ip'
+order by rr.ymd, rr.jyocd, rr.raceno
+) to 'C:\Dev\temp\3T123_ip_99100_2year.tsv' csv delimiter E'\t' header;
+
+
+select grade, count(1) betcnt, sum(prize) income, 
+(sum(hit)::float/count(1)::float)::numeric(5,2) hitrate, ((count(1)+(sum(prize)/100))::float / count(1)::float)::numeric(5,2) incomerate
+from 
+(
+	select
+	  rr.ymd, rr.jyocd, rr.raceno, rr.grade, rr.timezone, rr.turn, rr.fixedentrance fixed, rr.alevelcount acnt,
+	  om.bor,om.bork,om.ror,om.rork,
+	  rr2.entry[1] entry1, rr2.entry[2] entry2, rr2.entry[3] entry3, rr2.entry[4] entry4, rr2.entry[5] entry5, rr2.entry[6] entry6,
+	  rr2.level[1] level1, rr2.level[2] level2, rr2.level[3] level3, rr2.level[4] level4, rr2.level[5] level5, rr2.level[6] level6,
+	  (mc.prediction1 || mc.prediction2 || mc.prediction3) as bkumiban, rr.sanrentanno as rkumiban,
+--	  ( (case when (mc.prediction1 || mc.prediction2) = rr.nirentanno then 1 else 0 end)::int ) hit,
+--	  ( (case when (mc.prediction1 || mc.prediction2) = rr.nirentanno then nirentanprize-100 else -100 end)::int ) prize
+	  ( (case when (mc.prediction1 || mc.prediction2 || mc.prediction3) = rr.sanrentanno then 1 else 0 end)::int ) hit,
+	  ( (case when (mc.prediction1 || mc.prediction2 || mc.prediction3) = rr.sanrentanno then sanrentanprize-100 else -100 end)::int ) prize
+	from ml_classification mc, rec_race rr, odds_monitor om, rec_racer_arr rr2 
+	where mc.ymd = rr.ymd and mc.jyocd = rr.jyocd and mc.raceno = rr.raceno 
+	  and mc.ymd = om.ymd and mc.jyocd = om.jyocd and mc.raceno = om.raceno and om.bettype = '3T' and om.kumiban='123'
+	  and mc.ymd = rr2.ymd and mc.jyocd = rr2.jyocd and mc.raceno = rr2.raceno
+	  and mc.modelno = '99100'
+	  and rr.grade = 'ip'
+      and mc.ymd::int between 20210603 and 20230602
+--    and mc.ymd::int between 20210603 and 20220602
+--    and mc.ymd::int between 20220603 and 20230602
+--	  and mc.ymd::int between 20230603 and 20240426
+--	  and mc.ymd::int between 20240603 and 20241031
+	  and mc.prediction1 = '1' and mc.prediction2 = '2' and mc.prediction3 = '3'
+--	  and mc.prediction1 = '1' and mc.prediction2 = '2'
+	order by rr.ymd, rr.jyocd, rr.raceno
+)
+where 1 = 1
+--  and grade = 'G1'
+--  and timezone <> 'N'
+--  and fixed = 'N'
+--  and bor::int between 10 and 15 
+--  and bork between 1 and 3
+--   and timezone = 'N' and fixed = 'N'
+--  and acnt >= 4
+group by grade
+;
+
+
+select 
+  grade, count(1)
+from rec_race rr 
+group by grade;
+
+select modelno, min(ymd), max(ymd) 
+from ml_classification mc
+--where mc.modelno = '20022'
+group by modelno order by modelno
+;
+
+select  min(ymd), max(ymd) from rec_race rr;
+
+SELECT modelno, count(1), min(ymd), max(ymd)
+FROM ml_classification mc
+WHERE mc.ymd::int between 20210603 and 20230603 
+GROUP BY modelno 
+order by mc.modelno 
+;
+m
+
+
+truncate table odds_monitor;
+
+
+select *
+from ml_evaluation me 
+where bettype = '3T'
+order by hitrate desc;
+
+select
+  sanrentanno, hitbet, (hitbet::float/totalbet::float)::numeric(5,2) hitrate, (hitamt::float/betamt::float)::numeric(5,2) incrate   
+from (
+	select
+	  sanrentanno, count(1) hitbet, sum(sanrentanprize) hitamt, 808711 totalbet, (808711 * 100) betamt
+	from rec_race
+	where sanrentanno <> '不成立'
+	group by sanrentanno 
+	order by sanrentanno
+)
+order by incrate desc
+;
+
+select
+  nirentanno, hitbet, (hitbet::float/totalbet::float)::numeric(5,2) hitrate, (hitamt::float/betamt::float)::numeric(5,2) incrate   
+from (
+	select
+	  nirentanno, count(1) hitbet, sum(nirentanprize) hitamt, 808711 totalbet, (808711 * 100) betamt
+	from rec_race
+	where sanrentanno <> '不成立'
+	group by nirentanno 
+	order by nirentanno
+)
+order by incrate desc
+;
+
+select count(1)
+from rec_race rr 
+where sanrentanno <> '不成立'
+;
+
+select 
+  racetype  , count(1)
+from rec_race
+group by racetype
+;
+
+
+select distinct substring(wakurank from 4 for 1) from rec_race;
+
+select *
+from ml_classification mc where modelno = '99105';
+
+insert into ml_classification select * from ml_classification_20018;
+
+delete from ml_classification where modelno = '20018' and ymd::int between 20230603 and 20240426;
+
+create table ml_classification_20018 as select * from ml_classification where modelno = '20018' and ymd::int between 20230603 and 20240426;
+
+
+
+select * 
+from rec_racer_arr2 
+where substring(ymd from 5 for 2) = '11' and  jyocd = '13' and raceno = 2  
+
+
+select 
+*
+from rec_racer_arr2
+where runcnt[5] is null;
+
+
+select
+	'nopattern' pattern,
+	race.ymd,
+	sanrentanprize::double precision,
+	substring(race.ymd
+from
+	5 for 2) mm,
+	race.jyocd,
+	race.raceno::text,
+	turn::text,
+	race.grade,
+	race.racetype::text,
+	femalecount::text,
+	alevelcount::text,
+	timezone::text,
+	fixedentrance,
+	entry[1]::text entry1,
+	entry[2]::text entry2,
+	entry[3]::text entry3,
+	entry[4]::text entry4,
+	entry[5]::text entry5,
+	entry[6]::text entry6,
+	nationwiningrate[1]::text nationwiningrate1,
+	nationwiningrate[2]::text nationwiningrate2,
+	nationwiningrate[3]::text nationwiningrate3,
+	nationwiningrate[4]::text nationwiningrate4,
+	nationwiningrate[5]::text nationwiningrate5,
+	nationwiningrate[6]::text nationwiningrate6,
+	nation2winingrate[1]::text nation2winingrate1,
+	nation2winingrate[2]::text nation2winingrate2,
+	nation2winingrate[3]::text nation2winingrate3,
+	nation2winingrate[4]::text nation2winingrate4,
+	nation2winingrate[5]::text nation2winingrate5,
+	nation2winingrate[6]::text nation2winingrate6,
+	nation3winingrate[1]::text nation3winingrate1,
+	nation3winingrate[2]::text nation3winingrate2,
+	nation3winingrate[3]::text nation3winingrate3,
+	nation3winingrate[4]::text nation3winingrate4,
+	nation3winingrate[5]::text nation3winingrate5,
+	nation3winingrate[6]::text nation3winingrate6,
+	localwiningrate[1]::text localwiningrate1,
+	localwiningrate[2]::text localwiningrate2,
+	localwiningrate[3]::text localwiningrate3,
+	localwiningrate[4]::text localwiningrate4,
+	localwiningrate[5]::text localwiningrate5,
+	localwiningrate[6]::text localwiningrate6,
+	local2winingrate[1]::text local2winingrate1,
+	local2winingrate[2]::text local2winingrate2,
+	local2winingrate[3]::text local2winingrate3,
+	local2winingrate[4]::text local2winingrate4,
+	local2winingrate[5]::text local2winingrate5,
+	local2winingrate[6]::text local2winingrate6,
+	local3winingrate[1]::text local3winingrate1,
+	local3winingrate[2]::text local3winingrate2,
+	local3winingrate[3]::text local3winingrate3,
+	local3winingrate[4]::text local3winingrate4,
+	local3winingrate[5]::text local3winingrate5,
+	local3winingrate[6]::text local3winingrate6,
+	motor2winingrate[1]::text motor2winingrate1,
+	motor2winingrate[2]::text motor2winingrate2,
+	motor2winingrate[3]::text motor2winingrate3,
+	motor2winingrate[4]::text motor2winingrate4,
+	motor2winingrate[5]::text motor2winingrate5,
+	motor2winingrate[6]::text motor2winingrate6,
+	sex[1] sex1,
+	sex[2] sex2,
+	sex[3] sex3,
+	sex[4] sex4,
+	sex[5] sex5,
+	sex[6] sex6,
+	level[1] level1,
+	level[2] level2,
+	level[3] level3,
+	level[4] level4,
+	level[5] level5,
+	level[6] level6,
+	age[1]::text age1,
+	age[2]::text age2,
+	age[3]::text age3,
+	age[4]::text age4,
+	age[5]::text age5,
+	age[6]::text age6,
+	weight[1]::text weit1,
+	weight[2]::text weit2,
+	weight[3]::text weit3,
+	weight[4]::text weit4,
+	weight[5]::text weit5,
+	weight[6]::text weit6,
+	flying[1]::text fly1,
+	flying[2]::text fly2,
+	flying[3]::text fly3,
+	flying[4]::text fly4,
+	flying[5]::text fly5,
+	flying[6]::text fly6,
+	late[1]::text late1,
+	late[2]::text late2,
+	late[3]::text late3,
+	late[4]::text late4,
+	late[5]::text late5,
+	late[6]::text late6,
+	averagestart[1]::text avgst1,
+	averagestart[2]::text avgst2,
+	averagestart[3]::text avgst3,
+	averagestart[4]::text avgst4,
+	averagestart[5]::text avgst5,
+	averagestart[6]::text avgst6,
+	nullif(runcnt[0],
+	0)::text rcnt1,
+	nullif(runcnt[1],
+	0)::text rcnt2,
+	nullif(runcnt[2],
+	0)::text rcnt3,
+	nullif(runcnt[3],
+	0)::text rcnt4,
+	nullif(runcnt[4],
+	0)::text rcnt5,
+	nullif(runcnt[5],
+	0)::text rcnt6,
+	nvldbl(cond[0],
+	0.0)::text cond1,
+	nvldbl(cond[1],
+	0.0)::text cond2,
+	nvldbl(cond[2],
+	0.0)::text cond3,
+	nvldbl(cond[3],
+	0.0)::text cond4,
+	nvldbl(cond[4],
+	0.0)::text cond5,
+	nvldbl(cond[5],
+	0.0)::text cond6,
+	nvldbl(n1point[0],
+	0.0)::text n1p1,
+	nvldbl(n1point[1],
+	0.0)::text n1p2,
+	nvldbl(n1point[2],
+	0.0)::text n1p3,
+	nvldbl(n1point[3],
+	0.0)::text n1p4,
+	nvldbl(n1point[4],
+	0.0)::text n1p5,
+	nvldbl(n1point[5],
+	0.0)::text n1p6,
+	nvldbl(n2point[0],
+	0.0)::text n2p1,
+	nvldbl(n2point[1],
+	0.0)::text n2p2,
+	nvldbl(n2point[2],
+	0.0)::text n2p3,
+	nvldbl(n2point[3],
+	0.0)::text n2p4,
+	nvldbl(n2point[4],
+	0.0)::text n2p5,
+	nvldbl(n2point[5],
+	0.0)::text n2p6,
+	nvldbl(n3point[0],
+	0.0)::text n3p1,
+	nvldbl(n3point[1],
+	0.0)::text n3p2,
+	nvldbl(n3point[2],
+	0.0)::text n3p3,
+	nvldbl(n3point[3],
+	0.0)::text n3p4,
+	nvldbl(n3point[4],
+	0.0)::text n3p5,
+	nvldbl(n3point[5],
+	0.0)::text n3p6,
+	nvldbl(n1point_waku[0],
+	0.0)::text n1pw1,
+	nvldbl(n1point_waku[1],
+	0.0)::text n1pw2,
+	nvldbl(n1point_waku[2],
+	0.0)::text n1pw3,
+	nvldbl(n1point_waku[3],
+	0.0)::text n1pw4,
+	nvldbl(n1point_waku[4],
+	0.0)::text n1pw5,
+	nvldbl(n1point_waku[5],
+	0.0)::text n1pw6,
+	nvldbl(n2point_waku[0],
+	0.0)::text n2pw1,
+	nvldbl(n2point_waku[1],
+	0.0)::text n2pw2,
+	nvldbl(n2point_waku[2],
+	0.0)::text n2pw3,
+	nvldbl(n2point_waku[3],
+	0.0)::text n2pw4,
+	nvldbl(n2point_waku[4],
+	0.0)::text n2pw5,
+	nvldbl(n2point_waku[5],
+	0.0)::text n2pw6,
+	nvldbl(n3point_waku[0],
+	0.0)::text n3pw1,
+	nvldbl(n3point_waku[1],
+	0.0)::text n3pw2,
+	nvldbl(n3point_waku[2],
+	0.0)::text n3pw3,
+	nvldbl(n3point_waku[3],
+	0.0)::text n3pw4,
+	nvldbl(n3point_waku[4],
+	0.0)::text n3pw5,
+	nvldbl(n3point_waku[5],
+	0.0)::text n3pw6,
+	nvldbl(avgstart_waku[0],
+	0.0)::text avgw1,
+	nvldbl(avgstart_waku[1],
+	0.0)::text avgw2,
+	nvldbl(avgstart_waku[2],
+	0.0)::text avgw3,
+	nvldbl(avgstart_waku[3],
+	0.0)::text avgw4,
+	nvldbl(avgstart_waku[4],
+	0.0)::text avgw5,
+	nvldbl(avgstart_waku[5],
+	0.0)::text avgw6,
+	nvldbl(runcnt_slope[0],
+	0.0)::text rcntsp1,
+	nvldbl(runcnt_slope[1],
+	0.0)::text rcntsp2,
+	nvldbl(runcnt_slope[2],
+	0.0)::text rcntsp3,
+	nvldbl(runcnt_slope[3],
+	0.0)::text rcntsp4,
+	nvldbl(runcnt_slope[4],
+	0.0)::text rcntsp5,
+	nvldbl(runcnt_slope[5],
+	0.0)::text rcntsp6,
+	nvldbl(cond_slope[0],
+	0.0)::text condsp1,
+	nvldbl(cond_slope[1],
+	0.0)::text condsp2,
+	nvldbl(cond_slope[2],
+	0.0)::text condsp3,
+	nvldbl(cond_slope[3],
+	0.0)::text condsp4,
+	nvldbl(cond_slope[4],
+	0.0)::text condsp5,
+	nvldbl(cond_slope[5],
+	0.0)::text condsp6,
+	nvldbl(n1point_slope[0],
+	0.0)::text n1psp1,
+	nvldbl(n1point_slope[1],
+	0.0)::text n1psp2,
+	nvldbl(n1point_slope[2],
+	0.0)::text n1psp3,
+	nvldbl(n1point_slope[3],
+	0.0)::text n1psp4,
+	nvldbl(n1point_slope[4],
+	0.0)::text n1psp5,
+	nvldbl(n1point_slope[5],
+	0.0)::text n1psp6,
+	nvldbl(n2point_slope[0],
+	0.0)::text n2psp1,
+	nvldbl(n2point_slope[1],
+	0.0)::text n2psp2,
+	nvldbl(n2point_slope[2],
+	0.0)::text n2psp3,
+	nvldbl(n2point_slope[3],
+	0.0)::text n2psp4,
+	nvldbl(n2point_slope[4],
+	0.0)::text n2psp5,
+	nvldbl(n2point_slope[5],
+	0.0)::text n2psp6,
+	nvldbl(n3point_slope[0],
+	0.0)::text n3psp1,
+	nvldbl(n3point_slope[1],
+	0.0)::text n3psp2,
+	nvldbl(n3point_slope[2],
+	0.0)::text n3psp3,
+	nvldbl(n3point_slope[3],
+	0.0)::text n3psp4,
+	nvldbl(n3point_slope[4],
+	0.0)::text n3psp5,
+	nvldbl(n3point_slope[5],
+	0.0)::text n3psp6,
+	nvldbl(n1point_waku_slope[0],
+	0.0)::text n1pwsp1,
+	nvldbl(n1point_waku_slope[1],
+	0.0)::text n1pwsp2,
+	nvldbl(n1point_waku_slope[2],
+	0.0)::text n1pwsp3,
+	nvldbl(n1point_waku_slope[3],
+	0.0)::text n1pwsp4,
+	nvldbl(n1point_waku_slope[4],
+	0.0)::text n1pwsp5,
+	nvldbl(n1point_waku_slope[5],
+	0.0)::text n1pwsp6,
+	nvldbl(n2point_waku_slope[0],
+	0.0)::text n2pwsp1,
+	nvldbl(n2point_waku_slope[1],
+	0.0)::text n2pwsp2,
+	nvldbl(n2point_waku_slope[2],
+	0.0)::text n2pwsp3,
+	nvldbl(n2point_waku_slope[3],
+	0.0)::text n2pwsp4,
+	nvldbl(n2point_waku_slope[4],
+	0.0)::text n2pwsp5,
+	nvldbl(n2point_waku_slope[5],
+	0.0)::text n2pwsp6,
+	nvldbl(n3point_waku_slope[0],
+	0.0)::text n3pwsp1,
+	nvldbl(n3point_waku_slope[1],
+	0.0)::text n3pwsp2,
+	nvldbl(n3point_waku_slope[2],
+	0.0)::text n3pwsp3,
+	nvldbl(n3point_waku_slope[3],
+	0.0)::text n3pwsp4,
+	nvldbl(n3point_waku_slope[4],
+	0.0)::text n3pwsp5,
+	nvldbl(n3point_waku_slope[5],
+	0.0)::text n3pwsp6,
+	nvldbl(avgstart_waku_slope[0],
+	0.0)::text avgwsp1,
+	nvldbl(avgstart_waku_slope[1],
+	0.0)::text avgwsp2,
+	nvldbl(avgstart_waku_slope[2],
+	0.0)::text avgwsp3,
+	nvldbl(avgstart_waku_slope[3],
+	0.0)::text avgwsp4,
+	nvldbl(avgstart_waku_slope[4],
+	0.0)::text avgwsp5,
+	nvldbl(avgstart_waku_slope[5],
+	0.0)::text avgwsp6,
+	( (case
+		when rank = 9 then 6
+		else rank
+	end)::text ) classes
+from
+	rec_race race,
+	rec_racer_arr arr,
+	rec_racer_arr2 arr2
+where
+	race.ymd = arr.ymd
+	and race.jyocd = arr.jyocd
+	and race.raceno = arr.raceno
+	and race.ymd = arr2.ymd
+	and race.jyocd = arr2.jyocd
+	and race.raceno = arr2.raceno
+	and sanrentanno <> '不成立'
+	and grade in ('ip', 'G3', 'G2', 'G1', 'SG')
+	and race.ymd >= '20160603'
+	and race.ymd <= '20240425'
+	and (true)
+order by
+	pattern,
+	race.ymd,
+	race.sime
+;
+
+
+select modelno, max(ymd) from ml_classification mc group by modelno;
+
+
 copy ml_evaluation from 'D:\Dev\export\20240504_ml_evaluation.tsv' csv delimiter E'\t' header;
 ;
 

@@ -33,4 +33,5 @@ public class BoatConst_noused {
 	/** ユーザー単位マーティン継続 */
 	public static final int MARTIN_CONTINUE_TYPE_USER = 1;
 	
+	
 }

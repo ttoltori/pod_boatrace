@@ -1,5 +1,5 @@
 model_no	model_start_ymd	model_end_ymd	class_rank1	class_rank2	class_rank3	class_rank4	algorithm_rank1	algorithm_rank2	algorithm_rank3	algorithm_rank4	features_rank1	features_rank2	features_rank3	features_rank4	arff_sql_id	classification_sql_id	data_use_range	model_data_days	model_interval_days
-99100	20210602	20210602	r1-123456	r2-123456	r3-123456	x	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	x	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	x	arff_1	clf_1	yes	1825	30
+99100	20210603	20240426	r1-123456	r2-123456	r3-123456	r4-123456	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	arff_1	clf_1	yes	1825	30
 # 選手傾向 + nw + en、削除：slope全体, motor, sex, age, late, avgst																			
 11609	20180601	20230331	r1-123456	r2-123456	r3-123456	x	cf_lgbm-1_py	cf_lgbm-1_py	cf_lgbm-1_py	x	fs_14	fs_14	fs_14	x	arff_11	clf_11	yes	1825	30
 #CatboostRanker 공식피쳐																			
@@ -58,7 +58,7 @@ model_no	model_start_ymd	model_end_ymd	class_rank1	class_rank2	class_rank3	class
 #CatboostRanker + ipSG + class_weight X + iterations=100  1개월단위																			
 89103	20210603	20240426	rk-ipSG-1	x	x	x	rk_catb-1_py	x	x	x	rk_6	x	x	x	arff_rk_2	clf_rk_2	yes	1825	30
 #LGBMRanker + ipSG + class_weight X + learning rate=0.01 1개월단위																			
-20018	20210603	20240426	rk-ipSG-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_2	x	x	x	arff_rk_2	clf_rk_2	yes	1825	30
+20018	20230603	20240426	rk-ipSG-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_2	x	x	x	arff_rk_2	clf_rk_2	yes	1825	30
 #CatboostRanker + ipSG + class_weight X + iterations=100 + learning rate = 0.01 1개월단위																			
 89104	20210603	20240426	rk-ipSG-1	x	x	x	rk_catb-1_py	x	x	x	rk_2	x	x	x	arff_rk_2	clf_rk_2	yes	1825	30
 #LGBMRanker + ipSG + class_weight X + learning rate=0.005 1개월단위																			
@@ -69,3 +69,39 @@ model_no	model_start_ymd	model_end_ymd	class_rank1	class_rank2	class_rank3	class
 20020	20210603	20240426	rk-ipSG-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_2	x	x	x	arff_rk_2	clf_rk_2	yes	1825	30
 #LGBMRanker + ipSG + class_weight X + learning rate=0.05 1개월단위																			
 20021	20210603	20240426	rk-ipSG-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_2	x	x	x	arff_rk_2	clf_rk_2	yes	1825	30
+#LGBMClasssifier 공식피쳐 + 트렌드피쳐+ ip SG + class_weight O + learning rate=0.01  1개월단위																			
+98105	20210603	20240426	r123-all	x	x	x	cf_lgbm-8_py	x	x	x	fs_19	x	x	x	arff_11	clf_11	yes	1825	30
+#LGBMRanker + ipSG + class_weight X + learning rate=0.01 1개월단위 7년치 학습 rk_1																			
+20022	20240427	20241031	rk-ipSG-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_1	x	x	x	arff_rk_1	clf_rk_1	yes	2555	30
+#LGBMRanker + ipSG + class_weight X + learning rate=0.1 1개월단위 7년치 학습 rk_1																			
+20023	20210603	20240426	rk-ipSG-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_1	x	x	x	arff_rk_1	clf_rk_1	yes	2555	30
+#LGBMRanker + ipSG + class_weight X + learning rate=0.05 1개월단위 7년치 학습 rk_7, param = {'boosting_type':'dart', 'max_depth':8, 'num_leaves':64, 'learning_rate':0.05}																			
+20024	20210603	20240426	rk-ipSG-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_7	x	x	x	arff_rk_1	clf_rk_1	yes	2555	30
+#LGBMRanker + ipSG + class_weight X + learning rate=0.01 1개월단위 7년치 학습 rk_7, param = {'boosting_type':'gbdt', 'max_depth':10, 'num_leaves':128, 'learning_rate':0.01, 'reg_alpha':0.05, 'reg_lamda':0.05}																			
+20025	20210603	20240426	rk-ipSG-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_7	x	x	x	arff_rk_1	clf_rk_1	yes	2555	30
+#LGBMRanker + ipSG + class_weight X + learning rate=0.01 1개월단위 7년치 학습 rk_7, param = {'boosting_type':'dart', 'max_depth':10, 'num_leaves':128, 'learning_rate':0.01, 'reg_alpha':0.05}																			
+20026	20210603	20240426	rk-ipSG-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_7	x	x	x	arff_rk_1	clf_rk_1	yes	2555	30
+#LGBMClasssifier en_nw_ext_25  dart tuning balanced																			
+99105	20210603	20240426	r1-123456	r2-123456	r3-123456	r4-123456	cf_lgbm-9_py	cf_lgbm-9_py	cf_lgbm-9_py	cf_lgbm-9_py	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	arff_1	clf_1	yes	1825	30
+#LGBMClasssifier en_nw_ext_25  dart 																			
+99106	20210603	20240426	r1-123456	r2-123456	r3-123456	r4-123456	cf_lgbm-10_py	cf_lgbm-10_py	cf_lgbm-10_py	cf_lgbm-10_py	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	arff_1	clf_1	yes	1825	30
+#LGBMClasssifier en_nw_ext_25  gbdt, balanced, tuning																			
+99107	20210603	20240426	r1-123456	r2-123456	r3-123456	r4-123456	cf_lgbm-11_py	cf_lgbm-11_py	cf_lgbm-11_py	cf_lgbm-11_py	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	arff_1	clf_1	yes	1825	30
+#LGBMRanker + ip~ SG + class_weight O + learning rate=0.05, en=int																			
+20027	20210603	20240426	rk-ipSG-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_3	x	x	x	arff_rk_2	clf_rk_2	yes	1825	30
+# LGBMClassifier + ip,sg + class_weight x + learning rate=0.01 123 이진선택																			
+10001	20210603	20210603	r1-123x	x	x	x	cf_lgbm-1_py	x	x	x	fs_19	x	x	x	arff_11	clf_11	yes	1825	30
+# LGBMClassifier + ip,sg + class_weight O + learning rate=0.1 123 각각이진선택																			
+10002	20210603	20240426	r1-1x	r2-2x	r3-3x	x	cf_lgbm-7_py	cf_lgbm-7_py	cf_lgbm-7_py	x	fs_20	fs_20	fs_20	x	arff_1	clf_1	yes	1825	30
+# 20022를 G1에 대해서만																			
+20028	20210603	20241031	rk-G1	x	x	x	rk_lgbm-1_py	x	x	x	rk_1	x	x	x	arff_rk_1	clf_rk_1	yes	2555	30
+# 20022를 G1에 대해서만 1주단위																			
+20029	20210603	20241031	rk-G1	x	x	x	rk_lgbm-1_py	x	x	x	rk_1	x	x	x	arff_rk_1	clf_rk_1	yes	2555	7
+#LGBMRanker + ipSG + class_weight X + learning rate=0.01 1개월단위 7년치 학습 rk_8																			
+20030	20210603	20241031	rk-ipSG-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_8	x	x	x	arff_rk_1	clf_rk_1	yes	2555	30
+#LGBMRanker + ipSG + class_weight O + learning rate=0.01 1개월단위 7년치 학습 rk_8																			
+20031	20210603	20241031	rk-ipSG-1	x	x	x	rk_lgbm-1_py	x	x	x	rk_8	x	x	x	arff_rk_1	clf_rk_1	yes	2555	30
+#LGBMClasssifier SMOTE en_nw_ext_25 7년학습																			
+99108	20210603	20241031	r1-123456	r2-123456	r3-123456	r4-123456	cf_lgbm-8_py	cf_lgbm-8_py	cf_lgbm-8_py	cf_lgbm-8_py	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	en_nw_ext_25	arff_1	clf_1	yes	2555	30
+#LGBMClasssifier SMOTE nw_ext_28 7년학습																			
+99109	20210603	20241031	r1-123456	r2-123456	r3-123456	r4-123456	cf_lgbm-8_py	cf_lgbm-8_py	cf_lgbm-8_py	cf_lgbm-8_py	nw_ext_28	nw_ext_28	nw_ext_28	nw_ext_28	arff_1	clf_1	yes	2555	30

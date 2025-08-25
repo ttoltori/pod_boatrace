@@ -20,6 +20,7 @@ public class DBRecord extends HashMap<String, Object> {
 		return (Double) super.get(key);
 	}
 	
+	@Deprecated
 	public Double getPercentizedDouble(String key, double min, double max) {
 		return MathUtil.convertToPercentile((Double) super.get(key), min, max, 20); 
 	}

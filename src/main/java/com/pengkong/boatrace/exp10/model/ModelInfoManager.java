@@ -263,7 +263,8 @@ public class ModelInfoManager {
 	 */
 	List<String> getClassIdList() {
 		List<String> result = new ArrayList<>();
-		for (int rankNo = 1; rankNo < 4; rankNo++) {
+		int rankCnt = prop.getInteger("rankcnt");
+		for (int rankNo = 1; rankNo <= rankCnt; rankNo++) {
 			String classId = prop.getString("class_rank" + rankNo);
 			if (!classId.equals(USE_NONE)) {
 				result.add(classId);

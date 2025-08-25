@@ -311,7 +311,8 @@ public class MathUtil {
         throw new IllegalStateException();
 	}
 	
-    public static double convertToPercentile(double value, double min, double max, double percentile) {
+    @Deprecated
+	public static double convertToPercentile(double value, double min, double max, double percentile) {
         if (value < min || value > max) {
             throw new IllegalArgumentException("Value is not within the specified range");
         }
@@ -319,6 +320,7 @@ public class MathUtil {
         return     MathUtil.scale( ((value - min) / range) * percentile , 0)  ;
     }
 	
+    @Deprecated
     public static double calculatePercentile(List<Double> numbers, double N) {
         // Sort the list in ascending order
         Collections.sort(numbers);

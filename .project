@@ -29,7 +29,7 @@
 		<link>
 			<name>experiment</name>
 			<type>2</type>
-			<location>C:/Dev/workspace/Oxygen/pod_boatrace_test/experiment</location>
+			<location>C:/Dev/github/pod_boatrace_test/experiment/expr10</location>
 		</link>
 		<link>
 			<name>weka/bat/analyze_manual_pattern.bat</name>
@@ -127,4 +127,15 @@
 			<locationURI>PARENT-1-PROJECT_LOC/pod_boatrace_test/wekamodels/test.bat</locationURI>
 		</link>
 	</linkedResources>
+	<filteredResources>
+		<filter>
+			<id>1755002168988</id>
+			<name></name>
+			<type>30</type>
+			<matcher>
+				<id>org.eclipse.core.resources.regexFilterMatcher</id>
+				<arguments>node_modules|\.git|__CREATED_BY_JAVA_LANGUAGE_SERVER__</arguments>
+			</matcher>
+		</filter>
+	</filteredResources>
 </projectDescription>

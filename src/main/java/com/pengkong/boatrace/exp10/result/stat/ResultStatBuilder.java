@@ -53,7 +53,7 @@ public class ResultStatBuilder {
 		
 		isLimitedFormation = prop.getYesNo("limited_formation");
 		if (isLimitedFormation) {
-			tokenKumiban = ResultHelper.parseKumiban(prop.getString("limited_kumiban"));			
+			tokenKumiban = ResultHelper.parseKumiban(prop.getString("limited_kumiban"));
 		} else {
 			tokenKumiban = ResultHelper.parseKumiban(prop.getString("kumiban"));
 		}

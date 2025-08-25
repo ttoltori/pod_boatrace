@@ -7,6 +7,8 @@ import com.pengkong.boatrace.server.db.dto.DBRecord;
  * @author ttolt
  *
  */
+@Deprecated
+/* ProbabilityExpCalculatorDefault를 사용할 것 */
 public class ProbabilityExpCaculator123 extends AbstractProbabilityExpCalculator {
 	@Override
 	Double getProbability1T(DBRecord rec) {

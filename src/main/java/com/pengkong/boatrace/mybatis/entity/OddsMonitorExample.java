@@ -502,6 +502,126 @@ public class OddsMonitorExample {
 			return (Criteria) this;
 		}
 
+		public Criteria andOddslistIsNull() {
+			addCriterion("oddslist is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andOddslistIsNotNull() {
+			addCriterion("oddslist is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andOddslistEqualTo(Object value) {
+			addCriterion("oddslist =", value, "oddslist");
+			return (Criteria) this;
+		}
+
+		public Criteria andOddslistNotEqualTo(Object value) {
+			addCriterion("oddslist <>", value, "oddslist");
+			return (Criteria) this;
+		}
+
+		public Criteria andOddslistGreaterThan(Object value) {
+			addCriterion("oddslist >", value, "oddslist");
+			return (Criteria) this;
+		}
+
+		public Criteria andOddslistGreaterThanOrEqualTo(Object value) {
+			addCriterion("oddslist >=", value, "oddslist");
+			return (Criteria) this;
+		}
+
+		public Criteria andOddslistLessThan(Object value) {
+			addCriterion("oddslist <", value, "oddslist");
+			return (Criteria) this;
+		}
+
+		public Criteria andOddslistLessThanOrEqualTo(Object value) {
+			addCriterion("oddslist <=", value, "oddslist");
+			return (Criteria) this;
+		}
+
+		public Criteria andOddslistIn(List<Object> values) {
+			addCriterion("oddslist in", values, "oddslist");
+			return (Criteria) this;
+		}
+
+		public Criteria andOddslistNotIn(List<Object> values) {
+			addCriterion("oddslist not in", values, "oddslist");
+			return (Criteria) this;
+		}
+
+		public Criteria andOddslistBetween(Object value1, Object value2) {
+			addCriterion("oddslist between", value1, value2, "oddslist");
+			return (Criteria) this;
+		}
+
+		public Criteria andOddslistNotBetween(Object value1, Object value2) {
+			addCriterion("oddslist not between", value1, value2, "oddslist");
+			return (Criteria) this;
+		}
+
+		public Criteria andLastindexIsNull() {
+			addCriterion("lastindex is null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLastindexIsNotNull() {
+			addCriterion("lastindex is not null");
+			return (Criteria) this;
+		}
+
+		public Criteria andLastindexEqualTo(Short value) {
+			addCriterion("lastindex =", value, "lastindex");
+			return (Criteria) this;
+		}
+
+		public Criteria andLastindexNotEqualTo(Short value) {
+			addCriterion("lastindex <>", value, "lastindex");
+			return (Criteria) this;
+		}
+
+		public Criteria andLastindexGreaterThan(Short value) {
+			addCriterion("lastindex >", value, "lastindex");
+			return (Criteria) this;
+		}
+
+		public Criteria andLastindexGreaterThanOrEqualTo(Short value) {
+			addCriterion("lastindex >=", value, "lastindex");
+			return (Criteria) this;
+		}
+
+		public Criteria andLastindexLessThan(Short value) {
+			addCriterion("lastindex <", value, "lastindex");
+			return (Criteria) this;
+		}
+
+		public Criteria andLastindexLessThanOrEqualTo(Short value) {
+			addCriterion("lastindex <=", value, "lastindex");
+			return (Criteria) this;
+		}
+
+		public Criteria andLastindexIn(List<Short> values) {
+			addCriterion("lastindex in", values, "lastindex");
+			return (Criteria) this;
+		}
+
+		public Criteria andLastindexNotIn(List<Short> values) {
+			addCriterion("lastindex not in", values, "lastindex");
+			return (Criteria) this;
+		}
+
+		public Criteria andLastindexBetween(Short value1, Short value2) {
+			addCriterion("lastindex between", value1, value2, "lastindex");
+			return (Criteria) this;
+		}
+
+		public Criteria andLastindexNotBetween(Short value1, Short value2) {
+			addCriterion("lastindex not between", value1, value2, "lastindex");
+			return (Criteria) this;
+		}
+
 		public Criteria andBorkIsNull() {
 			addCriterion("bork is null");
 			return (Criteria) this;

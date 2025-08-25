@@ -39,7 +39,7 @@ public class FileUtil {
 	public static List<String> readFileByLineArr(String filepath, String p_sCharSet) throws Exception {
 		return readFileByLineArr(filepath, p_sCharSet, true, "#");
 	}
-	
+
 	public static List<String> readFileByLineArr(String filepath, String p_sCharSet, boolean forceTrim, String commentSign) throws Exception {
 		try (BufferedReader brReader = new BufferedReader(
 				new InputStreamReader(new FileInputStream(filepath), p_sCharSet));) {
@@ -89,7 +89,6 @@ public class FileUtil {
 		if (file.exists()) {
 			FileUtils.deleteDirectory(file);
 		}
-		
 	}
 	
 	public static void appendFileByLine(String filepath, String line) throws Exception {

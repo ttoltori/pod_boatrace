@@ -68,8 +68,9 @@ public class MLModelGenerator extends MLModelGeneratorBase {
 		MLArffCreator arff = new MLArffCreator();
 		
 		YmdBeforeRangeDbList listRange = new YmdBeforeRangeDbList();
+		int rankCnt = prop.getInteger("rankcnt");
 		// 랭크 1,2,3 루프
-		for (int rankNo = 1; rankNo <= 3; rankNo++) {
+		for (int rankNo = 1; rankNo <= rankCnt; rankNo++) {
 			// 他モデルを流用する
 			if (isReferentialModel(rankNo) || isRankNotExist(rankNo)) {
 				continue;
@@ -98,7 +99,6 @@ public class MLModelGenerator extends MLModelGeneratorBase {
 				// 모델생성간격으로 루프
 				while( (listDb = listRange.get()) != null) {
 					
-					// 外れ値を処理する
 					// 外れ値を処理する
 					if (isProcessOutlier()) {
 						listDb = processOutliers(listDb);
@@ -144,7 +144,7 @@ public class MLModelGenerator extends MLModelGeneratorBase {
 				    logger.debug("generating : " + StringUtil.leftPad(exNo, BoatConst.LEFT_PAD, "0") + "_" + pattern + "_" + rangeEndYmd + "_rank" + rankNo + ".model");
 					List<String> cmdAndParams = Arrays.asList(cmdline.split(Delimeter.SPACE.getValue()));
 					
-					int exitcode = CommandExecutor.execute(cmdAndParams,1000, evalFilepath, envMap);
+					int exitcode = CommandExecutor.execute(cmdAndParams,10000, evalFilepath, envMap);
 					if (exitcode != 0) {
 						throw new Exception("model creation failed, exit code=" + exitcode);
 					}
@@ -183,7 +183,7 @@ public class MLModelGenerator extends MLModelGeneratorBase {
 	
 	public static void main(String[] args) {
 //		String propertyFilepath = "C:/Dev/github/pod_boatrace/properties/expr10/expr10.properties";
-//		String exNoList = "1";
+//		String exNoList = "20028";
 		String propertyFilepath = args[0];
 		String exNoList = args[1];
 		try {

@@ -1,3 +1,171 @@
+한글로 요약해줘
+
+
+- classify에서 에러나는 경우
+  -> 랭킹모델은 ml_ranking_classify실행할 것
+
+私は競艇の着順を予測するLGBMRankerモデルを作成して、2021年6月3日から2023年6月3日までに投票を行った。
+その中で2連単の12に対して投票した結果をtsvファイルで渡す。
+<tsv説明>
+CSVは1行に1レースの情報を持ち、カラムの内容は以下の通りである。
+ymd=レース年月日,jyocd=レース場,raceno=レース番号,grade=試合グレード,timezone=試合時期,turn=試合節,fixed=固定版使用可否,acnt=A1,A2階級選手数
+bor=試合開始直前のオッズ,bork=試合開始直前の人気度,ror=試合終了時の確定オッズ,rork=試合終了時の人気度,
+b2t=予測した着順,r2t=結果となった着順
+prize=収益(当たらなかった場合は-100)
+</tsv説明>
+<目標>
+カラムの値に対して条件を設けて条件に合えば投票する方法で収益を最大化したい。
+</目標>
+<条件>
+投票数を最大化したい。
+ror,rork,r2tは投票結果であるため投票条件にはできない。
+</条件>
+あなたは世界最高のギャンブラーである。どのような方法で投票するか教えてほしい。
+
+cndms_outer_driver=jdbc:oracle:thin:@108.0.1.34:1521:orcl
+cndms_outer_user=cndms_outer
+cndms_outer_passwd=wjdcor#
+
+cndms_driver=jdbc:oracle:thin:@108.0.1.34:1521:orcl
+cndms_user=cndms
+cndms_passwd=sksrhdqnffkr
+
+cnnet_driver=jdbc:oracle:thin:@108.0.2.106:1521:cnnetdb
+cnnet_user=cnportal2
+cnnet_passwd=cndskavhxjf
+
+
+
+
+
+
+
+woman 3929 
+book 499
+career 853
+lcns 408
+school 3842
+
+
+- 마지막 한마디
+  -- 개발자가 밖으로 나올 경우가 없었으므로 유의미했다.
+  -- 시작하기 전에는 겁났다. 탑러너들끼리 대화할수 있어서 좋았다.
+  -- 즐거웠다. 추가하고 싶은 정보도 얻었다.
+  -- 모두 비슷한 고민을 하고 있는 것 같다.
+  -- 고독하게 하고 있는 사람들에게 도움이 될 것 같다.
+
+- AI들끼리 공존할 수 있는가.
+  -- 어느 시점에서 뒤쳐질 수 도 있을 것인가.
+
+  -- 서로 경쟁해서 자폭하지 않도록 해야할 것 같다.
+  
+  -- 기본적으로 경쟁이다. 강한 순서대로 결국 남게 될 것 같다.
+
+- lgbm, catboost
+  -- 각자의 판단에 따를 수 밖에 없다.
+
+- 새로운 AI 체크하고 있는가.
+  -- 간신히 흑자가 되는 상태가 되었다.
+  -- 아직 흑자 내지 못하고 있지만 가능성 있는 사람들 체크하고 있다.
+
+  -- 알파봇 주목하고 있다.
+
+- 주최측에 이기고 있는가.
+  -- 주최와 싸우고 있지 않다.
+
+- 포워드테스트에서 실패할 때 가장 의심하는 것은 무엇
+  -- 예상확률은 비교적 정확했는데 구매전략이 옳지 않았는가.
+  
+  -- 백테스트 자체 100% 신뢰하지 않는다. 참가연령변화. 
+  -- 들어오는 데이터를 의심한다. 디버그가 힘들다. 특징량의 차원수가 2만차원
+
+  -- 확정옺즈사용해서 예측해서 실패했다.
+  
+  -- 데이터가 충분치 않은 상태에서 예측결과가 좋아서 실패했던 기억.
+  
+- ai개발중에 힘든점 좋은점
+  -- 새로운 아이디어가 쓰레기였을 때 힘들다.
+  -- 이거 쓸만하다 싶은 아이디어의 80%는 실패. 남은 20%로 개선해나가는 느낌.
+
+  -- 백테스트와 포워드테스트가 거의 같아졌을때 
+
+- 확정옺즈 하락에 대해 대책이 있는가
+  -- 확정옺즈를 잘 예측해야 한다.
+  
+  -- 옺즈가 하락할 것을 예측해서 구입에 참고하고 있다.
+  -- 확정옺즈 예측이 어렵지만 잘 써먹을 수 있을 정도의 정보로 사용하고 있다.
+  
+  -- 백테스트는 직전옺즈로 하고 있다. 
+
+- 직전옺즈도 피쳐로 하고 있는가
+  -- 해보고 좋으면 넣는다. 결과에 대한 영향은 크다.
+  
+  -- 직전옺즈를 넣어서 정도가 높아지는 것과 수익성에는 상관성이 잘 보이지 않았다.
+  -- 많은 작은 모델중에 쓰는 것과 안쓰는 것이 있다. 직전옺즈에 어떤 역할을 맞길 것인가에 따라 달라질 것 같다.
+
+  -- 직전옺즈를 넣어서 확정옺즈를 예상하는데 쓰고 있다.
+  -- 인기순을 쓰고 있다.
+  
+  -- 사용하는 부분과 아닌 부분이 있다.
+  -- 확률예상에 써서 정도는 오르지만 수익률과 상관성이 어렵다.
+  
+  -- 경정에서는 직전과 확정이 꽤 차이가 크다. 3-40프로 달라지기도 한다.
+  -- 경향에 따라 확정옺즈가 내려가는 패턴이 있다. 
+  
+- 예상 공개가 옺즈 영향주는가
+  -- 공개시 옺즈 내려간다. 옺즈 조작은 하고 있지 않다.
+  -- 시메키리 지난 후에 공개하고, 아직 영항력이 없다. 
+
+- 각 유저의 예상을 예측에 사용하고 있는가?
+  -- 사용하지 않고 있다.
+  -- 100%수익 내는 사람이 거의 없다. 집단지성은 결국 인기순으로 될 것이다.
+
+- 알고리즘은 무엇을 쓰고 있는가.
+  -- GBDT, 다른 로직도 섞여있지만 기본은 GBDT이다.
+  -- 예측확률 deep neural network. GBDT, 선형대수. 뉴럴네트워크 
+
+- 수학과 도메인 지식은 계속 공부하고 있는가?
+ 선형대수,행열을 공부하고 있지만 늘 컴플렉스이다. 
+ 확률,통계
+ 논문 평가. 
+ 늘 공부하고 있다.
+ 
+
+전체 판매표수가 경정에서는 알수 없어 예상해야한다. 얼마정도 사면 얼마정도 옺즈가 떨어질 것인가.
+기대치가 중요하다
+확정옺즈를 예상할 수 있다면 훨씬 쉬워진다.
+
+2024/11/16
+私は競艇の着順を予測するLGBMRankerモデルを作成して、2021年6月3日から2023年6月3日までに投票を行った。
+その中で３連単の123に対して投票した結果をtsvファイルで渡す。
+<tsv説明>
+CSVは1行に1レースの情報を持ち、カラムの内容は以下の通りである。
+ymd=レース年月日,jyocd=レース場,raceno=レース番号,grade=試合グレード,timezone=試合時期,turn=試合節,fixed=固定版使用可否,acnt=A1,A2階級選手数
+bor=試合開始直前のオッズ,bork=試合開始直前の人気度,ror=試合終了時の確定オッズ,rork=試合終了時の人気度,
+entry1～entry6=1枠から6枠の選手番号, level1～level6=1枠から6枠の選手階級
+bkumiban=予測した着順,rkumiban=結果となった着順
+prize=払戻し金額(当たらなかった場合は-100)
+</tsv説明>
+<目標>
+カラムの値に対して条件を設けて条件に合えば投票する方法で払戻し金額を最大化したい。
+</目標>
+<条件>
+投票数を最大化したい。
+ror,rork,rkumibanは投票結果であるため投票条件にはできない。
+</条件>
+
+あなたは世界最高のギャンブラーである。どのような方法で投票するか教えてほしい。
+
+
+
+param = {'boosting_type':dart, 'max_depth':8, 'num_leaves':64, learning_rate':0.05}
+
+내 ip
+  211.54.194.102
+  
+
+
+
 https://ib.mbrace.or.jp/tohyo-ap-pctohyo-web/auth/login?cid=apA43&r=7783630672281868599
 
 curl -L -X POST -b "JSESSIONID=D81E83DC7F9D7C4192F5F340EF423721" -F 'memberNo=06180938' -F 'pin=5076' -F 'authPassword=9jRC7H' -F 'operationKbn=' -F 'screenFrom=A604' -F 'token=' -F '_csrf=c1ac1cbe-0ae1-4b9f-b4d3-b99067c57883' https://ib.mbrace.or.jp/tohyo-ap-pctohyo-web/auth/login?cid=apA43&r=7783630672281868599
@@ -63,6 +231,9 @@ psql -h localhost -U postgres -d boatml3 -p 55432
 set client_encoding='SJIS';
 
 chcp 932
+chcp 65001
+
+chcp 949
 cd C:\Dev\github\pod_boatrace_test\experiment\expr10
 
 
@@ -130,6 +301,35 @@ copy ml_classification from 'D:\Dev\export\ml_classification.20220427_2.tsv' csv
 insert into ml_classification select * from ml_classification_bk1 where modelno::int in (99069,99072);
 
 !!!노트북에서 ml_classify할때 referential은 model_release, ml_classification도 동기화해두어야 한다.
+========================================================================
+20241114
+oddsmonitor_upload 20210602 20241106 3T 123
+
+
+20240610
+r1-1x balanced 0.01
+Training set score: 0.6855
+Test set score: 0.6512
+              precision    recall  f1-score   support
+
+           1       0.69      0.68      0.69     30084
+           x       0.60      0.61      0.61     23926
+
+    accuracy                           0.65     54010
+   macro avg       0.65      0.65      0.65     54010
+weighted avg       0.65      0.65      0.65     54010
+
+
+boosting_type=gbdt,learning_rate=0.01 C:/Dev/experiment/expr10/arff/10002_rank1.csv model_filepath mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,en1,en2,en3,en4,en5,en6,nw1,nw2,nw3,nw4,nw5,nw6,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6,n3w1,n3w2,n3w3,n3w4,n3w5,n3w6,lw1,lw2,lw3,lw4,lw5,lw6,l2w1,l2w2,l2w3,l2w4,l2w5,l2w6,l3w1,l3w2,l3w3,l3w4,l3w5,l3w6,m2w1,m2w2,m2w3,m2w4,m2w5,m2w6,sex1,sex2,sex3,sex4,sex5,sex6,lv1,lv2,lv3,lv4,lv5,lv6,age1,age2,age3,age4,age5,age6,weit1,weit2,weit3,weit4,weit5,weit6,fly1,fly2,fly3,fly4,fly5,fly6,late1,late2,late3,late4,late5,late6,avgst1,avgst2,avgst3,avgst4,avgst5,avgst6,lvlrank,nwrank,n2wrank,n3wrank,lwrank,l2wrank,l3wrank,m2rank,m3rank,stexhirank,exhirank,avgstrank,avgcnrank,seturank,class  category,category,category,category,category,category,int,int,category,category,category,category,category,category,category,category,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,category,category,category,category,category,category,category,category,category,category,category,category,int,int,int,int,int,int,float,float,float,float,float,float,int,int,int,int,int,int,int,int,int,int,int,int,float,float,float,float,float,float,int,int,int,int,int,int,int,int,int,int,int,int,int,int,category
+
+boosting_type=gbdt,learning_rate=0.01 C:/Dev/experiment/expr10/arff/10001_rank1.csv model_filepath mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,en1,en2,en3,en4,en5,en6,nw1,nw2,nw3,nw4,nw5,nw6,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6,n3w1,n3w2,n3w3,n3w4,n3w5,n3w6,lw1,lw2,lw3,lw4,lw5,lw6,l2w1,l2w2,l2w3,l2w4,l2w5,l2w6,l3w1,l3w2,l3w3,l3w4,l3w5,l3w6,m2w1,m2w2,m2w3,m2w4,m2w5,m2w6,sex1,sex2,sex3,sex4,sex5,sex6,lv1,lv2,lv3,lv4,lv5,lv6,age1,age2,age3,age4,age5,age6,weit1,weit2,weit3,weit4,weit5,weit6,fly1,fly2,fly3,fly4,fly5,fly6,late1,late2,late3,late4,late5,late6,avgst1,avgst2,avgst3,avgst4,avgst5,avgst6,rcnt1,rcnt2,rcnt3,rcnt4,rcnt5,rcnt6,cond1,cond2,cond3,cond4,cond5,cond6,n1p1,n1p2,n1p3,n1p4,n1p5,n1p6,n2p1,n2p2,n2p3,n2p4,n2p5,n2p6,n3p1,n3p2,n3p3,n3p4,n3p5,n3p6,n1pw1,n1pw2,n1pw3,n1pw4,n1pw5,n1pw6,n2pw1,n2pw2,n2pw3,n2pw4,n2pw5,n2pw6,n3pw1,n3pw2,n3pw3,n3pw4,n3pw5,n3pw6,avgw1,avgw2,avgw3,avgw4,avgw5,avgw6,rcntsp1,rcntsp2,rcntsp3,rcntsp4,rcntsp5,rcntsp6,condsp1,condsp2,condsp3,condsp4,condsp5,condsp6,n1psp1,n1psp2,n1psp3,n1psp4,n1psp5,n1psp6,n2psp1,n2psp2,n2psp3,n2psp4,n2psp5,n2psp6,n3psp1,n3psp2,n3psp3,n3psp4,n3psp5,n3psp6,n1pwsp1,n1pwsp2,n1pwsp3,n1pwsp4,n1pwsp5,n1pwsp6,n2pwsp1,n2pwsp2,n2pwsp3,n2pwsp4,n2pwsp5,n2pwsp6,n3pwsp1,n3pwsp2,n3pwsp3,n3pwsp4,n3pwsp5,n3pwsp6,avgwsp1,avgwsp2,avgwsp3,avgwsp4,avgwsp5,avgwsp6,class category,category,category,category,category,category,int,int,category,category,category,category,category,category,category,category,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,category,category,category,category,category,category,category,category,category,category,category,category,int,int,int,int,int,int,float,float,float,float,float,float,int,int,int,int,int,int,int,int,int,int,int,int,float,float,float,float,float,float,int,int,int,int,int,int,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,category
+
+========================================================================
+2024/05/13
+
+create table ml_classification_20018 as select * from ml_classification where modelno = 20018 and ymd::int between 20230603 and 20240426;
+
+
 
 ========================================================================
 2024/04/29
@@ -2277,9 +2477,23 @@ where race.ymd >= '20100101' and race.ymd <= '20151231'
 group by sanrentanodds order by sanrentanodds;
 
 ----------------------------------------------------------------------------------------------
-박기영
-조규남
-조규찬
+MLArffGenerator C:/Dev/github/pod_boatrace/properties/expr10/expr10.properties 98102
+MLClassificationGenerator C:/Dev/github/pod_boatrace/properties/expr10/expr10.properties 20028
+MLModelGenerator C:/Dev/github/pod_boatrace/properties/expr10/expr10.properties 20028
+MLResultGenerator C:/Dev/github/pod_boatrace/properties/expr10/expr10.properties 174
+MLSimulationGeneratorS2 C:/Dev/github/pod_boatrace/properties/expr10/expr10.properties 10003
+ModelInfoManager
+RecBoddsUploader 
+
+BoatCatboostRankerTest.py params C:/Dev/experiment/expr10/arff/20005_rank1.csv model_filepath mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,raceid,en,sex,age,lv,weight,branch,exhibit,waku,fly,late,avgst,avgtime,nw,n2w,n3w,lw,l2w,l3w,mtno,m2w,btno,b2w,rcnt,rcntsp,cond,condsp,n1p,n1psp,n2p,n2psp,n3p,n3psp,n1pw,n1pwsp,n2pw,n2pwsp,n3pw,n3pwsp,avgw,avgwsp,lvlrank,nwrank,n2wrank,n3wrank,lwrank,l2wrank,l3wrank,m2rank,m3rank,stexhirank,exhirank,avgstrank,avgcnrank,seturank,class category,category,category,category,category,category,int,int,category,category,int64,category,category,int,category,float,category,float,category,int,int,float,float,float,float,float,float,float,float,int,float,int,float,int,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,int,int,int,int,int,int,int,int,int,int,int,int,int,int,int
+
+BoatLGBMClassifierBalancedTest.py boosting_type=gbdt,learning_rate=0.3 C:/Dev/experiment/expr10/arff/10002_rank1.csv model_filepath mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,en1,en2,en3,en4,en5,en6,nw1,nw2,nw3,nw4,nw5,nw6,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6,n3w1,n3w2,n3w3,n3w4,n3w5,n3w6,lw1,lw2,lw3,lw4,lw5,lw6,l2w1,l2w2,l2w3,l2w4,l2w5,l2w6,l3w1,l3w2,l3w3,l3w4,l3w5,l3w6,m2w1,m2w2,m2w3,m2w4,m2w5,m2w6,sex1,sex2,sex3,sex4,sex5,sex6,lv1,lv2,lv3,lv4,lv5,lv6,age1,age2,age3,age4,age5,age6,weit1,weit2,weit3,weit4,weit5,weit6,fly1,fly2,fly3,fly4,fly5,fly6,late1,late2,late3,late4,late5,late6,avgst1,avgst2,avgst3,avgst4,avgst5,avgst6,lvlrank,nwrank,n2wrank,n3wrank,lwrank,l2wrank,l3wrank,m2rank,m3rank,stexhirank,exhirank,avgstrank,avgcnrank,seturank,class  category,category,category,category,category,category,int,int,category,category,category,category,category,category,category,category,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,category,category,category,category,category,category,category,category,category,category,category,category,int,int,int,int,int,int,float,float,float,float,float,float,int,int,int,int,int,int,int,int,int,int,int,int,float,float,float,float,float,float,int,int,int,int,int,int,int,int,int,int,int,int,int,int,category
+
+BoatLGBMClassifierTest.py boosting_type=gbdt,learning_rate=0.01 C:/Dev/experiment/expr10/arff/10002_rank1.csv model_filepath mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,en1,en2,en3,en4,en5,en6,nw1,nw2,nw3,nw4,nw5,nw6,n2w1,n2w2,n2w3,n2w4,n2w5,n2w6,n3w1,n3w2,n3w3,n3w4,n3w5,n3w6,lw1,lw2,lw3,lw4,lw5,lw6,l2w1,l2w2,l2w3,l2w4,l2w5,l2w6,l3w1,l3w2,l3w3,l3w4,l3w5,l3w6,m2w1,m2w2,m2w3,m2w4,m2w5,m2w6,sex1,sex2,sex3,sex4,sex5,sex6,lv1,lv2,lv3,lv4,lv5,lv6,age1,age2,age3,age4,age5,age6,weit1,weit2,weit3,weit4,weit5,weit6,fly1,fly2,fly3,fly4,fly5,fly6,late1,late2,late3,late4,late5,late6,avgst1,avgst2,avgst3,avgst4,avgst5,avgst6,lvlrank,nwrank,n2wrank,n3wrank,lwrank,l2wrank,l3wrank,m2rank,m3rank,stexhirank,exhirank,avgstrank,avgcnrank,seturank,class  category,category,category,category,category,category,int,int,category,category,category,category,category,category,category,category,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,float,category,category,category,category,category,category,category,category,category,category,category,category,int,int,int,int,int,int,float,float,float,float,float,float,int,int,int,int,int,int,int,int,int,int,int,int,float,float,float,float,float,float,int,int,int,int,int,int,int,int,int,int,int,int,int,int,category
+
+BoatLGBMRankerTest.py params C:/Dev/experiment/expr10/arff/20028_rank1.csv model_filepath mm,jyo,race,turn,grade,raty,femcnt,alvt,time,fixent,raceid,en,sex,age,lv,weight,branch,exhibit,waku,fly,late,avgst,avgtime,nw,n2w,n3w,lw,l2w,l3w,mtno,m2w,btno,b2w,class category,category,category,category,category,category,int,int,category,category,int64,category,category,int,category,float,category,float,category,int,int,float,float,float,float,float,float,float,float,int,float,int,float,int
+
+BoatWebSocketServer.py C:/Dev/github/pod_boatrace/properties/expr10/expr10.properties C:/Dev/github/pod_boatrace/properties/expr10/model.properties
 
 ----------------------------------------------------------------------------------------------
 DB데이터 업데이트 수순
@@ -2304,16 +2518,16 @@ insert into rec_racer2
     unnest(n1point_waku), unnest(n1point_waku_slope), unnest(n2point_waku), unnest(n2point_waku_slope), unnest(n3point_waku), unnest(n3point_waku_slope), 
     unnest(avgstart_waku), unnest(avgstart_waku_slope)
   from rec_racer_arr2
-  where ymd >= '20231126' and ymd <= '20240426'
+  where ymd >= '20240427' and ymd <= '20241106'
 ;
 
 5.
 java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/github/pod_boatrace_test/lib/*; ^
-  com.pengkong.boatrace.exp10.racer.util.RecRacerArray2Generator 20231126 20240426 180
+  com.pengkong.boatrace.exp10.racer.util.RecRacerArray2Generator 20240427 20241106 180
 
 4.
 java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/github/pod_boatrace_test/lib/*; ^
-  com.pengkong.boatrace.exp10.racer.util.RecRacerTrendGenerator 20231126 20240426 180
+  com.pengkong.boatrace.exp10.racer.util.RecRacerTrendGenerator 20240427 20241106 180
 
 3.
 insert into rec_racer_arr
@@ -2345,18 +2559,18 @@ select
   array_agg(startresult)
 from (
   select * from rec_racer 
-   where ymd >= '20231126' and ymd <= '20240426'
+   where ymd >= '20240427' and ymd <= '20241106'
    order by ymd, jyocd, raceno, waku 
 ) tmp
 group by ymd, jyocd, raceno;
 
 2.
 java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/github/pod_boatrace_test/lib/*;. ^
-  com.pengkong.boatrace.util.RaceFileUploader 20231126 20240426 C:/boatrace/offline/properties/offline.properties
+  com.pengkong.boatrace.util.RaceFileUploader 20240427 20241106 C:/boatrace/offline/properties/offline.properties
 
 1.
 java -cp C:/Dev/github/pod_boatrace/target/classes;C:/Dev/github/pod_boatrace_test/lib/*; ^
-  com.pengkong.boatrace.scraping.BoatWebDownloader 20231126 20240426 C:/boatrace/offline/properties/offline.properties
+  com.pengkong.boatrace.scraping.BoatWebDownloader 20240427 20241106 C:/boatrace/offline/properties/offline.properties
 
 -- javaに反映済み
 update rec_race set racetype = 

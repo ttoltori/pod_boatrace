@@ -43,7 +43,7 @@ public class DataServer extends UnicastRemoteObject implements RmiDataServerInte
 	void initialize() throws Exception {
 		// 메모리 부족으로 일시적 대처
 		//raceServer.load();
-		//clfServer.load();
+		clfServer.load();
 	}
 	
 	@Override

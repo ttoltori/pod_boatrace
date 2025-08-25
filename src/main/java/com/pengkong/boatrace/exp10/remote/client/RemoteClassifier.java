@@ -64,7 +64,8 @@ public class RemoteClassifier {
 	public List<Classification> classify(SqlSession session, HashMap<String, ?> hashmap) throws Exception {
 
 		RemoteRequestSet rrs = new RemoteRequestSet();
-		for (int rankNo = 1; rankNo <= 3; rankNo++) {
+		int rankCnt = prop.getInteger("rankcnt");
+		for (int rankNo = 1; rankNo <= rankCnt; rankNo++) {
 			String classId = prop.getString("class_rank" + rankNo);
 			// 固定値classificationの場合、通信せずに固定値の結果を返却する
 			if (Clazz.isFixedClassification(classId)) {

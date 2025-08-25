@@ -69,8 +69,10 @@ public class MLSimulationGeneratorS2 extends MLResultGenerator {
 					prop.putProperty("grade_type", gradeType);
 
 					preProcess();
-					String evaluationsId = String.join(Delimeter.UNDERBAR.getValue(), exNo, betType,
-							prop.getString("kumiban"),  term,
+					String evaluationsId = String.join(Delimeter.UNDERBAR.getValue(), exNo, 
+							"{bettype}",
+							"{kumiban}", 
+							term,
 							prop.getString("result_type"), prop.getString("modelno"), gradeType
 							);
 					prop.putProperty("evaluations_id", evaluationsId);
@@ -123,7 +125,7 @@ public class MLSimulationGeneratorS2 extends MLResultGenerator {
 	}
 
 	public static void main(String[] args) {
-//		String propertyFilepath = "C:/Dev/workspace/Oxygen/pod_boatrace/properties/expr10/expr10.properties";
+//		String propertyFilepath = "C:/Dev/github/pod_boatrace/properties/expr10/expr10.properties";
 //		String exNoList = "1";
 		String propertyFilepath = args[0];
 		String exNoList = args[1];

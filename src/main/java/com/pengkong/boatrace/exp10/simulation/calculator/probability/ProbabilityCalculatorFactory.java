@@ -10,8 +10,12 @@ public class ProbabilityCalculatorFactory {
 			return new ProbabilityCaculator1234();
 		} else if (id.equals("d123")) {
 			return new ProbabilityCaculator123();
+		} else if (id.equals("dr123")) {
+			return new ProbabilityCaculatorR123();
 		} else if (id.equals("d1")) {
 			return new ProbabilityCalculator1();
+		} else if (id.equals("default")) {
+			return new ProbabilityCaculatorDefault();
 		}
 		
 		return null;

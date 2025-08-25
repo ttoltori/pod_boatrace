@@ -26,13 +26,13 @@ public class Evaluation extends HashMap<String, String>{
 	}
 
 	public String toString() {
-		return "Evaluation:[" + String.join("\t", get("bettype"), get("kumiban"), get("resultno"), get("modelno"), get("patternid"), get("pattern"), get("factor"),  
+		return "Evaluation:[" + String.join("\t", get("grades"),  get("bettype"), get("kumiban"), get("modelno"), get("patternid"), get("pattern"), get("factor"),  
 				"incamt="+get("incamt"), "betcnt="+get("betcnt"), "incrate="+get("incrate"), "hitrate="+get("hitrate")) + "]"; 
 	}
 	
 	/** evaluationファイルから１行を特定できるキーを取得する */
 	public String getUniqueKey() {
-		return String.join("_", get("bettype"), get("kumiban"), get("modelno"), get("patternid"), get("pattern"));
+		return String.join("_", get("grades"),  get("bettype"), get("kumiban"), get("modelno"), get("patternid"), get("pattern"));
 //		return String.join("_", get("bettype"), get("kumiban"), get("modelno"), get("patternid"), get("pattern"), get("bonus_bork"));
 	}
 	

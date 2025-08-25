@@ -242,16 +242,16 @@ public abstract class AbstractResultCreator {
 		result = setResultOdds(result);
 		
 		if (result.getBetOdds() != null) {
-			result.setExpectBor(  MathUtil.scale0(probabilityExpCalculator.calculate(betType.getValue(), rec) * result.getBetOdds()) );
+			result.setExpectBor(  MathUtil.scale1(probabilityExpCalculator.calculate(betType.getValue(), rec) * result.getBetOdds()) );
 		}
 		if (result.getBetOddsrank() != null) {
-			result.setExpectBork(  MathUtil.scale0(probabilityExpCalculator.calculate(betType.getValue(), rec) * result.getBetOddsrank()) );
+			result.setExpectBork(  MathUtil.scale1(probabilityExpCalculator.calculate(betType.getValue(), rec) * result.getBetOddsrank()) );
 		}
 		if (result.getResultOdds() != null) {
-			result.setExpectRor(  MathUtil.scale0(probabilityExpCalculator.calculate(betType.getValue(), rec) * result.getResultOdds()) );
+			result.setExpectRor(  MathUtil.scale1(probabilityExpCalculator.calculate(betType.getValue(), rec) * result.getResultOdds()) );
 		}
 		if (result.getResultOddsrank() != null) {
-			result.setExpectRork(  MathUtil.scale0(probabilityExpCalculator.calculate(betType.getValue(), rec) * result.getResultOddsrank()) );
+			result.setExpectRork(  MathUtil.scale1(probabilityExpCalculator.calculate(betType.getValue(), rec) * result.getResultOddsrank()) );
 		}
 		
 		// レース結果設定 */
@@ -332,7 +332,7 @@ public abstract class AbstractResultCreator {
 		result.setSime(rec.getString("sime"));
 		result.setPatternid(rec.getString("patternid"));
 		result.setPattern(rec.getString("pattern"));
-		if (rec.getString("prediction6") == null) {
+		if (rec.getString("prediction4") == null) {
 			result.setPredictRank123(rec.getString("prediction1", "") + rec.getString("prediction2", "") + rec.getString("prediction3", ""));
 		} else { // ranking알고리즘은 6개의 prediction이 존재한다.
 			result.setPredictRank123(rec.getString("prediction1", "") + rec.getString("prediction2", "") + rec.getString("prediction3", "") + rec.getString("prediction4", ""));

@@ -195,7 +195,7 @@ public class StringUtil {
 		String[] strs = {"1", "2"};
 		List<Double> doubles =  StringUtil.strings2Doubles(strs);
 		
-		
+		System.out.println(Delimeter.COMMA.getValue());
 		HashMap<Integer, Integer> test = new HashMap<>();
 		test.put(1, 1);
 		test.put(2, 1);

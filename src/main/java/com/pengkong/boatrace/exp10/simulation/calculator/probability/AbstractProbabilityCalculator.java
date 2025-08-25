@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.pengkong.boatrace.exp10.MLClassificationGenerator;
 import com.pengkong.boatrace.server.db.dto.DBRecord;
+import com.pengkong.common.MathUtil;
 
 /**
  * DB取得値から予想的中確率をbettype別に組み合わせるクラス 
@@ -20,6 +21,11 @@ public abstract class AbstractProbabilityCalculator {
 	
 	Map<String, Function<DBRecord, Double>> mapMethod;
 
+	Double rp1;
+	Double rp2;
+	Double rp3;
+	Double rp4;
+	
 	public AbstractProbabilityCalculator() {
 		mapMethod = new HashMap<>();
 		mapMethod.put("1T", this::getProbability1T);
@@ -44,8 +50,21 @@ public abstract class AbstractProbabilityCalculator {
 	
 	/** DB取得値から予想的中確率をbettype別の組み合わを取得する */
 	public Double calculate(String statBettype, DBRecord rec) {
+		if (rec.getDouble("probability6") != null )
+				calculateRelativeProbability(rec);
 		return mapMethod.get(statBettype).apply(rec);
 	}
+	
+	private void calculateRelativeProbability(DBRecord rec) {
+		Double sum  = rec.getDouble("probability1") + rec.getDouble("probability2") + rec.getDouble("probability3")
+		  + rec.getDouble("probability4") + rec.getDouble("probability5") + rec.getDouble("probability6");
+		
+		rp1 = rec.getDouble("probability1") / sum;
+		rp2 = rec.getDouble("probability2") / sum;
+		rp3 = rec.getDouble("probability3") / sum;
+		rp4 = rec.getDouble("probability4") / sum;
+	}
+	
 	/** 単勝 */
 	abstract Double getProbability1T(DBRecord rec);
 	/** 2連単 */
