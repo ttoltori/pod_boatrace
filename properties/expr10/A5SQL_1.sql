@@ -1,4 +1,25 @@
-﻿
+﻿SELECT
+    sanrentanno,
+    COUNT(*) AS cnt,
+    SUM(sanrentanprize) AS prize,
+    COUNT(*) * 1.0 / SUM(COUNT(*)) OVER() AS ratio,
+    ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER(), 2) AS ratio_percent
+FROM rec_race
+GROUP BY sanrentanno
+ORDER BY cnt DESC;
+
+select
+  sanrentanno, count(1) cnt, sum(sanrentanprize) prize
+from rec_race
+group by rec_race.sanrentanno
+order by cnt desc
+;
+
+
+
+select * from ml_classification mc  where mc.modelno = '99100';
+
+
 select grade, prediction, count(1) betcnt, sum(prize) income, 
   (sum(hit)::float/count(1)::float)::numeric(5,2) hitrate, ((count(1)+(sum(prize)/100))::float / count(1)::float)::numeric(5,2) incomerate
 from 
