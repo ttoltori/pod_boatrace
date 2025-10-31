@@ -1,3 +1,14 @@
+drop table if exists ml_probability;
+CREATE TABLE public.ml_probability (
+	modelno varchar(5) NULL,
+	ymd varchar(8) NULL,
+	jyocd varchar(2) NULL,
+	raceno int2 NULL,
+    sime varchar(4),
+	problist _float8 NULL
+);
+CREATE INDEX indexes_ml_probability ON ml_probability USING btree (ymd, jyocd, raceno);
+
 drop table if exists rec_bodds;
 create table rec_bodds (
 ymd varchar(8),

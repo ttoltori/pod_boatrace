@@ -1,5 +1,4 @@
-한글로 요약해줘
-
+cd c:\Dev\github\pod_boatrace_test\experiment\expr10
 
 - classify에서 에러나는 경우
   -> 랭킹모델은 ml_ranking_classify실행할 것
