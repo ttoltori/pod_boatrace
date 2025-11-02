@@ -16,6 +16,9 @@ import com.pengkong.boatrace.mybatis.client.CustomMapper;
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
 import com.pengkong.boatrace.server.db.dto.DBRecord;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class DatabaseUtil {
 	private static SqlSession session;
 	private static boolean isAutoCommit;
@@ -36,6 +39,7 @@ public class DatabaseUtil {
 	 * @param isAutoCommit 自動コミット
 	 */
 	public static SqlSession open(String targetDb, boolean isAutoCommit) throws IOException{
+		log.info("open targetDb: {}", targetDb);
         InputStream inputStream = Resources.getResourceAsStream(targetDb);
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
         return sqlSessionFactory.openSession(false);

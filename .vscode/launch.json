@@ -1,0 +1,1449 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "RaceEx2Pattern",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.converter.RaceEx2Pattern",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RaceEx2PatternConverter",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.converter.RaceEx2PatternConverter",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RecRace2Pattern",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.converter.RecRace2Pattern",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RankArffCreator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp02.RankArffCreator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RankBalanceGenerator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp02.RankBalanceGenerator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RankClassifierManager",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp02.RankClassifierManager",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RankModelGenerator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp02.RankModelGenerator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RankModelManager",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp02.RankModelManager",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RankPatternManager",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp02.RankPatternManager",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RankPredictor",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp02.RankPredictor",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RankResultGenerator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp02.RankResultGenerator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "WakuPatternManager",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp02.WakuPatternManager",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RankResultCreatorDefault",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp02.result.RankResultCreatorDefault",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RankUser",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp02.service.RankUser",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RankWorker",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp02.service.RankWorker",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RankSimulationUser",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp02.simulation.RankSimulationUser",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RankSimulationWorker",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp02.simulation.RankSimulationWorker",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLArffGenerator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLArffGenerator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLClassificationGenerator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLClassificationGenerator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLGroupSimulationGenerator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLGroupSimulationGenerator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLModelGenerator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLModelGenerator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLPorkClassificationGenerator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLPorkClassificationGenerator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLRankingClassificationGenerator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLRankingClassificationGenerator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLResultGenerator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLResultGenerator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLSimulationGenerator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLSimulationGenerator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLSimulationGeneratorBIG",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLSimulationGeneratorBIG",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLSimulationGeneratorBV",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLSimulationGeneratorBV",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLSimulationGeneratorBork",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLSimulationGeneratorBork",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLSimulationGeneratorFPH4",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLSimulationGeneratorFPH4",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLSimulationGeneratorFPI6",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLSimulationGeneratorFPI6",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLSimulationGeneratorFPI7",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLSimulationGeneratorFPI7",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLSimulationGeneratorFPI8",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLSimulationGeneratorFPI8",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLSimulationGeneratorFPI8_1",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLSimulationGeneratorFPI8_1",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLSimulationGeneratorFPI9",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLSimulationGeneratorFPI9",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLSimulationGeneratorFSB",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLSimulationGeneratorFSB",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLSimulationGeneratorFSBStep2",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLSimulationGeneratorFSBStep2",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLSimulationGeneratorJSJ",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLSimulationGeneratorJSJ",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLSimulationGeneratorJSJ_test",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLSimulationGeneratorJSJ_test",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLSimulationGeneratorPr",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLSimulationGeneratorPr",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLSimulationGeneratorPtnId",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLSimulationGeneratorPtnId",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLSimulationGeneratorPtnIdAll",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLSimulationGeneratorPtnIdAll",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLSimulationGeneratorS2",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLSimulationGeneratorS2",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLSimulationGeneratorTsvFile",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLSimulationGeneratorTsvFile",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLSimulationGeneratorVIC",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLSimulationGeneratorVIC",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLSimulationGeneratorZEN",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLSimulationGeneratorZEN",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "Step2SimulationGenerator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.Step2SimulationGenerator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLArffCreator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.arff.MLArffCreator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLArffCreator_WithBeforeOddsManager",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.arff.MLArffCreator_WithBeforeOddsManager",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "ModelInfoManager",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.model.ModelInfoManager",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "OddsMonitorFileLoader",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.odds.loader.OddsMonitorFileLoader",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "OddsResultFileLoader",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.odds.loader.OddsResultFileLoader",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "AlgorithmTemplate",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.property.AlgorithmTemplate",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "ClazzTemplate",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.property.ClazzTemplate",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "FeatureSetTemplate",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.property.FeatureSetTemplate",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "FeatureTemplate",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.property.FeatureTemplate",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLPropertyUtil",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.property.MLPropertyUtil",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLPropertyUtilStep2",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.property.MLPropertyUtilStep2",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "PatternTemplate",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.property.PatternTemplate",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "SqlTemplate",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.property.SqlTemplate",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RecRacerArray2Generator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.racer.util.RecRacerArray2Generator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RecRacerTrendGenerator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.racer.util.RecRacerTrendGenerator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "BoatWebSocketClient",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.remote.client.BoatWebSocketClient",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "BoatWebSocketServer",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.remote.server.BoatWebSocketServer",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "ResultBorkGraphBuilder",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.result.graph.ResultBorkGraphBuilder",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "ResultGraphBuilder",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.result.graph.ResultGraphBuilder",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "ResultGraphBuilderSplit",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.result.graph.split.ResultGraphBuilderSplit",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "TermSplitterIndexer",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.result.stat.split.TermSplitterIndexer",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "DBRaceDataServer",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.data.rmi.server.DBRaceDataServer",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MultiClassificationDataServer",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.data.rmi.server.MultiClassificationDataServer",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RmiDataServer",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.data.rmi.server.RmiDataServer",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationExcelLoader",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationExcelLoader",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationFileLoader",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationFileLoader",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationLoader",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationLoader",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationSimul2Loader",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationSimul2Loader",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationSimulExcelLoader",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationSimulExcelLoader",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationSimulLoaderBIG",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationSimulLoaderBIG",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationSimulLoaderBIG3",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationSimulLoaderBIG3",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationSimulLoaderBV",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationSimulLoaderBV",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationSimulLoaderBVFromTsv",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationSimulLoaderBVFromTsv",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationSimulLoaderBork",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationSimulLoaderBork",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationSimulLoaderFPH4",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationSimulLoaderFPH4",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationSimulLoaderFPI5GraphFilename",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationSimulLoaderFPI5GraphFilename",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationSimulLoaderFPI7",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationSimulLoaderFPI7",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationSimulLoaderFPI7GraphFilename",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationSimulLoaderFPI7GraphFilename",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationSimulLoaderFPI8",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationSimulLoaderFPI8",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationSimulLoaderFPI8_1",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationSimulLoaderFPI8_1",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationSimulLoaderFPI9",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationSimulLoaderFPI9",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationSimulLoaderFSB",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationSimulLoaderFSB",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationSimulLoaderJSJ",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationSimulLoaderJSJ",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationSimulLoaderPr",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationSimulLoaderPr",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationSimulLoaderProperty",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationSimulLoaderProperty",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationSimulLoaderPtnId",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationSimulLoaderPtnId",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationSimulLoaderResultGraphFilename",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationSimulLoaderResultGraphFilename",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationSimulLoaderVIC",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationSimulLoaderVIC",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationSimulLoaderZEN",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationSimulLoaderZEN",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationSimulTsvFileLoader",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationSimulTsvFileLoader",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationStep2Loader",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.evaluation.EvaluationStep2Loader",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "Step2PropertyLoaderFSB",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.simulation.step2.Step2PropertyLoaderFSB",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationHarvestor",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.util.EvaluationHarvestor",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationsIdToolBIG5VIC2",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.util.EvaluationsIdToolBIG5VIC2",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "EvaluationsIdToolJSJ",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.util.EvaluationsIdToolJSJ",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "GraphHarvestor",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.util.GraphHarvestor",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "GraphStore",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.util.GraphStore",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "GroupFileUpdater",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.util.GroupFileUpdater",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLUtil",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.util.MLUtil",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "SimulationSelectTool",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.util.SimulationSelectTool",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RankModelGenerator(1)",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.expr06.RankModelGenerator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "WakuFloatComparator2",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.model.comparator.WakuFloatComparator2",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "DailyClassificationGenerator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.online.batch.DailyClassificationGenerator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "DailyRaceDownloader",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.online.batch.DailyRaceDownloader",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "OnlineClassificationGenerator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.online.batch.OnlineClassificationGenerator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "OnlineRaceDownloader",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.online.batch.OnlineRaceDownloader",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "OnlineRaceUpdater",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.online.batch.OnlineRaceUpdater",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RecRacerArray2Generator(1)",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.online.batch.RecRacerArray2Generator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RecRacerTrendGenerator(1)",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.online.batch.RecRacerTrendGenerator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "OnlineOddsServer",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.online.odds.OnlineOddsServer",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RmiOnlineOddsServer",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.online.rmi.odds.RmiOnlineOddsServer",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RmiOnlineTohyoServer",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.online.rmi.tohyo.RmiOnlineTohyoServer",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "OnlineTohyoServer",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.online.tohyo.OnlineTohyoServer",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "Reporter",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.online.tohyo.report.Reporter",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "BoatOddsDownloader",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.scraping.BoatOddsDownloader",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "BoatWebDownloader",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.scraping.BoatWebDownloader",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "BoatWebDownloaderBeforeComputerBetting",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.scraping.BoatWebDownloaderBeforeComputerBetting",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "OddsBankDownloader",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.scraping.OddsBankDownloader",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "OddsDownloader",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.scraping.OddsDownloader",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "ScheduleDownloader",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.scraping.ScheduleDownloader",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "ComputerPageParser",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.scraping.parser.ComputerPageParser",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "Odds1TFPageParser",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.scraping.parser.Odds1TFPageParser",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "Odds2TFPageParser",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.scraping.parser.Odds2TFPageParser",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "Odds3FPageParser",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.scraping.parser.Odds3FPageParser",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "Odds3TPageParser",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.scraping.parser.Odds3TPageParser",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "OddsBankPageParser",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.scraping.parser.OddsBankPageParser",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "OddsKFPageParser",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.scraping.parser.OddsKFPageParser",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RaceBeforePageParser",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.scraping.parser.RaceBeforePageParser",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RaceListPageParser",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.scraping.parser.RaceListPageParser",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RaceProgramPageParser",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.scraping.parser.RaceProgramPageParser",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RaceResultPageParser",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.scraping.parser.RaceResultPageParser",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "SetuListPageParser",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.scraping.parser.SetuListPageParser",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "DailyOddsDownloader",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.scraping.scheduled.DailyOddsDownloader",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "DailyOddsDownloader2",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.scraping.scheduled.DailyOddsDownloader2",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "YmdBeforeRangeDbList",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.server.db.dto.YmdBeforeRangeDbList",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "BoatDbRmiServer",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.server.rmi.BoatDbRmiServer",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "ArffRmiClient",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.server.rmi.arff.ArffRmiClient",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "ArffRmiServer",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.server.rmi.arff.ArffRmiServer",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RegressionDbRmiServer",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.server.rmi.regression.RegressionDbRmiServer",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "BoatStatObject",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.server.stat.BoatStatObject",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "Db2PatternConverter",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.server.util.Db2PatternConverter",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "PopularLevelManager",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.service.manager.PopularLevelManager",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "PopularManager",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.service.manager.PopularManager",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "StatManager",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.service.manager.StatManager",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "TohyoManager",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.service.manager.TohyoManager",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "TohyoManagerMock",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.service.manager.TohyoManagerMock",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MotorStatBase",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.service.stat.MotorStatBase",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RacerStat",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.service.stat.RacerStat",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RacerStatBase",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.service.stat.RacerStatBase",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "User",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.service.worker.User",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "Worker",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.service.worker.Worker",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "TohyoManager(1)",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.service2.manager.TohyoManager",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "BettingRule",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.simulation.model.BettingRule",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "BoatUtil",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.util.BoatUtil",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "DailyRaceUpdater",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.util.DailyRaceUpdater",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "OddsBeforeFileUploader",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.util.OddsBeforeFileUploader",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "OddsBeforeTrendUploader",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.util.OddsBeforeTrendUploader",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "OddsMonitorFileUploader",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.util.OddsMonitorFileUploader",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "OddsResultFileUploader",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.util.OddsResultFileUploader",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "OddsTrendUploader",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.util.OddsTrendUploader",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RaceFileUploader",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.util.RaceFileUploader",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RecBoddsUploader",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.util.RecBoddsUploader",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "StatGenerator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.util.StatGenerator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "BatchUtil",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.util.tmp.BatchUtil",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "DbUtil",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.util.tmp.DbUtil",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "FileDeleter",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.util.tmp.FileDeleter",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "ModelRemover",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.util.tmp.ModelRemover",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "OddsFileRemoveDuplicate",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.util.tmp.OddsFileRemoveDuplicate",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "OddsFileUploader",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.util.tmp.OddsFileUploader",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "OddsFileUploaderTmp",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.util.tmp.OddsFileUploaderTmp",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RaceFileRemoveDuplicate",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.util.tmp.RaceFileRemoveDuplicate",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RaceFileUploaderTmp",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.util.tmp.RaceFileUploaderTmp",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RenameFiles",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.util.tmp.RenameFiles",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "StatGeneratorOld",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.util.tmp.StatGeneratorOld",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "TmpUtil",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.util.tmp.TmpUtil",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "AnalyzeManualPattern",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.weka.automation.AnalyzeManualPattern",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "AnalyzeWekaPattern",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.weka.automation.AnalyzeWekaPattern",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "ArffCreator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.weka.automation.ArffCreator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "ArffCreatorCli",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.weka.automation.ArffCreatorCli",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "FinalGenerator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.weka.automation.FinalGenerator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLMultiSimulator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.weka.automation.MLMultiSimulator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "ModelBatchCreator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.weka.automation.ModelBatchCreator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "NominalManager",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.weka.automation.NominalManager",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "OutputWekaPattern",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.weka.automation.OutputWekaPattern",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "DuplicatePatternChecker",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.weka.automation.prop.DuplicatePatternChecker",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MLSimulatorWithRegression",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.weka.automation.regression.MLSimulatorWithRegression",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RegressionArffCreator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.weka.automation.regression.RegressionArffCreator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RegressionModelBatchCreator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.weka.automation.regression.RegressionModelBatchCreator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "BoatClassifierDefault",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.weka.classifiers.BoatClassifierDefault",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "ClassifierManager",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.weka.classifiers.manager.ClassifierManager",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RegressionManager",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.weka.classifiers.manager.regression.RegressionManager",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "BoatRegressionDefault",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.weka.classifiers.regression.BoatRegressionDefault",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "WekaSimulationUser",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.weka.simulation.WekaSimulationUser",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "WekaSimulationWorker",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.weka.simulation.WekaSimulationWorker",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "ExcelFileUtil",
+            "request": "launch",
+            "mainClass": "com.pengkong.common.ExcelFileUtil",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "FileEx",
+            "request": "launch",
+            "mainClass": "com.pengkong.common.FileEx",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "MathUtil",
+            "request": "launch",
+            "mainClass": "com.pengkong.common.MathUtil",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "StringUtil",
+            "request": "launch",
+            "mainClass": "com.pengkong.common.StringUtil",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "WebDownloader",
+            "request": "launch",
+            "mainClass": "com.pengkong.common.WebDownloader",
+            "projectName": "boatrace"
+        }
+    ]
+}
