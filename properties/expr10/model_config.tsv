@@ -107,3 +107,5 @@ model_no	model_start_ymd	model_end_ymd	class_rank1	class_rank2	class_rank3	class
 99109	20210603	20241031	r1-123456	r2-123456	r3-123456	r4-123456	cf_lgbm-8_py	cf_lgbm-8_py	cf_lgbm-8_py	cf_lgbm-8_py	nw_ext_28	nw_ext_28	nw_ext_28	nw_ext_28	arff_1	clf_1	yes	2555	30
 #LGBMClasssifier 공식피쳐 + ip SG + class_weight O + learning rate=0.11  1개월단위																			
 39103	20210603	20210603	r123-all	x	x	x	cf_lgbm-1_py	x	x	x	en_nw_ext_25	x	x	x	arff_1	clf_1	yes	1825	30
+#LGBMClasssifier 공식피쳐 + ip SG + class_weight O + learning rate=0.01  1개월단위 																			
+39104	20210603	20210603	r123-all	x	x	x	cf_lgbm-14_py	x	x	x	en_nw_ext_25	x	x	x	arff_1	clf_1	yes	1825	30

@@ -5,6 +5,9 @@
 		},
 		{
 			"path": "../pod_boatrace_test/experiment/expr10"
+		},
+		{
+			"path": "../py_boatrace"
 		}
 	],
 	"settings": {}
