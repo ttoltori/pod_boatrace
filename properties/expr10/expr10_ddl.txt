@@ -1,3 +1,41 @@
+drop table if exists ml_expected;
+CREATE TABLE public.ml_expected (
+	modelno varchar(5) NULL,
+	ymd varchar(8) NULL,
+	jyocd varchar(2) NULL,
+	raceno int2 NULL,
+    -- kumiban varchar(3)[] NULL,
+	prob double precision[] NULL,
+	bor double precision[] NULL,
+	bork int[] NULL,
+	ror double precision[] NULL,
+	rork int[] NULL,
+	bexp double precision[] NULL,
+	rexp double precision[] NULL
+);
+CREATE INDEX indexes_ml_expected ON ml_expected USING btree (ymd, jyocd, raceno);
+
+drop table if exists ml_expected_plus;
+CREATE TABLE public.ml_expected_plus (
+	modelno varchar(5) NULL,
+	ymd varchar(8) NULL,
+	jyocd varchar(2) NULL,
+	raceno int2 NULL,
+	bkumiban varchar(3)[] NULL, -- 직전옷즈 흑자 구미방
+	bprob double precision[] NULL, -- 직전옷즈 흑자 구미방 확률
+	bor double precision[] NULL, -- 직전옷즈 흑자 직전옷즈
+	bork int[] NULL, -- 직전옷즈 흑자 직전옷즈
+	bexp double precision[] NULL, -- 직전옺즈 흑자 기대치
+	bcnt int NULL, -- 직전옷즈 흑자 구미방 갯수
+	rkumiban varchar(3)[] NULL, -- 확정옷즈 흑자 구미방
+	rprob double precision[] NULL, -- 확정옷즈 흑자 구미방 확률
+	ror double precision[] NULL, -- 확정옷즈 흑자 확정옷즈
+	rork int[] NULL, -- 확정옷즈 흑자 확정옷즈
+	rexp double precision[] NULL, -- 확정옺즈 흑자 기대치
+	rcnt int NULL -- 확정옷즈 흑자 구미방 갯수
+);
+CREATE INDEX indexes_ml_expected_plus ON ml_expected_plus USING btree (ymd, jyocd, raceno);
+
 drop table if exists ml_probability;
 CREATE TABLE public.ml_probability (
 	modelno varchar(5) NULL,

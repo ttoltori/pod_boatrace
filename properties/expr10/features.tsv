@@ -12,12 +12,12 @@ time	timezone	category	timezone::text	timezone::text
 femcnt	femalecount	int	femalecount::text	femalecount
 alvt	alevelcount	int	alevelcount::text	alevelcount
 weekday	weekday	category	weekday	weekday
-en1	entry1	category	entry[1]::text entry1	entry[1]::text entry1
-en2	entry2	category	entry[2]::text entry2	entry[2]::text entry2
-en3	entry3	category	entry[3]::text entry3	entry[3]::text entry3
-en4	entry4	category	entry[4]::text entry4	entry[4]::text entry4
-en5	entry5	category	entry[5]::text entry5	entry[5]::text entry5
-en6	entry6	category	entry[6]::text entry6	entry[6]::text entry6
+en1	entry1	float	entry[1]::text entry1	entry[1] entry1
+en2	entry2	float	entry[2]::text entry2	entry[2] entry2
+en3	entry3	float	entry[3]::text entry3	entry[3] entry3
+en4	entry4	float	entry[4]::text entry4	entry[4] entry4
+en5	entry5	float	entry[5]::text entry5	entry[5] entry5
+en6	entry6	float	entry[6]::text entry6	entry[6] entry6
 wa12	wakulevel12	category	substring(wakulevellist from 1 for 5) wakulevel12	substring(wakulevellist from 1 for 5) wakulevel12
 wa123	wakulevel123	category	substring(wakulevellist from 1 for 8) wakulevel123	substring(wakulevellist from 1 for 8) wakulevel123
 comp1	compredict1	category	substring(com_predict from 1 for 1) compredict1	substring(com_predict from 1 for 1) compredict1

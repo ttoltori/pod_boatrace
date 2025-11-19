@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "MLExpectedClassificationGenerator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLExpectedClassificationGenerator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"
