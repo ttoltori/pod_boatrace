@@ -38,7 +38,6 @@ public class DBRaceDataLoader extends AbstractRaceDataLoader {
 			
 			HashMap<String, String> mapParam = new HashMap<>();
 			mapParam.put("sql", sql);
-			
 			// 디비 데이터 일람 취득
 			List<DBRecord> results = customMapper.selectSql(mapParam);
 			if (results.size() <= 0) {

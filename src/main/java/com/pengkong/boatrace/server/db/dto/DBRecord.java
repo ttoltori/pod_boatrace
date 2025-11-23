@@ -25,10 +25,14 @@ public class DBRecord extends HashMap<String, Object> {
 		return MathUtil.convertToPercentile((Double) super.get(key), min, max, 20); 
 	}
 	
+	public String[] getStringArray(String key) {
+		return (String[]) super.get(key);
+	}
+
 	public double[] getDoubleArray(String key) {
 		return (double[]) super.get(key);
 	}
-	
+
 	public int[] getIntArray(String key) {
 		return (int[]) super.get(key);
 	}
@@ -40,6 +44,10 @@ public class DBRecord extends HashMap<String, Object> {
 		}
 		
 		return value.doubleValue();
+	}
+	
+	public Short getShort(String key) {
+		return (Short) super.get(key);
 	}
 	
 	public Integer getInteger(String key) {

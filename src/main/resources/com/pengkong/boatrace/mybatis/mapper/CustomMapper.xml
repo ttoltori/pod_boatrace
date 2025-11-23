@@ -20,6 +20,17 @@
     <result column="bor_max_arr" jdbcType="ARRAY" property="bor_max_arr" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler"/>
     <result column="balance" jdbcType="ARRAY" property="balance" typeHandler="com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler" />
     <result column="bal_slope" jdbcType="ARRAY" property="balSlope" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler" />
+    <result column="bkumiban" jdbcType="ARRAY" property="bkumiban" typeHandler="com.pengkong.boatrace.mybatis.typehandle.StringArrayTypeHandler"/>
+    <result column="bprob" jdbcType="ARRAY" property="bprob" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler"/>
+    <result column="bor" jdbcType="ARRAY" property="bor" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler"/>
+    <result column="bork" jdbcType="ARRAY" property="bork" typeHandler="com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler"/>
+    <result column="bexp" jdbcType="ARRAY" property="bexp" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler"/>
+    <result column="rkumiban" jdbcType="ARRAY" property="rkumiban" typeHandler="com.pengkong.boatrace.mybatis.typehandle.StringArrayTypeHandler"/>
+    <result column="rprob" jdbcType="ARRAY" property="rprob" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler"/>
+    <result column="ror" jdbcType="ARRAY" property="ror" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler"/>
+    <result column="rork" jdbcType="ARRAY" property="rork" typeHandler="com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler"/>
+    <result column="rexp" jdbcType="ARRAY" property="rexp" typeHandler="com.pengkong.boatrace.mybatis.typehandle.DoubleArrayTypeHandler"/>
+
   </resultMap>
   
   <!-- DailyRaceUpdaterで実行する。 -->

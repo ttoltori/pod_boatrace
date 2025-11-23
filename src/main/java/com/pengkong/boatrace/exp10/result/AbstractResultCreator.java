@@ -8,6 +8,7 @@ import java.util.TreeMap;
 
 import com.pengkong.boatrace.common.enums.BetType;
 import com.pengkong.boatrace.common.enums.Delimeter;
+import com.pengkong.boatrace.converter.MlExpectedRec;
 import com.pengkong.boatrace.exp10.odds.Odds;
 import com.pengkong.boatrace.exp10.odds.provider.AbstractOddsProvider;
 import com.pengkong.boatrace.exp10.odds.provider.OddsProviderInterface;
@@ -220,7 +221,6 @@ public abstract class AbstractResultCreator {
 		result.setStatBettype(statBetType.getValue());
 		return result;
 	}
-
 	protected MlResult createDefaultInner(BetType statBetType, BetType betType, String kumiban, DBRecord rec) throws Exception {
 		// 共通レース情報設定
 		MlResult result = createDefaultResult(rec);
@@ -259,7 +259,7 @@ public abstract class AbstractResultCreator {
 		
 		return result;
 	}
-	
+
 	protected MlResult setbeforeOdds(MlResult result) throws Exception {
 		// 直前オッズ
 		Odds beforeOdds = beforeOddsProvider.get(result.getYmd(), result.getJyocd(),

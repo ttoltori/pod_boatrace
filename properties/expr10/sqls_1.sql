@@ -402,9 +402,34 @@ BEGIN result_partial_select
     and modelno = '{used_model_no}'
 END
 
+-- result partial sql
+BEGIN result_partial_select_exp
+  select 
+    '{pattern_id}' patternid, {pattern_sql} pattern, 
+    pls.modelno, race.ymd, race.jyocd, race.raceno, race.sime, 
+    tansyono, nirentanno, nirenhukuno, sanrentanno, sanrenhukuno, 
+    tansyoprize, nirentanprize, nirenhukuprize, sanrentanprize, sanrenhukuprize,
+    tansyopopular, nirentanpopular, nirenhukupopular, sanrentanpopular, sanrenhukupopular, 
+    fixedentrance, timezone, com_predict,
+    bkumiban, bprob, bor, bork, bexp, bcnt,
+    rkumiban, rprob, ror, rork, rexp, rcnt
+  from rec_race race, ml_expected_plus pls, rec_racer_arr arr
+  where race.ymd = pls.ymd and race.jyocd = pls.jyocd and race.raceno = pls.raceno 
+    and race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno 
+    and sanrentanno <> '不成立' 
+    and grade in ({grade_condition}) 
+    and modelno = '{used_model_no}'
+END
+
 -- result data sql ml_classification分析後確定する
 BEGIN r-all
  {{result_partial_select}} 
+    and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
+ order by pattern, race.ymd, race.sime
+END
+
+BEGIN r-all-exp
+ {{result_partial_select_exp}} 
     and race.ymd >= '{fromYmd}' and race.ymd <= '{toYmd}' 
  order by pattern, race.ymd, race.sime
 END

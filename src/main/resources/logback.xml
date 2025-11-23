@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
 	<property name="LOG_DIR"
-		value="C:/Dev/workspace/Oxygen/pod_boatrace_test/logs" />
+		value="C:/Dev/github/pod_boatrace/logs" />
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<layout class="ch.qos.logback.classic.PatternLayout">
 			<Pattern>%d [%thread] %-5level %logger{20}.%M - %msg%n

@@ -1,0 +1,46 @@
+2025-11-23 00:40:21,144 [main] INFO  c.p.b.u.DatabaseUtil.open - open targetDb: mybatis-config.0.xml
+2025-11-23 00:40:24,537 [main] ERROR c.p.b.e.MLResultGenerator.execute - experiment 243 is failed.
+org.apache.ibatis.exceptions.PersistenceException: 
+### Error querying database.  Cause: org.apache.ibatis.executor.result.ResultMapException: Error attempting to get column 'bkumiban' from result set.  Cause: java.lang.ClassCastException: [Ljava.lang.String; cannot be cast to [Ljava.lang.Integer;
+### The error may exist in com/pengkong/boatrace/mybatis/mapper/CustomMapper.xml
+### The error may involve com.pengkong.boatrace.mybatis.client.CustomMapper.selectSql
+### The error occurred while handling results
+### SQL: select 'grade' patternid, race.grade pattern, pls.modelno, race.ymd, race.jyocd, race.raceno, race.sime, tansyono, nirentanno, nirenhukuno, sanrentanno, sanrenhukuno, tansyoprize, nirentanprize, nirenhukuprize, sanrentanprize, sanrenhukuprize, tansyopopular, nirentanpopular, nirenhukupopular, sanrentanpopular, sanrenhukupopular, fixedentrance, timezone, com_predict, bkumiban, bprob, bor, bork, bexp, bcnt, rkumiban, rprob, ror, rork, rexp, rcnt from rec_race race, ml_expected_plus pls, rec_racer_arr arr where race.ymd = pls.ymd and race.jyocd = pls.jyocd and race.raceno = pls.raceno and race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno and sanrentanno <> '不成立' and grade in ('SG','G1','G2') and modelno = '39104'  and race.ymd >= '20210604' and race.ymd <= '20220603' order by pattern, race.ymd, race.sime
+### Cause: org.apache.ibatis.executor.result.ResultMapException: Error attempting to get column 'bkumiban' from result set.  Cause: java.lang.ClassCastException: [Ljava.lang.String; cannot be cast to [Ljava.lang.Integer;
+	at org.apache.ibatis.exceptions.ExceptionFactory.wrapException(ExceptionFactory.java:30)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:150)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:141)
+	at org.apache.ibatis.binding.MapperMethod.executeForMany(MapperMethod.java:137)
+	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:75)
+	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:59)
+	at com.sun.proxy.$Proxy0.selectSql(Unknown Source)
+	at com.pengkong.boatrace.exp10.simulation.data.DBRaceDataLoader.excute(DBRaceDataLoader.java:43)
+	at com.pengkong.boatrace.exp10.simulation.data.AbstractRaceDataLoader.load(AbstractRaceDataLoader.java:10)
+	at com.pengkong.boatrace.exp10.MLResultGenerator.loadDB(MLResultGenerator.java:416)
+	at com.pengkong.boatrace.exp10.MLResultGenerator.executeExperiment(MLResultGenerator.java:161)
+	at com.pengkong.boatrace.exp10.MLResultGenerator.execute(MLResultGenerator.java:120)
+	at com.pengkong.boatrace.exp10.MLResultGenerator.main(MLResultGenerator.java:452)
+Caused by: org.apache.ibatis.executor.result.ResultMapException: Error attempting to get column 'bkumiban' from result set.  Cause: java.lang.ClassCastException: [Ljava.lang.String; cannot be cast to [Ljava.lang.Integer;
+	at org.apache.ibatis.type.BaseTypeHandler.getResult(BaseTypeHandler.java:68)
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.applyAutomaticMappings(DefaultResultSetHandler.java:512)
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.getRowValue(DefaultResultSetHandler.java:393)
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleRowValuesForSimpleResultMap(DefaultResultSetHandler.java:347)
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleRowValues(DefaultResultSetHandler.java:322)
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleResultSet(DefaultResultSetHandler.java:295)
+	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleResultSets(DefaultResultSetHandler.java:192)
+	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:64)
+	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:79)
+	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:63)
+	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:324)
+	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:156)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:109)
+	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:83)
+	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:148)
+	... 11 common frames omitted
+Caused by: java.lang.ClassCastException: [Ljava.lang.String; cannot be cast to [Ljava.lang.Integer;
+	at com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler.extractArray(IntegerArrayTypeHandler.java:41)
+	at com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler.getNullableResult(IntegerArrayTypeHandler.java:23)
+	at com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler.getNullableResult(IntegerArrayTypeHandler.java:1)
+	at org.apache.ibatis.type.BaseTypeHandler.getResult(BaseTypeHandler.java:66)
+	... 25 common frames omitted
+2025-11-23 00:48:12,159 [main] INFO  c.p.b.u.DatabaseUtil.open - open targetDb: mybatis-config.0.xml

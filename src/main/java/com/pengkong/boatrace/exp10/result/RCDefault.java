@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.pengkong.boatrace.common.enums.BetType;
+import com.pengkong.boatrace.exp10.odds.provider.BeforeOddsProvider;
 import com.pengkong.boatrace.exp10.odds.provider.ResultOddsProvider;
 import com.pengkong.boatrace.exp10.simulation.calculator.expectation.ProbabilityExpCalculatorFactory;
 import com.pengkong.boatrace.exp10.simulation.calculator.probability.ProbabilityCalculatorFactory;
@@ -38,8 +39,8 @@ public class RCDefault extends AbstractResultCreator {
 		probabilityExpCalculator = ProbabilityExpCalculatorFactory.create();
 		
 		// 直前オッズ
-		beforeOddsProvider = new RmiBeforeOddsProvider();
-		//beforeOddsProvider = new BeforeOddsProvider();
+		//beforeOddsProvider = new RmiBeforeOddsProvider();
+		beforeOddsProvider = new BeforeOddsProvider();
 		
 		// 確定オッズ
 		//resultOddsProvider = new RmiResultOddsProvider();

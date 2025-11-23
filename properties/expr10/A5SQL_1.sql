@@ -1,4 +1,21 @@
-﻿delete from ml_expected me where me.modelno = '39104';
+﻿  select 
+    'pattern_id' patternid, 'pattern', 
+    cls.modelno, race.ymd, race.jyocd, race.raceno, race.sime, 
+    tansyono, nirentanno, nirenhukuno, sanrentanno, sanrenhukuno, 
+    tansyoprize, nirentanprize, nirenhukuprize, sanrentanprize, sanrenhukuprize,
+    tansyopopular, nirentanpopular, nirenhukupopular, sanrentanpopular, sanrenhukupopular, 
+    fixedentrance, timezone, com_predict,
+    bkumiban, bprob, bor, bork, bexp, bcnt,
+    rkumiban, rprob, ror, rork, rexp, rcnt
+  from rec_race race, ml_expected_plus pls, rec_racer_arr arr
+  where race.ymd = pls.ymd and race.jyocd = pls.jyocd and race.raceno = pls.raceno 
+    and race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno 
+    and sanrentanno <> '不成立' 
+    -- and grade in ('ip{grade_condition}') 
+    and modelno = '39104'
+;
+
+delete from ml_expected me where me.modelno = '39104';
 delete from ml_expected_plus me where me.modelno = '39104';
 
 select * from rec_race where ymd = '20210606' and jyocd ='10' and raceno =4;

@@ -436,10 +436,10 @@ public class MLResultGenerator {
 		return true;
 	}
 	public static void main(String[] args) {
-//		String propertyFilepath = "C:/Dev/github/pod_boatrace/properties/expr10/expr10.properties";
-//		String exNoList = "1";
-		String propertyFilepath = args[0];
-		String exNoList = args[1];
+		String propertyFilepath = "C:/Dev/github/pod_boatrace/properties/expr10/expr10.properties";
+		String exNoList = "243";
+		// String propertyFilepath = args[0];
+		// String exNoList = args[1];
 
 		List<String> listExno = StringUtil.parseNumericOptionsString(exNoList);
 
