@@ -1,0 +1,53 @@
+2025-11-26 22:14:07,634 [WebSocketConnectReadThread-15] ERROR c.p.b.e.r.c.BoatWebSocketClient.onError - an error occurred:Connection refused: connect
+2025-11-26 23:32:36,733 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 243 is failed.
+java.lang.NullPointerException: Cannot read field "javaClass" because the return value of "com.pengkong.boatrace.exp10.property.StrategyTemplate.getStrategy(String)" is null
+	at com.pengkong.boatrace.exp10.MLResultGenerator.setupResultCreator(MLResultGenerator.java:132)
+	at com.pengkong.boatrace.exp10.MLResultGenerator.executeExperiment(MLResultGenerator.java:144)
+	at com.pengkong.boatrace.exp10.MLResultGenerator.execute(MLResultGenerator.java:121)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.main(MLResultGeneratorExp.java:453)
+2025-11-26 23:40:24,645 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 243 is failed.
+java.lang.NullPointerException: Cannot read field "javaClass" because the return value of "com.pengkong.boatrace.exp10.property.StrategyTemplate.getStrategy(String)" is null
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.setupResultCreator(MLResultGeneratorExp.java:132)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.executeExperiment(MLResultGeneratorExp.java:144)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.execute(MLResultGeneratorExp.java:121)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.main(MLResultGeneratorExp.java:453)
+2025-11-26 23:42:37,505 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 243 is failed.
+java.lang.IllegalStateException: invalid prediction is retrieved from DB.69,[I@a619c2,13,[D@648ee871,M,nopattern,39104,1,N,4,[Ljava.lang.String;@375b5b7f,20210604,[D@1813f3e9,120,[D@28cb9120,0847,440,[D@3b152928,1,135,0,[Ljava.lang.String;@56781d96,13,1320,750,nopattern,1524,[I@5173200b,65,530,[D@25c5e994,21,135,5,3,3,[D@378bd86d
+	at com.pengkong.boatrace.exp10.result.ResultHelper.getPredictions(ResultHelper.java:45)
+	at com.pengkong.boatrace.exp10.result.AbstractResultCreatorExp.execute(AbstractResultCreatorExp.java:89)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.createResult(MLResultGeneratorExp.java:344)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.executeExperiment(MLResultGeneratorExp.java:217)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.execute(MLResultGeneratorExp.java:121)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.main(MLResultGeneratorExp.java:453)
+2025-11-26 23:52:21,145 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 243 is failed.
+java.lang.ClassCastException: class java.lang.Integer cannot be cast to class java.lang.Short (java.lang.Integer and java.lang.Short are in module java.base of loader 'bootstrap')
+	at com.pengkong.boatrace.server.db.dto.DBRecord.getShort(DBRecord.java:50)
+	at com.pengkong.boatrace.converter.MlExpectedRec.create(MlExpectedRec.java:33)
+	at com.pengkong.boatrace.converter.MlExpectedRec.create(MlExpectedRec.java:53)
+	at com.pengkong.boatrace.exp10.result.RCDefaultExp.get3Tresult(RCDefaultExp.java:75)
+	at com.pengkong.boatrace.exp10.result.AbstractResultCreatorExp.execute(AbstractResultCreatorExp.java:97)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.createResult(MLResultGeneratorExp.java:344)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.executeExperiment(MLResultGeneratorExp.java:217)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.execute(MLResultGeneratorExp.java:121)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.main(MLResultGeneratorExp.java:453)
+2025-11-26 23:56:18,038 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 243 is failed.
+java.lang.ClassCastException: class java.lang.Integer cannot be cast to class java.lang.Short (java.lang.Integer and java.lang.Short are in module java.base of loader 'bootstrap')
+	at com.pengkong.boatrace.server.db.dto.DBRecord.getShort(DBRecord.java:50)
+	at com.pengkong.boatrace.converter.MlExpectedRec.create(MlExpectedRec.java:33)
+	at com.pengkong.boatrace.converter.MlExpectedRec.create(MlExpectedRec.java:53)
+	at com.pengkong.boatrace.exp10.result.RCDefaultExp.get3Tresult(RCDefaultExp.java:75)
+	at com.pengkong.boatrace.exp10.result.AbstractResultCreatorExp.execute(AbstractResultCreatorExp.java:97)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.createResult(MLResultGeneratorExp.java:344)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.executeExperiment(MLResultGeneratorExp.java:217)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.execute(MLResultGeneratorExp.java:121)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.main(MLResultGeneratorExp.java:453)
+2025-11-26 23:58:31,369 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 243 is failed.
+java.lang.ClassCastException: class [D cannot be cast to class [Ljava.lang.Double; ([D and [Ljava.lang.Double; are in module java.base of loader 'bootstrap')
+	at com.pengkong.boatrace.converter.MlExpectedRec.create(MlExpectedRec.java:35)
+	at com.pengkong.boatrace.converter.MlExpectedRec.create(MlExpectedRec.java:53)
+	at com.pengkong.boatrace.exp10.result.RCDefaultExp.get3Tresult(RCDefaultExp.java:75)
+	at com.pengkong.boatrace.exp10.result.AbstractResultCreatorExp.execute(AbstractResultCreatorExp.java:97)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.createResult(MLResultGeneratorExp.java:344)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.executeExperiment(MLResultGeneratorExp.java:217)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.execute(MLResultGeneratorExp.java:121)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.main(MLResultGeneratorExp.java:453)

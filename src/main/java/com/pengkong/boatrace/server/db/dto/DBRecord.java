@@ -47,7 +47,8 @@ public class DBRecord extends HashMap<String, Object> {
 	}
 	
 	public Short getShort(String key) {
-		return (Short) super.get(key);
+		return Short.valueOf(String.valueOf(super.get(key)));
+		//return Short.valueOf((super.get(key));
 	}
 	
 	public Integer getInteger(String key) {

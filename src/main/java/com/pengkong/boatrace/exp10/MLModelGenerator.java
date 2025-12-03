@@ -182,8 +182,8 @@ public class MLModelGenerator extends MLModelGeneratorBase {
 	}
 	
 	public static void main(String[] args) {
-//		String propertyFilepath = "C:/Dev/github/pod_boatrace/properties/expr10/expr10.properties";
-//		String exNoList = "20028";
+		// String propertyFilepath = "C:/Dev/github/pod_boatrace/properties/expr10/expr10.properties";
+		// String exNoList = "39106";
 		String propertyFilepath = args[0];
 		String exNoList = args[1];
 		try {

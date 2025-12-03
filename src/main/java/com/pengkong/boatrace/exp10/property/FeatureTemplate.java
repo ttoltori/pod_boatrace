@@ -79,8 +79,12 @@ public class FeatureTemplate {
 		StringBuilder sb = new StringBuilder();
 		for (String string : featureIds) {
 			Feature feature = featureMap.get(string.trim());
-			sb.append(feature.sqlForModel);
-			sb.append(Delimeter.COMMA.getValue());
+			try{
+				sb.append(feature.sqlForModel);
+				sb.append(Delimeter.COMMA.getValue());
+			}catch(Exception e) {
+				System.out.println("feature error " + string);
+			}
 		}
 		
 		return sb.substring(0, sb.length()-1);

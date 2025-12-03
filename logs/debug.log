@@ -1,46 +1,36 @@
-2025-11-23 00:40:21,144 [main] INFO  c.p.b.u.DatabaseUtil.open - open targetDb: mybatis-config.0.xml
-2025-11-23 00:40:24,537 [main] ERROR c.p.b.e.MLResultGenerator.execute - experiment 243 is failed.
-org.apache.ibatis.exceptions.PersistenceException: 
-### Error querying database.  Cause: org.apache.ibatis.executor.result.ResultMapException: Error attempting to get column 'bkumiban' from result set.  Cause: java.lang.ClassCastException: [Ljava.lang.String; cannot be cast to [Ljava.lang.Integer;
-### The error may exist in com/pengkong/boatrace/mybatis/mapper/CustomMapper.xml
-### The error may involve com.pengkong.boatrace.mybatis.client.CustomMapper.selectSql
-### The error occurred while handling results
-### SQL: select 'grade' patternid, race.grade pattern, pls.modelno, race.ymd, race.jyocd, race.raceno, race.sime, tansyono, nirentanno, nirenhukuno, sanrentanno, sanrenhukuno, tansyoprize, nirentanprize, nirenhukuprize, sanrentanprize, sanrenhukuprize, tansyopopular, nirentanpopular, nirenhukupopular, sanrentanpopular, sanrenhukupopular, fixedentrance, timezone, com_predict, bkumiban, bprob, bor, bork, bexp, bcnt, rkumiban, rprob, ror, rork, rexp, rcnt from rec_race race, ml_expected_plus pls, rec_racer_arr arr where race.ymd = pls.ymd and race.jyocd = pls.jyocd and race.raceno = pls.raceno and race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno and sanrentanno <> '不成立' and grade in ('SG','G1','G2') and modelno = '39104'  and race.ymd >= '20210604' and race.ymd <= '20220603' order by pattern, race.ymd, race.sime
-### Cause: org.apache.ibatis.executor.result.ResultMapException: Error attempting to get column 'bkumiban' from result set.  Cause: java.lang.ClassCastException: [Ljava.lang.String; cannot be cast to [Ljava.lang.Integer;
-	at org.apache.ibatis.exceptions.ExceptionFactory.wrapException(ExceptionFactory.java:30)
-	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:150)
-	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:141)
-	at org.apache.ibatis.binding.MapperMethod.executeForMany(MapperMethod.java:137)
-	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:75)
-	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:59)
-	at com.sun.proxy.$Proxy0.selectSql(Unknown Source)
-	at com.pengkong.boatrace.exp10.simulation.data.DBRaceDataLoader.excute(DBRaceDataLoader.java:43)
-	at com.pengkong.boatrace.exp10.simulation.data.AbstractRaceDataLoader.load(AbstractRaceDataLoader.java:10)
-	at com.pengkong.boatrace.exp10.MLResultGenerator.loadDB(MLResultGenerator.java:416)
-	at com.pengkong.boatrace.exp10.MLResultGenerator.executeExperiment(MLResultGenerator.java:161)
-	at com.pengkong.boatrace.exp10.MLResultGenerator.execute(MLResultGenerator.java:120)
-	at com.pengkong.boatrace.exp10.MLResultGenerator.main(MLResultGenerator.java:452)
-Caused by: org.apache.ibatis.executor.result.ResultMapException: Error attempting to get column 'bkumiban' from result set.  Cause: java.lang.ClassCastException: [Ljava.lang.String; cannot be cast to [Ljava.lang.Integer;
-	at org.apache.ibatis.type.BaseTypeHandler.getResult(BaseTypeHandler.java:68)
-	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.applyAutomaticMappings(DefaultResultSetHandler.java:512)
-	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.getRowValue(DefaultResultSetHandler.java:393)
-	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleRowValuesForSimpleResultMap(DefaultResultSetHandler.java:347)
-	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleRowValues(DefaultResultSetHandler.java:322)
-	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleResultSet(DefaultResultSetHandler.java:295)
-	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleResultSets(DefaultResultSetHandler.java:192)
-	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:64)
-	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:79)
-	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:63)
-	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:324)
-	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:156)
-	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:109)
-	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:83)
-	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:148)
-	... 11 common frames omitted
-Caused by: java.lang.ClassCastException: [Ljava.lang.String; cannot be cast to [Ljava.lang.Integer;
-	at com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler.extractArray(IntegerArrayTypeHandler.java:41)
-	at com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler.getNullableResult(IntegerArrayTypeHandler.java:23)
-	at com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler.getNullableResult(IntegerArrayTypeHandler.java:1)
-	at org.apache.ibatis.type.BaseTypeHandler.getResult(BaseTypeHandler.java:66)
-	... 25 common frames omitted
-2025-11-23 00:48:12,159 [main] INFO  c.p.b.u.DatabaseUtil.open - open targetDb: mybatis-config.0.xml
+2025-12-03 00:01:23,726 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20211230_rank1.model
+2025-12-03 00:03:33,883 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20220129_rank1.model
+2025-12-03 00:05:30,008 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20220228_rank1.model
+2025-12-03 00:07:38,129 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20220330_rank1.model
+2025-12-03 00:10:13,097 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20220429_rank1.model
+2025-12-03 00:12:48,484 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20220529_rank1.model
+2025-12-03 00:15:27,587 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20220628_rank1.model
+2025-12-03 00:18:01,354 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20220728_rank1.model
+2025-12-03 00:20:00,282 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20220827_rank1.model
+2025-12-03 00:21:54,736 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20220926_rank1.model
+2025-12-03 00:24:09,243 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20221026_rank1.model
+2025-12-03 00:26:37,010 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20221125_rank1.model
+2025-12-03 00:28:55,212 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20221225_rank1.model
+2025-12-03 00:30:52,301 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20230124_rank1.model
+2025-12-03 00:32:42,074 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20230223_rank1.model
+2025-12-03 00:34:50,799 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20230325_rank1.model
+2025-12-03 00:37:04,005 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20230424_rank1.model
+2025-12-03 00:39:01,570 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20230524_rank1.model
+2025-12-03 00:41:32,277 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20230623_rank1.model
+2025-12-03 00:43:39,872 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20230723_rank1.model
+2025-12-03 00:45:47,249 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20230822_rank1.model
+2025-12-03 00:48:13,101 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20230921_rank1.model
+2025-12-03 00:50:35,376 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20231021_rank1.model
+2025-12-03 00:53:08,306 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20231120_rank1.model
+2025-12-03 00:55:17,193 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20231220_rank1.model
+2025-12-03 00:57:36,194 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20240119_rank1.model
+2025-12-03 00:59:54,755 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20240218_rank1.model
+2025-12-03 01:02:08,594 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20240319_rank1.model
+2025-12-03 01:04:36,232 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20240418_rank1.model
+2025-12-03 01:07:08,822 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20240518_rank1.model
+2025-12-03 01:09:40,230 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20240617_rank1.model
+2025-12-03 01:12:16,411 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20240717_rank1.model
+2025-12-03 01:14:49,143 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20240816_rank1.model
+2025-12-03 01:17:15,476 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20240915_rank1.model
+2025-12-03 01:19:43,975 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20241015_rank1.model
+2025-12-03 01:22:15,924 [main] DEBUG c.p.b.e.MLModelGenerator.executeExperiment - generating : 40001_nopattern_20241103_rank1.model

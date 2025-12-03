@@ -146,7 +146,7 @@ public class MLExpectedClassificationGenerator {
 				}
 				
 				// 当該日付の既存classificationを削除
-				deleteDB(session, modelNo, ymd);
+				//deleteDB(session, modelNo, ymd);
 				
 				// 해당날짜의 레이스 데이터 루프
 				for (DBRecord dbRec : listRec) {
@@ -238,8 +238,6 @@ public class MLExpectedClassificationGenerator {
 				pbor.add(bor[i]);
 				pbork.add(bork[i]);
 				pbexp.add(bexpected[i]);
-			}
-			if ( rexpected[i] > 1.0 ) {
 				rcnt++;
 				prkumiban.add(classification.prediction);
 				prprob.add(prob[i]);

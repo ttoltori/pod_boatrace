@@ -31,7 +31,7 @@ public abstract class AbstractResultCreatorExp {
 	MLPropertyUtil prop = MLPropertyUtil.getInstance();
 	
 	/** 直前オッズprovider */
-	protected OddsProviderInterface beforeOddsProvider;
+	//protected OddsProviderInterface beforeOddsProvider;
 
 	/** 確定オッズprovider */
 	protected AbstractOddsProvider resultOddsProvider;
@@ -53,7 +53,7 @@ public abstract class AbstractResultCreatorExp {
 	protected abstract void preExecute();
 	protected abstract List<MlResult> get1Tresult(String kumiban, DBRecord rec) throws Exception;
 	protected abstract List<MlResult> get2Tresult(String kumiban, DBRecord rec) throws Exception;
-	protected abstract List<MlResult> get3Tresult(String kumiban, DBRecord rec) throws Exception;
+	protected abstract List<MlResult> get3Tresult(DBRecord rec) throws Exception;
 	protected abstract List<MlResult> get2Fresult(String kumiban, DBRecord rec) throws Exception;
 	protected abstract List<MlResult> get3Fresult(String kumiban, DBRecord rec) throws Exception;
 
@@ -86,38 +86,38 @@ public abstract class AbstractResultCreatorExp {
 		List<MlResult> result = new ArrayList<>();
 		
 		// 予測の組番を取得
-		String[] predictions = ResultHelper.getPredictions(dbRec);
+		//String[] predictions = ResultHelper.getPredictions(dbRec);
 		
 		// ターゲットのBetTypeリストを巡回
 		String[] tokenBettype = betTypes.split(Delimeter.COMMA.getValue());
 		String[] tokenKumiban = ResultHelper.parseKumiban(kumibans);
 		for (String betTypeStr : tokenBettype) {
-			if (!ResultHelper.isValidPredictions(betTypeStr, predictions)) {
-				continue;
-			}
-			
-			// 1T
-			if (BetType._1T.getValue().equals(betTypeStr)) {
-				result.addAll(get1Tresult(predictions[0], dbRec));
-			}
-			// 2T
-			if (BetType._2T.getValue().equals(betTypeStr)) {
-				result.addAll(get2Tresult(String.join("", predictions[0], predictions[1]), dbRec));
-			}
-			// 2F
-			if (BetType._2F.getValue().equals(betTypeStr)) {
-				String[] sorted = StringUtil.copyAndSort(predictions[0], predictions[1]);
-				result.addAll(get2Fresult(String.join("", sorted[0], sorted[1]), dbRec));
-			}
 			// 3T
 			if (BetType._3T.getValue().equals(betTypeStr)) {
-				result.addAll(get3Tresult(String.join("", predictions[0], predictions[1], predictions[2]), dbRec));
+				result.addAll(get3Tresult( dbRec));
 			}
-			// 3F
-			if (BetType._3F.getValue().equals(betTypeStr)) {
-				String[] sorted = StringUtil.copyAndSort(predictions[0], predictions[1], predictions[2]);
-				result.addAll(get3Fresult(String.join("", sorted[0], sorted[1], sorted[2]), dbRec));
-			}
+			// if (!ResultHelper.isValidPredictions(betTypeStr, predictions)) {
+			// 	continue;
+			// }
+			
+			// // 1T
+			// if (BetType._1T.getValue().equals(betTypeStr)) {
+			// 	result.addAll(get1Tresult(predictions[0], dbRec));
+			// }
+			// // 2T
+			// if (BetType._2T.getValue().equals(betTypeStr)) {
+			// 	result.addAll(get2Tresult(String.join("", predictions[0], predictions[1]), dbRec));
+			// }
+			// // 2F
+			// if (BetType._2F.getValue().equals(betTypeStr)) {
+			// 	String[] sorted = StringUtil.copyAndSort(predictions[0], predictions[1]);
+			// 	result.addAll(get2Fresult(String.join("", sorted[0], sorted[1]), dbRec));
+			// }
+			// // 3F
+			// if (BetType._3F.getValue().equals(betTypeStr)) {
+			// 	String[] sorted = StringUtil.copyAndSort(predictions[0], predictions[1], predictions[2]);
+			// 	result.addAll(get3Fresult(String.join("", sorted[0], sorted[1], sorted[2]), dbRec));
+			// }
 		}
 		
 		return result;

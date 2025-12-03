@@ -13,6 +13,7 @@ import com.pengkong.boatrace.exp10.odds.provider.ResultOddsProvider;
 import com.pengkong.boatrace.exp10.simulation.calculator.expectation.ProbabilityExpCalculatorFactory;
 import com.pengkong.boatrace.exp10.simulation.calculator.probability.ProbabilityCalculatorFactory;
 import com.pengkong.boatrace.exp10.simulation.data.rmi.client.RmiBeforeOddsProvider;
+import com.pengkong.boatrace.exp10.util.ResultExpHelper;
 import com.pengkong.boatrace.mybatis.entity.MlResult;
 import com.pengkong.boatrace.server.db.dto.DBRecord;
 
@@ -33,13 +34,13 @@ public class RCDefaultExp extends AbstractResultCreatorExp {
 	@Override
 	protected void preExecute() {
 		// 予想確率組み合わせクラス (statBettype기준)
-		probabilityCalculator = ProbabilityCalculatorFactory.create();
+		//probabilityCalculator = ProbabilityCalculatorFactory.create();
 		
 		// 기대치 계산용  예상확률을 취득 (bettype기준) 
-		probabilityExpCalculator = ProbabilityExpCalculatorFactory.create();
+		//probabilityExpCalculator = ProbabilityExpCalculatorFactory.create();
 		
 		// 直前オッズ
-		beforeOddsProvider = new RmiBeforeOddsProvider();
+		//beforeOddsProvider = new RmiBeforeOddsProvider();
 		//beforeOddsProvider = new BeforeOddsProvider();
 		
 		// 確定オッズ
@@ -69,11 +70,14 @@ public class RCDefaultExp extends AbstractResultCreatorExp {
 	}
 
 	@Override
-	protected List<MlResult> get3Tresult(String kumiban, DBRecord rec) throws Exception {
+	protected List<MlResult> get3Tresult(DBRecord rec) throws Exception {
 		List<MlResult> result = new ArrayList<>();
 		List<MlExpectedRec> mlExpectedRecList = MlExpectedRec.create(rec);
+		
+		ResultExpHelper.setBexpRank(mlExpectedRecList); // 직전옺즈기대치 랭킹 설정
+
 		for (MlExpectedRec expRec : mlExpectedRecList) {
-			result.add(createDefault(BetType._3T, BetType._3T, kumiban, rec, expRec));
+			result.add(createDefault(BetType._3T, BetType._3T, expRec.bkumiban, rec, expRec));
 		}
 	
 		return result;
@@ -101,18 +105,18 @@ public class RCDefaultExp extends AbstractResultCreatorExp {
 		return result;
 	}
 
-	/**
-	 * 組番1,2,3,4,5,6からstrings以外を返却する
-	 * 
-	 * @param strings 除外するnum ex)1,2
-	 * @return ex)3,4,5,6
-	 */
-	private final List<String> getRemainKumibans(String... strings) {
-		List<String> numList = new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5", "6"));
-		for (String str : strings) {
-			numList.remove(str);
-		}
+	// /**
+	//  * 組番1,2,3,4,5,6からstrings以外を返却する
+	//  * 
+	//  * @param strings 除外するnum ex)1,2
+	//  * @return ex)3,4,5,6
+	//  */
+	// private final List<String> getRemainKumibans(String... strings) {
+	// 	List<String> numList = new ArrayList<>(Arrays.asList("1", "2", "3", "4", "5", "6"));
+	// 	for (String str : strings) {
+	// 		numList.remove(str);
+	// 	}
 
-		return numList;
-	}
+	// 	return numList;
+	// }
 }

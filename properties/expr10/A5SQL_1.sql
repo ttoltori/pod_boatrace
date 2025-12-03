@@ -1,6 +1,25 @@
-﻿  select 
+﻿select * from ml_classification mc where modelno = '20022';
+
+select * from ml_expected  where modelno = '39104';
+select modelno, min(ymd), max(ymd) 
+from ml_expected_plus mep 
+group by modelno;
+
+-- delete from ml_expected where modelno = '39104-00';
+-- delete from ml_expected_plus  where modelno = '39104;
+delete from ml_expected;
+delete from ml_expected_plus ;
+
+
+select max(ymd) from rec_race;
+
+select modelno, min(ymd) , max(ymd), sum(bcnt) 
+from ml_expected_plus mep
+group by modelno;
+  
+select 
     'pattern_id' patternid, 'pattern', 
-    cls.modelno, race.ymd, race.jyocd, race.raceno, race.sime, 
+    pls.modelno, race.ymd, race.jyocd, race.raceno, race.sime, 
     tansyono, nirentanno, nirenhukuno, sanrentanno, sanrenhukuno, 
     tansyoprize, nirentanprize, nirenhukuprize, sanrentanprize, sanrenhukuprize,
     tansyopopular, nirentanpopular, nirenhukupopular, sanrentanpopular, sanrenhukupopular, 
@@ -1675,7 +1694,8 @@ select 1/1;
 ALTER TABLE st_patternid 
 ADD COLUMN harmean double precision;
 
-
+ALTER TABLE ml_expected_plus 
+ALTER COLUMN modelno TYPE varchar(8);
 
 delete from ml_evaluation where resultno = '272248';
 

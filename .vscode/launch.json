@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "MLResultGeneratorExp",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp10.MLResultGeneratorExp",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
             "name": "MLExpectedClassificationGenerator",
             "request": "launch",
             "mainClass": "com.pengkong.boatrace.exp10.MLExpectedClassificationGenerator",
@@ -155,6 +162,13 @@
             "name": "MLGroupSimulationGenerator",
             "request": "launch",
             "mainClass": "com.pengkong.boatrace.exp10.MLGroupSimulationGenerator",
+            "projectName": "boatrace"
+        },
+        {
+            "type": "java",
+            "name": "RankResultGenerator",
+            "request": "launch",
+            "mainClass": "com.pengkong.boatrace.exp02.RankResultGenerator",
             "projectName": "boatrace"
         },
         {

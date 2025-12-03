@@ -1,44 +1,109 @@
-2025-11-23 00:40:24,537 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 243 is failed.
-org.apache.ibatis.exceptions.PersistenceException: 
-### Error querying database.  Cause: org.apache.ibatis.executor.result.ResultMapException: Error attempting to get column 'bkumiban' from result set.  Cause: java.lang.ClassCastException: [Ljava.lang.String; cannot be cast to [Ljava.lang.Integer;
-### The error may exist in com/pengkong/boatrace/mybatis/mapper/CustomMapper.xml
-### The error may involve com.pengkong.boatrace.mybatis.client.CustomMapper.selectSql
-### The error occurred while handling results
-### SQL: select 'grade' patternid, race.grade pattern, pls.modelno, race.ymd, race.jyocd, race.raceno, race.sime, tansyono, nirentanno, nirenhukuno, sanrentanno, sanrenhukuno, tansyoprize, nirentanprize, nirenhukuprize, sanrentanprize, sanrenhukuprize, tansyopopular, nirentanpopular, nirenhukupopular, sanrentanpopular, sanrenhukupopular, fixedentrance, timezone, com_predict, bkumiban, bprob, bor, bork, bexp, bcnt, rkumiban, rprob, ror, rork, rexp, rcnt from rec_race race, ml_expected_plus pls, rec_racer_arr arr where race.ymd = pls.ymd and race.jyocd = pls.jyocd and race.raceno = pls.raceno and race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno and sanrentanno <> '不成立' and grade in ('SG','G1','G2') and modelno = '39104'  and race.ymd >= '20210604' and race.ymd <= '20220603' order by pattern, race.ymd, race.sime
-### Cause: org.apache.ibatis.executor.result.ResultMapException: Error attempting to get column 'bkumiban' from result set.  Cause: java.lang.ClassCastException: [Ljava.lang.String; cannot be cast to [Ljava.lang.Integer;
-	at org.apache.ibatis.exceptions.ExceptionFactory.wrapException(ExceptionFactory.java:30)
-	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:150)
-	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:141)
-	at org.apache.ibatis.binding.MapperMethod.executeForMany(MapperMethod.java:137)
-	at org.apache.ibatis.binding.MapperMethod.execute(MapperMethod.java:75)
-	at org.apache.ibatis.binding.MapperProxy.invoke(MapperProxy.java:59)
-	at com.sun.proxy.$Proxy0.selectSql(Unknown Source)
-	at com.pengkong.boatrace.exp10.simulation.data.DBRaceDataLoader.excute(DBRaceDataLoader.java:43)
+2025-11-28 00:55:45,588 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 247 is failed.
+java.lang.Exception: db has no data. sql=select 'nopattern' patternid, ('nopattern') pattern, pls.modelno, race.ymd, race.jyocd, race.raceno, race.sime, tansyono, nirentanno, nirenhukuno, sanrentanno, sanrenhukuno, tansyoprize, nirentanprize, nirenhukuprize, sanrentanprize, sanrenhukuprize, tansyopopular, nirentanpopular, nirenhukupopular, sanrentanpopular, sanrenhukupopular, fixedentrance, timezone, com_predict, bkumiban, bprob, bor, bork, bexp, bcnt, rkumiban, rprob, ror, rork, rexp, rcnt from rec_race race, ml_expected_plus pls, rec_racer_arr arr where race.ymd = pls.ymd and race.jyocd = pls.jyocd and race.raceno = pls.raceno and race.ymd = arr.ymd and race.jyocd = arr.jyocd and race.raceno = arr.raceno and sanrentanno <> '不成立' and grade in ('ip','G3','SG','G1','G2') and modelno = '39104' 
+and race.ymd >= '20210604' and race.ymd <= '20220603'
+order by pattern, race.ymd, race.sime
+
+	at com.pengkong.boatrace.exp10.simulation.data.DBRaceDataLoader.excute(DBRaceDataLoader.java:44)
 	at com.pengkong.boatrace.exp10.simulation.data.AbstractRaceDataLoader.load(AbstractRaceDataLoader.java:10)
-	at com.pengkong.boatrace.exp10.MLResultGenerator.loadDB(MLResultGenerator.java:416)
-	at com.pengkong.boatrace.exp10.MLResultGenerator.executeExperiment(MLResultGenerator.java:161)
-	at com.pengkong.boatrace.exp10.MLResultGenerator.execute(MLResultGenerator.java:120)
-	at com.pengkong.boatrace.exp10.MLResultGenerator.main(MLResultGenerator.java:452)
-Caused by: org.apache.ibatis.executor.result.ResultMapException: Error attempting to get column 'bkumiban' from result set.  Cause: java.lang.ClassCastException: [Ljava.lang.String; cannot be cast to [Ljava.lang.Integer;
-	at org.apache.ibatis.type.BaseTypeHandler.getResult(BaseTypeHandler.java:68)
-	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.applyAutomaticMappings(DefaultResultSetHandler.java:512)
-	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.getRowValue(DefaultResultSetHandler.java:393)
-	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleRowValuesForSimpleResultMap(DefaultResultSetHandler.java:347)
-	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleRowValues(DefaultResultSetHandler.java:322)
-	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleResultSet(DefaultResultSetHandler.java:295)
-	at org.apache.ibatis.executor.resultset.DefaultResultSetHandler.handleResultSets(DefaultResultSetHandler.java:192)
-	at org.apache.ibatis.executor.statement.PreparedStatementHandler.query(PreparedStatementHandler.java:64)
-	at org.apache.ibatis.executor.statement.RoutingStatementHandler.query(RoutingStatementHandler.java:79)
-	at org.apache.ibatis.executor.SimpleExecutor.doQuery(SimpleExecutor.java:63)
-	at org.apache.ibatis.executor.BaseExecutor.queryFromDatabase(BaseExecutor.java:324)
-	at org.apache.ibatis.executor.BaseExecutor.query(BaseExecutor.java:156)
-	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:109)
-	at org.apache.ibatis.executor.CachingExecutor.query(CachingExecutor.java:83)
-	at org.apache.ibatis.session.defaults.DefaultSqlSession.selectList(DefaultSqlSession.java:148)
-	... 11 common frames omitted
-Caused by: java.lang.ClassCastException: [Ljava.lang.String; cannot be cast to [Ljava.lang.Integer;
-	at com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler.extractArray(IntegerArrayTypeHandler.java:41)
-	at com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler.getNullableResult(IntegerArrayTypeHandler.java:23)
-	at com.pengkong.boatrace.mybatis.typehandle.IntegerArrayTypeHandler.getNullableResult(IntegerArrayTypeHandler.java:1)
-	at org.apache.ibatis.type.BaseTypeHandler.getResult(BaseTypeHandler.java:66)
-	... 25 common frames omitted
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.loadDB(MLResultGeneratorExp.java:417)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.executeExperiment(MLResultGeneratorExp.java:162)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.execute(MLResultGeneratorExp.java:121)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.main(MLResultGeneratorExp.java:453)
+2025-11-28 00:59:42,854 [main] ERROR c.p.b.exp10.property.MLPropertyUtil.next - MLPropertyUtil:next() error: 
+2025-11-28 01:00:21,505 [main] ERROR c.p.b.exp10.property.MLPropertyUtil.next - MLPropertyUtil:next() error: 
+2025-11-29 20:23:18,408 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 257 is failed.
+java.lang.NullPointerException: Cannot read field "sql" because the return value of "com.pengkong.boatrace.exp10.property.PatternTemplate.getPattern(String)" is null
+	at com.pengkong.boatrace.exp10.simulation.data.DBRaceDataLoader.excute(DBRaceDataLoader.java:37)
+	at com.pengkong.boatrace.exp10.simulation.data.AbstractRaceDataLoader.load(AbstractRaceDataLoader.java:10)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.loadDB(MLResultGeneratorExp.java:417)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.executeExperiment(MLResultGeneratorExp.java:162)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.execute(MLResultGeneratorExp.java:121)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.main(MLResultGeneratorExp.java:453)
+2025-11-29 20:23:26,261 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 258 is failed.
+java.lang.NullPointerException: Cannot read field "sql" because the return value of "com.pengkong.boatrace.exp10.property.PatternTemplate.getPattern(String)" is null
+	at com.pengkong.boatrace.exp10.simulation.data.DBRaceDataLoader.excute(DBRaceDataLoader.java:37)
+	at com.pengkong.boatrace.exp10.simulation.data.AbstractRaceDataLoader.load(AbstractRaceDataLoader.java:10)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.loadDB(MLResultGeneratorExp.java:417)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.executeExperiment(MLResultGeneratorExp.java:162)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.execute(MLResultGeneratorExp.java:121)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.main(MLResultGeneratorExp.java:453)
+2025-11-29 20:23:33,885 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 259 is failed.
+java.lang.NullPointerException: Cannot read field "sql" because the return value of "com.pengkong.boatrace.exp10.property.PatternTemplate.getPattern(String)" is null
+	at com.pengkong.boatrace.exp10.simulation.data.DBRaceDataLoader.excute(DBRaceDataLoader.java:37)
+	at com.pengkong.boatrace.exp10.simulation.data.AbstractRaceDataLoader.load(AbstractRaceDataLoader.java:10)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.loadDB(MLResultGeneratorExp.java:417)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.executeExperiment(MLResultGeneratorExp.java:162)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.execute(MLResultGeneratorExp.java:121)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.main(MLResultGeneratorExp.java:453)
+2025-11-29 20:23:41,423 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 260 is failed.
+java.lang.NullPointerException: Cannot read field "sql" because the return value of "com.pengkong.boatrace.exp10.property.PatternTemplate.getPattern(String)" is null
+	at com.pengkong.boatrace.exp10.simulation.data.DBRaceDataLoader.excute(DBRaceDataLoader.java:37)
+	at com.pengkong.boatrace.exp10.simulation.data.AbstractRaceDataLoader.load(AbstractRaceDataLoader.java:10)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.loadDB(MLResultGeneratorExp.java:417)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.executeExperiment(MLResultGeneratorExp.java:162)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.execute(MLResultGeneratorExp.java:121)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.main(MLResultGeneratorExp.java:453)
+2025-11-29 20:28:10,534 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 269 is failed.
+java.lang.NullPointerException: Cannot read field "sql" because the return value of "com.pengkong.boatrace.exp10.property.PatternTemplate.getPattern(String)" is null
+	at com.pengkong.boatrace.exp10.simulation.data.DBRaceDataLoader.excute(DBRaceDataLoader.java:37)
+	at com.pengkong.boatrace.exp10.simulation.data.AbstractRaceDataLoader.load(AbstractRaceDataLoader.java:10)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.loadDB(MLResultGeneratorExp.java:417)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.executeExperiment(MLResultGeneratorExp.java:162)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.execute(MLResultGeneratorExp.java:121)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.main(MLResultGeneratorExp.java:453)
+2025-11-29 20:28:16,834 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 270 is failed.
+java.lang.NullPointerException: Cannot read field "sql" because the return value of "com.pengkong.boatrace.exp10.property.PatternTemplate.getPattern(String)" is null
+	at com.pengkong.boatrace.exp10.simulation.data.DBRaceDataLoader.excute(DBRaceDataLoader.java:37)
+	at com.pengkong.boatrace.exp10.simulation.data.AbstractRaceDataLoader.load(AbstractRaceDataLoader.java:10)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.loadDB(MLResultGeneratorExp.java:417)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.executeExperiment(MLResultGeneratorExp.java:162)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.execute(MLResultGeneratorExp.java:121)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.main(MLResultGeneratorExp.java:453)
+2025-11-29 20:28:23,469 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 271 is failed.
+java.lang.NullPointerException: Cannot read field "sql" because the return value of "com.pengkong.boatrace.exp10.property.PatternTemplate.getPattern(String)" is null
+	at com.pengkong.boatrace.exp10.simulation.data.DBRaceDataLoader.excute(DBRaceDataLoader.java:37)
+	at com.pengkong.boatrace.exp10.simulation.data.AbstractRaceDataLoader.load(AbstractRaceDataLoader.java:10)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.loadDB(MLResultGeneratorExp.java:417)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.executeExperiment(MLResultGeneratorExp.java:162)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.execute(MLResultGeneratorExp.java:121)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.main(MLResultGeneratorExp.java:453)
+2025-11-29 20:28:29,374 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 272 is failed.
+java.lang.NullPointerException: Cannot read field "sql" because the return value of "com.pengkong.boatrace.exp10.property.PatternTemplate.getPattern(String)" is null
+	at com.pengkong.boatrace.exp10.simulation.data.DBRaceDataLoader.excute(DBRaceDataLoader.java:37)
+	at com.pengkong.boatrace.exp10.simulation.data.AbstractRaceDataLoader.load(AbstractRaceDataLoader.java:10)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.loadDB(MLResultGeneratorExp.java:417)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.executeExperiment(MLResultGeneratorExp.java:162)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.execute(MLResultGeneratorExp.java:121)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.main(MLResultGeneratorExp.java:453)
+2025-11-29 20:28:36,357 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 273 is failed.
+java.lang.NullPointerException: Cannot read field "sql" because the return value of "com.pengkong.boatrace.exp10.property.PatternTemplate.getPattern(String)" is null
+	at com.pengkong.boatrace.exp10.simulation.data.DBRaceDataLoader.excute(DBRaceDataLoader.java:37)
+	at com.pengkong.boatrace.exp10.simulation.data.AbstractRaceDataLoader.load(AbstractRaceDataLoader.java:10)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.loadDB(MLResultGeneratorExp.java:417)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.executeExperiment(MLResultGeneratorExp.java:162)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.execute(MLResultGeneratorExp.java:121)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.main(MLResultGeneratorExp.java:453)
+2025-11-29 20:28:42,072 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 274 is failed.
+java.lang.NullPointerException: Cannot read field "sql" because the return value of "com.pengkong.boatrace.exp10.property.PatternTemplate.getPattern(String)" is null
+	at com.pengkong.boatrace.exp10.simulation.data.DBRaceDataLoader.excute(DBRaceDataLoader.java:37)
+	at com.pengkong.boatrace.exp10.simulation.data.AbstractRaceDataLoader.load(AbstractRaceDataLoader.java:10)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.loadDB(MLResultGeneratorExp.java:417)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.executeExperiment(MLResultGeneratorExp.java:162)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.execute(MLResultGeneratorExp.java:121)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.main(MLResultGeneratorExp.java:453)
+2025-11-29 20:31:18,641 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 255 is failed.
+java.lang.NullPointerException: Cannot read field "sql" because the return value of "com.pengkong.boatrace.exp10.property.PatternTemplate.getPattern(String)" is null
+	at com.pengkong.boatrace.exp10.simulation.data.DBRaceDataLoader.excute(DBRaceDataLoader.java:37)
+	at com.pengkong.boatrace.exp10.simulation.data.AbstractRaceDataLoader.load(AbstractRaceDataLoader.java:10)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.loadDB(MLResultGeneratorExp.java:417)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.executeExperiment(MLResultGeneratorExp.java:162)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.execute(MLResultGeneratorExp.java:121)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.main(MLResultGeneratorExp.java:453)
+2025-11-29 20:31:23,905 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 256 is failed.
+java.lang.NullPointerException: Cannot read field "sql" because the return value of "com.pengkong.boatrace.exp10.property.PatternTemplate.getPattern(String)" is null
+	at com.pengkong.boatrace.exp10.simulation.data.DBRaceDataLoader.excute(DBRaceDataLoader.java:37)
+	at com.pengkong.boatrace.exp10.simulation.data.AbstractRaceDataLoader.load(AbstractRaceDataLoader.java:10)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.loadDB(MLResultGeneratorExp.java:417)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.executeExperiment(MLResultGeneratorExp.java:162)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.execute(MLResultGeneratorExp.java:121)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.main(MLResultGeneratorExp.java:453)

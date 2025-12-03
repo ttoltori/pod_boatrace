@@ -1,0 +1,40 @@
+2025-11-27 00:04:07,356 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 243 is failed.
+java.lang.ClassCastException: java.lang.Integer cannot be cast to [I
+	at com.pengkong.boatrace.converter.MlExpectedRec.create(MlExpectedRec.java:39)
+	at com.pengkong.boatrace.converter.MlExpectedRec.create(MlExpectedRec.java:53)
+	at com.pengkong.boatrace.exp10.result.RCDefaultExp.get3Tresult(RCDefaultExp.java:75)
+	at com.pengkong.boatrace.exp10.result.AbstractResultCreatorExp.execute(AbstractResultCreatorExp.java:97)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.createResult(MLResultGeneratorExp.java:344)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.executeExperiment(MLResultGeneratorExp.java:217)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.execute(MLResultGeneratorExp.java:121)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.main(MLResultGeneratorExp.java:453)
+2025-11-27 00:14:20,738 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 243 is failed.
+java.lang.ClassCastException: java.lang.Integer cannot be cast to [I
+	at com.pengkong.boatrace.converter.MlExpectedRec.create(MlExpectedRec.java:39)
+	at com.pengkong.boatrace.converter.MlExpectedRec.create(MlExpectedRec.java:53)
+	at com.pengkong.boatrace.exp10.result.RCDefaultExp.get3Tresult(RCDefaultExp.java:75)
+	at com.pengkong.boatrace.exp10.result.AbstractResultCreatorExp.execute(AbstractResultCreatorExp.java:97)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.createResult(MLResultGeneratorExp.java:344)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.executeExperiment(MLResultGeneratorExp.java:217)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.execute(MLResultGeneratorExp.java:121)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.main(MLResultGeneratorExp.java:453)
+2025-11-27 00:15:27,360 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 243 is failed.
+java.lang.ClassCastException: java.lang.Integer cannot be cast to [I
+	at com.pengkong.boatrace.converter.MlExpectedRec.create(MlExpectedRec.java:39)
+	at com.pengkong.boatrace.converter.MlExpectedRec.create(MlExpectedRec.java:53)
+	at com.pengkong.boatrace.exp10.result.RCDefaultExp.get3Tresult(RCDefaultExp.java:75)
+	at com.pengkong.boatrace.exp10.result.AbstractResultCreatorExp.execute(AbstractResultCreatorExp.java:97)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.createResult(MLResultGeneratorExp.java:344)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.executeExperiment(MLResultGeneratorExp.java:217)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.execute(MLResultGeneratorExp.java:121)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.main(MLResultGeneratorExp.java:453)
+2025-11-27 00:20:51,187 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 243 is failed.
+java.lang.ArrayIndexOutOfBoundsException: Index 34 out of bounds for length 34
+	at com.pengkong.boatrace.converter.MlExpectedRec.create(MlExpectedRec.java:40)
+	at com.pengkong.boatrace.converter.MlExpectedRec.create(MlExpectedRec.java:53)
+	at com.pengkong.boatrace.exp10.result.RCDefaultExp.get3Tresult(RCDefaultExp.java:75)
+	at com.pengkong.boatrace.exp10.result.AbstractResultCreatorExp.execute(AbstractResultCreatorExp.java:97)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.createResult(MLResultGeneratorExp.java:344)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.executeExperiment(MLResultGeneratorExp.java:217)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.execute(MLResultGeneratorExp.java:121)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.main(MLResultGeneratorExp.java:453)
