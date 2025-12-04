@@ -19,15 +19,20 @@ ml_result_exp 263
 ml_result_exp 264
 ml_result_exp 265
 
-ml_result_exp 266
-ml_result_exp 267
-ml_result_exp 268
-ml_result_exp 269
-ml_result_exp 270
-ml_result_exp 271
-ml_result_exp 272
-ml_result_exp 273
-ml_result_exp 274
+ml_result_exp 279
+ml_result_exp 280
+ml_result_exp 281
+ml_result_exp 282
+
+ml_result_exp 287
+ml_result_exp 288
+ml_result_exp 289
+ml_result_exp 290
+
+ml_result 275
+ml_result 276
+ml_result 277
+ml_result 278
 
 0 : 
 대기

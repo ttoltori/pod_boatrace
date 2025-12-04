@@ -1,0 +1,6 @@
+2025-12-03 23:14:26,523 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 275 is failed.
+java.lang.ClassCastException: class com.pengkong.boatrace.exp10.result.RCDefault cannot be cast to class com.pengkong.boatrace.exp10.result.AbstractResultCreatorExp (com.pengkong.boatrace.exp10.result.RCDefault and com.pengkong.boatrace.exp10.result.AbstractResultCreatorExp are in unnamed module of loader 'app')
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.setupResultCreator(MLResultGeneratorExp.java:135)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.executeExperiment(MLResultGeneratorExp.java:144)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.execute(MLResultGeneratorExp.java:121)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.main(MLResultGeneratorExp.java:453)

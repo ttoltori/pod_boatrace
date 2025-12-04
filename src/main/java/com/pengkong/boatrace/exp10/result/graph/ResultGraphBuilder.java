@@ -112,7 +112,7 @@ public class ResultGraphBuilder {
 				//dirExResult = dirAllResult + resultType + "/" + stat.statBettype + "/" + prop.getString("used_model_no")  + "/" + prop.getString("pattern_id") + "/";
 				//dirExResult = dirAllResult + "/" + exNo + "/" + resultType + "/" + stat.statBettype + "/";
 				String evalId = prop.getString("evaluations_id");
-				dirExResult = dirAllResult + "/" + evalId + "/";
+				dirExResult = dirAllResult + "/" + evalId + "/"+ stat.statBettype + "/";
 				
 				String filePathCommon = dirExResult + String.join("_", 
 						prop.getString("result_type"),

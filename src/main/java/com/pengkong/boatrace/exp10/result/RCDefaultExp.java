@@ -75,8 +75,11 @@ public class RCDefaultExp extends AbstractResultCreatorExp {
 		List<MlExpectedRec> mlExpectedRecList = MlExpectedRec.create(rec);
 		
 		ResultExpHelper.setBexpRank(mlExpectedRecList); // 직전옺즈기대치 랭킹 설정
-
-		for (MlExpectedRec expRec : mlExpectedRecList) {
+		
+		// 戦略に基づいてフィルタリング（期待値上限・確率下限・スコア順）
+		List<MlExpectedRec> filteredList = ResultExpHelper.filterByStrategy(mlExpectedRecList);
+		
+		for (MlExpectedRec expRec : filteredList) {
 			result.add(createDefault(BetType._3T, BetType._3T, expRec.bkumiban, rec, expRec));
 		}
 	
