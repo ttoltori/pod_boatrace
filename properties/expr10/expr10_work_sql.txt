@@ -1,3 +1,19 @@
+MlClassificationは一つの競艇レースに対してLGBMRankerで予測した1着～6着の相対的強さを保持している。
+例）ymd=レース年月日、jyocd=場コード、raceno=レース番号、prediction1=着順1の枠、probability1=ランキングモデルの予測値を相対的強さを示すパーセント値に変換した数値。
+
+1)これをもとにすべての勝式(1T,2T,2F,3T,3F)の全てのベッティング可能な組番とその的中確率に変換したい。
+例）3Tの場合、('123', '0.23),('124', '0.12)....。'123'は組番、0.23は的中確率
+
+2)この的中確率にBoddsProviderが提供する直前オッズを掛けて期待値を計算したい。
+
+3)ある期間分のList<MlClassification>に対して1)、2)を実行した結果をymd,jyocd,raceno,勝式、組番事に期待値の大きい順番に保持しているクラスを作成したい。
+クラス名＝RankedBetProvider
+
+4)RankedBetProviderをもっていろんな意味のある範囲のバリエーションでベッティングをシミュレーションしようとしている。
+例えば以下のようなメソッドが必要だ。
+
+
+
 
 
 
@@ -6,7 +22,6 @@ cd C:\Dev\github\pod_boatrace_test\experiment\expr10
 ml_arff 
 
 
-<<<<<<< HEAD
 cd c:\Dev\github\pod_boatrace_test\experiment\expr10
 =======
 
@@ -17,8 +32,6 @@ java소스 정리
 
 ==================================
 한글로 요약해줘
-
->>>>>>> 17dd3ecbe4441a67762528dd90a5ef4163806773
 
 - classify에서 에러나는 경우
   -> 랭킹모델은 ml_ranking_classify실행할 것
