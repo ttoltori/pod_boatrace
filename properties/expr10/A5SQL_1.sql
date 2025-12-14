@@ -1,4 +1,4 @@
-﻿select * from ml_classification mc where modelno = '20022';
+﻿select * from ml_classification mc where modelno = '40001';;
 
 select * from ml_expected  where modelno = '39104';
 select modelno, min(ymd), max(ymd) 

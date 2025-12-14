@@ -46,12 +46,20 @@ public class MlExpectedRec {
         return rec;
     }
 
+    /** ML_EXPECTED_PLUS+race レコード１件から組番毎のベットリストを作成する。 */
     public static List<MlExpectedRec> create(DBRecord mlExpectedPlus) {
         List<MlExpectedRec> list = new ArrayList<>();
         String[] bkumibans = mlExpectedPlus.getStringArray("bkumiban");
         for (int i = 0; i < bkumibans.length; i++) {
             list.add(create(mlExpectedPlus, i));
         }
+        return list;
+    }
+
+    /**  */
+    public static List<MlExpectedRec> create2(DBRecord rec) {
+        List<MlExpectedRec> list = new ArrayList<>();
+
         return list;
     }
 }
