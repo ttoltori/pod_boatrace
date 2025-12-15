@@ -13,6 +13,7 @@ import com.pengkong.boatrace.exp10.odds.Odds;
 import com.pengkong.boatrace.exp10.odds.provider.AbstractOddsProvider;
 import com.pengkong.boatrace.exp10.odds.provider.OddsProviderInterface;
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
+import com.pengkong.boatrace.exp10.result.ranked.MlExpectedRecProvider;
 import com.pengkong.boatrace.exp10.result.stat.BorkPatternProvider;
 import com.pengkong.boatrace.exp10.simulation.calculator.expectation.AbstractProbabilityExpCalculator;
 import com.pengkong.boatrace.exp10.simulation.calculator.probability.AbstractProbabilityCalculator;
@@ -26,12 +27,12 @@ import com.pengkong.common.StringUtil;
  * @author ttolt
  *
  */
-public abstract class AbstractResultCreatorExp2 {
+public abstract class AbstractResultCreatorRankedExp {
 	/** 実験プロパティ */
 	MLPropertyUtil prop = MLPropertyUtil.getInstance();
 	
 	/** 直前オッズprovider */
-	protected OddsProviderInterface beforeOddsProvider;
+	//protected OddsProviderInterface beforeOddsProvider;
 
 	/** 確定オッズprovider */
 	protected AbstractOddsProvider resultOddsProvider;
@@ -47,7 +48,11 @@ public abstract class AbstractResultCreatorExp2 {
 	
 	//protected BorkPatternProvider borkPatternProvider = new BorkPatternProvider();
 	
-	public AbstractResultCreatorExp2() {
+	protected MlExpectedRecProvider mlExpectedRecProvider;
+	/**
+	 * コンストラクタ
+	 */
+	public AbstractResultCreatorRankedExp() {
 	}
 	
 	protected abstract void preExecute();

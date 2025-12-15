@@ -15,7 +15,7 @@ import com.pengkong.boatrace.mybatis.entity.MlClassification;
  * MlClassificationのランキングモデル予測結果から、各勝式の組番ごとの期待値を計算し、
  * 期待値の大きい順に保持するプロバイダー
  */
-public class RankedBetProvider {
+public class RankedBetProviderRef {
     
     /** key = ymd_jyoCd_raceNo_betType, value = 期待値降順ソート済みRankedBetリスト */
     private Map<String, List<RankedBet>> mapRankedBets = new HashMap<>();
@@ -23,7 +23,7 @@ public class RankedBetProvider {
     /** 直前オッズプロバイダー */
     private BeforeOddsProvider oddsProvider;
     
-    public RankedBetProvider() {
+    public RankedBetProviderRef() {
         this.oddsProvider = new BeforeOddsProvider();
     }
     

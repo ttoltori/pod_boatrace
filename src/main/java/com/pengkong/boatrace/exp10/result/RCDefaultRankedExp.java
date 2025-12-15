@@ -10,9 +10,7 @@ import org.slf4j.LoggerFactory;
 import com.pengkong.boatrace.common.enums.BetType;
 import com.pengkong.boatrace.converter.MlExpectedRec;
 import com.pengkong.boatrace.exp10.odds.provider.ResultOddsProvider;
-import com.pengkong.boatrace.exp10.simulation.calculator.expectation.ProbabilityExpCalculatorFactory;
-import com.pengkong.boatrace.exp10.simulation.calculator.probability.ProbabilityCalculatorFactory;
-import com.pengkong.boatrace.exp10.simulation.data.rmi.client.RmiBeforeOddsProvider;
+import com.pengkong.boatrace.exp10.result.ranked.MlExpectedRecProvider;
 import com.pengkong.boatrace.exp10.util.ResultExpHelper;
 import com.pengkong.boatrace.mybatis.entity.MlResult;
 import com.pengkong.boatrace.server.db.dto.DBRecord;
@@ -23,11 +21,11 @@ import com.pengkong.boatrace.server.db.dto.DBRecord;
  * @author ttolt
  *
  */
-public class RCDefaultExp2 extends AbstractResultCreatorExp {
+public class RCDefaultRankedExp extends AbstractResultCreatorRankedExp {
 
 	Logger logger = LoggerFactory.getLogger(RCDefaultExp.class);
 
-	public RCDefaultExp2() {
+	public RCDefaultRankedExp() {
 		super();
 	}
 
@@ -46,6 +44,7 @@ public class RCDefaultExp2 extends AbstractResultCreatorExp {
 		// 確定オッズ
 		//resultOddsProvider = new RmiResultOddsProvider();
 		resultOddsProvider = new ResultOddsProvider();
+		mlExpectedRecProvider = new MlExpectedRecProvider();
 	}
 
 	@Override
