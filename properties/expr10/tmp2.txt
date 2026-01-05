@@ -1,4 +1,16 @@
 한글보고서로 요약해줘.
+ml_result_rexp 293
+ml_result_rexp 294
+ml_result_rexp 295
+ml_result_rexp 296
+ml_result_rexp 297
+ml_result_rexp 298
+
+ml_result_rexp 299
+ml_result_rexp 300
+ml_result_rexp 301
+ml_result_rexp 302
+
 
 ml_result 235
 ml_result 236

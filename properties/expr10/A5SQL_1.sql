@@ -1,4 +1,34 @@
-﻿select * from ml_classification mc where modelno = '40001';;
+﻿select
+  rr.ymd, rr.jyocd, rr.raceno, rr.sime, 
+  -- rr.temparature, rr.weather, rr.winddirection, rr.wind, rr.watertemp, rr.wave
+  rr.grade, rr.isvenus, rr.timezone, rr.turn, rr.sanrentanno, rr.sanrentanprize, rr.sanrentanpopular 
+from rec_race rr, rec_race_waku rw1, rec_race_waku2 rw2, ml_result mr 
+where 
+  rr.ymd = rw1.ymd and rr.jyocd = rw1.jyocd and rr.raceno = rw1.raceno
+  and rr.ymd = rw2.ymd and rr.jyocd = rw2.jyocd and rr.raceno = rw2.raceno
+  and rr.ymd = mr.ymd and rr.jyocd = mr.jyocd and rr.raceno = mr.raceno
+  and mr.modelno = '40001' and mr.resultno = '325'
+  and mr.bettype = '3T'
+order by rr.ymd  
+;  
+  
+select count(1)
+from ml_result mr 
+where mr.modelno = '40001' and mr.resultno = '326'
+  and mr.bettype = '3T'
+  ;
+
+
+
+select 
+   rr.sanrenhukuno   kumiban, count(1), avg(rr.sanrenhukuprize)::int 
+from rec_race rr
+group by kumiban
+order by kumiban
+;
+
+
+select * from ml_classification mc where modelno = '40001';;
 
 select * from ml_expected  where modelno = '39104';
 select modelno, min(ymd), max(ymd) 

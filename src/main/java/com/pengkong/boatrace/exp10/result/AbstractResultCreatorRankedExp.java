@@ -48,7 +48,7 @@ public abstract class AbstractResultCreatorRankedExp {
 	
 	//protected BorkPatternProvider borkPatternProvider = new BorkPatternProvider();
 	
-	protected MlExpectedRecProvider mlExpectedRecProvider;
+	protected MlExpectedRecProvider mlExpRecProvider;
 	/**
 	 * コンストラクタ
 	 */
@@ -56,11 +56,11 @@ public abstract class AbstractResultCreatorRankedExp {
 	}
 	
 	protected abstract void preExecute();
-	protected abstract List<MlResult> get1Tresult(String kumiban, DBRecord rec) throws Exception;
-	protected abstract List<MlResult> get2Tresult(String kumiban, DBRecord rec) throws Exception;
+	protected abstract List<MlResult> get1Tresult(DBRecord rec) throws Exception;
+	protected abstract List<MlResult> get2Tresult(DBRecord rec) throws Exception;
 	protected abstract List<MlResult> get3Tresult(DBRecord rec) throws Exception;
-	protected abstract List<MlResult> get2Fresult(String kumiban, DBRecord rec) throws Exception;
-	protected abstract List<MlResult> get3Fresult(String kumiban, DBRecord rec) throws Exception;
+	protected abstract List<MlResult> get2Fresult(DBRecord rec) throws Exception;
+	protected abstract List<MlResult> get3Fresult(DBRecord rec) throws Exception;
 
 	void initialize() {
 		mapBetType = new TreeMap<>();
@@ -95,34 +95,30 @@ public abstract class AbstractResultCreatorRankedExp {
 		
 		// ターゲットのBetTypeリストを巡回
 		String[] tokenBettype = betTypes.split(Delimeter.COMMA.getValue());
-		String[] tokenKumiban = ResultHelper.parseKumiban(kumibans);
+		mlExpRecProvider.processClassification(dbRec);
+
 		for (String betTypeStr : tokenBettype) {
 			// 3T
 			if (BetType._3T.getValue().equals(betTypeStr)) {
 				result.addAll(get3Tresult( dbRec));
 			}
-			// if (!ResultHelper.isValidPredictions(betTypeStr, predictions)) {
-			// 	continue;
-			// }
 			
-			// // 1T
-			// if (BetType._1T.getValue().equals(betTypeStr)) {
-			// 	result.addAll(get1Tresult(predictions[0], dbRec));
-			// }
-			// // 2T
-			// if (BetType._2T.getValue().equals(betTypeStr)) {
-			// 	result.addAll(get2Tresult(String.join("", predictions[0], predictions[1]), dbRec));
-			// }
-			// // 2F
-			// if (BetType._2F.getValue().equals(betTypeStr)) {
-			// 	String[] sorted = StringUtil.copyAndSort(predictions[0], predictions[1]);
-			// 	result.addAll(get2Fresult(String.join("", sorted[0], sorted[1]), dbRec));
-			// }
-			// // 3F
-			// if (BetType._3F.getValue().equals(betTypeStr)) {
-			// 	String[] sorted = StringUtil.copyAndSort(predictions[0], predictions[1], predictions[2]);
-			// 	result.addAll(get3Fresult(String.join("", sorted[0], sorted[1], sorted[2]), dbRec));
-			// }
+			// 1T
+			if (BetType._1T.getValue().equals(betTypeStr)) {
+				result.addAll(get1Tresult(dbRec));
+			}
+			// 2T
+			if (BetType._2T.getValue().equals(betTypeStr)) {
+				result.addAll(get2Tresult(dbRec));
+			}
+			// 2F
+			if (BetType._2F.getValue().equals(betTypeStr)) {
+				result.addAll(get2Fresult(dbRec));
+			}
+			// 3F
+			if (BetType._3F.getValue().equals(betTypeStr)) {
+				result.addAll(get3Fresult(dbRec));
+			}
 		}
 		
 		return result;
@@ -156,16 +152,16 @@ public abstract class AbstractResultCreatorRankedExp {
 		
 		// 予想的中確率を設定する(BetTypeを基に計算する)
 		//result.setProbability(MathUtil.scale2(probabilityCalculator.calculate(betType.getValue(), rec)));
-		result.setProbability(expRec.bprob);
+		result.setProbability( MathUtil.scale2(expRec.bprob) );
 		
 		// 直前オッズ
 		result = setbeforeOdds(result, expRec);
 		// 確定オッズ
 		result = setResultOdds(result, expRec);
-		result.setExpectBor(  expRec.bexp);
+		result.setExpectBor(  MathUtil.scale2(expRec.bexp) );
 		result.setExpectBork(  MathUtil.scale2(expRec.bork * expRec.bprob) );
-		result.setExpectRor(  expRec.rexp);
-		result.setExpectRork(  expRec.rork * expRec.ror);
+		result.setExpectRor(  MathUtil.scale2(expRec.rexp) );
+		result.setExpectRork(  MathUtil.scale2(expRec.rork * expRec.ror) );
 		
 		// レース結果設定 */
 		result = setRaceResult(betType, rec, result);

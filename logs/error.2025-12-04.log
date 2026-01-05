@@ -1,0 +1,13 @@
+2025-12-04 22:24:26,688 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 279 is failed.
+java.lang.IndexOutOfBoundsException: Index 6 out of bounds for length 6
+	at java.base/jdk.internal.util.Preconditions.outOfBounds(Preconditions.java:64)
+	at java.base/jdk.internal.util.Preconditions.outOfBoundsCheckIndex(Preconditions.java:70)
+	at java.base/jdk.internal.util.Preconditions.checkIndex(Preconditions.java:266)
+	at java.base/java.util.Objects.checkIndex(Objects.java:359)
+	at java.base/java.util.ArrayList.get(ArrayList.java:427)
+	at com.pengkong.boatrace.exp10.result.RCDefaultExp.get3Tresult(RCDefaultExp.java:86)
+	at com.pengkong.boatrace.exp10.result.AbstractResultCreatorExp.execute(AbstractResultCreatorExp.java:97)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.createResult(MLResultGeneratorExp.java:344)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.executeExperiment(MLResultGeneratorExp.java:217)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.execute(MLResultGeneratorExp.java:121)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.main(MLResultGeneratorExp.java:453)

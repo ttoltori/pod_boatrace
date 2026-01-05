@@ -334,6 +334,13 @@ insert into ml_classification select * from ml_classification_bk1 where modelno:
 
 !!!노트북에서 ml_classify할때 referential은 model_release, ml_classification도 동기화해두어야 한다.
 ========================================================================
+20251223
+37-1,2의 result에 대해 bork를 1~10으로 좁히고 bet수를 늘려보자.
+  1와꾸이외의 축에서도 베팅수가 좀 있으면서 bork가 높은 쪽에 수익률이 1.0전후인 경향성이 보인다.
+
+
+
+========================================================================
 20251127
 
 

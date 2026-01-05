@@ -7,13 +7,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.pengkong.boatrace.common.enums.Delimeter;
 import com.pengkong.boatrace.converter.MlExpectedRec;
 import com.pengkong.boatrace.exp10.odds.Odds;
 import com.pengkong.boatrace.exp10.odds.provider.BeforeOddsProvider;
 import com.pengkong.boatrace.exp10.odds.provider.OddsProviderInterface;
 import com.pengkong.boatrace.exp10.odds.provider.ResultOddsProvider;
+import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
 import com.pengkong.boatrace.mybatis.entity.MlClassification;
 import com.pengkong.boatrace.server.db.dto.DBRecord;
+import com.pengkong.common.MathUtil;
 
 /**
  * MlClassificationのランキングモデル予測結果から、各勝式の組番ごとの期待値を計算し、
@@ -28,6 +31,7 @@ public class MlExpectedRecProvider {
 	OddsProviderInterface bOP = new BeforeOddsProvider();
 	OddsProviderInterface rOP = new ResultOddsProvider();
 
+    MLPropertyUtil prop = MLPropertyUtil.getInstance();
     public MlExpectedRecProvider() {
     }
     
@@ -315,27 +319,63 @@ public class MlExpectedRecProvider {
 
     // }
     
+    // public List<MlExpectedRec> getBetsByCondition2(DBRecord rec, String betType, int[] borkRange, int count) {
+    //     String ymd = rec.getString("ymd");
+    //     String jyoCd = rec.getString("jyocd");
+    //     String raceNo = rec.getStringForced("raceno");
+    //     String key = createKey(ymd, jyoCd, raceNo, betType);
+    //     List<MlExpectedRec> bets = mapRankedBets.get(key);
+
+    //     if (bets == null || bets.isEmpty()) {
+    //         return new ArrayList<>();
+    //     }
+        
+    //     // フィルタリング: 期待値範囲 & 確率下限
+    //     List<MlExpectedRec> filtered = new ArrayList<>();
+    //     for (MlExpectedRec bet : bets) {
+    //         // 期待値が1.0以下は対象外
+    //         if (bet.bork < borkRange[0] || bet.bork > borkRange[1] || bet.bexp <= 1.0) {
+    //             continue;
+    //         }
+    //         filtered.add(bet);
+    //     }
+        
+    //     // スコア（期待値×確率）の降順でソート
+    //     filtered.sort(Comparator.comparingDouble((MlExpectedRec b) -> b.bexp * b.bprob).reversed());
+        
+    //     // 購入点数で制限
+    //     int limit = Math.min(count, filtered.size());
+    //     return new ArrayList<>(filtered.subList(0, limit));        
+    // }
+
     public List<MlExpectedRec> getBetsByCondition(DBRecord rec, String betType, 
-            Double minBexp, Double maxBexp, int count) {
+            Double maxBexp, Double minBprob, Integer maxBork, int count) {
         String ymd = rec.getString("ymd");
         String jyoCd = rec.getString("jyocd");
         String raceNo = rec.getStringForced("raceno");
-        return getBetsByCondition(ymd, jyoCd, raceNo, betType, minBexp, maxBexp, count);
+        return getBetsByCondition(ymd, jyoCd, raceNo, betType, maxBexp, minBprob, maxBork, count);
     }
 
     /**
-     * 指定年月日、場、レース、勝式の期待値を指定範囲内のベッティング情報をcount分取得する
+     * 指定年月日、場、レース、勝式の期待値・確率条件を満たすベッティング情報をcount分取得する
+     * 
+     * フィルタリング条件:
+     * - 期待値が maxBexp 以下
+     * - 確率が minBprob 以上
+     * 
+     * ソート順: スコア（期待値×確率）の降順
+     * 
      * @param ymd 年月日
      * @param jyoCd 場コード
      * @param raceNo レース番号
      * @param betType 勝式
-     * @param minBexp 最小期待値
-     * @param maxBexp 最大期待値
-     * @param count 取得件数
-     * @return 期待値降順のRankedBetリスト
+     * @param maxBexp 最大期待値（期待値上限）
+     * @param minBprob 最小確率（確率下限）
+     * @param count 取得件数（購入点数）
+     * @return スコア降順のMlExpectedRecリスト
      */
     public List<MlExpectedRec> getBetsByCondition(String ymd, String jyoCd, String raceNo, String betType, 
-            Double minBexp, Double maxBexp, int count) {
+            Double maxBexp, Double minBprob, Integer maxBork, int count) {
         String key = createKey(ymd, jyoCd, raceNo, betType);
         List<MlExpectedRec> bets = mapRankedBets.get(key);
         
@@ -343,17 +383,36 @@ public class MlExpectedRecProvider {
             return new ArrayList<>();
         }
         
+        // フィルタリング: 期待値範囲 & 確率下限
         List<MlExpectedRec> filtered = new ArrayList<>();
         for (MlExpectedRec bet : bets) {
-            if (bet.bexp >= minBexp && bet.bexp <= maxBexp) {
-                filtered.add(bet);
-                if (filtered.size() >= count) {
-                    break;
-                }
+            // 期待値が1.0以下は対象外
+            if (bet.bexp == null || bet.bexp <= 1.0) {
+                continue;
             }
+            // 期待値範囲チェック
+            if (bet.bexp == null || bet.bexp > maxBexp) {
+                continue;
+            }
+            // 確率下限チェック
+            if (bet.bprob == null || bet.bprob < minBprob) {
+                continue;
+            }
+            
+            // 購入点数制限チェック
+            if (bet.bork == null || bet.bork > maxBork) {
+                continue;
+            }
+            
+            filtered.add(bet);
         }
         
-        return filtered;
+        // スコア（期待値×確率）の降順でソート
+        filtered.sort(Comparator.comparingDouble((MlExpectedRec b) -> b.bexp * b.bprob).reversed());
+        
+        // 購入点数で制限
+        int limit = Math.min(count, filtered.size());
+        return new ArrayList<>(filtered.subList(0, limit));
     }
     
     /**

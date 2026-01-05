@@ -1,0 +1,28 @@
+2025-12-28 23:25:21,475 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 321 is failed.
+java.lang.ClassCastException: class com.pengkong.boatrace.exp10.result.RCDefaultRankedExp cannot be cast to class com.pengkong.boatrace.exp10.result.AbstractResultCreatorExp (com.pengkong.boatrace.exp10.result.RCDefaultRankedExp and com.pengkong.boatrace.exp10.result.AbstractResultCreatorExp are in unnamed module of loader 'app')
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.setupResultCreator(MLResultGeneratorExp.java:135)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.executeExperiment(MLResultGeneratorExp.java:144)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.execute(MLResultGeneratorExp.java:121)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorExp.main(MLResultGeneratorExp.java:453)
+2025-12-28 23:27:21,899 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 321 is failed.
+java.lang.NumberFormatException: For input string: "10,10,10,10,10"
+	at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67)
+	at java.base/java.lang.Integer.parseInt(Integer.java:668)
+	at java.base/java.lang.Integer.valueOf(Integer.java:999)
+	at com.pengkong.common.PropertyUtil.getInteger(PropertyUtil.java:58)
+	at com.pengkong.boatrace.exp10.result.stat.ResultStatBuilder.add(ResultStatBuilder.java:84)
+	at com.pengkong.boatrace.exp10.result.stat.ResultStatBuilder.addAll(ResultStatBuilder.java:116)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorRankedExp.executeExperiment(MLResultGeneratorRankedExp.java:225)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorRankedExp.execute(MLResultGeneratorRankedExp.java:123)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorRankedExp.main(MLResultGeneratorRankedExp.java:456)
+2025-12-28 23:27:32,413 [main] ERROR c.p.b.exp10.MLResultGenerator.execute - experiment 322 is failed.
+java.lang.NumberFormatException: For input string: "10,10,10,10,10"
+	at java.base/java.lang.NumberFormatException.forInputString(NumberFormatException.java:67)
+	at java.base/java.lang.Integer.parseInt(Integer.java:668)
+	at java.base/java.lang.Integer.valueOf(Integer.java:999)
+	at com.pengkong.common.PropertyUtil.getInteger(PropertyUtil.java:58)
+	at com.pengkong.boatrace.exp10.result.stat.ResultStatBuilder.add(ResultStatBuilder.java:84)
+	at com.pengkong.boatrace.exp10.result.stat.ResultStatBuilder.addAll(ResultStatBuilder.java:116)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorRankedExp.executeExperiment(MLResultGeneratorRankedExp.java:225)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorRankedExp.execute(MLResultGeneratorRankedExp.java:123)
+	at com.pengkong.boatrace.exp10.MLResultGeneratorRankedExp.main(MLResultGeneratorRankedExp.java:456)
