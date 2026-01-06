@@ -134,7 +134,65 @@ public class MLUtil {
 		return classId.split("=")[0];
 	}
 	
+	public static class DateRange {
+		public String fromYmd;
+		public String toYmd;
+		
+		public DateRange(String fromYmd, String toYmd) {
+			this.fromYmd = fromYmd;
+			this.toYmd = toYmd;
+		}
+	}
+
+	public static List<DateRange> splitDateRange(String startYmd, String endYmd, int splitCount) {
+		List<DateRange> list = new ArrayList<>();
+		// Parse start and end dates
+		int startYear = Integer.parseInt(startYmd.substring(0, 4));
+		int startMonth = Integer.parseInt(startYmd.substring(4, 6));
+		int startDay = Integer.parseInt(startYmd.substring(6, 8));
+
+		int endYear = Integer.parseInt(endYmd.substring(0, 4));
+		int endMonth = Integer.parseInt(endYmd.substring(4, 6));
+		int endDay = Integer.parseInt(endYmd.substring(6, 8));
+
+		// Calculate total days
+		java.time.LocalDate start = java.time.LocalDate.of(startYear, startMonth, startDay);
+		java.time.LocalDate end = java.time.LocalDate.of(endYear, endMonth, endDay);
+		long totalDays = java.time.temporal.ChronoUnit.DAYS.between(start, end) + 1;
+
+		// Calculate days per split
+		long daysPerSplit = totalDays / splitCount;
+
+		java.time.LocalDate currentStart = start;
+		for (int i = 0; i < splitCount; i++) {
+			java.time.LocalDate currentEnd;
+			if (i == splitCount - 1) {
+				currentEnd = end;
+			} else {
+				currentEnd = currentStart.plusDays(daysPerSplit - 1);
+			}
+			
+			String fromYmd = String.format("%04d%02d%02d", currentStart.getYear(), currentStart.getMonthValue(), currentStart.getDayOfMonth());
+			String toYmd = String.format("%04d%02d%02d", currentEnd.getYear(), currentEnd.getMonthValue(), currentEnd.getDayOfMonth());
+			
+			list.add(new DateRange(fromYmd, toYmd));
+			
+			currentStart = currentEnd.plusDays(1);
+		}
+		return list;
+	}
+
+	public static void testSplitDateRange() {
+		List<DateRange> list = splitDateRange("20210101", "20231231", 3);
+		for (DateRange dateRange : list) {
+			System.out.println(dateRange.fromYmd + " - " + dateRange.toYmd);
+		}
+	}
 	public static void main(String[] args) {
+
+		testSplitDateRange();
+		System.exit(0);
+
 		MLDescriptiveStatistics stat = new MLDescriptiveStatistics();
 		double[] input = {28,30,40,50,60,70,80,900,900,2,2,2,2,2,2,2,2,2,2,2,2,5,5,5,5,6,6,6,7,7,7,8,9.10,11,12,13,14,15,16,17,18,1000,3,3,3,3,3,4,4,4,4,4,1,1,1,1,1,1,1,1,1,1,1,1,19,20,21,22,24,26};
 		
@@ -189,5 +247,4 @@ public class MLUtil {
 		System.out.println("percentile," + stat.getTitles(Delimeter.COMMA));
 		System.out.println("percentile," + stat.getValues(Delimeter.COMMA));
 	}
-	
 }
