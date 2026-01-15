@@ -10,13 +10,17 @@ import java.util.Map;
 import com.pengkong.boatrace.common.enums.Delimeter;
 import com.pengkong.boatrace.converter.MlExpectedRec;
 import com.pengkong.boatrace.exp10.odds.Odds;
+import com.pengkong.boatrace.exp10.odds.provider.BeforeOddsCachedProvider;
 import com.pengkong.boatrace.exp10.odds.provider.BeforeOddsProvider;
 import com.pengkong.boatrace.exp10.odds.provider.OddsProviderInterface;
+import com.pengkong.boatrace.exp10.odds.provider.ResultOddsCachedProvider;
 import com.pengkong.boatrace.exp10.odds.provider.ResultOddsProvider;
 import com.pengkong.boatrace.exp10.property.MLPropertyUtil;
 import com.pengkong.boatrace.mybatis.entity.MlClassification;
 import com.pengkong.boatrace.server.db.dto.DBRecord;
 import com.pengkong.common.MathUtil;
+import com.pengkong.boatrace.exp10.result.ranked.filter.ConditionFilter;
+import com.pengkong.boatrace.exp10.result.ranked.filter.KumibanFilter;
 
 /**
  * MlClassificationのランキングモデル予測結果から、各勝式の組番ごとの期待値を計算し、
@@ -32,6 +36,9 @@ public class MlExpectedRecProvider {
 	OddsProviderInterface rOP = new ResultOddsProvider();
 
     MLPropertyUtil prop = MLPropertyUtil.getInstance();
+
+    KumibanFilter kumibanFilter = new KumibanFilter();
+    ConditionFilter conditionFilter = new ConditionFilter();
     public MlExpectedRecProvider() {
     }
     
@@ -98,6 +105,11 @@ public class MlExpectedRecProvider {
         List<String> kumibans = generateKumibans(betType);
         
         for (String kumiban : kumibans) {
+
+            if (!kumibanFilter.isValid(betType, kumiban)) {
+                continue;
+            }
+
             Double prob = calculateProbabilityPL(kumiban, betType, strengthMap);
             if (prob == null || prob <= 0) {
                 continue;
@@ -353,7 +365,7 @@ public class MlExpectedRecProvider {
         String ymd = rec.getString("ymd");
         String jyoCd = rec.getString("jyocd");
         String raceNo = rec.getStringForced("raceno");
-        return getBetsByCondition(ymd, jyoCd, raceNo, betType, maxBexp, minBprob, maxBork, count);
+        return getBetsByCondition(ymd, jyoCd, raceNo, betType, maxBexp, minBprob, maxBork, count, rec);
     }
 
     /**
@@ -375,7 +387,7 @@ public class MlExpectedRecProvider {
      * @return スコア降順のMlExpectedRecリスト
      */
     public List<MlExpectedRec> getBetsByCondition(String ymd, String jyoCd, String raceNo, String betType, 
-            Double maxBexp, Double minBprob, Integer maxBork, int count) {
+            Double maxBexp, Double minBprob, Integer maxBork, int count, DBRecord rec) {
         String key = createKey(ymd, jyoCd, raceNo, betType);
         List<MlExpectedRec> bets = mapRankedBets.get(key);
         
@@ -386,6 +398,10 @@ public class MlExpectedRecProvider {
         // フィルタリング: 期待値範囲 & 確率下限
         List<MlExpectedRec> filtered = new ArrayList<>();
         for (MlExpectedRec bet : bets) {
+            if (!conditionFilter.isValid(rec, bet)) {
+                continue;
+            }
+
             // 期待値が1.0以下は対象外
             if (bet.bexp == null || bet.bexp <= 1.0) {
                 continue;

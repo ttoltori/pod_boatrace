@@ -1,25 +1,123 @@
-﻿select
-  rr.ymd, rr.jyocd, rr.raceno, rr.sime, 
-  -- rr.temparature, rr.weather, rr.winddirection, rr.wind, rr.watertemp, rr.wave
-  rr.grade, rr.isvenus, rr.timezone, rr.turn, rr.sanrentanno, rr.sanrentanprize, rr.sanrentanpopular 
+﻿copy (select * from ml_result) 
+to 'C:\work\ml_classification.tsv' csv delimiter E'\t' header;
+
+
+
+select count(1) from ml_result;
+select max(ymd) from ml_classification mc where mc.modelno = '40001';
+
+copy (
+select
+   rr.ymd, rr.jyocd, rr.raceno, rr.sime, 
+   rr.temparature, rr.weather, rr.winddirection, rr.wind, rr.watertemp, rr.wave, 
+   rr.grade, rr.isvenus, rr.timezone, rr.turn, 
+   rr.sanrentanno, rr.sanrentanprize, rr.sanrentanpopular, 
+   rr.sanrenhukuno, rr.sanrenhukuprize, rr.sanrenhukupopular, 
+   rr.nirentanno, rr.nirentanprize, rr.nirentanpopular, 
+   rr.nirenhukuno, rr.nirenhukuprize, rr.nirenhukupopular, 
+   rr.tansyono, rr.tansyoprize, rr.tansyopopular, 
+   rr.fixedentrance, rr.alevelcount, rr.femalecount, rr.com_predict, rr.com_confidence,
+   split_part(rr.wakulevellist, '-', 1) AS level1,
+   split_part(rr.wakulevellist, '-', 2) AS level2,
+   split_part(rr.wakulevellist, '-', 3) AS level3,
+   split_part(rr.wakulevellist, '-', 4) AS level4,
+   split_part(rr.wakulevellist, '-', 5) AS level5,
+   split_part(rr.wakulevellist, '-', 6) AS level6,
+	rw1.entry1, rw1.entry2, rw1.entry3, rw1.entry4, rw1.entry5, rw1.entry6,
+--	rw1.motorno1, rw1.motorno2, rw1.motorno3, rw1.motorno4,rw1.motorno5,rw1.motorno6,
+--	rw1.avgtime1,rw1.avgtime2,rw1.avgtime3,rw1.avgtime4,rw1.avgtime5,rw1.avgtime6,
+--	rw1.avgst1,rw1.avgst2,rw1.avgst3,rw1.avgst4,rw1.avgst5,rw1.avgst6,
+--	rw1.setuavgst1,rw1.setuavgst2,rw1.setuavgst3,rw1.setuavgst4,rw1.setuavgst5,rw1.setuavgst6,
+--	rw1.setuavgwin1,rw1.setuavgwin2,rw1.setuavgwin3,rw1.setuavgwin4,rw1.setuavgwin5,rw1.setuavgwin6,
+--	rw1.flcount1,rw1.flcount2,rw1.flcount3,rw1.flcount4,rw1.flcount5,rw1.flcount6,
+--	rw1.tilt1,rw1.tilt2,rw1.tilt3,rw1.tilt4,rw1.tilt5,rw1.tilt6,
+--	rw1.homeyn1,rw1.homeyn2,rw1.homeyn3,rw1.homeyn4,rw1.homeyn5,rw1.homeyn6
+	mr.bet_kumiban,
+	mr.bet_odds,
+	mr.bet_oddsrank,
+	mr.result_kumiban,
+	mr.result_odds,
+	mr.result_oddsrank,
+	mr.result_amt,
+	mr.betamt,
+	mr.hitamt,
+	mr.probability,
+	mr.expect_bor,
+	mr.expect_bork,
+	mr.race_odds,
+	mr.race_oddsrank
 from rec_race rr, rec_race_waku rw1, rec_race_waku2 rw2, ml_result mr 
 where 
   rr.ymd = rw1.ymd and rr.jyocd = rw1.jyocd and rr.raceno = rw1.raceno
   and rr.ymd = rw2.ymd and rr.jyocd = rw2.jyocd and rr.raceno = rw2.raceno
   and rr.ymd = mr.ymd and rr.jyocd = mr.jyocd and rr.raceno = mr.raceno
-  and mr.modelno = '40001' and mr.resultno = '325'
-  and mr.bettype = '3T'
-order by rr.ymd  
+  and mr.modelno = '40001' and mr.resultno = '346'
+  and mr.bettype = '3T' and mr.bet_kumiban = '123'
+  and mr.ymd::int between 20210604 and 20220603
+order by rr.ymd, rr.sime
+) to 'C:\Dev\github\pod_boatrace\document\test\result_3T_123.tsv' csv delimiter E'\t' header;
 ;  
-  
+
+select
+   rr.ymd, rr.jyocd, rr.raceno, rr.sime, 
+   rr.temparature, rr.weather, rr.winddirection, rr.wind, rr.watertemp, rr.wave, 
+   rr.grade, rr.isvenus, rr.timezone, rr.turn, 
+   rr.sanrentanno, rr.sanrentanprize, rr.sanrentanpopular, 
+   rr.sanrenhukuno, rr.sanrenhukuprize, rr.sanrenhukupopular, 
+   rr.nirentanno, rr.nirentanprize, rr.nirentanpopular, 
+   rr.nirenhukuno, rr.nirenhukuprize, rr.nirenhukupopular, 
+   rr.tansyono, rr.tansyoprize, rr.tansyopopular, 
+   rr.fixedentrance, rr.alevelcount, rr.femalecount, rr.com_predict, rr.com_confidence,
+   split_part(rr.wakulevellist, '-', 1) AS level1,
+   split_part(rr.wakulevellist, '-', 2) AS level2,
+   split_part(rr.wakulevellist, '-', 3) AS level3,
+   split_part(rr.wakulevellist, '-', 4) AS level4,
+   split_part(rr.wakulevellist, '-', 5) AS level5,
+   split_part(rr.wakulevellist, '-', 6) AS level6,
+	rw1.entry1, rw1.entry2, rw1.entry3, rw1.entry4, rw1.entry5, rw1.entry6,
+--	rw1.motorno1, rw1.motorno2, rw1.motorno3, rw1.motorno4,rw1.motorno5,rw1.motorno6,
+--	rw1.avgtime1,rw1.avgtime2,rw1.avgtime3,rw1.avgtime4,rw1.avgtime5,rw1.avgtime6,
+--	rw1.avgst1,rw1.avgst2,rw1.avgst3,rw1.avgst4,rw1.avgst5,rw1.avgst6,
+--	rw1.setuavgst1,rw1.setuavgst2,rw1.setuavgst3,rw1.setuavgst4,rw1.setuavgst5,rw1.setuavgst6,
+--	rw1.setuavgwin1,rw1.setuavgwin2,rw1.setuavgwin3,rw1.setuavgwin4,rw1.setuavgwin5,rw1.setuavgwin6,
+--	rw1.flcount1,rw1.flcount2,rw1.flcount3,rw1.flcount4,rw1.flcount5,rw1.flcount6,
+--	rw1.tilt1,rw1.tilt2,rw1.tilt3,rw1.tilt4,rw1.tilt5,rw1.tilt6,
+--	rw1.homeyn1,rw1.homeyn2,rw1.homeyn3,rw1.homeyn4,rw1.homeyn5,rw1.homeyn6
+	mr.bet_kumiban,
+	mr.bet_odds,
+	mr.bet_oddsrank,
+	mr.result_kumiban,
+	mr.result_odds,
+	mr.result_oddsrank,
+	mr.result_amt,
+	mr.betamt,
+	mr.hitamt,
+	mr.probability,
+	mr.expect_bor,
+	mr.expect_bork,
+	mr.race_odds,
+	mr.race_oddsrank
+from rec_race rr, rec_race_waku rw1, rec_race_waku2 rw2, ml_result mr 
+where 
+  rr.ymd = rw1.ymd and rr.jyocd = rw1.jyocd and rr.raceno = rw1.raceno
+  and rr.ymd = rw2.ymd and rr.jyocd = rw2.jyocd and rr.raceno = rw2.raceno
+  and rr.ymd = mr.ymd and rr.jyocd = mr.jyocd and rr.raceno = mr.raceno
+  and mr.modelno = '40001' and mr.resultno = '346'
+  and mr.bettype = '3T' and mr.bet_kumiban = '123'
+  and mr.ymd::int between 20210604 and 20220603
+  and mr.expect_bor > 1.0
+order by rr.ymd, rr.sime
+;
+
 select count(1)
 from ml_result mr 
-where mr.modelno = '40001' and mr.resultno = '326'
-  and mr.bettype = '3T'
+where mr.modelno = '40001' and mr.resultno = '346'
+  and mr.bettype = '3T' and mr.bet_kumiban = '123'
+  and mr.ymd::int between 20210604 and 20220603
   ;
 
 
-
+delete from ml_result;
 select 
    rr.sanrenhukuno   kumiban, count(1), avg(rr.sanrenhukuprize)::int 
 from rec_race rr

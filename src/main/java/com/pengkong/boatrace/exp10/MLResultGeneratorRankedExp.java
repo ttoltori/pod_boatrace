@@ -31,6 +31,8 @@ import com.pengkong.boatrace.exp10.result.stat.ResultStatBuilder;
 import com.pengkong.boatrace.exp10.result.stat.split.ResultStatBuilderSplit;
 import com.pengkong.boatrace.exp10.simulation.data.AbstractRaceDataLoader;
 import com.pengkong.boatrace.exp10.simulation.data.DBRaceDataLoader;
+import com.pengkong.boatrace.exp10.util.MLUtil;
+import com.pengkong.boatrace.exp10.util.MLUtil.DateRange;
 import com.pengkong.boatrace.mybatis.client.MlEvaluationMapper;
 import com.pengkong.boatrace.mybatis.client.MlRangeEvaluationMapper;
 import com.pengkong.boatrace.mybatis.client.MlResultMapper;
@@ -120,7 +122,24 @@ public class MLResultGeneratorRankedExp {
 			// 実験実行
 			try {
 				prop.putProperty("evaluations_id", prop.getString("evaluations_id"));
-				executeExperiment(prop.getString("result_no"));
+				setupResultCreator();
+				String resultSplit = prop.getString("result_split");
+				if ("x".equals(resultSplit)) {
+					executeExperiment(prop.getString("result_no"));
+				} else {
+					int split = Integer.parseInt(resultSplit);
+					List<DateRange> ranges = MLUtil.splitDateRange(prop.getString("result_start_ymd"), prop.getString("result_end_ymd"), split);
+					int count = 1;
+					for (DateRange range : ranges) {
+						prop.putProperty("result_start_ymd", range.fromYmd);
+						prop.putProperty("result_end_ymd", range.toYmd);
+						prop.putProperty("result_split_no", "T" + count++);
+						executeExperiment(prop.getString("result_no"));
+					}
+				}
+
+
+
 			} catch (Exception e) {
 				logger.error("experiment " + prop.getString("result_no") + " is failed.", e);
 			}
@@ -143,7 +162,7 @@ public class MLResultGeneratorRankedExp {
 	 * @throws Exception
 	 */
 	void executeExperiment(String exNo) throws Exception {
-		setupResultCreator();
+		// setupResultCreator();
 		
 		String usedModelNo = prop.getString("used_model_no");
 		// 統計ビルダ初期化
@@ -194,7 +213,7 @@ public class MLResultGeneratorRankedExp {
 				// 既存ml_result削除
 				MlResultExample exam = new MlResultExample();
 				exam.createCriteria().andResultnoEqualTo(exNo).andResultTypeEqualTo(prop.getString("result_type"));
-				mapper.deleteByExample(exam);
+				//mapper.deleteByExample(exam);
 			}
 			
 			// 결과 생성 날짜범위 루프

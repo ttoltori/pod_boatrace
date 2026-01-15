@@ -165,10 +165,14 @@ public class StringUtil {
 		return new String(tempString);
 	}
 
-	public static boolean contains(String findStr, String[] src) {
+	public static boolean contains(String findStr, String... src) {
 		return Arrays.stream(src).anyMatch(findStr::contains);
 	}
 
+	public static boolean contains (int findVal, int... src) {
+		return Arrays.stream(src).anyMatch(val -> val == findVal);
+	}
+	
 	public static Double[] getDoubleArray(String[] arr) {
 		Double[] ret = new Double[arr.length];
 		for (int i = 0; i < arr.length; i++) {

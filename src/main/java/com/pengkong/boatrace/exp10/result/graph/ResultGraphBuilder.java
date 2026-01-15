@@ -122,6 +122,7 @@ public class ResultGraphBuilder {
 						stat.pattern, 
 						prop.getString("used_model_no"),
 						prop.getString("evaluations_id"),
+						prop.getString("result_split_no"),
 						//prop.getString("limited_formation"),
 						//StringUtil.leftPad(exNo, BoatConst.LEFT_PAD6, "0"),
 						String.valueOf(stat.getDailyIncome()), String.valueOf(stat.getDailyHitrate()), String.valueOf(stat.getDailyBetcnt())

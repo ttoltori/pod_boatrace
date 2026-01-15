@@ -386,7 +386,7 @@ END
 BEGIN result_partial_select
   select 
     '{pattern_id}' patternid, {pattern_sql} pattern, 
-    cls.modelno, race.ymd, race.jyocd, race.raceno, race.sime, 
+    cls.modelno, race.ymd, race.jyocd, race.raceno, race.sime, race.wind::int,
     tansyono, nirentanno, nirenhukuno, sanrentanno, sanrenhukuno, 
     tansyoprize, nirentanprize, nirenhukuprize, sanrentanprize, sanrenhukuprize,
     tansyopopular, nirentanpopular, nirenhukupopular, sanrentanpopular, sanrenhukupopular,
